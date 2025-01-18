@@ -12,6 +12,7 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
         koreaBlue: "#0047A0",
+        koreaRed: "#c92c38"
       },
     },
   },
