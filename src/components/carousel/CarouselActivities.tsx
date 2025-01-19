@@ -28,26 +28,39 @@ export default function CarouselActivities() {
         afterChange: (i: any) => { setNum(i) }
     };
     return (
-        <div className='w-[80%] m-auto bg-gradient-to-b from-koreaBlue to-black py-8 rounded-t-xl rounded-bl-xl rounded-br-[100px] '>
-            <div className='grid grid-cols-2 justify-items-center items-start w-full m-auto '>
-            <div className='w-[80%]'>
-                <h3 className='text-3xl font-bold text-white mt-7 mb-7'>{judul[num]}</h3>
-                <p className='text-white text-base'>{text[num]}</p>
+        <div className='md:w-[80%] w-[90%] m-auto bg-gradient-to-b from-koreaBlue to-black py-8 rounded-t-xl rounded-bl-xl rounded-br-[100px] '>
+            <div className='grid md:grid-cols-2 grid-cols-1 justify-items-center items-start w-full m-auto '>
+               <div className='m-auto w-[70%] md:hidden block'>
+                    <Slider {...settings}>
+                        <div>
+                            <img className='rounded-lg' src="/images/gallery/1.jpeg" alt="image" />
+                        </div>
+                        <div>
+                            <img className='rounded-lg' src="/images/gallery/2.jpg" alt="image" />
+                        </div>
+                        <div>
+                            <img className='rounded-lg' src="/images/gallery/3.jpg" alt="image" />
+                        </div>
+                    </Slider>
+                </div>
+                <div className='w-[80%] mb-10'>
+                    <h3 className='md:text-3xl text-xl font-bold text-white mt-7 mb-7'>{judul[num]}</h3>
+                    <p className='text-white md:text-base text-sm'>{text[num]}</p>
+                </div>
+                <div className='m-auto w-[50%] md:block hidden'>
+                    <Slider {...settings}>
+                        <div>
+                            <img className='rounded-lg' src="/images/gallery/1.jpeg" alt="image" />
+                        </div>
+                        <div>
+                            <img className='rounded-lg' src="/images/gallery/2.jpg" alt="image" />
+                        </div>
+                        <div>
+                            <img className='rounded-lg' src="/images/gallery/3.jpg" alt="image" />
+                        </div>
+                    </Slider>
+                </div>
             </div>
-            <div className='m-auto w-[50%] '>
-                <Slider {...settings}>
-                    <div>
-                        <img className='rounded-lg' src="/images/gallery/1.jpeg" alt="image" />
-                    </div>
-                    <div>
-                        <img className='rounded-lg' src="/images/gallery/2.jpg" alt="image" />
-                    </div>
-                    <div>
-                        <img className='rounded-lg' src="/images/gallery/3.jpg" alt="image" />
-                    </div>
-                </Slider>
-            </div>
-        </div>
         </div>
     )
 }

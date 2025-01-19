@@ -11,9 +11,27 @@ export default function TableActivities2({ dataYear, dataGoals, dataTitleGoals }
     return (
         <>
             <div className="w-[100%] shadow">
-                <div className="grid grid-cols-2 align-items-center w-full b-black bg-koreaBlueMuda rounded-t-xl">
-                    <p className="place-self-start p-4 text-lg font-bold">{title}</p>
-                    <div className="place-self-end mr-5 m-auto ">
+                <div className="md:grid flex grid-cols-2 align-items-center w-full b-black bg-koreaBlueMuda rounded-t-xl">
+                    <p className="w-full md:place-self-start md:p-4 py-3 px-3 md:text-lg text-xs font-bold">{title} asad asdasd asdasd safsa </p>
+                    <div className="md:place-self-end m-auto md:hidden block w-[50%] ">
+                    <select className="h-8 w-[90%] bg-koreaBlueMuda border-2 rounded-xl pl-2 md:text-base text-sm text-white bg-koreaBlue" name="year" onChange={(e:any)=>{
+                        setCurrentYearValue(e.target.options[e.target.selectedIndex].text)
+                        setCurrentYear(e.target.value)
+                    }}>
+                        <option className="text-xs text-white" value="">year</option>
+                        {
+                            year && year.map((value: any, i: any) => {
+                                console.log(i)
+                                return (
+                                    <option className="text-xs text-white" key={i} value={value.percent} onClick={(e)=>{
+                                        setCurrentYear(value.year);
+                                    }}>{value.year}</option>
+                                )
+                            })
+                        }
+                    </select>
+                    </div>
+                    <div className="place-self-end mr-5 m-auto md:block hidden">
                         {
                             year && year.map((value: any, i: any) => {
                                 console.log(i)
@@ -28,23 +46,28 @@ export default function TableActivities2({ dataYear, dataGoals, dataTitleGoals }
 
                     </div>
                 </div>
-                <div className="flex w-full items-center justify-between">
+                <div className="md:flex w-full items-center justify-between">
+                    <div className="w-[60%] m-auto text-center md:hidden block">
+                        <div className="m-auto text-center py-3">
+                            <h3 className="md:text-2xl text-lg font-bold md:w-[80%] w-[90%] m-auto ">Achievements (%) / yr ({currentYearValue})</h3>
+                            <p className="font-bold md:text-3xl text-xl mt-2 text-koreaRed"> {currentYear}%</p>
+                        </div>
+                    </div>
                     <div className="w-full">
                         {goals && goals.map((v: any, i: any) => {
                             return (
                                 <div key={i} className="w-full shadow p-4 ">
-                                    <p className="text-lg">{v}</p>
+                                    <p className="md:text-lg text-xs">{v}</p>
                                 </div>
                             )
                         })}
 
                     </div>
-                    <div className="w-[45%] m-auto text-center">
-                        <div className="m-auto text-center">
-                            <h3 className="text-2xl font-bold w-[80%] m-auto ">Achievements (%) / yr ({currentYearValue})</h3>
-                            <p className="font-bold text-3xl mt-2 text-koreaRed"> {currentYear}%</p>
+                    <div className="w-[60%] m-auto text-center md:block hidden">
+                        <div className="m-auto text-center py-3">
+                            <h3 className="md:text-2xl text-lg font-bold md:w-[80%] w-[90%] m-auto ">Achievements (%) / yr ({currentYearValue})</h3>
+                            <p className="font-bold md:text-3xl text-xl mt-2 text-koreaRed"> {currentYear}%</p>
                         </div>
-
                     </div>
                 </div>
 

@@ -14,8 +14,8 @@ export default function Aboutus() {
             <div className="md:w-[85%] w-[90%] m-auto">
                 {/* hero section */}
                 <div className="">
-                    <h1 className="md:text-4xl text-3xl mt-10 font-bold">Greetings from coordinator LUPIC</h1>
-                    <div className="h-1 w-36 bg-koreaRed mt-5"></div>
+                    <h1 className="md:text-4xl text-2xl mt-10 font-bold">Greetings from coordinator LUPIC</h1>
+                    <div className="h-1 w-36 bg-koreaRed md:mt-5 mt-2"></div>
                 </div>
 
                 {/* pc */}
@@ -59,8 +59,8 @@ export default function Aboutus() {
 
                 {/* history */}
                 <div className=" mt-24">
-                    <h1 className="md:text-4xl text-3xl mt-10 font-bold">Short History</h1>
-                    <div className="h-1 w-36 bg-koreaRed mt-5"></div>
+                    <h1 className="md:text-4xl text-2xl mt-10 font-bold">Short History</h1>
+                    <div className="h-1 w-36 bg-koreaRed md:mt-5 mt-2"></div>
                 </div>
                 <div className="">
                     <p className="text-justify md:text-xl text-base mt-5">
@@ -87,8 +87,8 @@ export default function Aboutus() {
                 </div>
                 {/* history */}
                 <div className=" mt-14">
-                    <h3 className="md:text-4xl text-3xl mt-10 font-bold">Sogang University</h3>
-                    <div className="h-1 w-36 bg-koreaRed mt-5"></div>
+                    <h3 className="md:text-4xl text-2xl mt-10 font-bold">Sogang University</h3>
+                    <div className="h-1 w-36 bg-koreaRed md:mt-5 mt-2"></div>
                 </div>
                 <div className="mt-3">
                     <Image className="m-auto" src={"/images/sogang.png"} alt="foto" width={150} height={150} />
@@ -110,8 +110,8 @@ export default function Aboutus() {
                 </div>
                 {/* Partner */}
                 <div className=" mt-14">
-                    <h3 className="md:text-4xl text-3xl mt-10 font-bold">Partner University</h3>
-                    <div className="h-1 w-36 bg-koreaRed mt-5"></div>
+                    <h3 className="md:text-4xl text-2xl mt-10 font-bold">Partner University</h3>
+                    <div className="h-1 w-36 bg-koreaRed md:mt-5 mt-2"></div>
                 </div>
                 <div className="mt-5">
                     <Image className="m-auto" src={"/images/partner.png"} alt="foto" width={1100} height={300} />
@@ -119,10 +119,10 @@ export default function Aboutus() {
                     <div className="mt-10">
                         <div>
                             <div className="flex justify-between items-center w-full h-20 m-auto bg-koreaBlue rounded-[50px] hover:cursor-pointer" onClick={(e) => { setActive(!active) }}>
-                                <div className="bg-gradient-to-b from-koreaBlue to-black rounded-full md:h-28 md:w-28 h-20 w-20 flex items-center">
-                                    <Image className="rounded-full m-auto " src={"/images/logoAbout/upi.jpg"} width={95} height={95} alt="foto" />
+                                <div className="bg-gradient-to-b from-koreaBlue to-black rounded-full md:h-24 md:w-28 h-20 w-20 flex items-center">
+                                    <Image className="rounded-full m-auto md:h-24 md:w-28 h-20 w-20" src={"/images/logoAbout/upi.jpg"} width={95} height={95} alt="foto" />
                                 </div>
-                                <h3 className="md:text-xl text-xs font-bold text-white text-center">UNIVERSITAS PENDIDIKAN INDONESIA</h3>
+                                <h3 className="md:w-full w-[50%] md:text-xl text-xs font-bold text-white text-center">UNIVERSITAS PENDIDIKAN INDONESIA</h3>
                                 <button className="md:mr-10 mr-5" onClick={(e) => { setActive(!active) }}>
                                     <Image className={active ? "" : "rotate-180"} src={"/images/logoAbout/white-up.svg"} width={30} height={30} alt="foto" />
                                 </button>
@@ -153,10 +153,10 @@ export default function Aboutus() {
                         </div>
                         <div className="mt-10">
                             <div className="flex justify-between items-center w-full h-20 m-auto bg-koreaBlue rounded-[50px] hover:cursor-pointer" onClick={(e) => { setActive2(!active2) }}>
-                                <div className="bg-gradient-to-b from-koreaBlue to-black rounded-full md:h-28 md:w-28 h-20 w-20 flex items-center">
-                                    <Image className="rounded-full m-auto " src={"/images/logoAbout/upi.jpg"} width={95} height={95} alt="foto" />
+                                <div className="bg-gradient-to-b from-koreaBlue to-black rounded-full md:h-24 md:w-28 h-20 w-20 flex items-center">
+                                    <Image className="rounded-full m-auto md:h-24 md:w-28 h-20 w-20" src={"/images/logoAbout/upi.jpg"} width={95} height={95} alt="foto" />
                                 </div>
-                                <h3 className="md:text-xl text-xs font-bold text-white text-center">UNIVERSITAS PENDIDIKAN INDONESIA</h3>
+                                <h3 className="md:w-full w-[50%] md:text-xl text-xs font-bold text-white text-center">UNIVERSITAS PENDIDIKAN INDONESIA</h3>
                                 <button className="md:mr-10 mr-5" onClick={(e) => { setActive2(!active2) }}>
                                     <Image className={active2 ? "" : "rotate-180"} src={"/images/logoAbout/white-up.svg"} width={30} height={30} alt="foto" />
                                 </button>
@@ -187,10 +187,10 @@ export default function Aboutus() {
                         </div>
                         <div className="mt-10">
                             <div className="flex justify-between items-center w-full h-20 m-auto bg-koreaBlue rounded-[50px] hover:cursor-pointer" onClick={(e) => { setActive3(!active3) }}>
-                                <div className="bg-gradient-to-b from-koreaBlue to-black rounded-full md:h-28 md:w-28 h-20 w-20 flex items-center">
-                                    <Image className="rounded-full m-auto " src={"/images/logoAbout/upi.jpg"} width={95} height={95} alt="foto" />
+                                <div className="bg-gradient-to-b from-koreaBlue to-black rounded-full md:h-24 md:w-28 h-20 w-20 flex items-center">
+                                    <Image className="rounded-full m-auto md:h-24 md:w-28 h-20 w-20" src={"/images/logoAbout/upi.jpg"} width={95} height={95} alt="foto" />
                                 </div>
-                                <h3 className="md:text-xl text-xs font-bold text-white text-center">UNIVERSITAS PENDIDIKAN INDONESIA</h3>
+                                <h3 className="md:w-full w-[50%] md:text-xl text-xs font-bold text-white text-center">UNIVERSITAS PENDIDIKAN INDONESIA Bandung Raya Bogor </h3>
                                 <button className="md:mr-10 mr-5" onClick={(e) => { setActive3(!active3) }}>
                                     <Image className={active3 ? "" : "rotate-180"} src={"/images/logoAbout/white-up.svg"} width={30} height={30} alt="foto" />
                                 </button>
@@ -223,7 +223,7 @@ export default function Aboutus() {
                     </div>
                     {/* Partner */}
                     <div className=" text-center m-auto pt-10">
-                        <h3 className="md:text-4xl text-3xl mt-10 font-bold">Collaboration With</h3>
+                        <h3 className="md:text-4xl text-2xl mt-10 font-bold">Collaboration With</h3>
                         <div className="h-1 w-36 bg-koreaRed mt-5 m-auto"></div>
                     </div>
                     <div className="m-auto flex justify-center items-center mt-10 mb-28">

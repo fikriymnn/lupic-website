@@ -45,7 +45,7 @@ export default function CarouselGallery() {
                     onChange={(currentIndex) => {
                         setIndex(currentIndex)
                     }} />
-                <p className='w-[80%] text-lg text-center m-auto pt-8'>{textItems[index]}</p>
+                <p className='w-[80%] md:text-lg text-sm text-center m-auto pt-8'>{textItems[index]}</p>
             </div>
             </div>
             
