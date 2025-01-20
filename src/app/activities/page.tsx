@@ -60,10 +60,10 @@ export default function Activities() {
                                 </thead>
                                     <TableDataActivities />
                             </table>
-                            <div className="md:w-[80%] w-full overflow-x-auto md:hidden block">
-                            <table className="w-[550px] text-center align-center mt-5 ">
-                                <thead className="">
-                                    <tr className="text-lg bg-koreaBlueMuda rounded-xl">
+                            <div className="md:w-[80%] w-full overflow-x-auto md:hidden block rounded-xl">
+                            <table className="w-[550px] text-center align-center mt-5 rounded-xl">
+                                <thead className="rounded-xl">
+                                    <tr className="text-lg bg-koreaBlueMuda rounded-xl shadow-lg">
                                         <th className="py-4 text-sm w-[10%]">NO</th>
                                         <th className="py-4 text-sm w-[30%]">GOALS</th>
                                         <th className="py-4 text-sm w-[20%]">UPI</th>

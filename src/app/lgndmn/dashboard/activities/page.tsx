@@ -4,6 +4,8 @@ import Sidebar from "@/components/Sidebar";
 import Image from "next/image";
 import Editor from 'react-simple-wysiwyg';
 import AdminPartnerDropdown from "@/components/dropdown/AdminPartnerDropdown";
+import AdminCardActivities from "@/components/card/AdminCardActivities";
+import AdminCarouselActivities from "@/components/carousel/AdminCarouselActivities";
 
 export default function Activities() {
   const [file, setFile] = useState({ name: "" });
@@ -78,8 +80,8 @@ export default function Activities() {
                 Tambahkan
               </button>
             </form>
-            <div>
-              <AdminPartnerDropdown/>
+            <div className="mt-14">
+              <AdminCarouselActivities/>
             </div>
 
             <form>
@@ -121,8 +123,8 @@ export default function Activities() {
                 Tambahkan
               </button>
             </form>
-            <div>
-              <AdminPartnerDropdown/>
+            <div className="mt-14">
+            <AdminCardActivities/>
             </div>
 
 
