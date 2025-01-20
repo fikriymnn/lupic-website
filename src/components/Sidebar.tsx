@@ -14,31 +14,31 @@ const Sidebar = () => {
       <nav className="flex-1 p-4">
         <ul>
         <li className="mb-2">
-            <a href="/lgdmn/dashboard" className={`flex items-center space-x-2 p-2 hover:bg-koreaBlueMuda rounded ${!adminPath[3]?"bg-koreaBlueMuda":""}`}>
+            <a href="/lgndmn/dashboard" className={`flex items-center space-x-2 p-2 hover:bg-koreaBlueMuda rounded ${!adminPath[3]?"bg-koreaBlueMuda":""}`}>
               <FaCog />
               <span>Home</span>
             </a>
           </li>
           <li className="mb-2">
-            <a href="/lgdmn/dashboard/aboutus" className={`flex items-center space-x-2 p-2 hover:bg-koreaBlueMuda rounded ${adminPath[3]=="aboutus"?"bg-koreaBlueMuda":""}`}>
+            <a href="/lgndmn/dashboard/aboutus" className={`flex items-center space-x-2 p-2 hover:bg-koreaBlueMuda rounded ${adminPath[3]=="aboutus"?"bg-koreaBlueMuda":""}`}>
               <FaHome />
               <span>About Us</span>
             </a>
           </li>
           <li className="mb-2">
-            <a href="/lgdmn/dashboard/activities" className={`flex items-center space-x-2 p-2 hover:bg-koreaBlueMuda rounded ${adminPath[3]=="activities"?"bg-koreaBlueMuda":""}`}>
+            <a href="/lgndmn/dashboard/activities" className={`flex items-center space-x-2 p-2 hover:bg-koreaBlueMuda rounded ${adminPath[3]=="activities"?"bg-koreaBlueMuda":""}`}>
               <FaUser />
               <span>Activities</span>
             </a>
           </li>
           <li className="mb-2">
-            <a href="/lgdmn/dashboard/facilities" className={`flex items-center space-x-2 p-2 hover:bg-koreaBlueMuda rounded ${adminPath[3]=="facilities"?"bg-koreaBlueMuda":""}`}>
+            <a href="/lgndmn/dashboard/facilities" className={`flex items-center space-x-2 p-2 hover:bg-koreaBlueMuda rounded ${adminPath[3]=="facilities"?"bg-koreaBlueMuda":""}`}>
               <FaCog />
               <span>Facilities</span>
             </a>
           </li>
           <li className="mb-2">
-            <a href="/lgdmn/dashboard/news" className={`flex items-center space-x-2 p-2 hover:bg-koreaBlueMuda rounded ${adminPath[3]=="news"?"bg-koreaBlueMuda":""}`}>
+            <a href="/lgndmn/dashboard/news" className={`flex items-center space-x-2 p-2 hover:bg-koreaBlueMuda rounded ${adminPath[3]=="news"?"bg-koreaBlueMuda":""}`}>
               <FaCog />
               <span>News</span>
             </a>

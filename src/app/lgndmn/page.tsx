@@ -9,7 +9,7 @@ export default function Lgdmn(){
     e.preventDefault();
     console.log("Login Attempt:", { email, password });
     // Tambahkan logika autentikasi di sini
-    window.location.href = "/lgdmn/dashboard"
+    window.location.href = "/lgndmn/dashboard"
   };
 
   return (
