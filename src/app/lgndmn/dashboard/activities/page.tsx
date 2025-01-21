@@ -40,7 +40,7 @@ export default function Activities() {
 
           
 
-          <div className=" m-auto bg-white p-6 rounded-lg shadow-lg w-[80%]">
+          <div className=" m-auto bg-white p-6 rounded-lg shadow-lg w-[80%] border-2">
           <form>
               <h2 className="text-3xl pt-4 font-semibold text-start mb-4">Carousel</h2>
               <label className="block text-gray-700 font-medium mb-2 text-xl mt-3">

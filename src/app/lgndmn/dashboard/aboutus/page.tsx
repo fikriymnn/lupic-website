@@ -36,7 +36,7 @@ export default function Aboutus() {
         </div>
         <div className="m-auto w-full">
 
-          <div className=" m-auto bg-white p-6 rounded-lg shadow-lg w-[80%]">
+          <div className=" m-auto bg-white p-6 rounded-lg shadow-lg w-[80%] border-2">
 
             <h2 className="text-3xl pt-5 font-semibold text-start mb-4">Poster Partner</h2>
             <Image alt="foto" src={"/images/poster.jpg"} width={1000} height={500} />

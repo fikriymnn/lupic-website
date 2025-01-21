@@ -3,8 +3,9 @@ import React, { useState } from "react";
 import Sidebar from "@/components/Sidebar";
 import Editor from "react-simple-wysiwyg";
 import AdminCardFacilities from "@/components/card/AdminCardFacilities";
+import Image from 'next/image'
 
-export default  function FacilitiesAdmin() {
+export default  function DetailNews() {
     const [file, setFile] = useState({ name: "" });
     const [html, setHtml] = useState('my <b>HTML</b>');
   
@@ -29,13 +30,13 @@ export default  function FacilitiesAdmin() {
     <div className="flex">
       <Sidebar />
       <div className="w-64"></div>
-      <div className="w-full">
+      <div className="w-full mb-16">
         <div className="p-6 mt-8 text-center">
-          <h1 className="text-3xl font-bold text-koreaBlue">FACILITIES CONTENT</h1>
+          <h1 className="text-3xl font-bold text-koreaBlue">UPDATE FACILITY</h1>
         </div>
         <div className="m-auto w-full">
 
-          <div className=" m-auto bg-white p-6 rounded-lg shadow-lg w-[80%] border-2">
+          <div className=" m-auto bg-white p-6 rounded-lg shadow-lg w-[80%]">
             <form>
               <h2 className="text-3xl pt-2 font-semibold text-start mb-4">Facility</h2>
               <label className="block text-gray-700 font-medium mb-2 text-xl mt-3">
@@ -54,6 +55,7 @@ export default  function FacilitiesAdmin() {
                 Gambar
               </label>
               <div className="border-2 border-dashed border-gray-300 p-4 rounded-lg text-center">
+                <Image alt="foto" src={"/images/poster.jpg"} width={500} height={500} className="m-auto pb-5"/>
                 <input
                   type="file"
                   onChange={handleFileChange}
@@ -72,17 +74,9 @@ export default  function FacilitiesAdmin() {
                 type="submit"
                 className="mt-4 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-200"
               >
-                Tambahkan
+                Update
               </button>
             </form>
-            <div>
-              <h3 className="text-2xl font-bold text-center mt-14 mb-4">List Facility</h3>
-            </div>
-            <div>
-              <AdminCardFacilities/>
-            </div>
-
-
           </div>
         </div>
       </div >
