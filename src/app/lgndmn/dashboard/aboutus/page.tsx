@@ -38,10 +38,10 @@ export default function Aboutus() {
 
           <div className=" m-auto bg-white p-6 rounded-lg shadow-lg w-[80%] border-2">
 
-            <h2 className="text-3xl pt-5 font-semibold text-start mb-4">Poster Partner</h2>
+            <h2 className="text-3xl pt-5 font-semibold text-start mb-4">Foto</h2>
             <Image alt="foto" src={"/images/poster.jpg"} width={1000} height={500} />
             <form>
-              <div className="border-2 border-dashed border-gray-300 p-4 rounded-lg text-center">
+              <div className="border-2 border-dashed border-gray-300 p-4 rounded-lg">
                 <input
                   type="file"
                   onChange={handleFileChange}
@@ -54,17 +54,7 @@ export default function Aboutus() {
                 >
                   {file ? file?.name : "Pilih file untuk diunggah"}
                 </label>
-              </div>
-              <button
-                type="submit"
-                className="mt-4 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-200"
-              >
-                Upload
-              </button>
-            </form>
-            <form>
-              <h2 className="text-3xl pt-14 font-semibold text-start mb-4">List Partner</h2>
-              <label className="block text-gray-700 font-medium mb-2 text-xl mt-3">
+                <label className="block text-gray-700 font-medium mb-2 text-xl mt-3">
                 Nama
               </label>
               <input
@@ -73,38 +63,31 @@ export default function Aboutus() {
                 className="mt-2 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
               <label className="block text-gray-700 font-medium mb-2 text-xl mt-3">
-                Deskripsi
+                Keterangan
               </label>
-              <Editor value={html} onChange={onChange} />
+              <input
+                type="text"
+                placeholder="Masukkan nama..."
+                className="mt-2 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
               <label className="block text-gray-700 font-medium mb-2 text-xl mt-3">
-                Logo
+                Text Content
               </label>
-              <div className="border-2 border-dashed border-gray-300 p-4 rounded-lg text-center">
-                <input
-                  type="file"
-                  onChange={handleFileChange}
-                  className=""
-                  id="fileInput"
-                />
-                <label
-                  htmlFor="fileInput"
-                  className="cursor-pointer text-blue-500 hover:underline"
-                >
-                  {file ? file?.name : "Pilih file untuk diunggah"}
-                </label>
+              <input
+                type="text"
+                placeholder="Masukkan nama..."
+                className="mt-2 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
               </div>
-
+              
+              
               <button
                 type="submit"
                 className="mt-4 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-200"
               >
-                Tambahkan
+                Update
               </button>
             </form>
-            <div>
-              <AdminPartnerDropdown/>
-            </div>
-
 
           </div>
         </div>

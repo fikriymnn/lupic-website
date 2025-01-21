@@ -30,7 +30,7 @@ export default function InformationDropdown2() {
             <div>
                 <div className="flex justify-between items-center w-full h-20 m-auto bg-koreaBlue rounded-[50px] hover:cursor-pointer" onClick={(e) => { setActive(!active) }}>
                     <div className="bg-gradient-to-b from-koreaBlue to-black rounded-full md:h-24 md:w-24 h-20 w-20 flex items-center">
-                        <p className="md:text-4xl text-xl font-bold text-white m-auto text-center">01</p>
+                        <p className="md:text-4xl text-xl font-bold text-white m-auto text-center">02</p>
                     </div>
                     <h3 className="md:text-xl w-[50%] text-xs font-bold text-white text-center">National University's Chemistry Education and Capacity Building Program</h3>
                     <button className="md:mr-10 mr-5" onClick={(e) => { setActive(!active) }}>

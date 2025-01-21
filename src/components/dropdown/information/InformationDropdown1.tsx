@@ -1,10 +1,18 @@
 "use client"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Image from "next/image"
 import TableActivities2 from "../../table/TableActivities2"
 
 export default function InformationDropdown1() {
     const [active, setActive] = useState(true)
+    const [data,setData] = useState([])
+
+    useEffect(()=>{
+        async function getData(){
+
+        }
+        getData()
+    },[])
 
     return (
         <>
@@ -20,13 +28,13 @@ export default function InformationDropdown1() {
                 </div>
                 <div className={`w-[85%] m-auto  ${active ? 'hidden' : 'block'}`}>
                     <div className="mt-8">
-                     <TableActivities2 point={1} sub_point={1} data={[
-                        {sub_point: 1,text: "apwoepaowepawe",year_1:true,year_2:true,year_3:true},
-                        {sub_point: 2,text: "pwnrdnjsfyrhds",year_1:false,year_2:true,year_3:false}
+                     <TableActivities2 point={1} sub_point={1} title_sub_point={"1-1 asdasd"} data={[
+                        {point:1,sub_point: 1,text: "apwoepaowepawe",year_1:true,year_2:true,year_3:true},
+                        {point:1,sub_point: 2,text: "pwnrdnjsfyrhds",year_1:false,year_2:true,year_3:false}
                      ]}/>
-                     <TableActivities2 point={1} sub_point={2} data={[
-                        {sub_point: 1,text: "apwoepaowepawe",year_1:true,year_2:true,year_3:true},
-                        {sub_point: 2,text: "pwnrdnjsfyrhds",year_1:false,year_2:true,year_3:false}
+                     <TableActivities2 point={1} sub_point={2} title_sub_point={"1-1 asdasd"} data={[
+                        {point:1,sub_point: 1,text: "apwoepaowepawe",year_1:true,year_2:true,year_3:true},
+                        {point:1,sub_point: 2,text: "pwnrdnjsfyrhds",year_1:false,year_2:true,year_3:false}
                      ]}/>
                     {/* //  <TableActivities2 data 1.2/>
                     //  <TableActivities2 data 1.3/>

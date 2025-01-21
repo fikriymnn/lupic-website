@@ -31,7 +31,7 @@ export default  function News() {
       <div className="w-64"></div>
       <div className="w-full">
         <div className="p-6 mt-8 text-center">
-          <h1 className="text-3xl font-bold text-koreaBlue">FACILITIES CONTENT</h1>
+          <h1 className="text-3xl font-bold text-koreaBlue">NEWS CONTENT</h1>
         </div>
         <div className="m-auto w-full">
 
