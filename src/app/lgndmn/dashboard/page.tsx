@@ -79,8 +79,7 @@ export default function Dashboard() {
                   </button>
                 </form>
 
-                <h2 className="text-3xl mt-8 font-semibold text-start mb-4">Foto Poster</h2>
-                <Image alt="foto" src={"/images/poster.jpg"} width={1000} height={500}/>
+                <h2 className="mt-16 text-3xl font-semibold text-start mb-4">Carousel</h2>
                 <form>
                 <div className="border-2 border-dashed border-gray-300 p-4 rounded-lg text-center">
                     <input
@@ -98,36 +97,21 @@ export default function Dashboard() {
                   </div>
                   <button
                     type="submit"
-                    className="mt-4 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-200"
+                    className="mt-4 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-200 mb-5"
                   >
                     Upload
                   </button>
                 </form>
-                
-                <h2 className="text-3xl mt-8 font-semibold text-start mb-4">Foto Goals Poster</h2>
-                <Image alt="foto" src={"/images/poster.jpg"} width={1000} height={500}/>
-                <form>
-                <div className="border-2 border-dashed border-gray-300 p-4 rounded-lg text-center">
-                    <input
-                      type="file"
-                      onChange={handleFileChange3}
-                      className=""
-                      id="fileInput"
-                    />
-                    <label
-                      htmlFor="fileInput"
-                      className="cursor-pointer text-blue-500 hover:underline"
-                    >
-                      {file3 ? file3?.name : "Pilih file untuk diunggah"}
-                    </label>
+                <div className="flex justify-evently m-auto">
+                  <div className="grid grid-cols-1 justify-items-center">
+                  <Image className="mx-6 py-5" alt="foto" src={"/images/poster.jpg"} width={300} height={300}/>
+                  <button className="w-20 m-auto w-[80%]" onClick={(e) => { alert("hapus") }}>
+                    <p className="text-sm text-center m-auto text-white bg-koreaRed p-2 rounded-2xl">Delete</p>
+                </button>
                   </div>
-                  <button
-                    type="submit"
-                    className="mt-4 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-200"
-                  >
-                    Upload
-                  </button>
-                </form>
+                 
+                </div>
+               
               </div>
           </div>
       </div>

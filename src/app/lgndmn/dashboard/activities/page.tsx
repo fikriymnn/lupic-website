@@ -124,7 +124,6 @@ export default function Activities() {
               </button>
             </form>
             <div className="mt-14">
-            <AdminCardActivities/>
             </div>
 
 

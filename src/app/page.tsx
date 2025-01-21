@@ -3,6 +3,7 @@ import Navbar from '../components/Navbar';
 import Image from 'next/image';
 import CardNews from '@/components/card/CardNews';
 import CustomFooter from '@/components/CustomFooter';
+import CarouselHome from '@/components/carousel/CarouselHome';
 
 const Home: React.FC = () => {
   return (
@@ -50,7 +51,7 @@ const Home: React.FC = () => {
       <div className="w-[95%]">
           {/* poster */}
           <div className='flex justify-center align-center md:pt-8 pt-5'>
-          <Image className="rounded-3xl" src={"/images/poster.jpg"} alt={"image"} width={1200} height={1200} />
+          <CarouselHome/>
           </div>
           {/* goals */}
           <div className='w-full md:pt-14 pt-8'>
