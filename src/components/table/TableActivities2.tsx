@@ -1,14 +1,23 @@
 "use client"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function TableActivities2({point,sub_point,data}:any) {
     const [currentYear, setCurrentYear] = useState(0)
+    const [filterData,setFilterData] = useState([{}])
+
+    useEffect(()=>{
+        data.forEach((v:any)=>{
+            if(v.point==1,v.sub_point==sub_point){
+                setFilterData([...filterData,v])
+            }
+        })
+    },[])
 
     return (
         <>
             <div className="w-[100%] shadow">
                 <div className="md:grid flex grid-cols-2 align-items-center w-full b-black bg-koreaBlueMuda rounded-t-xl">
-                    <p className="w-full md:place-self-start md:p-4 py-3 px-3 md:text-lg text-xs font-bold">asad asdasd asdasd safsa </p>
+                    <p className="w-full md:place-self-start md:p-4 py-3 px-3 md:text-lg text-xs font-bold">{point} asad asdasd asdasd safsa </p>
                     <div className="md:place-self-end m-auto md:hidden block w-[50%] ">
                         <select className="h-8 w-[90%] bg-koreaBlueMuda border-2 rounded-xl pl-2 md:text-base text-sm text-white bg-koreaBlue" name="year" onChange={(e: any) => {
                             setCurrentYear(e.target.value)
