@@ -3,8 +3,6 @@ import React, { useState } from "react";
 import Sidebar from "@/components/Sidebar";
 import Image from "next/image";
 import Editor from 'react-simple-wysiwyg';
-import AdminPartnerDropdown from "@/components/dropdown/AdminPartnerDropdown";
-import AdminCardActivities from "@/components/card/AdminCardActivities";
 import AdminCarouselActivities from "@/components/carousel/AdminCarouselActivities";
 
 export default function Activities() {
@@ -87,10 +85,10 @@ export default function Activities() {
 
             <h2 className="text-3xl pt-14 font-semibold text-start mb-4">Goals</h2>
             <div>
-              <div className="w-full flex justify-evenly border-2 p-2 mb-2"> 
-                <p className="text-lg">Goals</p> 
+              <div className="w-full flex justify-evenly border-2 p-2 mb-2">
+                <p className="text-lg">Goals</p>
                 <p className="text-lg">Check Goals</p>
-                </div>
+              </div>
               {/* list */}
               <div className="w-full p-6 border rounded-lg shadow-md bg-white">
                 <div className="grid grid-cols-2 gap-4 items-center">
