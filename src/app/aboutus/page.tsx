@@ -58,7 +58,7 @@ export default function Aboutus() {
                 </div>
 
                 {/* history */}
-                <div className=" mt-24">
+                <div className=" mt-24 mb-2">
                     <h1 className="md:text-4xl text-2xl mt-10 font-bold">Short History</h1>
                     <div className="h-1 w-36 bg-koreaRed md:mt-5 mt-2"></div>
                 </div>
