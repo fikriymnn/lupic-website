@@ -1,121 +1,188 @@
 "use client"
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "@/components/Sidebar";
 import Image from "next/image";
+import axios from "axios";
 
 export default function Dashboard() {
-  const [file, setFile] = useState({ name: "" });
-  const [file2, setFile2] = useState({ name: "" });
-  const [file3, setFile3] = useState({ name: "" });
+  const [fullData,setFullData] = useState(null)
+  const [fileHero, setFileHero] = useState("");
+  const [file, setFile] = useState("");
+  const [fileCarousel, setFileCarousel] = useState(null);
+  const [file2, setFile2] = useState([]);
 
   const handleFileChange = (e: any) => {
-    setFile(e.target.files[0]);
+    e.preventDefault();
+    const filee = e.target.files[0];
+    setFileHero(filee);
+    console.log(fileHero);
   };
-  const handleFileChange2 = (e: any) => {
-    setFile2(e.target.files[0]);
-  };
-  const handleFileChange3 = (e: any) => {
-    setFile3(e.target.files[0]);
+  const handleFileChange2 = async (e: any) => {
+    setFileCarousel(e.target.files[0]);
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (!file) {
       alert("Pilih file terlebih dahulu!");
       return;
     }
-    console.log("File uploaded:", file);
-  };
-  const handleSubmit2 = (e: any) => {
-    e.preventDefault();
-    if (!file2) {
-      alert("Pilih file terlebih dahulu!");
-      return;
+    try {
+      const formData = new FormData();
+      formData.append('file', fileHero);
+
+      const data = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/file", formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+
+      if (data?.data) {
+        const message = await axios.put(process.env.NEXT_PUBLIC_API_URL + "/api/home/"+fullData, {
+          hero_section: data?.data,
+          carousel: file2
+        },{})
+        if (message.data == "success") {
+          window.location.reload()
+        }
+      }
+    } catch (err: any) {
+      console.log(err.message)
     }
-    console.log("File uploaded:", file2);
+
   };
-  const handleSubmit3 = (e: any) => {
+  const handleSubmit2 = async (e: any) => {
     e.preventDefault();
-    if (!file3) {
+    if (!fileCarousel) {
       alert("Pilih file terlebih dahulu!");
-      return;
+      return
     }
-    console.log("File uploaded:", file3);
+    const formData = new FormData();
+    formData.append('file', fileCarousel);
+
+    try {
+      const data = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/file",formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      if (data.data) {
+        let newData = [...file2, data.data]
+        const message = await axios.put(process.env.NEXT_PUBLIC_API_URL + "/api/home/"+fullData, {
+          hero_section: file,
+          carousel: newData
+        })
+        if (message.data == "success") {
+          window.location.reload()
+        }
+      }
+    } catch (err: any) {
+      console.log(err.message)
+    }
   };
+
+  const onDelete = async (i:any)=>{
+    try{
+      let newData = [...file2]
+      newData.splice(i,1)
+      const message = await axios.put(process.env.NEXT_PUBLIC_API_URL + "/api/home/"+fullData, {
+        hero_section: file,
+        carousel: newData
+      })
+      if (message.data == "success") {
+        window.location.reload()
+      }
+    }catch(err:any){
+      console.log(err.message)
+    }
+      
+  }
+
+  useEffect(() => {
+    async function getData() {
+      try {
+        const data = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/home")
+        setFile(data.data.hero_section)
+        setFile2(data.data.carousel)
+        console.log(data)
+          setFullData(data.data._id)
+
+      } catch (err: any) {
+        console.log(err.message)
+      }
+    }
+    getData()
+  }, [])
+
   return (
     <div className="flex">
       <Sidebar />
       <div className="w-64"></div>
       <div className="w-full">
-          <div className="p-6 mt-8 text-center">
-              <h1 className="text-3xl font-bold text-koreaBlue">HOME CONTENT</h1>
-          </div>
-          <div className="m-auto w-full">
+        <div className="p-6 mt-8 text-center">
+          <h1 className="text-3xl font-bold text-koreaBlue">HOME CONTENT</h1>
+        </div>
+        <div className="m-auto w-full">
 
-              <div className=" m-auto bg-white p-6 rounded-lg shadow-lg w-[80%] border-2">
+          <div className=" m-auto bg-white p-6 rounded-lg shadow-lg w-[80%] border-2">
 
-                <h2 className="text-3xl pt-5 font-semibold text-start mb-4">Foto Hero Section</h2>
-                <Image alt="foto" src={"/images/poster.jpg"} width={1000} height={500}/>
-                <form>
-                <div className="border-2 border-dashed border-gray-300 p-4 rounded-lg text-center">
-                    <input
-                      type="file"
-                      onChange={handleFileChange}
-                      className=""
-                      id="fileInput"
-                    />
-                    <label
-                      htmlFor="fileInput"
-                      className="cursor-pointer text-blue-500 hover:underline"
-                    >
-                      {file ? file?.name : "Pilih file untuk diunggah"}
-                    </label>
-                  </div>
-                  <button
-                    type="submit"
-                    className="mt-4 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-200"
-                  >
-                    Upload
-                  </button>
-                </form>
-
-                <h2 className="mt-16 text-3xl font-semibold text-start mb-4">Carousel</h2>
-                <form>
-                <div className="border-2 border-dashed border-gray-300 p-4 rounded-lg text-center">
-                    <input
-                      type="file"
-                      onChange={handleFileChange2}
-                      className=""
-                      id="fileInput"
-                    />
-                    <label
-                      htmlFor="fileInput"
-                      className="cursor-pointer text-blue-500 hover:underline"
-                    >
-                      {file2 ? file2?.name : "Pilih file untuk diunggah"}
-                    </label>
-                  </div>
-                  <button
-                    type="submit"
-                    className="mt-4 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-200 mb-5"
-                  >
-                    Upload
-                  </button>
-                </form>
-                <div className="flex justify-evently m-auto">
-                  <div className="grid grid-cols-1 justify-items-center">
-                  <Image className="mx-6 py-5" alt="foto" src={"/images/poster.jpg"} width={300} height={300}/>
-                  <button className="w-20 m-auto w-[80%]" onClick={(e) => { alert("hapus") }}>
-                    <p className="text-sm text-center m-auto text-white bg-koreaRed p-2 rounded-2xl">Delete</p>
-                </button>
-                  </div>
-                 
-                </div>
-               
+            <h2 className="text-3xl pt-5 font-semibold text-start mb-4">Foto Hero Section</h2>
+            <Image alt="foto" src={`${process.env.NEXT_PUBLIC_API_FILE_URL}` + file} width={1000} height={500} />
+            <form onSubmit={handleSubmit}>
+              <div className="border-2 border-dashed border-gray-300 p-4 rounded-lg text-center">
+                <input
+                  type="file"
+                  onChange={handleFileChange}
+                  className=""
+                  id="fileInput"
+                  name="file"
+                />
               </div>
+              <button
+                type="submit"
+                className="mt-4 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-200"
+              >
+                Update
+              </button>
+            </form>
+
+            <h2 className="mt-16 text-3xl font-semibold text-start mb-4">Carousel</h2>
+            <form onSubmit={handleSubmit2}>
+              <div className="border-2 border-dashed border-gray-300 p-4 rounded-lg text-center">
+                <input
+                  type="file"
+                  onChange={handleFileChange2}
+                  className=""
+                  id="fileInput"
+                  name="file"
+                />
+              </div>
+              <button
+                type="submit"
+                className="mt-4 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-200 mb-5"
+              >
+                Upload
+              </button>
+            </form>
+            <div className="flex justify-evently m-auto">
+              {
+                file2 && file2.map((v, i) => {
+                  return (
+                    <div className="grid grid-cols-1 justify-items-center" key={i}>
+                      <Image className="mx-6 py-5" alt="foto" src={process.env.NEXT_PUBLIC_API_FILE_URL + v} width={300} height={300} />
+                      <button className="w-20 m-auto w-[80%]" onClick={(e)=>onDelete(i)}>
+                        <p className="text-sm text-center m-auto text-white bg-koreaRed p-2 rounded-2xl">Delete</p>
+                      </button>
+                    </div>
+                  )
+                })
+              }
+            </div>
+
           </div>
+        </div>
       </div>
-      
+
     </div>
   );
 }
