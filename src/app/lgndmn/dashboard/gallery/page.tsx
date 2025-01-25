@@ -4,11 +4,11 @@ import Sidebar from "@/components/Sidebar";
 import Editor from "react-simple-wysiwyg";
 import AdminCardFacilities from "@/components/card/AdminCardFacilities";
 import axios from "axios";
+import Image from "next/image";
 
 export default function FacilitiesAdmin() {
-  const [data, setData] = useState([])
-  const [form, setForm] = useState({ judul: "",gambar: "",deskripsi:"" })
-  const [content, setContent] = useState("");
+  const [data, setData] = useState([{ gambar: "", deskripsi: "" }])
+  const [form, setForm] = useState({ gambar: "", deskripsi: "" })
   const [file, setFile] = useState("");
 
   const handleChange = (e: any) => {
@@ -19,13 +19,20 @@ export default function FacilitiesAdmin() {
     }));
   };
 
-  const handleContent = (e: any) => {
-    setContent(e.target.value);
-  };
-
   const handleFileChange = (e: any) => {
     setFile(e.target.files[0]);
   };
+
+  const handleDelete = async (id:any)=>{
+    try{
+      const message = await axios.delete(process.env.NEXT_PUBLIC_API_URL+"/api/gallery/"+id)
+      if(message.data=="success"){
+        window.location.reload()
+      }
+    }catch(err:any){
+      console.log(err)
+    }
+  }
 
 
   const handleSubmit = async (e: any) => {
@@ -46,11 +53,9 @@ export default function FacilitiesAdmin() {
         },
       })
       if (getData.data) {
-        const message = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/facility/", {
+        const message = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/gallery/", {
           gambar: getData.data,
-          judul: form.judul,
-          deskripsi: form.deskripsi,
-          content:content
+          deskripsi: form.deskripsi
         })
         if (message.data == "success") {
           window.location.reload()
@@ -65,7 +70,7 @@ export default function FacilitiesAdmin() {
   useEffect(() => {
     async function getData() {
       try {
-        const Data = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/facility/")
+        const Data = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/gallery/")
         if (Data.data) {
           setData(Data.data)
         }
@@ -91,17 +96,6 @@ export default function FacilitiesAdmin() {
             <form onSubmit={handleSubmit}>
               <h2 className="text-3xl pt-2 font-semibold text-start mb-4">Facility</h2>
               <label className="block text-gray-700 font-medium mb-2 text-xl mt-3">
-                Judul
-              </label>
-              <input
-                type="text"
-                placeholder="Masukkan nama..."
-                className="mt-2 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                name="judul"
-                onChange={handleChange}
-                value={form.judul}
-              />
-               <label className="block text-gray-700 font-medium mb-2 text-xl mt-3">
                 Deskripsi
               </label>
               <input
@@ -112,10 +106,6 @@ export default function FacilitiesAdmin() {
                 onChange={handleChange}
                 value={form.deskripsi}
               />
-              <label className="block text-gray-700 font-medium mb-2 text-xl mt-3">
-                Content
-              </label>
-              <Editor value={content} onChange={handleContent} />
               <label className="block text-gray-700 font-medium mb-2 text-xl mt-3">
                 Gambar
               </label>
@@ -139,15 +129,20 @@ export default function FacilitiesAdmin() {
             <div>
               <h3 className="text-2xl font-bold text-center mt-14 mb-4">List Facility</h3>
             </div>
-            <div>
+            <div className="grid grid-cols-2 justify-items-center m-auto align-items-center items-center">
               {
-                data&&data.map((v:any,i:any)=>{
-                  return(
-                    <AdminCardFacilities key={i} judul={v.judul} gambar={v.gambar} deskripsi={v.deskripsi} content={v.content} _id={v._id} />
+                data && data.map((v:any, i:any) => {
+                  return (
+                    <div className="grid grid-cols-1  justify-items-center w-[450px] mx-4" key={i}>
+                      <Image className="mx-6 py-5" alt="foto" src={process.env.NEXT_PUBLIC_API_FILE_URL + v.gambar} width={300} height={300} />
+                      <p className="text-xs mx-3 px-3">{v.deskripsi}</p>
+                      <button className="w-20 m-auto w-[80%] mt-3" onClick={(e) => handleDelete(v._id)}>
+                        <p className="text-sm text-center m-auto text-white bg-koreaRed p-2 rounded-2xl">Delete</p>
+                      </button>
+                    </div>
                   )
                 })
               }
-              
             </div>
 
 

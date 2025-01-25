@@ -4,10 +4,11 @@ import Sidebar from "@/components/Sidebar";
 import Editor from "react-simple-wysiwyg";
 import AdminCardFacilities from "@/components/card/AdminCardFacilities";
 import axios from "axios";
+import AdminCardToko from "@/components/card/AdminCardToko";
 
-export default function FacilitiesAdmin() {
+export default function ServicesAdmin() {
   const [data, setData] = useState([])
-  const [form, setForm] = useState({ judul: "",gambar: "",deskripsi:"" })
+  const [form, setForm] = useState({ judul: "",gambar: "",deskripsi:"",harga:0,link_shopee:"",link_tokped:"",content:"" })
   const [content, setContent] = useState("");
   const [file, setFile] = useState("");
 
@@ -46,9 +47,12 @@ export default function FacilitiesAdmin() {
         },
       })
       if (getData.data) {
-        const message = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/facility/", {
+        const message = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/toko/", {
           gambar: getData.data,
           judul: form.judul,
+          harga: form.harga,
+          link_shopee: form.link_shopee,
+          link_tokped: form.link_tokped,
           deskripsi: form.deskripsi,
           content:content
         })
@@ -65,9 +69,10 @@ export default function FacilitiesAdmin() {
   useEffect(() => {
     async function getData() {
       try {
-        const Data = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/facility/")
+        const Data = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/toko/")
         if (Data.data) {
           setData(Data.data)
+          setContent(Data.data.content)
         }
 
       } catch (err: any) {
@@ -83,15 +88,14 @@ export default function FacilitiesAdmin() {
       <div className="w-64"></div>
       <div className="w-full">
         <div className="p-6 mt-8 text-center">
-          <h1 className="text-3xl font-bold text-koreaBlue">FACILITIES CONTENT</h1>
+          <h1 className="text-3xl font-bold text-koreaBlue">Service Toko</h1>
         </div>
         <div className="m-auto w-full">
 
           <div className=" m-auto bg-white p-6 rounded-lg shadow-lg w-[80%] border-2">
             <form onSubmit={handleSubmit}>
-              <h2 className="text-3xl pt-2 font-semibold text-start mb-4">Facility</h2>
               <label className="block text-gray-700 font-medium mb-2 text-xl mt-3">
-                Judul
+                Nama
               </label>
               <input
                 type="text"
@@ -100,6 +104,39 @@ export default function FacilitiesAdmin() {
                 name="judul"
                 onChange={handleChange}
                 value={form.judul}
+              />
+              <label className="block text-gray-700 font-medium mb-2 text-xl mt-3">
+                Harga
+              </label>
+              <input
+                type="number"
+                placeholder="Masukkan nama..."
+                className="mt-2 w-[30%] px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                name="harga"
+                onChange={handleChange}
+                value={form.harga}
+              />
+              <label className="block text-gray-700 font-medium mb-2 text-xl mt-3">
+                Link Shopee
+              </label>
+              <input
+                type="text"
+                placeholder="Masukkan nama..."
+                className="mt-2 w-[30%] px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                name="link_shopee"
+                onChange={handleChange}
+                value={form.link_shopee}
+              />
+              <label className="block text-gray-700 font-medium mb-2 text-xl mt-3">
+                Link Tokped
+              </label>
+              <input
+                type="text"
+                placeholder="Masukkan nama..."
+                className="mt-2 w-[30%] px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                name="link_tokped"
+                onChange={handleChange}
+                value={form.link_tokped}
               />
                <label className="block text-gray-700 font-medium mb-2 text-xl mt-3">
                 Deskripsi
@@ -137,17 +174,16 @@ export default function FacilitiesAdmin() {
               </button>
             </form>
             <div>
-              <h3 className="text-2xl font-bold text-center mt-14 mb-4">List Facility</h3>
+              <h3 className="text-2xl font-bold text-center mt-14 mb-4">List</h3>
             </div>
             <div>
               {
-                data&&data.map((v:any,i:any)=>{
+                data.map((v:any,i:any)=>{
                   return(
-                    <AdminCardFacilities key={i} judul={v.judul} gambar={v.gambar} deskripsi={v.deskripsi} content={v.content} _id={v._id} />
+                    <AdminCardToko key={i} judul={v.judul} deskripsi={v.deskripsi} id={v._id} gambar={v.gambar} harga={v.harga}/>
                   )
                 })
               }
-              
             </div>
 
 

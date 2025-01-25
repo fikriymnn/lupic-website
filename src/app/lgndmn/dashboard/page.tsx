@@ -5,11 +5,12 @@ import Image from "next/image";
 import axios from "axios";
 
 export default function Dashboard() {
-  const [fullData,setFullData] = useState(null)
-  const [fileHero, setFileHero] = useState("");
+  const [id,setId] = useState(null)
   const [file, setFile] = useState("");
-  const [fileCarousel, setFileCarousel] = useState(null);
   const [file2, setFile2] = useState([]);
+  const [fileHero, setFileHero] = useState("");
+  const [fileCarousel, setFileCarousel] = useState(null);
+  
 
   const handleFileChange = (e: any) => {
     e.preventDefault();
@@ -23,7 +24,7 @@ export default function Dashboard() {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if (!file) {
+    if (!fileHero) {
       alert("Pilih file terlebih dahulu!");
       return;
     }
@@ -38,7 +39,7 @@ export default function Dashboard() {
       })
 
       if (data?.data) {
-        const message = await axios.put(process.env.NEXT_PUBLIC_API_URL + "/api/home/"+fullData, {
+        const message = await axios.put(process.env.NEXT_PUBLIC_API_URL + "/api/home/"+id, {
           hero_section: data?.data,
           carousel: file2
         },{})
@@ -68,7 +69,7 @@ export default function Dashboard() {
       })
       if (data.data) {
         let newData = [...file2, data.data]
-        const message = await axios.put(process.env.NEXT_PUBLIC_API_URL + "/api/home/"+fullData, {
+        const message = await axios.put(process.env.NEXT_PUBLIC_API_URL + "/api/home/"+id, {
           hero_section: file,
           carousel: newData
         })
@@ -85,7 +86,7 @@ export default function Dashboard() {
     try{
       let newData = [...file2]
       newData.splice(i,1)
-      const message = await axios.put(process.env.NEXT_PUBLIC_API_URL + "/api/home/"+fullData, {
+      const message = await axios.put(process.env.NEXT_PUBLIC_API_URL + "/api/home/"+id, {
         hero_section: file,
         carousel: newData
       })
@@ -105,7 +106,7 @@ export default function Dashboard() {
         setFile(data.data.hero_section)
         setFile2(data.data.carousel)
         console.log(data)
-          setFullData(data.data._id)
+          setId(data.data._id)
 
       } catch (err: any) {
         console.log(err.message)
@@ -164,11 +165,11 @@ export default function Dashboard() {
                 Upload
               </button>
             </form>
-            <div className="flex justify-evently m-auto">
+            <div className="grid grid-cols-2 justify-items-center m-auto align-items-center items-center">
               {
                 file2 && file2.map((v, i) => {
                   return (
-                    <div className="grid grid-cols-1 justify-items-center" key={i}>
+                    <div className="grid grid-cols-1 justify-items-center w-[400px]" key={i}>
                       <Image className="mx-6 py-5" alt="foto" src={process.env.NEXT_PUBLIC_API_FILE_URL + v} width={300} height={300} />
                       <button className="w-20 m-auto w-[80%]" onClick={(e)=>onDelete(i)}>
                         <p className="text-sm text-center m-auto text-white bg-koreaRed p-2 rounded-2xl">Delete</p>

@@ -9,17 +9,16 @@ export default function AddNews() {
     const [file, setFile] = useState({ name: "" });
     const [html, setHtml] = useState('');
     const [data, setData] = useState({
-        title: "",
-        deskripsi: "",
+        judul:"", deskripsi:"", gambar:"", sub_content:[], tanggal:"", author:"",content:""
     })
-    const [content, setContent] = useState([{
+    const [subContent, setSubContent] = useState([{
         sub_judul: "",
         deskripsi: "",
         gambar: [""]
     }])
 
-    function addContent() {
-        setContent([...content, {
+    function addSubContent() {
+        setSubContent([...subContent, {
             sub_judul: "",
             deskripsi: "",
             gambar: [""]
@@ -27,9 +26,9 @@ export default function AddNews() {
     }
 
     function addGambar(i: any) {
-        let newContent = [...content]
+        let newContent = [...subContent]
         newContent[i].gambar = [...newContent[i].gambar, ""]
-        setContent([...newContent])
+        setSubContent([...newContent])
     }
 
     function onChange(e: any) {
@@ -106,7 +105,7 @@ export default function AddNews() {
 
                             <div className="mt-8 mb-10">
                                 {
-                                    content&&content.map((e: any, i: any) => {
+                                    subContent&&subContent.map((e: any, i: any) => {
                                         return (
                                             <div key={i} className="w-[85%] m-auto">
                                                 <label className="block text-gray-700 font-medium mb-2 text-xl mt-3">
@@ -127,7 +126,7 @@ export default function AddNews() {
                                                     Gambar
                                                 </label>
                                                 {
-                                                    content[i].gambar&&content[i].gambar.map((v, a) => {
+                                                    subContent[i].gambar&&subContent[i].gambar.map((v, a) => {
                                                         return (
                                                             <div key={a} className="border-2 border-dashed border-gray-300 p-4 rounded-lg text-center">
 
@@ -169,7 +168,7 @@ export default function AddNews() {
                                 <button
                                     onClick={(e) => {
                                         e.preventDefault()
-                                        addContent()
+                                        addSubContent()
                                     }}
                                     className="mt-4 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-200"
                                 >

@@ -1,13 +1,31 @@
 "use client"
 import CustomFooter from "@/components/CustomFooter"
 import Navbar from "@/components/Navbar"
+import axios from "axios"
 import Image from "next/image"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 export default function Aboutus() {
     const [active, setActive] = useState(true)
-  
     const [active3, setActive3] = useState(true)
+    const [data,setData] = useState({gambar:"",pesan:"",deskripsi:"",nama:""})
+
+
+
+    useEffect(()=>{
+        async function getData(){
+            try{
+                const Data = await axios.get(process.env.NEXT_PUBLIC_API_URL+"/api/aboutus");
+                if(Data.data){
+                    setData(Data.data)
+                }
+            }catch(err:any){
+                console.log(err.message)
+            }
+        }
+        getData()
+    },[])
+
     return (
         <>
             <Navbar />
@@ -23,13 +41,12 @@ export default function Aboutus() {
                     <div className=" flex justify-center relative w-[95%] mt-24">
                         <div className="w-80 relative h-40 bg-koreaBlue z-20 left-[85px] top-[200px] rounded-bl-3xl">
                         </div>
-                        <div className="w-[1500px] h-[300px] relative bg-gradient-to-b from-koreaRed to-black z-30 rounded-2xl flex justify-between items-center text-white">
-                            <Image className="w-[300px] h-[250px] md:ml-10 rounded-lg" src={"/images/HeroAboutUs.jpg"} alt="foto" width={500} height={500} />
+                        <div className="w-[1500px] h-[300px] relative bg-gradient-to-b from-koreaRed to-black z-30 rounded-2xl flex justify-start items-center text-white">
+                            <Image className="w-[300px] h-[250px] md:ml-10 rounded-lg" src={process.env.NEXT_PUBLIC_API_FILE_URL+data.gambar} alt="foto" width={500} height={500} />
                             <div className="px-5">
-                                <p className=" text-justify w-[95%]">I am pleased to welcome you as the Director of the LUPIC program. It is with great excitement that I announce the launch of our new website, serving as a platform for collaboration and communication between Sogang University and Indonesian universities</p>
-                                <h3 className="font-bold md:text-xl text-base mt-5 mb-2">Prof. Wonkoo Lee</h3>
-                                <p className="text-xs">Department of Chemistry, Sogang University
-                                    Seoul, Korea</p>
+                                <p className=" text-justify w-[95%]">{data.pesan}</p>
+                                <h3 className="font-bold md:text-xl text-base mt-5 mb-2">{data.nama}</h3>
+                                <p className="text-xs">{data.deskripsi}</p>
                             </div>
                         </div>
                         <div className="w-80 h-40 relative bg-koreaBlue z-10 right-[85px] bottom-[50px] rounded-tr-3xl">

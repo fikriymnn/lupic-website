@@ -2,17 +2,25 @@
 import { useEffect, useState } from "react"
 import Image from "next/image"
 import TableActivities2 from "../../table/TableActivities2"
+import axios from "axios"
 
 export default function InformationDropdown1() {
     const [active, setActive] = useState(true)
-    const [data,setData] = useState([])
+    const [data, setData] = useState<any>([])
 
-    useEffect(()=>{
-        async function getData(){
-
+    useEffect(() => {
+        async function getData() {
+            try{
+                const Data = await axios.get(process.env.NEXT_PUBLIC_API_URL+"/api/activity_goals")
+                if(Data.data){
+                    setData(Data.data)
+                }
+            }catch(err:any){
+                console.log(err.message)
+            }
         }
         getData()
-    },[])
+    }, [])
 
     return (
         <>
@@ -28,18 +36,11 @@ export default function InformationDropdown1() {
                 </div>
                 <div className={`w-[85%] m-auto  ${active ? 'hidden' : 'block'}`}>
                     <div className="mt-8">
-                     <TableActivities2 point={1} sub_point={1} title_sub_point={"1-1 asdasd"} data={[
-                        {point:1,sub_point: 1,text: "apwoepaowepawe",year_1:true,year_2:true,year_3:true},
-                        {point:1,sub_point: 2,text: "pwnrdnjsfyrhds",year_1:false,year_2:true,year_3:false}
-                     ]}/>
-                     <TableActivities2 point={1} sub_point={2} title_sub_point={"1-1 asdasd"} data={[
-                        {point:1,sub_point: 1,text: "apwoepaowepawe",year_1:true,year_2:true,year_3:true},
-                        {point:1,sub_point: 2,text: "pwnrdnjsfyrhds",year_1:false,year_2:true,year_3:false}
-                     ]}/>
-                    {/* //  <TableActivities2 data 1.2/>
-                    //  <TableActivities2 data 1.3/>
-                    //  <TableActivities2 data 1.4/> */}
-                   </div>
+                        <TableActivities2 point={1} sub_point={1} title_sub_point={"1-1. Enhancement of Education Capability"} data={data.data} />
+                        <TableActivities2 point={1} sub_point={2} title_sub_point={"1-2. Enhance-ment of Research Capability"} data={data.data} />
+                         <TableActivities2 point={1} sub_point={3} title_sub_point={"1-3. Expansion of the Base and Related Activities"} data={data.data} />
+                         <TableActivities2 point={1} sub_point={4} title_sub_point={"1-4. Global Capability Building and Expansion of Model"} data={data.data} />
+                    </div>
                 </div>
             </div>
         </>

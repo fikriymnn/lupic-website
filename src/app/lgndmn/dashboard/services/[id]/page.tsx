@@ -9,7 +9,7 @@ import { use } from "react";
 
 export default  function FacilitiesAdmin({params}: { params: Promise<{ id: string }> }) {
   const {id} = use(params)
-  const [form, setForm] = useState({ judul: "",gambar: "",deskripsi:"" })
+  const [form, setForm] = useState({ judul: "", content: "", gambar: "",harga:"",deskripsi:"",link_shopee:"",link_tokped:"",_id:""  })
   const [content, setContent] = useState("");
   const [file, setFile] = useState("");
 
@@ -44,21 +44,27 @@ export default  function FacilitiesAdmin({params}: { params: Promise<{ id: strin
           },
         })
         if (getData.data) {
-          const message = await axios.put(process.env.NEXT_PUBLIC_API_URL + "/api/facility/"+id, {
+          const message = await axios.put(process.env.NEXT_PUBLIC_API_URL + "/api/toko/"+id, {
             gambar: getData.data,
             judul: form.judul,
             deskripsi: form.deskripsi,
-            content:content
+            harga: form.harga,
+            link_tokped: form.link_tokped,
+            link_shopee: form.link_shopee,
+            content:content,
           })
           if (message.data == "success") {
             window.location.reload()
           }
         }
       }else{
-          const message = await axios.put(process.env.NEXT_PUBLIC_API_URL + "/api/facility/"+id, {
+          const message = await axios.put(process.env.NEXT_PUBLIC_API_URL + "/api/toko/"+id, {
             gambar: form.gambar,
             judul: form.judul,
             deskripsi: form.deskripsi,
+            harga: form.harga,
+            link_tokped: form.link_tokped,
+            link_shopee: form.link_shopee,
             content:content
           })
           if (message.data == "success") {
@@ -76,7 +82,7 @@ export default  function FacilitiesAdmin({params}: { params: Promise<{ id: strin
   useEffect(() => {
     async function getData() {
       try {
-        const Data = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/facility/"+id)
+        const Data = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/toko/"+id)
         if (Data.data) {
           setForm(Data.data)
           setContent(Data.data.content)
@@ -95,15 +101,14 @@ export default  function FacilitiesAdmin({params}: { params: Promise<{ id: strin
       <div className="w-64"></div>
       <div className="w-full mb-16">
         <div className="p-6 mt-8 text-center">
-          <h1 className="text-3xl font-bold text-koreaBlue">EDIT FACILITY</h1>
+          <h1 className="text-3xl font-bold text-koreaBlue">EDIT SERVICE TOKO</h1>
         </div>
         <div className="m-auto w-full">
 
           <div className=" m-auto bg-white p-6 rounded-lg shadow-lg w-[80%]">
             <form onSubmit={handleSubmit}>
-              <h2 className="text-3xl pt-2 font-semibold text-start mb-4">Facility</h2>
-              <label className="block text-gray-700 font-medium mb-2 text-xl mt-3">
-                Judul
+            <label className="block text-gray-700 font-medium mb-2 text-xl mt-3">
+                Nama
               </label>
               <input
                 type="text"
@@ -114,7 +119,40 @@ export default  function FacilitiesAdmin({params}: { params: Promise<{ id: strin
                 value={form.judul}
               />
               <label className="block text-gray-700 font-medium mb-2 text-xl mt-3">
-                Deksripsi
+                Harga
+              </label>
+              <input
+                type="number"
+                placeholder="Masukkan nama..."
+                className="mt-2 w-[30%] px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                name="harga"
+                onChange={handleChange}
+                value={form.harga}
+              />
+              <label className="block text-gray-700 font-medium mb-2 text-xl mt-3">
+                Link Shopee
+              </label>
+              <input
+                type="text"
+                placeholder="Masukkan nama..."
+                className="mt-2 w-[30%] px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                name="link_shopee"
+                onChange={handleChange}
+                value={form.link_shopee}
+              />
+              <label className="block text-gray-700 font-medium mb-2 text-xl mt-3">
+                Link Tokped
+              </label>
+              <input
+                type="text"
+                placeholder="Masukkan nama..."
+                className="mt-2 w-[30%] px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                name="link_tokped"
+                onChange={handleChange}
+                value={form.link_tokped}
+              />
+               <label className="block text-gray-700 font-medium mb-2 text-xl mt-3">
+                Deskripsi
               </label>
               <input
                 type="text"
@@ -132,7 +170,6 @@ export default  function FacilitiesAdmin({params}: { params: Promise<{ id: strin
                 Gambar
               </label>
               <div className="border-2 border-dashed border-gray-300 p-4 rounded-lg text-center">
-                <Image alt="foto" src={process.env.NEXT_PUBLIC_API_FILE_URL +form.gambar} width={500} height={500} className="m-auto pb-5"/>
                 <input
                   type="file"
                   onChange={handleFileChange}
@@ -141,6 +178,7 @@ export default  function FacilitiesAdmin({params}: { params: Promise<{ id: strin
                   name="file"
                 />
               </div>
+              <Image alt="foto" src={process.env.NEXT_PUBLIC_API_FILE_URL+form.gambar} width={500} height={500} className="m-auto my-6" />
 
               <button
                 type="submit"

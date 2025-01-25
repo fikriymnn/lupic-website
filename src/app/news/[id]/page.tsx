@@ -20,6 +20,9 @@ export default function detailNews({ params }: any) {
                 <p className="mt-8 m-auto md:text-xl text-lg w-[80%] text-justify">
                     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Itaque eius eaque, rem molestias hic at! Qui a voluptatibus dolorem dolorum veniam optio suscipit totam, earum soluta? Ad a optio similique. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Itaque eius eaque, rem molestias hic at! Qui a voluptatibus dolorem dolorum veniam optio suscipit totam, earum soluta? Ad a optio similique.
                 </p>
+                <p className="mt-6 m-auto md:text-xl text-lg w-[80%] text-justify">
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Itaque eius eaque, rem molestias hic at! Qui a voluptatibus dolorem dolorum veniam optio suscipit totam, earum soluta? Ad a optio similique. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Itaque eius eaque, rem molestias hic at! Qui a voluptatibus dolorem dolorum veniam optio suscipit totam, earum soluta? Ad a optio similique.
+                </p>
                 {/* looping */}
                 <div className="mb-16">
                     <div className="mt-8 m-auto text-xl w-[80%] text-justify">

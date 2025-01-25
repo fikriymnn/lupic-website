@@ -31,25 +31,6 @@ export default function Activities() {
                 <div className="mt-5 m-auto md:w-[80%] w-[90%] pb-16">
                     <div className="md:mt-10 mt-7">
                         <InformationDropdown1 />
-                        {/* list */}
-                        {/* <div>
-                            <div className="flex justify-between items-center w-full h-20 m-auto bg-koreaBlue rounded-[50px] hover:cursor-pointer" onClick={(e) => { setActive2(!active) }}>
-                                <div className="bg-gradient-to-b from-koreaBlue to-black rounded-full md:h-24 md:w-24 h-20 w-20 flex items-center">
-                                    <p className="md:text-4xl text-xl font-bold text-white m-auto text-center">01</p>
-                                </div>
-                                <h3 className="md:text-xl w-[50%] text-xs font-bold text-white text-center">National University's Chemistry Education and Capacity Building Program</h3>
-                                <button className="md:mr-10 mr-5" onClick={(e) => { setActive2(!active) }}>
-                                    <Image className={active ? "" : "rotate-180"} src={"/images/logoAbout/white-up.svg"} width={30} height={30} alt="foto" />
-                                </button>
-                            </div>
-                            <div className={`w-[85%] m-auto  ${active2 ? 'hidden' : 'block'}`}>
-
-                                <div className="mt-8">
-                                    list 
-                                    <TableActivities2 />
-                                </div>
-                            </div>
-                        </div> */}
                     </div>
                 </div>
                 <div className="mb-20">

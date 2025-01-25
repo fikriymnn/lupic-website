@@ -43,6 +43,18 @@ const Sidebar = () => {
               <span>News</span>
             </a>
           </li>
+          <li className="mb-2">
+            <a href="/lgndmn/dashboard/gallery" className={`flex items-center space-x-2 p-2 hover:bg-koreaBlueMuda rounded ${adminPath[3]=="gallery"?"bg-koreaBlueMuda":""}`}>
+              <FaCog />
+              <span>Gallery</span>
+            </a>
+          </li>
+          <li className="mb-2">
+            <a href="/lgndmn/dashboard/services" className={`flex items-center space-x-2 p-2 hover:bg-koreaBlueMuda rounded ${adminPath[3]=="services"?"bg-koreaBlueMuda":""}`}>
+              <FaCog />
+              <span>Service Toko</span>
+            </a>
+          </li>
          
         </ul>
       </nav>

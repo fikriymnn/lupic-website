@@ -1,10 +1,6 @@
-"use client"
-import { useState } from 'react'
 import Navbar from '@/components/Navbar'
 import CustomFooter from '@/components/CustomFooter'
 import CarouselGallery from '@/components/carousel/CarouselGallery'
-
-
 
 
 export default function Gallery() {
