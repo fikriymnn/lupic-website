@@ -4,26 +4,26 @@ const arry = {
 
     }
     "2-Days wokshop (Venue: Bandung, June 2023)"
-export default function TableDataActivities() {
+export default function TableDataActivities({point,sub_point,sub_sub_point,text,upi,unnes,undiksha}:any) {
     return (
-        <tbody className="md:text-base text-xs">
-            <tr className="">
+       
+            <tr className="w-full">
                 <td className="py-3 md:px-3 px-2 border-2">
-                    1.1.1
+                    {point}.{sub_point}.{sub_sub_point}
                 </td>
                 <td className="py-3 md:px-3 px-2 border-2">
-                Holding chemistry education expert consulting meetings (once a year)
+                {text}
                 </td>
                 <td className="py-3 md:px-3 px-2 border-2">
-                2-Days wokshop (Venue: Bandung, June 2023)
+                {upi}
                 </td>
                 <td className="py-3 md:px-3 px-2 border-2">
-                2-Days wokshop (Venue: Bandung, June 2023)
+                {unnes}
                 </td>
                 <td className="py-3 md:px-3 px-2 border-2">
-                2-Days wokshop (Venue: Bandung, June 2023)
+                {undiksha}
                 </td>
             </tr>
-        </tbody>
+    
     )
 }

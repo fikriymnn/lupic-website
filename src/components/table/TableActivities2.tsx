@@ -3,15 +3,27 @@ import { useEffect, useState } from "react";
 
 export default function TableActivities2({ point, sub_point, data, title_sub_point }: any) {
     const [currentYear, setCurrentYear] = useState(0)
+    const [rawData,setRawData] = useState([])
     const [filterData, setFilterData] = useState([{}])
 
     useEffect(() => {
-        data.forEach((v: any) => {
-            if (v.point == 1, v.sub_point == sub_point) {
-                setFilterData([...filterData, v])
-            }
-        })
+
+
+        setRawData(data)
+        console.log(rawData)
     }, [])
+    // useEffect(() => {
+
+
+        
+    //     if(data.length>0){
+    //         setRawData(data)
+    //         if(rawData){
+    //             console.log(rawData)
+    //         }
+    //     }
+    //     // console.log(data)
+    // }, [data])
 
     return (
         <>
@@ -54,18 +66,19 @@ export default function TableActivities2({ point, sub_point, data, title_sub_poi
                 </div>
                 <div className="md:flex w-full items-center justify-between">
                     <div className="w-full">
-                        <div className="w-full shadow p-2 ">
+                        <div className="w-full shadow ">
                             {
-                                filterData && filterData.map((v: any, i: any) => {
-                                    if  ((currentYear == 1 && v.year_1) || (currentYear == 1 && v.year_2) || (currentYear == 1 && v.year_3) || (currentYear == 1 && v.year_4) || (currentYear == 1 && v.year_5) || (currentYear == 1 && v.year_6)) {
+                                data && data.map((v: any, i: any) => {
+                                    if(v.point==point&&v.sub_point==sub_point){
+                                    if  ((currentYear == 1 && (v.year_1.upi || v.year_1.unnes || v.year_1.undiksha)) || (currentYear == 2 && (v.year_2.upi || v.year_2.unnes || v.year_2.undiksha)) || (currentYear == 3 && (v.year_3.upi || v.year_3.unnes || v.year_3.undiksha)) || (currentYear == 4 && (v.year_4.upi || v.year_4.unnes || v.year_4.undiksha)) || (currentYear == 5 && (v.year_5.upi || v.year_5.unnes || v.year_5.undiksha)) || (currentYear == 6 && (v.year_6.upi || v.year_6.unnes || v.year_6.undiksha))) {
                                         return (
-                                            <p key={i} className="md:text-lg text-xs bg-gray-200 p-1">{v.text}</p>
+                                            <p key={i} className="md:text-lg text-xs bg-gray-200 py-4 px-5 border">{v.text}</p>
                                         )
                                     } else{
                                         return (
-                                            <p key={i} className="md:text-lg text-xs p-1">{v.text}</p>
+                                            <p key={i} className="md:text-lg text-xs py-4 px-5 border">{v.text}</p>
                                         )
-                                    }
+                                    }}
                                 })
                             }
                         </div>

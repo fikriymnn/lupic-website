@@ -3,9 +3,10 @@ import Navbar from "@/components/Navbar"
 import CustomFooter from "@/components/CustomFooter"
 import Image from "next/image"
 import CardNews from "@/components/card/CardNews";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ResponsivePagination from 'react-responsive-pagination';
 import 'react-responsive-pagination/themes/classic.css';
+import axios from "axios";
 
 
 
@@ -20,6 +21,17 @@ export default function News() {
         }
         return text;
     };
+
+    useEffect(()=>{
+        async function getData(){
+            try{
+                // const Data = await axios
+            }catch(err:any){
+                console.log(err.message)
+            }
+        }
+        getData()
+    },[])
     return (
         <>
             <Navbar />

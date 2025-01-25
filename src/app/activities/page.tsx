@@ -1,13 +1,17 @@
 "use client"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Navbar from "@/components/Navbar"
 import CustomFooter from "@/components/CustomFooter"
 import CarouselActivities from "@/components/carousel/CarouselActivities"
 import Image from "next/image"
 import InformationDropdown from "@/components/dropdown/InformationDropdown"
 import TableDataActivities from "@/components/table/TableDataActivities"
-import TableActivities2 from "@/components/table/TableActivities2"
+// import TableActivities2 from "@/components/table/TableActivities2"
 import InformationDropdown1 from "@/components/dropdown/information/InformationDropdown1"
+import InformationDropdown2 from "@/components/dropdown/information/InformationDropdown2"
+import InformationDropdown3 from "@/components/dropdown/information/InformationDropdown3"
+import InformationDropdown4 from "@/components/dropdown/information/InformationDropdown4"
+import axios from "axios"
 
 export default function Activities() {
     const [active, setActive] = useState(true)
@@ -16,6 +20,21 @@ export default function Activities() {
     const [active4, setActive4] = useState(true)
     const [active5, setActive5] = useState(true)
     const [active6, setActive6] = useState(true)
+    const [data, setData] = useState([])
+
+    useEffect(() => {
+        async function getData() {
+            try {
+                const Data = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/activity_goals")
+                if (Data.data == "success") {
+                    setData(Data.data)
+                }
+            } catch (err: any) {
+                console.log(err.message)
+            }
+        }
+        getData()
+    }, [])
 
     return (
         <>
@@ -30,12 +49,24 @@ export default function Activities() {
             <div>
                 <div className="mt-5 m-auto md:w-[80%] w-[90%] pb-16">
                     <div className="md:mt-10 mt-7">
-                        <InformationDropdown1 />
+                        <div className="my-10">
+                            <InformationDropdown1 />
+                        </div>
+                        <div className="my-10">
+                            <InformationDropdown2 />
+                        </div>
+                        <div className="my-10">
+                            <InformationDropdown3 />
+                        </div>
+                        <div className="my-10">
+                            <InformationDropdown4 />
+                        </div>
+
                     </div>
                 </div>
-                <div className="mb-20">
+                <div className="mb-20 w-full">
                     <div className="w-[80%] m-auto ">
-                        <div>
+                        <div className="w-full">
                             <h3 className="md:mt-7 mt-2 text-koreaRed text-xl font-bold">First year</h3>
                             <div className="flex justify-between cursor-pointer" onClick={(e) => { setActive(!active) }}>
                                 <h1 className="md:text-3xl text-2xl mt-2 font-bold">Activities</h1>
@@ -46,31 +77,53 @@ export default function Activities() {
                             <div className="h-1 w-full mt-3 bg-koreaRed mb-2">
 
                             </div>
-                            <div className={active ? "hidden" : "block"}>
-                                <table className="w-full text-center align-center mt-5 md:block hidden">
+                            <div className={`${active ? "hidden" : "block"} w-full`}>
+                                <table className="w-full bg-green-200 text-center align-center mt-5 md:block hidden">
+
                                     <thead className="">
-                                        <tr className="text-lg bg-koreaBlueMuda rounded-xl">
-                                            <th className="py-4 w-[10%]">NO</th>
-                                            <th className="py-4 w-[30%]">GOALS</th>
-                                            <th className="py-4 w-[20%]">UPI</th>
-                                            <th className="py-4 w-[20%]">UNNES</th>
-                                            <th className="py-4 w-[20%]">UNDIKSHA</th>
+                                        <tr className="text-lg bg-koreaBlueMuda  ">
+                                            <th className="py-4 w-[100rem]">NO</th>
+                                            <th className="py-4 w-[100rem]">GOALS</th>
+                                            <th className="py-4 w-[100rem]">UPI</th>
+                                            <th className="py-4 w-[100rem]">UNNES</th>
+                                            <th className="py-4 w-[100rem]">UNDIKSHA</th>
                                         </tr>
                                     </thead>
-                                    <TableDataActivities />
+                                    <tbody className="md:text-base text-xs">
+                                        {
+                                            data && data.map((v: any, i: any) => {
+                                                if (v.year_1.upi || v.year_1.unnes || v.year_1.undiksha) {
+                                                    return (
+                                                        <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_1.upi || ""} unnes={v.year_1.unnes} undiksha={v.year_1.undiksha} />
+                                                    )
+                                                }
+                                            })
+                                        }
+
+                                    </tbody>
                                 </table>
-                                <div className="md:w-[80%] w-full overflow-x-auto md:hidden block rounded-xl">
-                                    <table className="w-[550px] text-center align-center mt-5 rounded-xl">
-                                        <thead className="rounded-xl">
-                                            <tr className="text-lg bg-koreaBlueMuda rounded-xl shadow-lg">
-                                                <th className="py-4 text-sm w-[10%]">NO</th>
-                                                <th className="py-4 text-sm w-[30%]">GOALS</th>
-                                                <th className="py-4 text-sm w-[20%]">UPI</th>
-                                                <th className="py-4 text-sm w-[20%]">UNNES</th>
-                                                <th className="py-4 text-sm w-[20%]">UNDIKSHA</th>
+                                <div className="md:w-[80%] w-full overflow-x-auto md:hidden block ">
+                                    <table className="w-[550px] text-center align-center mt-5 ">
+                                        <thead className="">
+                                            <tr className="text-lg bg-koreaBlueMuda  shadow-lg">
+                                                <th className="py-4 text-sm w-[100rem]">NO</th>
+                                                <th className="py-4 text-sm w-[100rem]">GOALS</th>
+                                                <th className="py-4 text-sm w-[100rem]">UPI</th>
+                                                <th className="py-4 text-sm w-[100rem]">UNNES</th>
+                                                <th className="py-4 text-sm w-[100rem]">UNDIKSHA</th>
                                             </tr>
                                         </thead>
-                                        <TableDataActivities />
+                                        <tbody className="md:text-base text-xs">
+                                            {
+                                                data && data.map((v: any, i: any) => {
+                                                    if (v.year_1.upi || v.year_1.unnes || v.year_1.undiksha) {
+                                                        return (
+                                                            <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_1.upi || ""} unnes={v.year_1.unnes} undiksha={v.year_1.undiksha} />
+                                                        )
+                                                    }
+                                                })
+                                            }
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -91,14 +144,25 @@ export default function Activities() {
                                 <table className="w-full text-center align-center mt-5 md:block hidden">
                                     <thead className="">
                                         <tr className="text-lg bg-koreaBlueMuda rounded-xl">
-                                            <th className="py-4 w-[10%]">NO</th>
-                                            <th className="py-4 w-[30%]">GOALS</th>
-                                            <th className="py-4 w-[20%]">UPI</th>
-                                            <th className="py-4 w-[20%]">UNNES</th>
-                                            <th className="py-4 w-[20%]">UNDIKSHA</th>
+                                            <th className="py-4 w-[100rem]">NO</th>
+                                            <th className="py-4 w-[100rem]">GOALS</th>
+                                            <th className="py-4 w-[100rem]">UPI</th>
+                                            <th className="py-4 w-[100rem]">UNNES</th>
+                                            <th className="py-4 w-[100rem]">UNDIKSHA</th>
                                         </tr>
                                     </thead>
-                                    <TableDataActivities />
+                                    <tbody className="md:text-base text-xs">
+                                        {
+                                            data && data.map((v: any, i: any) => {
+                                                if (v.year_2.upi || v.year_2.unnes || v.year_2.undiksha) {
+                                                    return (
+                                                        <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_2.upi || ""} unnes={v.year_2.unnes} undiksha={v.year_2.undiksha} />
+                                                    )
+                                                }
+                                            })
+                                        }
+
+                                    </tbody>
                                 </table>
                                 <div className="md:w-[80%] w-full overflow-x-auto md:hidden block rounded-xl">
                                     <table className="w-[550px] text-center align-center mt-5 rounded-xl">
@@ -111,7 +175,18 @@ export default function Activities() {
                                                 <th className="py-4 text-sm w-[20%]">UNDIKSHA</th>
                                             </tr>
                                         </thead>
-                                        <TableDataActivities />
+                                        <tbody className="md:text-base text-xs">
+                                            {
+                                                data && data.map((v: any, i: any) => {
+                                                    if (v.year_2.upi || v.year_2.unnes || v.year_2.undiksha) {
+                                                        return (
+                                                            <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_2.upi || ""} unnes={v.year_2.unnes} undiksha={v.year_2.undiksha} />
+                                                        )
+                                                    }
+                                                })
+                                            }
+
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -132,14 +207,25 @@ export default function Activities() {
                                 <table className="w-full text-center align-center mt-5 md:block hidden">
                                     <thead className="">
                                         <tr className="text-lg bg-koreaBlueMuda rounded-xl">
-                                            <th className="py-4 w-[10%]">NO</th>
-                                            <th className="py-4 w-[30%]">GOALS</th>
-                                            <th className="py-4 w-[20%]">UPI</th>
-                                            <th className="py-4 w-[20%]">UNNES</th>
-                                            <th className="py-4 w-[20%]">UNDIKSHA</th>
+                                            <th className="py-4 w-[100rem]">NO</th>
+                                            <th className="py-4 w-[100rem]">GOALS</th>
+                                            <th className="py-4 w-[100rem]">UPI</th>
+                                            <th className="py-4 w-[100rem]">UNNES</th>
+                                            <th className="py-4 w-[100rem]">UNDIKSHA</th>
                                         </tr>
                                     </thead>
-                                    <TableDataActivities />
+                                    <tbody className="md:text-base text-xs">
+                                        {
+                                            data && data.map((v: any, i: any) => {
+                                                if (v.year_3.upi || v.year_3.unnes || v.year_3.undiksha) {
+                                                    return (
+                                                        <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_3.upi || ""} unnes={v.year_3.unnes} undiksha={v.year_3.undiksha} />
+                                                    )
+                                                }
+                                            })
+                                        }
+
+                                    </tbody>
                                 </table>
                                 <div className="md:w-[80%] w-full overflow-x-auto md:hidden block rounded-xl">
                                     <table className="w-[550px] text-center align-center mt-5 rounded-xl">
@@ -152,7 +238,18 @@ export default function Activities() {
                                                 <th className="py-4 text-sm w-[20%]">UNDIKSHA</th>
                                             </tr>
                                         </thead>
-                                        <TableDataActivities />
+                                        <tbody className="md:text-base text-xs">
+                                            {
+                                                data && data.map((v: any, i: any) => {
+                                                    if (v.year_3.upi || v.year_3.unnes || v.year_3.undiksha) {
+                                                        return (
+                                                            <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_3.upi || ""} unnes={v.year_3.unnes} undiksha={v.year_3.undiksha} />
+                                                        )
+                                                    }
+                                                })
+                                            }
+
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -173,14 +270,25 @@ export default function Activities() {
                                 <table className="w-full text-center align-center mt-5 md:block hidden">
                                     <thead className="">
                                         <tr className="text-lg bg-koreaBlueMuda rounded-xl">
-                                            <th className="py-4 w-[10%]">NO</th>
-                                            <th className="py-4 w-[30%]">GOALS</th>
-                                            <th className="py-4 w-[20%]">UPI</th>
-                                            <th className="py-4 w-[20%]">UNNES</th>
-                                            <th className="py-4 w-[20%]">UNDIKSHA</th>
+                                            <th className="py-4 w-[100rem]">NO</th>
+                                            <th className="py-4 w-[100rem]">GOALS</th>
+                                            <th className="py-4 w-[100rem]">UPI</th>
+                                            <th className="py-4 w-[100rem]">UNNES</th>
+                                            <th className="py-4 w-[100rem]">UNDIKSHA</th>
                                         </tr>
                                     </thead>
-                                    <TableDataActivities />
+                                    <tbody className="md:text-base text-xs">
+                                        {
+                                            data && data.map((v: any, i: any) => {
+                                                if (v.year_4.upi || v.year_4.unnes || v.year_4.undiksha) {
+                                                    return (
+                                                        <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_4.upi || ""} unnes={v.year_4.unnes} undiksha={v.year_4.undiksha} />
+                                                    )
+                                                }
+                                            })
+                                        }
+
+                                    </tbody>
                                 </table>
                                 <div className="md:w-[80%] w-full overflow-x-auto md:hidden block rounded-xl">
                                     <table className="w-[550px] text-center align-center mt-5 rounded-xl">
@@ -193,7 +301,18 @@ export default function Activities() {
                                                 <th className="py-4 text-sm w-[20%]">UNDIKSHA</th>
                                             </tr>
                                         </thead>
-                                        <TableDataActivities />
+                                        <tbody className="md:text-base text-xs">
+                                            {
+                                                data && data.map((v: any, i: any) => {
+                                                    if (v.year_4.upi || v.year_4.unnes || v.year_4.undiksha) {
+                                                        return (
+                                                            <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_4.upi || ""} unnes={v.year_4.unnes} undiksha={v.year_4.undiksha} />
+                                                        )
+                                                    }
+                                                })
+                                            }
+
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -214,14 +333,25 @@ export default function Activities() {
                                 <table className="w-full text-center align-center mt-5 md:block hidden">
                                     <thead className="">
                                         <tr className="text-lg bg-koreaBlueMuda rounded-xl">
-                                            <th className="py-4 w-[10%]">NO</th>
-                                            <th className="py-4 w-[30%]">GOALS</th>
-                                            <th className="py-4 w-[20%]">UPI</th>
-                                            <th className="py-4 w-[20%]">UNNES</th>
-                                            <th className="py-4 w-[20%]">UNDIKSHA</th>
+                                            <th className="py-4 w-[100rem]">NO</th>
+                                            <th className="py-4 w-[100rem]">GOALS</th>
+                                            <th className="py-4 w-[100rem]">UPI</th>
+                                            <th className="py-4 w-[100rem]">UNNES</th>
+                                            <th className="py-4 w-[100rem]">UNDIKSHA</th>
                                         </tr>
                                     </thead>
-                                    <TableDataActivities />
+                                    <tbody className="md:text-base text-xs">
+                                        {
+                                            data && data.map((v: any, i: any) => {
+                                                if (v.year_5.upi || v.year_5.unnes || v.year_5.undiksha) {
+                                                    return (
+                                                        <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_5.upi || ""} unnes={v.year_5.unnes} undiksha={v.year_5.undiksha} />
+                                                    )
+                                                }
+                                            })
+                                        }
+
+                                    </tbody>
                                 </table>
                                 <div className="md:w-[80%] w-full overflow-x-auto md:hidden block rounded-xl">
                                     <table className="w-[550px] text-center align-center mt-5 rounded-xl">
@@ -234,7 +364,18 @@ export default function Activities() {
                                                 <th className="py-4 text-sm w-[20%]">UNDIKSHA</th>
                                             </tr>
                                         </thead>
-                                        <TableDataActivities />
+                                        <tbody className="md:text-base text-xs">
+                                            {
+                                                data && data.map((v: any, i: any) => {
+                                                    if (v.year_5.upi || v.year_5.unnes || v.year_5.undiksha) {
+                                                        return (
+                                                            <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_5.upi || ""} unnes={v.year_5.unnes} undiksha={v.year_5.undiksha} />
+                                                        )
+                                                    }
+                                                })
+                                            }
+
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -255,14 +396,25 @@ export default function Activities() {
                                 <table className="w-full text-center align-center mt-5 md:block hidden">
                                     <thead className="">
                                         <tr className="text-lg bg-koreaBlueMuda rounded-xl">
-                                            <th className="py-4 w-[10%]">NO</th>
-                                            <th className="py-4 w-[30%]">GOALS</th>
-                                            <th className="py-4 w-[20%]">UPI</th>
-                                            <th className="py-4 w-[20%]">UNNES</th>
-                                            <th className="py-4 w-[20%]">UNDIKSHA</th>
+                                            <th className="py-4 w-[100rem]">NO</th>
+                                            <th className="py-4 w-[100rem]">GOALS</th>
+                                            <th className="py-4 w-[100rem]">UPI</th>
+                                            <th className="py-4 w-[100rem]">UNNES</th>
+                                            <th className="py-4 w-[100rem]">UNDIKSHA</th>
                                         </tr>
                                     </thead>
-                                    <TableDataActivities />
+                                    <tbody className="md:text-base text-xs">
+                                        {
+                                            data && data.map((v: any, i: any) => {
+                                                if (v.year_6.upi || v.year_6.unnes || v.year_6.undiksha) {
+                                                    return (
+                                                        <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_6.upi || ""} unnes={v.year_6.unnes} undiksha={v.year_6.undiksha} />
+                                                    )
+                                                }
+                                            })
+                                        }
+
+                                    </tbody>
                                 </table>
                                 <div className="md:w-[80%] w-full overflow-x-auto md:hidden block rounded-xl">
                                     <table className="w-[550px] text-center align-center mt-5 rounded-xl">
@@ -275,7 +427,18 @@ export default function Activities() {
                                                 <th className="py-4 text-sm w-[20%]">UNDIKSHA</th>
                                             </tr>
                                         </thead>
-                                        <TableDataActivities />
+                                        <tbody className="md:text-base text-xs">
+                                            {
+                                                data && data.map((v: any, i: any) => {
+                                                    if (v.year_6.upi || v.year_6.unnes || v.year_6.undiksha) {
+                                                        return (
+                                                            <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_6.upi || ""} unnes={v.year_6.unnes} undiksha={v.year_6.undiksha} />
+                                                        )
+                                                    }
+                                                })
+                                            }
+
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
