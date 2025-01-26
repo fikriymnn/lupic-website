@@ -26,8 +26,9 @@ export default function Activities() {
         async function getData() {
             try {
                 const Data = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/activity_goals")
-                if (Data.data == "success") {
+                if (Data.data) {
                     setData(Data.data)
+
                 }
             } catch (err: any) {
                 console.log(err.message)
@@ -78,12 +79,12 @@ export default function Activities() {
 
                             </div>
                             <div className={`${active ? "hidden" : "block"} w-full`}>
-                                <table className="w-full bg-green-200 text-center align-center mt-5 md:block hidden">
+                                <table className="w-full b0 text-center align-center mt-5 md:block hidden">
 
                                     <thead className="">
                                         <tr className="text-lg bg-koreaBlueMuda  ">
-                                            <th className="py-4 w-[100rem]">NO</th>
-                                            <th className="py-4 w-[100rem]">GOALS</th>
+                                            <th className="py-4 w-[30rem]">NO</th>
+                                            <th className="py-4 w-[200rem]">GOALS</th>
                                             <th className="py-4 w-[100rem]">UPI</th>
                                             <th className="py-4 w-[100rem]">UNNES</th>
                                             <th className="py-4 w-[100rem]">UNDIKSHA</th>
@@ -92,7 +93,10 @@ export default function Activities() {
                                     <tbody className="md:text-base text-xs">
                                         {
                                             data && data.map((v: any, i: any) => {
+                                                console.log(v)
+                                                console.log("first")
                                                 if (v.year_1.upi || v.year_1.unnes || v.year_1.undiksha) {
+
                                                     return (
                                                         <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_1.upi || ""} unnes={v.year_1.unnes} undiksha={v.year_1.undiksha} />
                                                     )
@@ -106,8 +110,8 @@ export default function Activities() {
                                     <table className="w-[550px] text-center align-center mt-5 ">
                                         <thead className="">
                                             <tr className="text-lg bg-koreaBlueMuda  shadow-lg">
-                                                <th className="py-4 text-sm w-[100rem]">NO</th>
-                                                <th className="py-4 text-sm w-[100rem]">GOALS</th>
+                                                <th className="py-4 text-sm w-[30rem]">NO</th>
+                                                <th className="py-4 text-sm w-[200rem]">GOALS</th>
                                                 <th className="py-4 text-sm w-[100rem]">UPI</th>
                                                 <th className="py-4 text-sm w-[100rem]">UNNES</th>
                                                 <th className="py-4 text-sm w-[100rem]">UNDIKSHA</th>
@@ -144,8 +148,8 @@ export default function Activities() {
                                 <table className="w-full text-center align-center mt-5 md:block hidden">
                                     <thead className="">
                                         <tr className="text-lg bg-koreaBlueMuda rounded-xl">
-                                            <th className="py-4 w-[100rem]">NO</th>
-                                            <th className="py-4 w-[100rem]">GOALS</th>
+                                            <th className="py-4 w-[30rem]">NO</th>
+                                            <th className="py-4 w-[200rem]">GOALS</th>
                                             <th className="py-4 w-[100rem]">UPI</th>
                                             <th className="py-4 w-[100rem]">UNNES</th>
                                             <th className="py-4 w-[100rem]">UNDIKSHA</th>
@@ -168,11 +172,11 @@ export default function Activities() {
                                     <table className="w-[550px] text-center align-center mt-5 rounded-xl">
                                         <thead className="rounded-xl">
                                             <tr className="text-lg bg-koreaBlueMuda rounded-xl shadow-lg">
-                                                <th className="py-4 text-sm w-[10%]">NO</th>
-                                                <th className="py-4 text-sm w-[30%]">GOALS</th>
-                                                <th className="py-4 text-sm w-[20%]">UPI</th>
-                                                <th className="py-4 text-sm w-[20%]">UNNES</th>
-                                                <th className="py-4 text-sm w-[20%]">UNDIKSHA</th>
+                                                <th className="py-4 text-sm w-[30rem]">NO</th>
+                                                <th className="py-4 text-sm w-[200rem]">GOALS</th>
+                                                <th className="py-4 text-sm w-[100rem]">UPI</th>
+                                                <th className="py-4 text-sm w-[100rem]">UNNES</th>
+                                                <th className="py-4 text-sm w-[100rem]">UNDIKSHA</th>
                                             </tr>
                                         </thead>
                                         <tbody className="md:text-base text-xs">
@@ -207,8 +211,8 @@ export default function Activities() {
                                 <table className="w-full text-center align-center mt-5 md:block hidden">
                                     <thead className="">
                                         <tr className="text-lg bg-koreaBlueMuda rounded-xl">
-                                            <th className="py-4 w-[100rem]">NO</th>
-                                            <th className="py-4 w-[100rem]">GOALS</th>
+                                            <th className="py-4 w-[30rem]">NO</th>
+                                            <th className="py-4 w-[200rem]">GOALS</th>
                                             <th className="py-4 w-[100rem]">UPI</th>
                                             <th className="py-4 w-[100rem]">UNNES</th>
                                             <th className="py-4 w-[100rem]">UNDIKSHA</th>
@@ -231,11 +235,11 @@ export default function Activities() {
                                     <table className="w-[550px] text-center align-center mt-5 rounded-xl">
                                         <thead className="rounded-xl">
                                             <tr className="text-lg bg-koreaBlueMuda rounded-xl shadow-lg">
-                                                <th className="py-4 text-sm w-[10%]">NO</th>
-                                                <th className="py-4 text-sm w-[30%]">GOALS</th>
-                                                <th className="py-4 text-sm w-[20%]">UPI</th>
-                                                <th className="py-4 text-sm w-[20%]">UNNES</th>
-                                                <th className="py-4 text-sm w-[20%]">UNDIKSHA</th>
+                                                <th className="py-4 text-sm w-[30rem]">NO</th>
+                                                <th className="py-4 text-sm w-[200rem]">GOALS</th>
+                                                <th className="py-4 text-sm w-[100rem]">UPI</th>
+                                                <th className="py-4 text-sm w-[100rem]">UNNES</th>
+                                                <th className="py-4 text-sm w-[100rem]">UNDIKSHA</th>
                                             </tr>
                                         </thead>
                                         <tbody className="md:text-base text-xs">
@@ -270,8 +274,8 @@ export default function Activities() {
                                 <table className="w-full text-center align-center mt-5 md:block hidden">
                                     <thead className="">
                                         <tr className="text-lg bg-koreaBlueMuda rounded-xl">
-                                            <th className="py-4 w-[100rem]">NO</th>
-                                            <th className="py-4 w-[100rem]">GOALS</th>
+                                            <th className="py-4 w-[30rem]">NO</th>
+                                            <th className="py-4 w-[200rem]">GOALS</th>
                                             <th className="py-4 w-[100rem]">UPI</th>
                                             <th className="py-4 w-[100rem]">UNNES</th>
                                             <th className="py-4 w-[100rem]">UNDIKSHA</th>
@@ -294,11 +298,11 @@ export default function Activities() {
                                     <table className="w-[550px] text-center align-center mt-5 rounded-xl">
                                         <thead className="rounded-xl">
                                             <tr className="text-lg bg-koreaBlueMuda rounded-xl shadow-lg">
-                                                <th className="py-4 text-sm w-[10%]">NO</th>
-                                                <th className="py-4 text-sm w-[30%]">GOALS</th>
-                                                <th className="py-4 text-sm w-[20%]">UPI</th>
-                                                <th className="py-4 text-sm w-[20%]">UNNES</th>
-                                                <th className="py-4 text-sm w-[20%]">UNDIKSHA</th>
+                                                <th className="py-4 text-sm w-[30rem]">NO</th>
+                                                <th className="py-4 text-sm w-[200rem]">GOALS</th>
+                                                <th className="py-4 text-sm w-[100rem]">UPI</th>
+                                                <th className="py-4 text-sm w-[100rem]">UNNES</th>
+                                                <th className="py-4 text-sm w-[100rem]">UNDIKSHA</th>
                                             </tr>
                                         </thead>
                                         <tbody className="md:text-base text-xs">
@@ -333,8 +337,8 @@ export default function Activities() {
                                 <table className="w-full text-center align-center mt-5 md:block hidden">
                                     <thead className="">
                                         <tr className="text-lg bg-koreaBlueMuda rounded-xl">
-                                            <th className="py-4 w-[100rem]">NO</th>
-                                            <th className="py-4 w-[100rem]">GOALS</th>
+                                            <th className="py-4 w-[30rem]">NO</th>
+                                            <th className="py-4 w-[200rem]">GOALS</th>
                                             <th className="py-4 w-[100rem]">UPI</th>
                                             <th className="py-4 w-[100rem]">UNNES</th>
                                             <th className="py-4 w-[100rem]">UNDIKSHA</th>
@@ -357,11 +361,11 @@ export default function Activities() {
                                     <table className="w-[550px] text-center align-center mt-5 rounded-xl">
                                         <thead className="rounded-xl">
                                             <tr className="text-lg bg-koreaBlueMuda rounded-xl shadow-lg">
-                                                <th className="py-4 text-sm w-[10%]">NO</th>
-                                                <th className="py-4 text-sm w-[30%]">GOALS</th>
-                                                <th className="py-4 text-sm w-[20%]">UPI</th>
-                                                <th className="py-4 text-sm w-[20%]">UNNES</th>
-                                                <th className="py-4 text-sm w-[20%]">UNDIKSHA</th>
+                                                <th className="py-4 text-sm w-[30rem]">NO</th>
+                                                <th className="py-4 text-sm w-[200rem]">GOALS</th>
+                                                <th className="py-4 text-sm w-[100rem]">UPI</th>
+                                                <th className="py-4 text-sm w-[100rem]">UNNES</th>
+                                                <th className="py-4 text-sm w-[100rem]">UNDIKSHA</th>
                                             </tr>
                                         </thead>
                                         <tbody className="md:text-base text-xs">
@@ -396,8 +400,8 @@ export default function Activities() {
                                 <table className="w-full text-center align-center mt-5 md:block hidden">
                                     <thead className="">
                                         <tr className="text-lg bg-koreaBlueMuda rounded-xl">
-                                            <th className="py-4 w-[100rem]">NO</th>
-                                            <th className="py-4 w-[100rem]">GOALS</th>
+                                            <th className="py-4 w-[30rem]">NO</th>
+                                            <th className="py-4 w-[200rem]">GOALS</th>
                                             <th className="py-4 w-[100rem]">UPI</th>
                                             <th className="py-4 w-[100rem]">UNNES</th>
                                             <th className="py-4 w-[100rem]">UNDIKSHA</th>
@@ -420,11 +424,11 @@ export default function Activities() {
                                     <table className="w-[550px] text-center align-center mt-5 rounded-xl">
                                         <thead className="rounded-xl">
                                             <tr className="text-lg bg-koreaBlueMuda rounded-xl shadow-lg">
-                                                <th className="py-4 text-sm w-[10%]">NO</th>
-                                                <th className="py-4 text-sm w-[30%]">GOALS</th>
-                                                <th className="py-4 text-sm w-[20%]">UPI</th>
-                                                <th className="py-4 text-sm w-[20%]">UNNES</th>
-                                                <th className="py-4 text-sm w-[20%]">UNDIKSHA</th>
+                                                <th className="py-4 text-sm w-[30rem]">NO</th>
+                                                <th className="py-4 text-sm w-[200rem]">GOALS</th>
+                                                <th className="py-4 text-sm w-[100rem]">UPI</th>
+                                                <th className="py-4 text-sm w-[100rem]">UNNES</th>
+                                                <th className="py-4 text-sm w-[100rem]">UNDIKSHA</th>
                                             </tr>
                                         </thead>
                                         <tbody className="md:text-base text-xs">

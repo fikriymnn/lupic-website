@@ -1,3 +1,4 @@
+"use client"
 import Head from 'next/head';
 import Navbar from '../components/Navbar';
 import Image from 'next/image';
@@ -5,8 +6,26 @@ import CardNews from '@/components/card/CardNews';
 import CustomFooter from '@/components/CustomFooter';
 import CarouselHome from '@/components/carousel/CarouselHome';
 import HeroSection from '@/components/HeroSection';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const Home: React.FC = () => {
+    const [data,setData]=useState([])
+
+
+  useEffect(()=>{
+    async function getData(){
+      try{
+        const Data = await axios.get(process.env.NEXT_PUBLIC_API_URL+"/api/news?page=1&limit=3")
+        if(Data.data){
+          setData(Data.data)
+        }
+      }catch(err:any){
+        console.log(err.message)
+      }
+    } 
+    getData()
+  },[])
   return (
     <>
       <Head>
@@ -66,12 +85,16 @@ const Home: React.FC = () => {
           {/* news */}
           <div className='md:mt-20 mt-10'>
             <h3 className='text-center text-4xl font-bold'>Latest News</h3>
-            <div className='flex md:flex-nowrap flex-wrap justify-center mt-8'>
-              <CardNews/>
-              <CardNews/>
-              <CardNews/>
+            <div className='grid md:grid-cols-3 grid-cols-1  justify-items-center mt-8'>
+              {
+                data&&data.map((v:any,i:any)=>{
+                  return(
+                    <CardNews key={i} tanggal={v.tanggal} judul={v.judul} deskripsi={v.deskripsi} gambar={v.gambar} id={v.id}/>
+                  )
+                })
+              }
             </div>
-            <a href='#' className='bg-koreaRed md:w-56 md:h-16 w-36 h-14 flex justify-center align-center content-middle rounded-xl md:mt-10 mt-8 m-auto'>
+            <a href='/news' className='bg-koreaRed md:w-56 md:h-16 w-36 h-14 flex justify-center align-center content-middle rounded-xl md:mt-10 mt-8 m-auto'>
               <p className='m-auto text-white md:text-base text-xs'>Read More News &#8594;</p>
             </a>
           </div>

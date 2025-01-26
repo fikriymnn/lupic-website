@@ -23,7 +23,7 @@ export default function AdminCarouselActivities({deskripsi,judul,gambar,id}:any)
                             {judul}
                         </td>
                         <td rowSpan={2}>
-                            <Image className="w-[700px]" src={process.env.NEXT_PUBLIC_API_FILE_URL+gambar} alt="foto" width={400} height={200} />
+                            <Image className="" src={process.env.NEXT_PUBLIC_API_FILE_URL+gambar} alt="foto" width={200} height={100} />
                         </td>
                     </tr>
                     <tr className="text-sm text-center">

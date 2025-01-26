@@ -1,7 +1,8 @@
 "use client"
 import React from "react";
-import { FaHome, FaUser, FaCog, FaSignOutAlt } from "react-icons/fa";
+import { FaHome, FaUser, FaCog, FaSignOutAlt, FaNewspaper, FaCamera, FaStore, FaHistory, FaAddressCard } from "react-icons/fa";
 import { usePathname } from "next/navigation";
+import { FaHouseMedical, FaScrewdriverWrench } from "react-icons/fa6";
 
 const Sidebar = () => {
   const path = usePathname();
@@ -15,13 +16,13 @@ const Sidebar = () => {
         <ul>
         <li className="mb-2">
             <a href="/lgndmn/dashboard" className={`flex items-center space-x-2 p-2 hover:bg-koreaBlueMuda rounded ${!adminPath[3]?"bg-koreaBlueMuda":""}`}>
-              <FaCog />
+              <FaHome />
               <span>Home</span>
             </a>
           </li>
           <li className="mb-2">
             <a href="/lgndmn/dashboard/aboutus" className={`flex items-center space-x-2 p-2 hover:bg-koreaBlueMuda rounded ${adminPath[3]=="aboutus"?"bg-koreaBlueMuda":""}`}>
-              <FaHome />
+              <FaAddressCard/>
               <span>About Us</span>
             </a>
           </li>
@@ -33,25 +34,25 @@ const Sidebar = () => {
           </li>
           <li className="mb-2">
             <a href="/lgndmn/dashboard/facilities" className={`flex items-center space-x-2 p-2 hover:bg-koreaBlueMuda rounded ${adminPath[3]=="facilities"?"bg-koreaBlueMuda":""}`}>
-              <FaCog />
+              <FaScrewdriverWrench />
               <span>Facilities</span>
             </a>
           </li>
           <li className="mb-2">
             <a href="/lgndmn/dashboard/news" className={`flex items-center space-x-2 p-2 hover:bg-koreaBlueMuda rounded ${adminPath[3]=="news"?"bg-koreaBlueMuda":""}`}>
-              <FaCog />
+              <FaNewspaper />
               <span>News</span>
             </a>
           </li>
           <li className="mb-2">
             <a href="/lgndmn/dashboard/gallery" className={`flex items-center space-x-2 p-2 hover:bg-koreaBlueMuda rounded ${adminPath[3]=="gallery"?"bg-koreaBlueMuda":""}`}>
-              <FaCog />
+              <FaCamera />
               <span>Gallery</span>
             </a>
           </li>
           <li className="mb-2">
             <a href="/lgndmn/dashboard/services" className={`flex items-center space-x-2 p-2 hover:bg-koreaBlueMuda rounded ${adminPath[3]=="services"?"bg-koreaBlueMuda":""}`}>
-              <FaCog />
+              <FaStore />
               <span>Service Toko</span>
             </a>
           </li>

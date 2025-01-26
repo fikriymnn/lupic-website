@@ -1,4 +1,5 @@
 "use client"
+import axios from "axios";
 import { useEffect, useState } from "react";
 
 export default function TableActivities2({ point, sub_point, data, title_sub_point }: any) {
@@ -6,24 +7,6 @@ export default function TableActivities2({ point, sub_point, data, title_sub_poi
     const [rawData,setRawData] = useState([])
     const [filterData, setFilterData] = useState([{}])
 
-    useEffect(() => {
-
-
-        setRawData(data)
-        console.log(rawData)
-    }, [])
-    // useEffect(() => {
-
-
-        
-    //     if(data.length>0){
-    //         setRawData(data)
-    //         if(rawData){
-    //             console.log(rawData)
-    //         }
-    //     }
-    //     // console.log(data)
-    // }, [data])
 
     return (
         <>
@@ -72,7 +55,7 @@ export default function TableActivities2({ point, sub_point, data, title_sub_poi
                                     if(v.point==point&&v.sub_point==sub_point){
                                     if  ((currentYear == 1 && (v.year_1.upi || v.year_1.unnes || v.year_1.undiksha)) || (currentYear == 2 && (v.year_2.upi || v.year_2.unnes || v.year_2.undiksha)) || (currentYear == 3 && (v.year_3.upi || v.year_3.unnes || v.year_3.undiksha)) || (currentYear == 4 && (v.year_4.upi || v.year_4.unnes || v.year_4.undiksha)) || (currentYear == 5 && (v.year_5.upi || v.year_5.unnes || v.year_5.undiksha)) || (currentYear == 6 && (v.year_6.upi || v.year_6.unnes || v.year_6.undiksha))) {
                                         return (
-                                            <p key={i} className="md:text-lg text-xs bg-gray-200 py-4 px-5 border">{v.text}</p>
+                                            <p key={i} className="md:text-lg text-xs bg-gray-200 py-4 px-5 border-t border-gray-400">{v.text}</p>
                                         )
                                     } else{
                                         return (

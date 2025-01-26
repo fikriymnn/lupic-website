@@ -199,12 +199,12 @@ export default function Activities() {
             <h2 className="text-3xl pt-14 font-semibold text-start mb-4 w-full">Goals</h2>
             <div className="w-full flex justify-end">
               <div className=" grid grid-cols-6 justify-items-center align-items-center items-center w-[50%] mb-3">
-                <button className={`${year==1?"bg-gray-200":""} text-xl px-4 py-2 rounded-lg border-2 mx-2`} onClick={(e) => { setYear(1) }}>Year 1</button>
-                <button className={`${year==2?"bg-gray-200":""} text-xl px-4 py-2 rounded-lg border-2 mx-2`} onClick={(e) => { setYear(2) }}>Year 2</button>
-                <button className={`${year==3?"bg-gray-200":""} text-xl px-4 py-2 rounded-lg border-2 mx-2`} onClick={(e) => { setYear(3) }}>Year 3</button>
-                <button className={`${year==4?"bg-gray-200":""} text-xl px-4 py-2 rounded-lg border-2 mx-2`} onClick={(e) => { setYear(4) }}>Year 4</button>
-                <button className={`${year==5?"bg-gray-200":""} text-xl px-4 py-2 rounded-lg border-2 mx-2`} onClick={(e) => { setYear(5) }}>Year 5</button>
-                <button className={`${year==6?"bg-gray-200":""} text-xl px-4 py-2 rounded-lg border-2 mx-2`} onClick={(e) => { setYear(6) }}>Year 6</button>
+                <button className={`${year==1?"bg-gray-200":""} text-base px-4 py-2 rounded-lg border-2 mx-2`} onClick={(e) => { setYear(1) }}>Year 1</button>
+                <button className={`${year==2?"bg-gray-200":""} text-base px-4 py-2 rounded-lg border-2 mx-2`} onClick={(e) => { setYear(2) }}>Year 2</button>
+                <button className={`${year==3?"bg-gray-200":""} text-base px-4 py-2 rounded-lg border-2 mx-2`} onClick={(e) => { setYear(3) }}>Year 3</button>
+                <button className={`${year==4?"bg-gray-200":""} text-base px-4 py-2 rounded-lg border-2 mx-2`} onClick={(e) => { setYear(4) }}>Year 4</button>
+                <button className={`${year==5?"bg-gray-200":""} text-base px-4 py-2 rounded-lg border-2 mx-2`} onClick={(e) => { setYear(5) }}>Year 5</button>
+                <button className={`${year==6?"bg-gray-200":""} text-base px-4 py-2 rounded-lg border-2 mx-2`} onClick={(e) => { setYear(6) }}>Year 6</button>
               </div>
 
             </div>
@@ -234,7 +234,7 @@ export default function Activities() {
                           
                           <input
                             type="text"
-                            placeholder="Keterangan UPI..."
+                            placeholder="UPI..."
                             className="mt-2 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                             name="upi"
                             onChange={(e: any) => {
@@ -269,7 +269,7 @@ export default function Activities() {
                           />
                           <input
                             type="text"
-                            placeholder="Keterangan UNNES..."
+                            placeholder="UNNES..."
                             className="mt-2 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                             name="judul"
                             onChange={(e: any) => {
@@ -305,7 +305,7 @@ export default function Activities() {
                           />
                           <input
                             type="text"
-                            placeholder="Keterangan UNDIKSHA..."
+                            placeholder="UNDIKSHA..."
                             className="mt-2 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                             name="undhiksha"
                             onChange={(e: any) => {

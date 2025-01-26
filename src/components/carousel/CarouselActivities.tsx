@@ -52,7 +52,7 @@ export default function CarouselActivities() {
                             data && data.map((v: any, i: any) => {
                                 return (
                                     <div key={i}>
-                                        <img className='rounded-lg' src={process.env.NEXT_PUBLIC_API_FILE_URL + v.gambar} alt="image" />
+                                        <img className='rounded-lg md:h-full h-36' src={process.env.NEXT_PUBLIC_API_FILE_URL + v.gambar} alt="image" />
                                     </div>
                                 )
                             })
@@ -60,16 +60,16 @@ export default function CarouselActivities() {
                     </Slider>
                 </div>
                 <div className='w-[80%] mb-10'>
-                    <h3 className='md:text-3xl text-xl font-bold text-white mt-7 mb-7'>{data[num]&&data[num].judul}</h3>
+                    <h3 className='md:text-3xl text-xl font-bold text-white mt-7 mb-7 '>{data[num]&&data[num].judul}</h3>
                     <p className='text-white md:text-base text-sm'>{data[num]&&data[num].deskripsi}</p>
                 </div>
-                <div className='m-auto w-[50%] md:block hidden'>
+                <div className='m-auto w-[60%] md:block hidden'>
                     <Slider {...settings}>
                     {
                             data && data.map((v: any, i: any) => {
                                 return (
                                     <div key={i}>
-                                        <img className='rounded-lg' src={process.env.NEXT_PUBLIC_API_FILE_URL + v.gambar} alt="image" />
+                                        <img className='rounded-lg h-full' src={process.env.NEXT_PUBLIC_API_FILE_URL + v.gambar} alt="image" />
                                     </div>
                                 )
                             })

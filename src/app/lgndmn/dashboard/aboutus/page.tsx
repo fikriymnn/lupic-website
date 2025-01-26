@@ -96,7 +96,8 @@ return (
         <div className=" m-auto bg-white p-6 rounded-lg shadow-lg w-[80%] border-2">
 
           <h2 className="text-3xl pt-5 font-semibold text-start mb-4">Foto</h2>
-          <Image alt="foto" src={(process.env.NEXT_PUBLIC_API_FILE_URL+file)||""} width={1000} height={500} />
+          {file&&<Image alt="foto" src={(process.env.NEXT_PUBLIC_API_FILE_URL+file)||""} width={1000} height={500} />}
+          
           <form onSubmit={handleSubmit}>
             <div className="border-2 border-dashed border-gray-300 p-4 rounded-lg">
               <input

@@ -35,8 +35,8 @@ export default function EditToko({ params }: { params: Promise<{ id: string }> }
                 <div className="md:w-[80%] w-[90%] h-[45%] m-auto grid md:grid-cols-2 grid-cols-1 justify-items-center">
                     <Image src={process.env.NEXT_PUBLIC_API_FILE_URL+data.gambar} alt="foto" width={600} height={600} className="md:w-[600px] md:h-[600px] w-full" />
                     <div className="block justify-items-start">
-                    <h3 className="md:text-4xl text-2xl mt-10 font-bold text-koreaBlue text-start">{data.judul}</h3>
-                    <p className="md:text-3xl text-xl font-bold md:mt-5 mt-3">Rp.{data.harga}</p>
+                    <h3 className="md:text-3xl text-2xl mt-10 font-bold text-koreaBlue text-start">{data.judul}</h3>
+                    <p className="md:text-2xl text-xl font-bold md:mt-5 mt-3">Rp.{data.harga}</p>
                     <div className="flex justiy-evenly items-center md:mt-8 mt-3">
                         <button onClick={(e)=>{window.location.href=data.link_shopee}} className="md:text-xl text-sm text-white bg-orange-600 md:px-6 px-3 md:py-3 py-1 rounded-lg mr-2">Link Shopee</button>
                         <button onClick={(e)=>{window.location.href=data.link_tokped}} className="md:text-xl text-sm text-white bg-green-800 md:px-6 px-3 md:py-3 py-1 rounded-lg ml-2">Link Tokped</button>

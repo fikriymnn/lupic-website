@@ -5,9 +5,13 @@ import CardFacilities from "@/components/card/CardFacilities"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import CardServiceToko from "@/components/card/CardServiceToko"
+import ResponsivePagination from 'react-responsive-pagination';
+import 'react-responsive-pagination/themes/classic.css';
 
 export default function ServiceToko() {
     const [data,setData] = useState([])
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages,setTotalPage] = useState(1)
 
     useEffect(()=>{
         async function getData(){
@@ -38,6 +42,13 @@ export default function ServiceToko() {
                     })
                 }
 
+            </div>
+            <div className="w-[20%] m-auto mt-10 mb-16">
+                <ResponsivePagination
+                    current={currentPage}
+                    total={totalPages}
+                    onPageChange={setCurrentPage}
+                />
             </div>
             <CustomFooter />
         </>
