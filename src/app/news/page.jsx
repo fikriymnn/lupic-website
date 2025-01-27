@@ -24,7 +24,7 @@ export default function News() {
 
     const onSearch = async ()=>{
         try{
-            const Data = await axios.get(process.env.NEXT_PUBLIC_API_URL+"/api/news?page="+currentPageSearch+"&limit=6"+search?`&search=${search}`:"")
+            const Data = await axios.get(process.env.NEXT_PUBLIC_API_URL+"/api/news?page="+currentPageSearch+"&limit=6"+(search?`&search=${search}`:""))
             if(Data.data){
                 setDataSearch(Data.data)
                 setTotalPageSearch(Math.ceil(Data.data.length/6))
@@ -63,11 +63,37 @@ export default function News() {
                             <p className="text-white md:text-lg text-lg w-full">Stay tuned for the latest updates, breakthroughs, and stories from the forefront of our research endeavors.</p>
                         </div>
                         <div className='m-auto md:w-[35%] w-[90%] flex mt-5'>
-                            <input placeholder="Masukan judul..." className="pl-3 w-[100%] rounded-l-lg" type="text" name="las" /> <button className="bg-koreaRed px-3 py-2 rounded-r-lg text-white hover:bg-red-800">Cari</button>
+                            <input placeholder="Masukan judul..." className="pl-3 w-[100%] rounded-l-lg" type="text" name="search" onChange={(e)=>setSearch(e.target.value)} /> <button className="bg-koreaRed px-3 py-2 rounded-r-lg text-white hover:bg-red-800" onClick={(e)=>onSearch()}>Cari</button>
                         </div>
                     </div>
                 </div>
             </div>
+            {
+            searchActive?<div>
+            <div className="w-[85%] m-auto md:mt-8 mt-1">
+                <div className="md:block md:justify-items-start grid grid-cols-1 justify-items-center">
+                </div>
+                <div className="grid md:grid-cols-3 justify-items-center grid-cols-1 md:mt-4 mt-2">
+                    {
+                        dataSearch&&dataSearch.map((v,i)=>{
+                            if(i!==0){
+                                return(
+                                    <CardNews gambar={v.gambar} key={i} judul={v.judul} deskripsi={v.deskripsi} tanggal={v.tanggal} id={v._id} />
+                                )
+                            }
+                        })
+                    }
+                </div>
+            </div>
+            <div className="w-[20%] m-auto mt-10 mb-10">
+                <ResponsivePagination
+                    current={currentPageSearch}
+                    total={totalPagesSearch}
+                    onPageChange={setCurrentPageSearch}
+                />
+            </div>
+            </div>:""
+            }
             {/* latest news */}
             <div className="w-[85%] m-auto">
                 <div className="md:block grid grid-cols-1 justify-items-center md:justify-items-start">

@@ -10,8 +10,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const Home = () => {
-    const [data,setData]=useState([])
-
+  const [data,setData]=useState([])
 
   useEffect(()=>{
     async function getData(){
@@ -26,6 +25,7 @@ const Home = () => {
     } 
     getData()
   },[])
+
   return (
     <>
       <Head>
@@ -89,7 +89,7 @@ const Home = () => {
               {
                 data&&data.map((v,i)=>{
                   return(
-                    <CardNews key={i} tanggal={v.tanggal} judul={v.judul} deskripsi={v.deskripsi} gambar={v.gambar} id={v.id}/>
+                    <CardNews key={i} tanggal={v.tanggal} judul={v.judul} deskripsi={v.deskripsi} gambar={v.gambar} id={v._id}/>
                   )
                 })
               }

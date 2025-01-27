@@ -2,6 +2,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
+// (currentYear == 1 && (v.year_1.upi || v.year_1.unnes || v.year_1.undiksha)) || (currentYear == 2 && (v.year_2.upi || v.year_2.unnes || v.year_2.undiksha)) || (currentYear == 3 && (v.year_3.upi || v.year_3.unnes || v.year_3.undiksha)) || (currentYear == 4 && (v.year_4.upi || v.year_4.unnes || v.year_4.undiksha)) || (currentYear == 5 && (v.year_5.upi || v.year_5.unnes || v.year_5.undiksha)) || (currentYear == 6 && (v.year_6.upi || v.year_6.unnes || v.year_6.undiksha))
+
 export default function TableActivities2({ point, sub_point, data, title_sub_point }) {
     const [currentYear, setCurrentYear] = useState(0)
     const [rawData,setRawData] = useState([])
@@ -53,7 +55,7 @@ export default function TableActivities2({ point, sub_point, data, title_sub_poi
                             {
                                 data && data.map((v, i) => {
                                     if(v.point==point&&v.sub_point==sub_point){
-                                    if  ((currentYear == 1 && (v.year_1.upi || v.year_1.unnes || v.year_1.undiksha)) || (currentYear == 2 && (v.year_2.upi || v.year_2.unnes || v.year_2.undiksha)) || (currentYear == 3 && (v.year_3.upi || v.year_3.unnes || v.year_3.undiksha)) || (currentYear == 4 && (v.year_4.upi || v.year_4.unnes || v.year_4.undiksha)) || (currentYear == 5 && (v.year_5.upi || v.year_5.unnes || v.year_5.undiksha)) || (currentYear == 6 && (v.year_6.upi || v.year_6.unnes || v.year_6.undiksha))) {
+                                    if  (((v.year_1.upi || v.year_1.unnes || v.year_1.undiksha)) || ((v.year_2.upi || v.year_2.unnes || v.year_2.undiksha)) || ((v.year_3.upi || v.year_3.unnes || v.year_3.undiksha)) || ((v.year_4.upi || v.year_4.unnes || v.year_4.undiksha)) || ((v.year_5.upi || v.year_5.unnes || v.year_5.undiksha)) || ((v.year_6.upi || v.year_6.unnes || v.year_6.undiksha))) {
                                         return (
                                             <p key={i} className="md:text-lg text-xs bg-gray-200 py-4 px-5 border-t border-gray-400">{v.text}</p>
                                         )
