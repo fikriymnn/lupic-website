@@ -20,9 +20,10 @@ export default function News() {
     async function getData() {
       try {
         const Data = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/news?" + "page=" + currentPage )
-        if (Data.data) {
+        const Data2 = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/news")
+        if (Data.data&&Data2.data) {
           setData(Data.data)
-          setTotalPages(Math.ceil(Data.data.length/9))
+          setTotalPages(Math.ceil(Data2.data.length/9))
         }
       } catch (err) {
         console.log(err.message)
@@ -30,7 +31,7 @@ export default function News() {
     }
     getData()
 
-  }, [])
+  }, [currentPage])
 
  
 
