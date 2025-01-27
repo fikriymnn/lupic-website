@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   images: {
-    domains: ['localhost', 'example.com'], // Tambahkan 'localhost' di sini
+    domains: ['localhost', 'example.com','lupic-backend.vercel.app'], // Tambahkan 'localhost' di sini
 },
 };
 
