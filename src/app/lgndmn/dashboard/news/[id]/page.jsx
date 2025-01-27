@@ -5,8 +5,10 @@ import Editor from "react-simple-wysiwyg";
 import AdminCardFacilities from "@/components/card/AdminCardFacilities";
 import Image from 'next/image'
 import axios from "axios";
+import { use } from "react";
 
-export default function AddNews() {
+export default function EditNews({params} ) {
+    const {id} = use(params)
     const [file, setFile] = useState("");
     const [content, setContent] = useState('');
     const [data, setData] = useState({
@@ -18,7 +20,7 @@ export default function AddNews() {
         sub_gambar: [""]
     }])
 
-    const handleChange = (e: any) => {
+    const handleChange = (e) => {
         const { name, value } = e.target;
         setData((prevData) => ({
             ...prevData,
@@ -26,7 +28,7 @@ export default function AddNews() {
         }));
     };
 
-    function handleContent(e: any) {
+    function handleContent(e) {
         setContent(e.target.value)
     }
 
@@ -38,24 +40,23 @@ export default function AddNews() {
         }])
     }
 
-    function addGambar(i: any) {
+    function addGambar(i) {
         let newContent = [...subContent]
         newContent[i].sub_gambar = [...newContent[i].sub_gambar, ""]
         setSubContent([...newContent])
     }
 
-    const handleFileChange = (e: any) => {
+    const handleFileChange = (e) => {
         setFile(e.target.files[0]);
     };
 
-    const handleSubmit = async (e: any) => {
-        if (!file) {
-            alert("Pilih file terlebih dahulu!");
-            return;
-        }
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        
 
         try {
-            const formData = new FormData();
+            if (file) {
+                const formData = new FormData();
             formData.append('file', file);
 
             const getData = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/file", formData, {
@@ -66,16 +67,7 @@ export default function AddNews() {
             
             
             if (getData.data) {
-                const obj = {
-                    judul: data.judul,
-                    gambar: getData.data,
-                    deskripsi: data.deskripsi,
-                    content: content,
-                    sub_content: subContent,
-                    tanggal: new Date().toLocaleDateString("id-ID")
-                }
-                console.log(obj)
-                const message = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/news", {
+                const message = await axios.put(process.env.NEXT_PUBLIC_API_URL + "/api/news/"+id, {
                     author: data.author,
                     judul: data.judul,
                     gambar: getData.data,
@@ -86,13 +78,45 @@ export default function AddNews() {
                 })
                 if (message.data == "success") {
                     alert("Success")
-                    // window.location.reload()
+                    window.location.reload()
                   }
+            }else{
+                    const message = await axios.put(process.env.NEXT_PUBLIC_API_URL + "/api/news/"+id, {
+                        author: data.author,
+                        judul: data.judul,
+                        gambar: data.gambar,
+                        deskripsi: data.deskripsi,
+                        content: content,
+                        sub_content: subContent,
+                        tanggal: new Date().toLocaleDateString("id-ID")
+                    })
+                    if (message.data == "success") {
+                        alert("Success")
+                        window.location.reload()
+                      }
             }
-            }catch (err: any) {
+            }
+            }catch (err) {
                 console.log(err.message)
             }
         }
+
+        useEffect(()=>{
+            async function getData(){
+                try {
+                    const Data = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/news/"+id)
+                    if (Data.data) {
+                      setData(Data.data)
+                      setContent(Data.data.content)
+                      setSubContent(Data.data.sub_content)
+                    }
+            
+                  } catch (err) {
+                    console.log(err.message)
+                  }
+            }
+            getData()
+        },[])
 
     return (
             <div className="flex">
@@ -100,7 +124,7 @@ export default function AddNews() {
                 <div className="w-64"></div>
                 <div className="w-full mb-16">
                     <div className="p-6 mt-8 text-center">
-                        <h1 className="text-3xl font-bold text-koreaBlue">ADD NEWS</h1>
+                        <h1 className="text-3xl font-bold text-koreaBlue">UPDATE NEWS</h1>
                     </div>
                     <div className="m-auto w-full">
 
@@ -129,6 +153,7 @@ export default function AddNews() {
                                     onChange={handleChange}
                                     value={data.judul||""}
                                 />
+                                <Image alt="foto" src={`${process.env.NEXT_PUBLIC_API_FILE_URL}` + data.gambar} width={1000} height={1000} className="w-[800px] h-[400px] m-auto py-5" />
                                 <label className="block text-gray-700 font-medium mb-2 text-xl mt-3">
                                     Gambar
                                 </label>
@@ -162,7 +187,7 @@ export default function AddNews() {
 
                                 <div className="mt-8 mb-10">
                                     {
-                                        subContent && subContent.map((e: any, i: any) => {
+                                        subContent && subContent.map((e, i) => {
                                             return (
                                                 <div key={i} className="w-[85%] m-auto">
                                                     <label className="block text-gray-700 font-medium mb-2 text-xl mt-3">
@@ -173,7 +198,8 @@ export default function AddNews() {
                                                         placeholder="Masukkan nama..."
                                                         className="mt-2 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                                                         name="sub_judul"
-                                                        onChange={(a: any) => {
+                                                        value={e.sub_judul}
+                                                        onChange={(a) => {
                                                             let newSubContent = [...subContent]
                                                             newSubContent[i].sub_judul = a.target.value
                                                             setSubContent(newSubContent)
@@ -184,7 +210,7 @@ export default function AddNews() {
                                                     <label className="block text-gray-700 font-medium mb-2 text-xl mt-3">
                                                         Sub Content
                                                     </label>
-                                                    <Editor value={subContent[i].sub_content} onChange={(a: any) => {
+                                                    <Editor value={subContent[i].sub_content} onChange={(a) => {
                                                         let newSubContent = [...subContent]
                                                         newSubContent[i].sub_content = a.target.value
                                                         setSubContent(newSubContent)
@@ -196,9 +222,11 @@ export default function AddNews() {
                                                         subContent[i].sub_gambar && subContent[i].sub_gambar.map((v, a) => {
                                                             return (
                                                                 <div key={a} className="border-2 border-dashed border-gray-300 p-4 rounded-lg text-center">
+                                                                     <Image alt="foto" src={`${process.env.NEXT_PUBLIC_API_FILE_URL}` + v} width={250} height={250} className=" m-auto py-5" />
                                                                     <input
                                                                         type="file"
-                                                                        onChange={(c: any) => {
+                                                            
+                                                                        onChange={(c) => {
                                                                             async function getData(){
                                                                                 const formData = new FormData();
                                                                                 formData.append('file', c.target.files[0]);

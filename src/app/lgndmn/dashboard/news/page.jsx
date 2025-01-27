@@ -24,7 +24,7 @@ export default function News() {
           setData(Data.data)
           setTotalPages(Math.ceil(Data.data.length/9))
         }
-      } catch (err: any) {
+      } catch (err) {
         console.log(err.message)
       }
     }
@@ -54,7 +54,7 @@ export default function News() {
             </button>
             <div className="grid grid-cols-2 justify-items-center">
               {
-                data && data.map((v: any, i: any) => {
+                data && data.map((v, i) => {
                   return (
                     <AdminCardNews gambar={v.gambar} judul={v.judul} deskripsi={v.deskripsi} tanggal={v.tanggal} id={v._id} key={i} />
                   )

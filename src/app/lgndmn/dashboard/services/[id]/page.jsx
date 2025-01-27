@@ -7,13 +7,13 @@ import Image from 'next/image'
 import axios from "axios";
 import { use } from "react";
 
-export default  function FacilitiesAdmin({params}: { params: Promise<{ id: string }> }) {
+export default  function FacilitiesAdmin({params}) {
   const {id} = use(params)
   const [form, setForm] = useState({ judul: "", content: "", gambar: "",harga:"",deskripsi:"",link_shopee:"",link_tokped:"",_id:""  })
   const [content, setContent] = useState("");
   const [file, setFile] = useState("");
 
-  const handleChange = (e: any) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prevData) => ({
       ...prevData,
@@ -21,16 +21,16 @@ export default  function FacilitiesAdmin({params}: { params: Promise<{ id: strin
     }));
   };
 
-  const handleContent = (e: any) => {
+  const handleContent = (e) => {
     setContent(e.target.value);
   };
 
-  const handleFileChange = (e: any) => {
+  const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
 
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
@@ -73,7 +73,7 @@ export default  function FacilitiesAdmin({params}: { params: Promise<{ id: strin
       }
 
       
-    } catch (err: any) {
+    } catch (err) {
       console.log(err.message)
     }
 
@@ -88,7 +88,7 @@ export default  function FacilitiesAdmin({params}: { params: Promise<{ id: strin
           setContent(Data.data.content)
         }
 
-      } catch (err: any) {
+      } catch (err) {
         console.log(err.message)
       }
     }

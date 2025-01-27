@@ -22,6 +22,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/activities/page.jsx", "src/app/lgndmn/dashboard/facilities/[id]/page.jsx", "src/app/lgndmn/dashboard/news/[id]/page.jsx", "src/app/lgndmn/dashboard/services/[id]/page.jsx", "src/app/lgndmn/dashboard/news/page.jsx", "src/app/lgndmn/dashboard/news/add_news/page.jsx", "src/app/lgndmn/dashboard/gallery/page.jsx", "src/app/lgndmn/dashboard/facilities/page.jsx", "src/app/facilities/page.jsx", "src/app/lgndmn/dashboard/aboutus/page.jsx", "src/app/lgndmn/dashboard/activities/page.jsx", "src/app/facilities/[id]/page.jsx"],
   "exclude": ["node_modules"]
 }

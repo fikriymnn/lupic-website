@@ -13,14 +13,14 @@ export default function Activities() {
   const [form, setForm] = useState({ judul: "", gambar: "", deskripsi: "" })
   const [year, setYear] = useState(1)
 
-  const handleChange = (e: any) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prevData) => ({
       ...prevData,
       [name]: value,
     }));
   };
-  // const handleChangeGoals = async (v: any, e: any, year: any) => {
+  // const handleChangeGoals = async (v, e, year) => {
   //   console.log(v)
   //   try {
   //     let obj = {
@@ -45,12 +45,12 @@ export default function Activities() {
   //       default: ""
   //     }
   //     const message = await axios.put(process.env.NEXT_PUBLIC_API_URL + "/api/activity_goals/" + v._id, obj)
-  //   } catch (err: any) {
+  //   } catch (err) {
   //     console.log(err.message)
   //   }
   // };
 
-  const handleSubmit2 = async ( v: any,i:any) => {
+  const handleSubmit2 = async ( v,i) => {
     try {
        const message = await axios.put(process.env.NEXT_PUBLIC_API_URL + "/api/activity_goals/" + v._id, {
         point: v.point,
@@ -67,17 +67,17 @@ export default function Activities() {
       if(message.data=="success"){
         alert("save success")
       }
-    } catch (err: any) {
+    } catch (err) {
       console.log(err.message)
     }
   };
 
-  const handleFileChange = (e: any) => {
+  const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
 
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
@@ -104,7 +104,7 @@ export default function Activities() {
           window.location.reload()
         }
       }
-    } catch (err: any) {
+    } catch (err) {
       console.log(err.message)
     }
 
@@ -121,7 +121,7 @@ export default function Activities() {
         if (Data2.data) {
           setData2(Data2.data)
         }
-      } catch (err: any) {
+      } catch (err) {
         console.log(err.message)
       }
     }
@@ -186,7 +186,7 @@ export default function Activities() {
             <p className="mt-8 text-2xl text-center font-bold">LIST CAROUSEL</p>
             <div className="mt-5">
               {
-                data && data.map((v: any, i: any) => {
+                data && data.map((v, i) => {
                   return (
                     <AdminCarouselActivities id={v._id} deskripsi={v.deskripsi} judul={v.judul} gambar={v.gambar} key={i} />
                   )
@@ -221,12 +221,12 @@ export default function Activities() {
               </div>
               {/* list */}
               {
-                data2 && data2.map((v: any, i: any) => {
+                data2 && data2.map((v, i) => {
                   return (
                     <div key={i} className="w-full p-6 border rounded-lg shadow-md bg-white">
                       <div className="grid grid-cols-2 gap-4 items-center">
                         <div className="font-semibold text-gray-700">{v.text}</div>
-                        <form onSubmit={(e:any)=>{
+                        <form onSubmit={(e)=>{
                           e.preventDefault();
                            handleSubmit2(v,i);
                            }} className="grid grid-cols-4 gap-2 ">
@@ -237,7 +237,7 @@ export default function Activities() {
                             placeholder="UPI..."
                             className="mt-2 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                             name="upi"
-                            onChange={(e: any) => {
+                            onChange={(e) => {
                               let newData2 = [...data2]
                                 switch (year) {
                                   case 1:
@@ -272,7 +272,7 @@ export default function Activities() {
                             placeholder="UNNES..."
                             className="mt-2 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                             name="judul"
-                            onChange={(e: any) => {
+                            onChange={(e) => {
                               let newData2 = [...data2]
                               switch (year) {
                                 case 1:
@@ -308,7 +308,7 @@ export default function Activities() {
                             placeholder="UNDIKSHA..."
                             className="mt-2 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                             name="undhiksha"
-                            onChange={(e: any) => {
+                            onChange={(e) => {
                               let newData2 = [...data2]
                               switch (year) {
                                 case 1:

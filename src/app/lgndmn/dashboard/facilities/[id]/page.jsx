@@ -3,15 +3,17 @@ import React, { useEffect, useState } from "react";
 import Sidebar from "@/components/Sidebar";
 import Editor from "react-simple-wysiwyg";
 import AdminCardFacilities from "@/components/card/AdminCardFacilities";
+import Image from 'next/image'
 import axios from "axios";
+import { use } from "react";
 
-export default function FacilitiesAdmin() {
-  const [data, setData] = useState([])
+export default  function FacilitiesAdmin({params}) {
+  const {id} = use(params)
   const [form, setForm] = useState({ judul: "",gambar: "",deskripsi:"" })
   const [content, setContent] = useState("");
   const [file, setFile] = useState("");
 
-  const handleChange = (e: any) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prevData) => ({
       ...prevData,
@@ -19,44 +21,53 @@ export default function FacilitiesAdmin() {
     }));
   };
 
-  const handleContent = (e: any) => {
+  const handleContent = (e) => {
     setContent(e.target.value);
   };
 
-  const handleFileChange = (e: any) => {
+  const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
 
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      if (!file) {
-        alert("Pilih file terlebih dahulu!");
-        return;
-      }
-
-      const formData = new FormData();
-      formData.append('file', file);
-
-      const getData = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/file", formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      })
-      if (getData.data) {
-        const message = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/facility/", {
-          gambar: getData.data,
-          judul: form.judul,
-          deskripsi: form.deskripsi,
-          content:content
+      if (file) {
+        const formData = new FormData();
+        formData.append('file', file);
+  
+        const getData = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/file", formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
         })
-        if (message.data == "success") {
-          window.location.reload()
+        if (getData.data) {
+          const message = await axios.put(process.env.NEXT_PUBLIC_API_URL + "/api/facility/"+id, {
+            gambar: getData.data,
+            judul: form.judul,
+            deskripsi: form.deskripsi,
+            content:content
+          })
+          if (message.data == "success") {
+            window.location.reload()
+          }
         }
+      }else{
+          const message = await axios.put(process.env.NEXT_PUBLIC_API_URL + "/api/facility/"+id, {
+            gambar: form.gambar,
+            judul: form.judul,
+            deskripsi: form.deskripsi,
+            content:content
+          })
+          if (message.data == "success") {
+            window.location.reload()
+          }
       }
-    } catch (err: any) {
+
+      
+    } catch (err) {
       console.log(err.message)
     }
 
@@ -65,29 +76,30 @@ export default function FacilitiesAdmin() {
   useEffect(() => {
     async function getData() {
       try {
-        const Data = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/facility/")
+        const Data = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/facility/"+id)
         if (Data.data) {
-          setData(Data.data)
+          setForm(Data.data)
+          setContent(Data.data.content)
         }
 
-      } catch (err: any) {
+      } catch (err) {
         console.log(err.message)
       }
     }
     getData();
   }, [])
-
+    
   return (
     <div className="flex">
       <Sidebar />
       <div className="w-64"></div>
-      <div className="w-full">
+      <div className="w-full mb-16">
         <div className="p-6 mt-8 text-center">
-          <h1 className="text-3xl font-bold text-koreaBlue">FACILITIES CONTENT</h1>
+          <h1 className="text-3xl font-bold text-koreaBlue">EDIT FACILITY</h1>
         </div>
         <div className="m-auto w-full">
 
-          <div className=" m-auto bg-white p-6 rounded-lg shadow-lg w-[80%] border-2">
+          <div className=" m-auto bg-white p-6 rounded-lg shadow-lg w-[80%]">
             <form onSubmit={handleSubmit}>
               <h2 className="text-3xl pt-2 font-semibold text-start mb-4">Facility</h2>
               <label className="block text-gray-700 font-medium mb-2 text-xl mt-3">
@@ -101,8 +113,8 @@ export default function FacilitiesAdmin() {
                 onChange={handleChange}
                 value={form.judul}
               />
-               <label className="block text-gray-700 font-medium mb-2 text-xl mt-3">
-                Deskripsi
+              <label className="block text-gray-700 font-medium mb-2 text-xl mt-3">
+                Deksripsi
               </label>
               <input
                 type="text"
@@ -120,6 +132,7 @@ export default function FacilitiesAdmin() {
                 Gambar
               </label>
               <div className="border-2 border-dashed border-gray-300 p-4 rounded-lg text-center">
+                <Image alt="foto" src={process.env.NEXT_PUBLIC_API_FILE_URL +form.gambar} width={500} height={500} className="m-auto pb-5"/>
                 <input
                   type="file"
                   onChange={handleFileChange}
@@ -133,24 +146,9 @@ export default function FacilitiesAdmin() {
                 type="submit"
                 className="mt-4 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-200"
               >
-                Tambahkan
+                Update
               </button>
             </form>
-            <div>
-              <h3 className="text-2xl  font-bold text-center mt-14 mb-4">List Facility</h3>
-            </div>
-            <div className="grid grid-cols-2 justify-items-center">
-              {
-                data&&data.map((v:any,i:any)=>{
-                  return(
-                    <AdminCardFacilities key={i} judul={v.judul} gambar={v.gambar} deskripsi={v.deskripsi} content={v.content} _id={v._id} />
-                  )
-                })
-              }
-              
-            </div>
-
-
           </div>
         </div>
       </div >

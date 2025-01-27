@@ -12,7 +12,7 @@ export default function Aboutus() {
   const [currentFile, setCurrentFile] = useState("");
 
 
-  const handleChange = (e: any) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setData((prevData) => ({
       ...prevData,
@@ -20,11 +20,11 @@ export default function Aboutus() {
     }));
   };
 
-  const handleFileChange = (e: any) => {
+  const handleFileChange = (e) => {
     setCurrentFile(e.target.files[0]);
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
@@ -61,7 +61,7 @@ export default function Aboutus() {
       }
 
      
-    } catch (err: any) {
+    } catch (err) {
     console.log(err.message)
   }
 
@@ -76,7 +76,7 @@ useEffect(() => {
         setData(Data.data)
       }
       
-    } catch (err: any) {
+    } catch (err) {
       console.log(err.message)
     }
   }

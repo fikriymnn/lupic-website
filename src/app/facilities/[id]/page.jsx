@@ -6,7 +6,7 @@ import Image from "next/image";
 import { use, useEffect, useState } from "react";
 import parse from "html-react-parser"
 
-export default function detailFacility({ params }: { params: Promise<{ id: string }> }) {
+export default function detailFacility({ params }) {
     const {id}= use(params);
     const [data,setData] = useState({judul:"",deskripsi:"",content:"",gambar:""})
 
@@ -17,7 +17,7 @@ export default function detailFacility({ params }: { params: Promise<{ id: strin
                 if(Data.data){
                     setData(Data.data)
                 }
-            }catch(err:any){
+            }catch(err){
                 console.log(err.message)
             }
         }
