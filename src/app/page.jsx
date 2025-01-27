@@ -10,8 +10,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const Home = () => {
-    const [data,setData]=useState([])
-
+  const [data,setData]=useState([])
 
   useEffect(()=>{
     async function getData(){
@@ -26,6 +25,7 @@ const Home = () => {
     } 
     getData()
   },[])
+
   return (
     <>
       <Head>
