@@ -89,7 +89,7 @@ const Home = () => {
               {
                 data&&data.map((v,i)=>{
                   return(
-                    <CardNews key={i} tanggal={v.tanggal} judul={v.judul} deskripsi={v.deskripsi} gambar={v.gambar} id={v.id}/>
+                    <CardNews key={i} tanggal={v.tanggal} judul={v.judul} deskripsi={v.deskripsi} gambar={v.gambar} id={v._id}/>
                   )
                 })
               }
