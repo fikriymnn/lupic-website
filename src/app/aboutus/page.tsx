@@ -117,7 +117,7 @@ export default function Aboutus() {
                         Located in the heart of Seoul, Sogang University was founded by the Society of Jesus in 1960. Since its foundation, Sogang has grown onto one of the most prestigious universities in Korea. Sogang seeks scholastic excellence by providing world-class education through its outstanding faculty, state-of-the art research, quality educational programs, and rigorous academic management system based on the Jesuit educational philosophy.
                     </p>
                     <p className="text-justify md:text-xl text-base mt-5">
-                        There are 30 departments within 8 colleges in the undergraduate program with 8,000 students and 408 full-time, tenure-track professors. There are 12 graduate schools including professional and special graduate schools with a student enrollment of 4,000 in master's and doctoral programs. Approximately 5,100 foreign students study annually at Sogang University in various academic programs.
+                        There are 30 departments within 8 colleges in the undergraduate program with 8,000 students and 408 full-time, tenure-track professors. There are 12 graduate schools including professional and special graduate schools with a student enrollment of 4,000 in master s and doctoral programs. Approximately 5,100 foreign students study annually at Sogang University in various academic programs.
                     </p>
                     <p className="text-justify md:text-xl text-base mt-5">
                         Recognized for its high standard of education, Sogang University boasts the highest employment rate with major corporations in Korea with over 40,000 alumni working in influential positions in various areas of society.
@@ -136,19 +136,19 @@ export default function Aboutus() {
 
                     <div className="mt-10">
                         <div>
-                            <div className="flex justify-between items-center w-full h-20 m-auto bg-koreaBlue rounded-[50px] hover:cursor-pointer" onClick={(e) => { setActive(!active) }}>
+                            <div className="flex justify-between items-center w-full h-20 m-auto bg-koreaBlue rounded-[50px] hover:cursor-pointer" onClick={(e) =>{ e.preventDefault(); { setActive(!active) }}}>
                                 <div className="bg-gradient-to-b from-koreaBlue to-black rounded-full md:h-24 md:w-28 h-20 w-20 flex items-center">
                                     <Image className="rounded-full m-auto md:h-24 md:w-28 h-20 w-20" src={"/images/logoAbout/upi.jpg"} width={95} height={95} alt="foto" />
                                 </div>
                                 <h3 className="md:w-full w-[50%] md:text-xl text-xs font-bold text-white text-center">UNIVERSITAS PENDIDIKAN INDONESIA</h3>
-                                <button className="md:mr-10 mr-5" onClick={(e) => { setActive(!active) }}>
+                                <button className="md:mr-10 mr-5" onClick={(e) => {e.preventDefault(); { setActive(!active) }}}>
                                     <Image className={active ? "" : "rotate-180"} src={"/images/logoAbout/white-up.svg"} width={30} height={30} alt="foto" />
                                 </button>
                                 
                             </div>
                             <div className={`w-[85%] m-auto ${active ? 'hidden' : 'block'}`}>
                                 <p className="text-justify md:text-xl text-base mt-5">
-                                    The forerunner of the Department of Chemistry Education at FPMIPA IKIP Bandung was the Department of Natural Sciences at the Teacher Education College (PTPG) which was born in 1954. In connection with the change of PTPG's status to the Faculty of Teacher Training and Education (FKIP) at Padjadjaran University (UNPAD), for six years since In 1957, this department became part of UNPAD.
+                                    The forerunner of the Department of Chemistry Education at FPMIPA IKIP Bandung was the Department of Natural Sciences at the Teacher Education College (PTPG) which was born in 1954. In connection with the change of PTPG s status to the Faculty of Teacher Training and Education (FKIP) at Padjadjaran University (UNPAD), for six years since In 1957, this department became part of UNPAD.
                                 </p>
                                 <p className="text-justify md:text-xl text-base mt-5">
                                     In 1963 FKIP UNPAD changed its status to IKIP Bandung in accordance with Presidential Decree No. 1 of 1963. Since then the chemistry education department has become one of the departments within the Faculty of Teacher Training and Exact Sciences (FKIE) IKIP Bandung, at that time it was called the Department of Chemistry.
@@ -172,12 +172,12 @@ export default function Aboutus() {
                         </div>
                         
                         <div className="mt-10">
-                            <div className="flex justify-between items-center w-full h-20 m-auto bg-koreaBlue rounded-[50px] hover:cursor-pointer" onClick={(e) => { setActive2(!active2) }}>
+                            <div className="flex justify-between items-center w-full h-20 m-auto bg-koreaBlue rounded-[50px] hover:cursor-pointer" onClick={(e) =>{ e.preventDefault(); { setActive2(!active2) }}}>
                                 <div className="bg-gradient-to-b from-koreaBlue to-black rounded-full md:h-24 md:w-28 h-20 w-20 flex items-center">
                                     <Image className="rounded-full m-auto md:h-24 md:w-40 h-20 w-14" src={"/images/logoAbout/unnes_bulet.png"} width={95} height={95} alt="foto" />
                                 </div>
                                 <h3 className="md:w-full w-[50%] md:text-xl text-xs font-bold text-white text-center">UNIVERSITAS NEGERI SEMARANG </h3>
-                                <button className="md:mr-10 mr-5" onClick={(e) => { setActive2(!active2) }}>
+                                <button className="md:mr-10 mr-5" onClick={(e) => {e.preventDefault(); { setActive2(!active2) }}}>
                                     <Image className={active2 ? "" : "rotate-180"} src={"/images/logoAbout/white-up.svg"} width={30} height={30} alt="foto" />
                                 </button>
                             </div>
@@ -195,12 +195,12 @@ export default function Aboutus() {
                             </div>
                         </div>
                         <div className="mt-10">
-                            <div className="flex justify-between items-center w-full h-20 m-auto bg-koreaBlue rounded-[50px] hover:cursor-pointer" onClick={(e) => { setActive3(!active3) }}>
+                            <div className="flex justify-between items-center w-full h-20 m-auto bg-koreaBlue rounded-[50px] hover:cursor-pointer" onClick={(e) =>{ e.preventDefault(); { setActive3(!active3) }}}>
                                 <div className="bg-gradient-to-b from-koreaBlue to-black rounded-full md:h-24 md:w-28 h-20 w-20 flex items-center">
                                     <Image className="rounded-full m-auto pb-1 px-2" src={"/images/logoAbout/upg.png"} width={95} height={95} alt="foto" />
                                 </div>
                                 <h3 className="md:w-full w-[50%] md:text-xl text-xs font-bold text-white text-center">UNIVERSITAS PENDIDIKAN GANESHA </h3>
-                                <button className="md:mr-10 mr-5" onClick={(e) => { setActive3(!active3) }}>
+                                <button className="md:mr-10 mr-5" onClick={(e) => {e.preventDefault(); { setActive3(!active3) }}}>
                                     <Image className={active3 ? "" : "rotate-180"} src={"/images/logoAbout/white-up.svg"} width={30} height={30} alt="foto" />
                                 </button>
                             </div>
@@ -209,10 +209,10 @@ export default function Aboutus() {
                                 Chemistry Education Study Program: The Chemistry Education Study Program is one of the study programs under the Chemistry Department of FMIPA Undiksha which is located in Singaraja, Buleleng Regency, Bali Province. The Chemistry Education Study Program began accepting students in 1980 until now. The Chemistry Education Study Program currently has an accreditation rating from BAN-PT with an A rating. Website link: https://undiksha.ac.id/akademik/fakultas/fakultas-matematika-dan-ilmu-pengetahuan-alam/pendidikan-kimia/
                                 </p>
                                 <p className="text-justify md:text-xl text-base mt-5">
-                                Chemistry Study Program: Undergraduate Chemistry Study Program, Department of Chemistry, FMIPA Singaraja-Bali was established based on the Letter of the Director General of Higher Education No. 356/KPT/I/2016 dated 16 November 2016 concerning Permit to Open the Undergraduate Chemistry Study Program. As part of the education provider institution, the Undergraduate Chemistry Study Program is committed to providing quality education to produce a superior generation in the field of chemistry with a deep understanding of the concept of sustainable chemistry. This vision supports sustainable development programs and is also in line with Undiksha's vision and mission to become a superior university based on the Tri Hita Karana philosophy.
+                                Chemistry Study Program: Undergraduate Chemistry Study Program, Department of Chemistry, FMIPA Singaraja-Bali was established based on the Letter of the Director General of Higher Education No. 356/KPT/I/2016 dated 16 November 2016 concerning Permit to Open the Undergraduate Chemistry Study Program. As part of the education provider institution, the Undergraduate Chemistry Study Program is committed to providing quality education to produce a superior generation in the field of chemistry with a deep understanding of the concept of sustainable chemistry. This vision supports sustainable development programs and is also in line with Undiksha s vision and mission to become a superior university based on the Tri Hita Karana philosophy.
                                 </p>
                                 <p className="text-justify md:text-xl text-base mt-5">
-                                Learning in the Undergraduate Chemistry Study Program is carried out by adapting the MBKM curriculum, providing opportunities for students to study on campus and carry out activities outside campus through an industrial internship program. Improving the quality of learning in the Undergraduate Chemistry Study Program continues to be carried out by establishing international collaboration with MCUT Taiwan, University of Gottingen Germany and Sogang University South Korea. As of 2023, the Undergraduate Chemistry Study Program has produced 46 graduates, all of whom have been absorbed in various industries inside and outside Bali. Two of them are also continuing their master's studies at MCUT Taiwan and ITB, and several others have been successful in setting up independent business units. Website link: https://undiksha.ac.id/akademik/fakultas/fakultas-matematika-dan-ilmu-pengetahuan-alam/kimia/
+                                Learning in the Undergraduate Chemistry Study Program is carried out by adapting the MBKM curriculum, providing opportunities for students to study on campus and carry out activities outside campus through an industrial internship program. Improving the quality of learning in the Undergraduate Chemistry Study Program continues to be carried out by establishing international collaboration with MCUT Taiwan, University of Gottingen Germany and Sogang University South Korea. As of 2023, the Undergraduate Chemistry Study Program has produced 46 graduates, all of whom have been absorbed in various industries inside and outside Bali. Two of them are also continuing their master s studies at MCUT Taiwan and ITB, and several others have been successful in setting up independent business units. Website link: https://undiksha.ac.id/akademik/fakultas/fakultas-matematika-dan-ilmu-pengetahuan-alam/kimia/
                                 </p>
                                 
                             </div>
