@@ -137,9 +137,9 @@ export default function FacilitiesAdmin() {
               </button>
             </form>
             <div>
-              <h3 className="text-2xl font-bold text-center mt-14 mb-4">List Facility</h3>
+              <h3 className="text-2xl  font-bold text-center mt-14 mb-4">List Facility</h3>
             </div>
-            <div>
+            <div className="grid grid-cols-2 justify-items-center">
               {
                 data&&data.map((v:any,i:any)=>{
                   return(

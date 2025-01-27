@@ -13,12 +13,13 @@ export default function News() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages,setTotalPages] = useState(1)
   const [data, setData] = useState([]);
+  const [search,setSearch] = useState("")
 
 
   useEffect(() => {
     async function getData() {
       try {
-        const Data = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/news?" + "page=" + currentPage + "&limit=" + 9)
+        const Data = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/news?" + "page=" + currentPage )
         if (Data.data) {
           setData(Data.data)
           setTotalPages(Math.ceil(Data.data.length/9))
@@ -31,9 +32,7 @@ export default function News() {
 
   }, [])
 
-  useEffect(()=>{
-    console.log(currentPage)
-  },[currentPage])
+ 
 
   return (
     <div className="flex">
@@ -53,7 +52,7 @@ export default function News() {
             >
               Tambahkan News
             </button>
-            <div className="grid grid-cols-3 justify-evenly">
+            <div className="grid grid-cols-2 justify-items-center">
               {
                 data && data.map((v: any, i: any) => {
                   return (

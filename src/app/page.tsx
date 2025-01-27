@@ -83,9 +83,9 @@ const Home: React.FC = () => {
              </div>
           </div>
           {/* news */}
-          <div className='md:mt-20 mt-10'>
+          <div className='md:mt-20 mt-10 '>
             <h3 className='text-center text-4xl font-bold'>Latest News</h3>
-            <div className='grid md:grid-cols-3 grid-cols-1  justify-items-center mt-8'>
+            <div className='grid md:grid-cols-3 grid-cols-1 w-[90%] m-auto justify-items-center mt-8'>
               {
                 data&&data.map((v:any,i:any)=>{
                   return(

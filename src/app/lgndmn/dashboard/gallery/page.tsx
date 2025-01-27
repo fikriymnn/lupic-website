@@ -88,7 +88,7 @@ export default function FacilitiesAdmin() {
       <div className="w-64"></div>
       <div className="w-full">
         <div className="p-6 mt-8 text-center">
-          <h1 className="text-3xl font-bold text-koreaBlue">FACILITIES CONTENT</h1>
+          <h1 className="text-3xl font-bold text-koreaBlue">GALLERY CONTENT</h1>
         </div>
         <div className="m-auto w-full">
 
@@ -127,14 +127,14 @@ export default function FacilitiesAdmin() {
               </button>
             </form>
             <div>
-              <h3 className="text-2xl font-bold text-center mt-14 mb-4">List Facility</h3>
+              <h3 className="text-2xl font-bold text-center mt-14 mb-4">List Gallery</h3>
             </div>
             <div className="grid grid-cols-2 justify-items-center m-auto align-items-center items-center">
               {
                 data && data.map((v:any, i:any) => {
                   return (
                     <div className="grid grid-cols-1  justify-items-center w-[450px] mx-4" key={i}>
-                      <Image className="mx-6 py-5" alt="foto" src={process.env.NEXT_PUBLIC_API_FILE_URL + v.gambar} width={300} height={300} />
+                      <Image className="mx-6 py-5 w-[400px] h-[300px]" alt="foto" src={process.env.NEXT_PUBLIC_API_FILE_URL + v.gambar} width={300} height={300} />
                       <p className="text-xs mx-3 px-3">{v.deskripsi}</p>
                       <button className="w-20 m-auto w-[80%] mt-3" onClick={(e) => handleDelete(v._id)}>
                         <p className="text-sm text-center m-auto text-white bg-koreaRed p-2 rounded-2xl">Delete</p>

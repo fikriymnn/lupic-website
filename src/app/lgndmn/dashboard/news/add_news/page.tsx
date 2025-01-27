@@ -49,7 +49,6 @@ export default function AddNews() {
     };
 
     const handleSubmit = async (e: any) => {
-        e.preventDefault()
         if (!file) {
             alert("Pilih file terlebih dahulu!");
             return;

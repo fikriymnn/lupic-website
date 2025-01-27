@@ -3,10 +3,24 @@ import React from "react";
 import { FaHome, FaUser, FaCog, FaSignOutAlt, FaNewspaper, FaCamera, FaStore, FaHistory, FaAddressCard } from "react-icons/fa";
 import { usePathname } from "next/navigation";
 import { FaHouseMedical, FaScrewdriverWrench } from "react-icons/fa6";
+import axios from "axios";
 
 const Sidebar = () => {
   const path = usePathname();
   const adminPath = path.split("/");
+
+  const handleLogout = async (e:any)=>{
+    try{
+      const Data = await axios.delete(process.env.NEXT_PUBLIC_API_URL+"/api/user",{
+        withCredentials:true
+      })
+      if(Data.data=="success"){
+        window.location.href = "/"
+      }
+    }catch(err:any){
+      alert("logout failed")
+    }
+  }
   return (
     <div className="h-screen w-64 bg-koreaBlue text-white flex flex-col fixed">
       <h2 className="text-2xl font-bold text-center p-4 border-b border-gray-700">
@@ -60,7 +74,7 @@ const Sidebar = () => {
         </ul>
       </nav>
       <div className="p-4 border-t border-gray-700">
-        <a href="#" className="flex items-center space-x-2 p-2 hover:bg-koreaBlueMuda hover:bg-red-600 rounded">
+        <a onClick={handleLogout} className="flex items-center space-x-2 p-2 hover:bg-koreaBlueMuda hover:bg-red-600 rounded">
           <FaSignOutAlt />
           <span>Logout</span>
         </a>
