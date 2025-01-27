@@ -4,92 +4,26 @@ const arry = {
 
     }
     "2-Days wokshop (Venue: Bandung, June 2023)"
-export default function TableDataActivities() {
+export default function TableDataActivities({point,sub_point,sub_sub_point,text,upi,unnes,undiksha}:any) {
     return (
-        <tbody className="md:text-base text-xs">
-            <tr className="">
-                <td className="py-3 px-2 border-2">
-                    1.1.1
+       
+            <tr className="w-full">
+                <td className="py-3 md:px-3 px-2 border-2">
+                    {point}.{sub_point}.{sub_sub_point}
                 </td>
-                <td className="py-3 px-2 border-2">
-                Holding chemistry education expert consulting meetings (once a year)
+                <td className="py-3 md:px-3 px-2 border-2">
+                {text}
                 </td>
-                <td className="py-3 px-2 border-2" colSpan={3}>
-                2-Days wokshop (Venue: Bandung, June 2023)
+                <td className="py-3 md:px-3 px-2 border-2">
+                {upi}
                 </td>
-            </tr>
-            <tr className="">
-                <td className="py-3 px-2 border-2">
-                    1.1.1
+                <td className="py-3 md:px-3 px-2 border-2">
+                {unnes}
                 </td>
-                <td className="py-3 px-2 border-2">
-                Holding chemistry education expert consulting meetings (once a year)
-                </td>
-                <td className="py-3 px-2 border-2">
-                2-Days wokshop (Venue: Bandung, June 2023)
-                </td>
-                <td className="py-3 px-2 border-2">
-                2-Days wokshop (Venue: Bandung, June 2023)
-                </td>
-                <td className="py-3 px-2 border-2">
-                2-Days wokshop (Venue: Bandung, June 2023)
+                <td className="py-3 md:px-3 px-2 border-2">
+                {undiksha}
                 </td>
             </tr>
-            <tr className="">
-                <td className="py-3 px-2 border-2">
-                    1.1.1
-                </td>
-                <td className="py-3 px-2 border-2">
-                Holding chemistry education expert consulting meetings (once a year)
-                </td>
-                <td className="py-3 px-2 border-2" colSpan={3}>
-                2-Days wokshop (Venue: Bandung, June 2023)
-                </td>
-            </tr>
-            <tr className="">
-                <td className="py-3 px-2 border-2">
-                    1.1.1
-                </td>
-                <td className="py-3 px-2 border-2">
-                Holding chemistry education expert consulting meetings (once a year)
-                </td>
-                <td className="py-3 px-2 border-2" colSpan={3}>
-                2-Days wokshop (Venue: Bandung, June 2023)
-                </td>
-            </tr>
-            <tr className="">
-                <td className="py-3 px-2 border-2">
-                    1.1.1
-                </td>
-                <td className="py-3 px-2 border-2">
-                Holding chemistry education expert consulting meetings (once a year)
-                </td>
-                <td className="py-3 px-2 border-2" colSpan={3}>
-                2-Days wokshop (Venue: Bandung, June 2023)
-                </td>
-            </tr>
-            <tr className="">
-                <td className="py-3 px-2 border-2">
-                    1.1.1
-                </td>
-                <td className="py-3 px-2 border-2">
-                Holding chemistry education expert consulting meetings (once a year)
-                </td>
-                <td className="py-3 px-2 border-2" colSpan={3}>
-                2-Days wokshop (Venue: Bandung, June 2023)
-                </td>
-            </tr>
-            <tr className="">
-                <td className="py-3 px-2 border-2">
-                    1.1.1
-                </td>
-                <td className="py-3 px-2 border-2">
-                Holding chemistry education expert consulting meetings (once a year)
-                </td>
-                <td className="py-3 px-2 border-2" colSpan={3}>
-                2-Days wokshop (Venue: Bandung, June 2023)
-                </td>
-            </tr>
-        </tbody>
+    
     )
 }

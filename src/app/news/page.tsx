@@ -3,23 +3,53 @@ import Navbar from "@/components/Navbar"
 import CustomFooter from "@/components/CustomFooter"
 import Image from "next/image"
 import CardNews from "@/components/card/CardNews";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ResponsivePagination from 'react-responsive-pagination';
 import 'react-responsive-pagination/themes/classic.css';
+import axios from "axios";
 
 
 
 export default function News() {
     const [currentPage, setCurrentPage] = useState(1);
-    const totalPages =2;
+    const [data,setData] = useState([{judul:"",deskripsi:"",tanggal:"",_id:"",gambar:""}])
+    const [dataSearch,setDataSearch] = useState([{judul:"",deskripsi:"",tanggal:"",_id:"",gambar:""}])
+    const [totalPages,setTotalPage] = useState(1)
+    const [totalPagesSearch,setTotalPageSearch] = useState(1)
+    const [currentPageSearch, setCurrentPageSearch] = useState(1);
+    const [search,setSearch] = useState("")
+    const [searchActive,setSearchActive] = useState(false)
 
-    const truncateText = (text: any, maxWords: any) => {
-        const words = text.split(" ");
-        if (words.length > maxWords) {
-            return words.slice(0, maxWords).join(" ") + " ...";
+   
+
+    const onSearch = async ()=>{
+        try{
+            const Data = await axios.get(process.env.NEXT_PUBLIC_API_URL+"/api/news?page="+currentPageSearch+"&limit=6"+search?`&search=${search}`:"")
+            if(Data.data){
+                setDataSearch(Data.data)
+                setTotalPageSearch(Math.ceil(Data.data.length/6))
+                setSearchActive(true)
+            }
+        }catch(err:any){
+          alert(err.message)
         }
-        return text;
-    };
+       }
+
+    useEffect(()=>{
+        async function getData(){
+            try{
+                const Data = await axios.get(process.env.NEXT_PUBLIC_API_URL+"/api/news?page="+currentPage+"&limit=9")
+                if(Data.data){
+                    setData(Data.data)
+                    setTotalPage(Math.ceil(Data.data.length/9))
+                }
+            }catch(err:any){
+                console.log(err.message)
+            }
+        }
+        getData()
+    },[])
+
     return (
         <>
             <Navbar />
@@ -46,18 +76,18 @@ export default function News() {
                 </div>
                 {/* News Highlight */}
                 <div className="mt-8 w-full">
-                    <a className="md:flex m-auto w-full" href="#">
+                    <a className="md:flex m-auto w-full" href={"/news/"+data[0]._id}>
                         <div className="md:w-[50%]">
-                            <Image src={"/images/poster.jpg"} alt="" width={500} height={400} className="w-[600px] h-[300px] rounded-lg" />
+                            <Image src={process.env.NEXT_PUBLIC_API_FILE_URL+data[0].gambar} alt="" width={800} height={500} className="md:w-[600px] md:h-[400px] w-full h-[250px] rounded-lg" />
                         </div>
 
                         <div className="md:px-5 md:w-[50%]">
-                            <h3 className="md:text-4xl mt-3 text-2xl font-bold mb-2 text-koreaBlue md:text-start text-center">
-                                {truncateText("Join our Fabrication Laboratory Workshop!", 7)}
+                            <h3 className="md:text-4xl mt-3 line-clamp-2 text-2xl font-bold mb-2 text-koreaBlue md:text-start ">
+                                {data[0].judul}
                             </h3>
-                            <p className="text-sm mb-2 text-koreaBlueMuda md:text-start text-center">18 Januari 2025</p>
-                            <p className="text-justify mx-2 md:text-xl text-sm">
-                                {truncateText(" Our Workshop will cover a variety of tools and methodologies including:- Digital Design Software (Tinkercad)- 3D Printer Operations - Laser Cutter Operations- 3D Scanner Operations By joining our FabLab workshop, you’ll gain:- Practical skills in digital fabrication.- Access to industry-standard machinery.- A deeper understanding of the entire design-to-production workflow.- E-certificate for 32JP for teacher or lecturer. Workshop Details- Location: Universitas Pendidikan Indonesia, FPMIPA C.- Date: 11 & 18", 45)}
+                            <p className="text-sm mb-2 text-koreaBlueMuda md:text-start">{data[0].tanggal}</p>
+                            <p className="text-justify md:text-xl text-sm line-clamp-6">
+                                {data[0].deskripsi}
 
                             </p>
                         </div>
@@ -72,14 +102,15 @@ export default function News() {
                     <div className="h-1 w-36 bg-koreaRed md:mt-3 mt-2"></div>
                 </div>
                 <div className="grid md:grid-cols-3 justify-items-center grid-cols-1 md:mt-4 mt-2">
-                    <CardNews />
-                    <CardNews />
-                    <CardNews />
-                    <CardNews />
-                    <CardNews />
-                    <CardNews />
-                    <CardNews />
-                    <CardNews />
+                    {
+                        data&&data.map((v:any,i:any)=>{
+                            if(i!==0){
+                                return(
+                                    <CardNews gambar={v.gambar} key={i} judul={v.judul} deskripsi={v.deskripsi} tanggal={v.tanggal} id={v._id} />
+                                )
+                            }
+                        })
+                    }
                 </div>
             </div>
             <div className="w-[20%] m-auto mt-10 mb-16">

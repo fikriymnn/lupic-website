@@ -1,13 +1,12 @@
-"use client"
-import { useState } from 'react'
+
 import Navbar from '@/components/Navbar'
 import CustomFooter from '@/components/CustomFooter'
 import CarouselGallery from '@/components/carousel/CarouselGallery'
 
 
-
-
 export default function Gallery() {
+
+
     return (
         <>
             <Navbar />
@@ -15,7 +14,7 @@ export default function Gallery() {
                 <h3 className="md:text-4xl text-3xl mt-10 font-bold">Our Gallery</h3>
                 <div className="h-1 w-36 bg-koreaRed mt-5 m-auto"></div>
             </div>
-            <CarouselGallery />
+            <CarouselGallery/>
             <CustomFooter />
         </>
     )

@@ -1,10 +1,31 @@
+"use client"
 import Head from 'next/head';
 import Navbar from '../components/Navbar';
 import Image from 'next/image';
 import CardNews from '@/components/card/CardNews';
 import CustomFooter from '@/components/CustomFooter';
+import CarouselHome from '@/components/carousel/CarouselHome';
+import HeroSection from '@/components/HeroSection';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const Home: React.FC = () => {
+    const [data,setData]=useState([])
+
+
+  useEffect(()=>{
+    async function getData(){
+      try{
+        const Data = await axios.get(process.env.NEXT_PUBLIC_API_URL+"/api/news?page=1&limit=3")
+        if(Data.data){
+          setData(Data.data)
+        }
+      }catch(err:any){
+        console.log(err.message)
+      }
+    } 
+    getData()
+  },[])
   return (
     <>
       <Head>
@@ -13,44 +34,12 @@ const Home: React.FC = () => {
       </Head>
       <Navbar />
       {/* hero section */}
-      <div
-        className="relative bg-cover bg-center h-screen text-white flex flex-col justify-center items-center px-4 md:px-6"
-        style={{ backgroundImage: "url('/images/villa-isola.jpg')" }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-b from-koreaBlue to-black opacity-50 z-0"></div>
-
-        <div className="relative z-10 flex flex-col justify-center items-center">
-          <button className="bg-koreaBlue py-3 px-4 md:px-8 rounded-full text-xs font-bold md:text-sm mb-4 hover:bg-red-600">
-            In Collaboration With Great Univ
-          </button>
-
-          <div className="space-x-4 mb-6">
-            <img
-              src="/images/logo-instansi-home.png"
-              alt="Logo-logo instansi"
-              className="h-8 md:h-24"
-            />
-          </div>
-
-          <h1 className="text-3xl w-[80%] md:text-6xl lg:text-6xl font-bold text-center mb-4 mx-6 md:mx-12 lg:mx-56 ">
-            Leading University Project for International Cooperation
-          </h1>
-
-          <p className="text-sm md:w-[60%] w-[80%] md:text-2xl text-center mb-6 mx-4 md:mx-12">
-            Improving Chemistry/Science Education Program in Java and Northern Bali Islands and
-            Community Service
-          </p>
-
-          <button className="bg-white text-red-700 py-2 px-4 md:px-6 rounded-lg hover:bg-red-700 hover:text-white">
-            Read More
-          </button>
-        </div>
-      </div>
+     <HeroSection/>
       <div className='flex justify-center'>
       <div className="w-[95%]">
           {/* poster */}
           <div className='flex justify-center align-center md:pt-8 pt-5'>
-          <Image className="rounded-3xl" src={"/images/poster.jpg"} alt={"image"} width={1200} height={1200} />
+          <CarouselHome/>
           </div>
           {/* goals */}
           <div className='w-full md:pt-14 pt-8'>
@@ -94,14 +83,18 @@ const Home: React.FC = () => {
              </div>
           </div>
           {/* news */}
-          <div className='md:mt-20 mt-10'>
+          <div className='md:mt-20 mt-10 '>
             <h3 className='text-center text-4xl font-bold'>Latest News</h3>
-            <div className='flex md:flex-nowrap flex-wrap justify-center mt-8'>
-              <CardNews/>
-              <CardNews/>
-              <CardNews/>
+            <div className='grid md:grid-cols-3 grid-cols-1 w-[90%] m-auto justify-items-center mt-8'>
+              {
+                data&&data.map((v:any,i:any)=>{
+                  return(
+                    <CardNews key={i} tanggal={v.tanggal} judul={v.judul} deskripsi={v.deskripsi} gambar={v.gambar} id={v.id}/>
+                  )
+                })
+              }
             </div>
-            <a href='#' className='bg-koreaRed md:w-56 md:h-16 w-36 h-14 flex justify-center align-center content-middle rounded-xl md:mt-10 mt-8 m-auto'>
+            <a href='/news' className='bg-koreaRed md:w-56 md:h-16 w-36 h-14 flex justify-center align-center content-middle rounded-xl md:mt-10 mt-8 m-auto'>
               <p className='m-auto text-white md:text-base text-xs'>Read More News &#8594;</p>
             </a>
           </div>

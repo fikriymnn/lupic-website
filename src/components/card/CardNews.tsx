@@ -1,6 +1,6 @@
 import Image from "next/image"
 
-export default function CardNews(){
+export default function CardNews({gambar,judul,deskripsi,tanggal,id}:any){
     const truncateText = (text: any, maxWords:any) => {
         const words = text.split(" ");
         if (words.length > maxWords) {
@@ -10,12 +10,13 @@ export default function CardNews(){
     };
 
     return(
-        <a href="/news/1" className="md:w-[95%] w-[90%] md:mx-5 mt-4">
+        
+        <a href={"/news/"+id} className="md:w-[450px] md:p-4 w-[90%] md:mx-5 mt-4 ">
         <div className="w-full">
-            <Image src={'/images/poster.jpg'} alt="foto" width={1000} height={1000} className="w-[500px] h-[250px] rounded-xl"/>
-            <h3 className="font-bold text-lg md:mt-2 mt-2 mb-1 text-koreaBlue">{truncateText("Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga, sint?",11)}</h3>
-            <p className=" text-koreaBlueMuda text-xs">19 Januari 2025</p>
-            <p className="text-justify text-sm">{truncateText("Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam, atque! Lorem ipsumasdas asdasd asdsad sad aasdas dolor sit amet consectetur adipisicing elit. Obcaecati, assumenda.",23)}</p>
+            <Image src={process.env.NEXT_PUBLIC_API_FILE_URL+gambar} alt="foto" width={600} height={300} className="w-[500px] h-[300px] rounded-xl"/>
+            <h3 className="font-bold line-clamp-2 text-lg md:mt-2 mt-2 text-koreaBlue">{judul}</h3>
+            <p className=" text-koreaBlueMuda text-xs">{tanggal}</p>
+            <p className="text-justify line-clamp-2 text-base">{deskripsi}</p>
         </div>
         </a>
     )

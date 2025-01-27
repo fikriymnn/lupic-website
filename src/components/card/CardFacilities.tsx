@@ -1,6 +1,6 @@
 import Image from "next/image"
 
-export default function CardFacilities(){
+export default function CardFacilities({gambar,judul,deskripsi,id}:any){
     const truncateText = (text: any, maxWords:any) => {
         const words = text.split(" ");
         if (words.length > maxWords) {
@@ -10,12 +10,12 @@ export default function CardFacilities(){
     };
 
     return(
-        <a className="mx-5 mt-4 block">
+        <a className="mx-5 mt-4 block" href={"/facilities/"+id}>
         <div className="w-[300px] shadow-xl rounded-xl">
-            <Image src={'/images/poster.jpg'} alt="foto" width={1000} height={1000} className="w-[300px] h-[300px] rounded-xl"/>
+            <Image src={process.env.NEXT_PUBLIC_API_FILE_URL+gambar} alt="foto" width={1000} height={1000} className="w-[300px] h-[300px] rounded-xl"/>
             <div className=" p-2"> 
-            <h3 className="font-bold text-center text-xl md:mt-2 mt-2 mb-1 text-koreaBlue">3D Printer Anycubic Photon D2 Big Size DLP</h3>
-            <p className="m-auto w-[90%] text-sm text-justify pb-2">3D Printer Anycubic Photon D2 Big Size DLP sppaspd asdpasd asdpaspd asdpapsdasd asdas dasd asd</p>
+            <h3 className="font-bold line-clamp-2 text-center text-xl md:mt-2 mt-2 mb-1 text-koreaBlue h-14">{judul}</h3>
+            <p className="m-auto line-clamp-2 w-[90%] text-sm text-justify pb-2 h-16">{truncateText(deskripsi,30)}</p>
             </div>
         </div>
         </a>

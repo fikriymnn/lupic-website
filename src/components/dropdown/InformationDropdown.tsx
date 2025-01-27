@@ -8,21 +8,19 @@ export default function InformationDropdown() {
     const [dataGoals,setDataGoals] = useState([{
         title_goals:"1-1. Enhancement of Education Capability",
         goals:[
-            "1-1-1. Holding chemistry education expert consulting meetings (once a year)",
-            "1-1-2. Holding a workshop for faculties of the participating universities and SDU (once a yesar)",
-            "1-1-1. Holding chemistry education expert consulting meetings (once a year)",
-            "1-1-2. Holding aa workshop for faculties of the participating universities and SDU (once a year)",
-        ],
-        year :[{ year: 1, percent: 50 , active:false}, { year: 2, percent: 60 , active:false}, { year: 3, percent: 70 , active:false}, { year: 4, percent: 80 , active:false}, { year: 5, percent: 90 , active:false}, { year: 6, percent: 100 , active:false}]
+            {
+            text: "1-1-1. Holding chemistry education expert consulting meetings (once a year)",
+            year:1
+            }   
+        ]
     },{
         title_goals:"1-2. Enhancement of Education Capability",
         goals:[
-            "1-1-1. Holding chemiwstry education expert consulting meetings (once a year)",
-            "1-1-2. Holding a workshop for faculties of the participating universities and SDU (once a year)",
-            "1-1-1. Holding chemristry education expert consulting meetings (once a year)",
-            "1-1-2. Holding a wo3rkshop for faculties of the participating universities and SDU (once a year)",
+            {
+                text: "1-1-1. Holding chemistry education expert consulting meetings (once a year)",
+                year:1
+            } 
         ],
-        year :[{ year: 1, percent: 50 , active:false}, { year: 2, percent: 60 , active:false}, { year: 3, percent: 70 , active:false}, { year: 4, percent: 80 , active:false}, { year: 5, percent: 90 , active:false}, { year: 6, percent: 100 , active:false}]
     }])
 
     return (
@@ -39,15 +37,7 @@ export default function InformationDropdown() {
                 </div>
                 <div className={`w-[85%] m-auto  ${active ? 'hidden' : 'block'}`}>
                     <div className="mt-8">
-                     {
-                        dataGoals&& dataGoals.map((v,i)=>{
-                            return(
-                                <TableActivities2 dataGoals={v.goals} dataTitleGoals={v.title_goals} dataYear={v.year} key={i}/>
-                            
-                            )
-                        })
-                     }
-
+                                <TableActivities2 />
                    </div>
                 </div>
             </div>

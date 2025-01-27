@@ -1,15 +1,29 @@
 "use client"
+import axios from "axios";
 import React, { useState } from "react";
 
 export default function Lgdmn(){
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e:any) => {
+  const handleSubmit = async (e:any) => {
     e.preventDefault();
-    console.log("Login Attempt:", { email, password });
-    // Tambahkan logika autentikasi di sini
-    window.location.href = "/lgdmn/dashboard"
+    try{
+      const Data = await axios.post(process.env.NEXT_PUBLIC_API_URL+"/api/login",{
+        email:email,password:password
+      },{
+        withCredentials: true 
+    })
+      if(Data.data=="success"){
+        alert("Login success")
+        window.location.href = "/lgndmn/dashboard"
+      }else{
+        alert("login failed")
+      }
+    }catch(err:any){
+      alert("login failed")
+    }
+    
   };
 
   return (
