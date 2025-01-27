@@ -25,9 +25,10 @@ export default function News() {
     const onSearch = async ()=>{
         try{
             const Data = await axios.get(process.env.NEXT_PUBLIC_API_URL+"/api/news?page="+currentPageSearch+"&limit=6"+(search?`&search=${search}`:""))
-            if(Data.data){
+            const Data2 = await axios.get(process.env.NEXT_PUBLIC_API_URL+"/api/news")
+            if(Data.data&&Data2.data){
                 setDataSearch(Data.data)
-                setTotalPageSearch(Math.ceil(Data.data.length/6))
+                setTotalPageSearch(Math.ceil(Data2.data.length/6))
                 setSearchActive(true)
             }
         }catch(err){
@@ -38,17 +39,19 @@ export default function News() {
     useEffect(()=>{
         async function getData(){
             try{
-                const Data = await axios.get(process.env.NEXT_PUBLIC_API_URL+"/api/news?page="+currentPage+"&limit=9")
+                const Data = await axios.get(process.env.NEXT_PUBLIC_API_URL+"/api/news?page="+currentPage+"&limit=10")
+                const Data2 = await axios.get(process.env.NEXT_PUBLIC_API_URL+"/api/news")
                 if(Data.data){
                     setData(Data.data)
-                    setTotalPage(Math.ceil(Data.data.length/9))
+                    setTotalPage(Math.ceil(Data2.data.length/10))
+                    console.log(totalPages)
                 }
             }catch(err){
                 console.log(err.message)
             }
         }
         getData()
-    },[])
+    },[currentPage])
 
     return (
         <>
