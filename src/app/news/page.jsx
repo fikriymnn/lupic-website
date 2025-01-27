@@ -25,11 +25,14 @@ export default function News() {
     const onSearch = async ()=>{
         try{
             const Data = await axios.get(process.env.NEXT_PUBLIC_API_URL+"/api/news?page="+currentPageSearch+"&limit=6"+(search?`&search=${search}`:""))
-            const Data2 = await axios.get(process.env.NEXT_PUBLIC_API_URL+"/api/news")
-            if(Data.data&&Data2.data){
+            const Data2 = await axios.get(process.env.NEXT_PUBLIC_API_URL+"/api/news?search="+search+"&count=asd")
+            if(Data.data){
                 setDataSearch(Data.data)
-                setTotalPageSearch(Math.ceil(Data2.data.length/6))
                 setSearchActive(true)
+            }
+            if(Data2.data){
+                setTotalPageSearch(Math.ceil(Data2.data/6))
+                
             }
         }catch(err){
           alert(err.message)

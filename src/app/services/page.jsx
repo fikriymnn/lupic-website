@@ -26,6 +26,7 @@ export default function ServiceToko() {
         }
         getData()
     },[currentPage])
+    
     return (
         <>
             <Navbar />
