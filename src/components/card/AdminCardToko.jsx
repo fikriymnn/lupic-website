@@ -1,8 +1,8 @@
 import axios from "axios";
 import Image from "next/image"
 
-export default function AdminCardToko({ gambar, judul, deskripsi, id, harga }: any) {
-    const truncateText = (text: any, maxWords: any) => {
+export default function AdminCardToko({ gambar, judul, deskripsi, id, harga }) {
+    const truncateText = (text, maxWords) => {
         const words = text.split(" ");
         if (words.length > maxWords) {
             return words.slice(0, maxWords).join(" ") + " ...";
@@ -10,14 +10,14 @@ export default function AdminCardToko({ gambar, judul, deskripsi, id, harga }: a
         return text;
     };
 
-    const onDelete = async (e: any) => {
+    const onDelete = async (e) => {
         try {
             const message = await axios.delete(process.env.NEXT_PUBLIC_API_URL + "/api/toko/"+id)
             if(message.data=="success"){
                 alert("delete success")
                 window.location.reload()
             }
-        } catch (err: any) {
+        } catch (err) {
             console.log(err.message)
         }
     }

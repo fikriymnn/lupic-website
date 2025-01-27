@@ -1,7 +1,7 @@
 import Image from "next/image"
 
-export default function CardFacilities({gambar,judul,deskripsi,id}:any){
-    const truncateText = (text: any, maxWords:any) => {
+export default function CardFacilities({gambar,judul,deskripsi,id}){
+    const truncateText = (text, maxWords) => {
         const words = text.split(" ");
         if (words.length > maxWords) {
           return words.slice(0, maxWords).join(" ") + " ...";

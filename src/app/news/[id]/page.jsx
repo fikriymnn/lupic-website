@@ -6,7 +6,7 @@ import axios from "axios";
 import Image from "next/image";
 import { use, useEffect, useState } from "react";
 
-export default function detailNews({ params }:{ params: Promise<{ id: string }> }) {
+export default function detailNews({ params }) {
     const [data, setData] = useState({ judul: "", deskripsi: "", content: "", gambar: "", sub_content: [{ sub_judul: "", sub_content: "", sub_gambar: [""] }], author: "", tanggal: "" })
     const {id}= use(params);
 
@@ -18,7 +18,7 @@ export default function detailNews({ params }:{ params: Promise<{ id: string }> 
                     setData(Data.data)
                     console.log(data)
                 }
-            } catch (err: any) {
+            } catch (err) {
                 console.log(err.message)
             }
         }
@@ -45,7 +45,7 @@ export default function detailNews({ params }:{ params: Promise<{ id: string }> 
                 </div>
                 {/* looping */}
                 {
-                    data.sub_content&&data.sub_content.map((v:any,i:any)=>{
+                    data.sub_content&&data.sub_content.map((v,i)=>{
                         return(
                             <div className="md:mb-14 mb-4" key={i}>
                             <div className="mt-8 m-auto text-xl w-[80%] text-justify">
@@ -55,7 +55,7 @@ export default function detailNews({ params }:{ params: Promise<{ id: string }> 
                                 <p className="md:text-xl text-base">{v.sub_content}</p>
                                 <div className="w-full mt-5 flex flex-wrap justify-center">
                                     {
-                                        v.sub_gambar&&v.sub_gambar.map((w:any,u:any)=>{
+                                        v.sub_gambar&&v.sub_gambar.map((w,u)=>{
                                             if(w!==""){
                                                 return(
                                                     <Image key={u} className="w-[60%] mb-4 mx-4" src={process.env.NEXT_PUBLIC_API_FILE_URL+w} alt="foto" width={600} height={600} />

@@ -6,7 +6,7 @@ import Image from "next/image";
 import { use, useEffect, useState } from "react";
 import parse from "html-react-parser"
 
-export default function EditToko({ params }: { params: Promise<{ id: string }> }) {
+export default function EditToko({ params }) {
     const { id } = use(params);
     const [data, setData] = useState({ judul: "", content: "", gambar: "",harga:"",deskripsi:"",link_shopee:"",link_tokped:"",_id:"" })
 
@@ -17,7 +17,7 @@ export default function EditToko({ params }: { params: Promise<{ id: string }> }
                 if (Data.data) {
                     setData(Data.data)
                 }
-            } catch (err: any) {
+            } catch (err) {
                 console.log(err.message)
             }
         }

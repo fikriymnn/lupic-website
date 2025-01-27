@@ -12,7 +12,7 @@ export default function ServicesAdmin() {
   const [content, setContent] = useState("");
   const [file, setFile] = useState("");
 
-  const handleChange = (e: any) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prevData) => ({
       ...prevData,
@@ -20,16 +20,16 @@ export default function ServicesAdmin() {
     }));
   };
 
-  const handleContent = (e: any) => {
+  const handleContent = (e) => {
     setContent(e.target.value);
   };
 
-  const handleFileChange = (e: any) => {
+  const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
 
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
@@ -60,7 +60,7 @@ export default function ServicesAdmin() {
           window.location.reload()
         }
       }
-    } catch (err: any) {
+    } catch (err) {
       console.log(err.message)
     }
 
@@ -75,7 +75,7 @@ export default function ServicesAdmin() {
           setContent(Data.data.content)
         }
 
-      } catch (err: any) {
+      } catch (err) {
         console.log(err.message)
       }
     }
@@ -178,7 +178,7 @@ export default function ServicesAdmin() {
             </div>
             <div>
               {
-                data.map((v:any,i:any)=>{
+                data.map((v,i)=>{
                   return(
                     <AdminCardToko key={i} judul={v.judul} deskripsi={v.deskripsi} id={v._id} gambar={v.gambar} harga={v.harga}/>
                   )

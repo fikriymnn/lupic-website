@@ -12,17 +12,17 @@ export default function Dashboard() {
   const [fileCarousel, setFileCarousel] = useState(null);
   
 
-  const handleFileChange = (e: any) => {
+  const handleFileChange = (e) => {
     e.preventDefault();
     const filee = e.target.files[0];
     setFileHero(filee);
     console.log(fileHero);
   };
-  const handleFileChange2 = async (e: any) => {
+  const handleFileChange2 = async (e) => {
     setFileCarousel(e.target.files[0]);
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!fileHero) {
       alert("Pilih file terlebih dahulu!");
@@ -47,12 +47,12 @@ export default function Dashboard() {
           window.location.reload()
         }
       }
-    } catch (err: any) {
+    } catch (err) {
       console.log(err.message)
     }
 
   };
-  const handleSubmit2 = async (e: any) => {
+  const handleSubmit2 = async (e) => {
     e.preventDefault();
     if (!fileCarousel) {
       alert("Pilih file terlebih dahulu!");
@@ -77,12 +77,12 @@ export default function Dashboard() {
           window.location.reload()
         }
       }
-    } catch (err: any) {
+    } catch (err) {
       console.log(err.message)
     }
   };
 
-  const onDelete = async (i:any)=>{
+  const onDelete = async (i)=>{
     try{
       let newData = [...file2]
       newData.splice(i,1)
@@ -93,7 +93,7 @@ export default function Dashboard() {
       if (message.data == "success") {
         window.location.reload()
       }
-    }catch(err:any){
+    }catch(err){
       console.log(err.message)
     }
       
@@ -108,7 +108,7 @@ export default function Dashboard() {
         console.log(data)
           setId(data.data._id)
 
-      } catch (err: any) {
+      } catch (err) {
         console.log(err.message)
       }
     }

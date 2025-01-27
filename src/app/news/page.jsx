@@ -30,7 +30,7 @@ export default function News() {
                 setTotalPageSearch(Math.ceil(Data.data.length/6))
                 setSearchActive(true)
             }
-        }catch(err:any){
+        }catch(err){
           alert(err.message)
         }
        }
@@ -43,7 +43,7 @@ export default function News() {
                     setData(Data.data)
                     setTotalPage(Math.ceil(Data.data.length/9))
                 }
-            }catch(err:any){
+            }catch(err){
                 console.log(err.message)
             }
         }
@@ -103,7 +103,7 @@ export default function News() {
                 </div>
                 <div className="grid md:grid-cols-3 justify-items-center grid-cols-1 md:mt-4 mt-2">
                     {
-                        data&&data.map((v:any,i:any)=>{
+                        data&&data.map((v,i)=>{
                             if(i!==0){
                                 return(
                                     <CardNews gambar={v.gambar} key={i} judul={v.judul} deskripsi={v.deskripsi} tanggal={v.tanggal} id={v._id} />

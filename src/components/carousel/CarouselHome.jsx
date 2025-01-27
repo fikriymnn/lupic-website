@@ -17,7 +17,7 @@ export default function CarouselHome() {
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 3000,
-        afterChange: (i: any) => { setNum(i) }
+        afterChange: (i) => { setNum(i) }
     };
 
     useEffect(() => {
@@ -25,7 +25,7 @@ export default function CarouselHome() {
             try {
                 const data = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/home")
                 setGambar(data.data.carousel)
-            } catch (err: any) {
+            } catch (err) {
                 console.log(err.message)
             }
         }

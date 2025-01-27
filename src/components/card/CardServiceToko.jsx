@@ -1,7 +1,7 @@
 import Image from "next/image"
 
-export default function CardServiceToko({ gambar, judul, deskripsi, id,harga }: any) {
-    const truncateText = (text: any, maxWords: any) => {
+export default function CardServiceToko({ gambar, judul, deskripsi, id,harga }) {
+    const truncateText = (text, maxWords) => {
         const words = text.split(" ");
         if (words.length > maxWords) {
             return words.slice(0, maxWords).join(" ") + " ...";

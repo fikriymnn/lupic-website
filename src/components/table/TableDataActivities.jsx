@@ -4,7 +4,7 @@ const arry = {
 
     }
     "2-Days wokshop (Venue: Bandung, June 2023)"
-export default function TableDataActivities({point,sub_point,sub_sub_point,text,upi,unnes,undiksha}:any) {
+export default function TableDataActivities({point,sub_point,sub_sub_point,text,upi,unnes,undiksha}) {
     return (
        
             <tr className="w-full">

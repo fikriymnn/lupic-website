@@ -9,7 +9,7 @@ const Sidebar = () => {
   const path = usePathname();
   const adminPath = path.split("/");
 
-  const handleLogout = async (e:any)=>{
+  const handleLogout = async (e)=>{
     try{
       const Data = await axios.delete(process.env.NEXT_PUBLIC_API_URL+"/api/user",{
         withCredentials:true
@@ -17,7 +17,7 @@ const Sidebar = () => {
       if(Data.data=="success"){
         window.location.href = "/"
       }
-    }catch(err:any){
+    }catch(err){
       alert("logout failed")
     }
   }

@@ -27,7 +27,7 @@ export default function CarouselActivities() {
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 3000,
-        beforeChange: (i: any) => { setNum(i)
+        beforeChange: (i) => { setNum(i)
          }
     };
     useEffect(() => {
@@ -37,7 +37,7 @@ export default function CarouselActivities() {
                 if (Data.data) {
                     setData(Data.data)
                 }
-            } catch (err: any) {
+            } catch (err) {
                 console.log(err.message)
             }
         }
@@ -49,7 +49,7 @@ export default function CarouselActivities() {
                 <div className='m-auto w-[70%] md:hidden block'>
                     <Slider {...settings}>
                         {
-                            data && data.map((v: any, i: any) => {
+                            data && data.map((v, i) => {
                                 return (
                                     <div key={i}>
                                         <img className='rounded-lg md:h-full h-36' src={process.env.NEXT_PUBLIC_API_FILE_URL + v.gambar} alt="image" />
@@ -66,7 +66,7 @@ export default function CarouselActivities() {
                 <div className='m-auto w-[60%] md:block hidden'>
                     <Slider {...settings}>
                     {
-                            data && data.map((v: any, i: any) => {
+                            data && data.map((v, i) => {
                                 return (
                                     <div key={i}>
                                         <img className='rounded-lg h-full' src={process.env.NEXT_PUBLIC_API_FILE_URL + v.gambar} alt="image" />

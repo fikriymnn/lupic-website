@@ -11,7 +11,7 @@ export default function HeroSection(){
             try{
                 const data = await axios.get(process.env.NEXT_PUBLIC_API_URL+"/api/home")
                 setGambar(data.data.hero_section)
-            }catch(err:any){
+            }catch(err){
                 console.log(err.message)
             }
         }

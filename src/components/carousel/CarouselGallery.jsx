@@ -18,7 +18,7 @@ export default function CarouselGallery() {
                    setData(Data.data)
                 }
                 
-            }catch(err:any){
+            }catch(err){
                 console.log(err.message)
             }
         }
@@ -31,7 +31,7 @@ export default function CarouselGallery() {
             <div className='w-[90%] m-auto'>
                 <Carousel
                     defaultOption={{ numOfSlides: 'auto' }}
-                    items={data.map((v:any,i:any)=><img className='rounded-lg w-full' src={(process.env.NEXT_PUBLIC_API_FILE_URL)+v.gambar} alt="image" />)}
+                    items={data.map((v,i)=><img className='rounded-lg w-full' src={(process.env.NEXT_PUBLIC_API_FILE_URL)+v.gambar} alt="image" />)}
                     startIndex={0}
                     onChange={(currentIndex) => {
                         setIndex(currentIndex)

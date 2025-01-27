@@ -2,7 +2,7 @@
 import axios from "axios"
 import Image from "next/image"
 
-export default function AdminCarouselActivities({deskripsi,judul,gambar,id}:any) {
+export default function AdminCarouselActivities({deskripsi,judul,gambar,id}) {
     const handleDelete = async()=>{
         try{
             const message = await axios.delete(process.env.NEXT_PUBLIC_API_URL+"/api/activity_carousel/"+id)
@@ -10,7 +10,7 @@ export default function AdminCarouselActivities({deskripsi,judul,gambar,id}:any)
                 alert("delete success")
                 window.location.reload()
             }
-        }catch(err:any){
+        }catch(err){
             console.log(err.message)
         }
     }

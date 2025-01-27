@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 
-const Navbar: React.FC = () => {
+const Navbar = () => {
     const [menuOpen, setMenuOpen] = useState(false);
 
     return (

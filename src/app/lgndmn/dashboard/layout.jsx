@@ -4,9 +4,7 @@ import { useEffect, useState } from "react";
 
 export default function layout({
     children,
-  }: Readonly<{
-    children: React.ReactNode;
-  }>) {
+  }) {
     const [auth,setAuth] = useState(false)
 
     useEffect(()=>{
@@ -20,7 +18,7 @@ export default function layout({
                   }else{
                     window.location.href="/"
                   }
-            }catch(err:any){
+            }catch(err){
                 alert(err.message)
             }
         }

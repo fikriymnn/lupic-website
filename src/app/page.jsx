@@ -9,7 +9,7 @@ import HeroSection from '@/components/HeroSection';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const Home: React.FC = () => {
+const Home = () => {
     const [data,setData]=useState([])
 
 
@@ -20,7 +20,7 @@ const Home: React.FC = () => {
         if(Data.data){
           setData(Data.data)
         }
-      }catch(err:any){
+      }catch(err){
         console.log(err.message)
       }
     } 
@@ -87,7 +87,7 @@ const Home: React.FC = () => {
             <h3 className='text-center text-4xl font-bold'>Latest News</h3>
             <div className='grid md:grid-cols-3 grid-cols-1 w-[90%] m-auto justify-items-center mt-8'>
               {
-                data&&data.map((v:any,i:any)=>{
+                data&&data.map((v,i)=>{
                   return(
                     <CardNews key={i} tanggal={v.tanggal} judul={v.judul} deskripsi={v.deskripsi} gambar={v.gambar} id={v.id}/>
                   )

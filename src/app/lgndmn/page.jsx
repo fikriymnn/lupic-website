@@ -6,7 +6,7 @@ export default function Lgdmn(){
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = async (e:any) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try{
       const Data = await axios.post(process.env.NEXT_PUBLIC_API_URL+"/api/login",{
@@ -20,7 +20,7 @@ export default function Lgdmn(){
       }else{
         alert("login failed")
       }
-    }catch(err:any){
+    }catch(err){
       alert("login failed")
     }
     

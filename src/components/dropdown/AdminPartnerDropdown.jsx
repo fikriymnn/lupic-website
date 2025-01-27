@@ -2,7 +2,7 @@
 import Image from "next/image"
 import { useState } from "react"
 
-export default function AdminPartnerDropdown({ nama, deskripsi,logo }: any) {
+export default function AdminPartnerDropdown({ nama, deskripsi,logo }) {
     const [active, setActive] = useState(true)
     return (
         <div className="mt-10">

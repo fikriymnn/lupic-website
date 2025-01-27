@@ -20,7 +20,7 @@ export default function ServiceToko() {
                 if(data.data){
                     setData(data.data)
                 }
-            }catch(err:any){
+            }catch(err){
                 console.log(err.message)
             }
         }
@@ -35,7 +35,7 @@ export default function ServiceToko() {
             </div>
             <div className="md:grid md:grid-cols-4 justify-items-center flex flex-wrap m-auto w-[90%] mb-20 md:mt-8 mt-3  justify-evenly items-center">
                 {
-                    data&&data.map((v:any,i:any)=>{
+                    data&&data.map((v,i)=>{
                         return(
                             <CardServiceToko key={i} judul={v.judul} deskripsi={v.deskripsi} harga={v.harga} gambar={v.gambar} id={v._id}/>
                         )
