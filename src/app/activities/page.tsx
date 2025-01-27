@@ -4,7 +4,6 @@ import Navbar from "@/components/Navbar"
 import CustomFooter from "@/components/CustomFooter"
 import CarouselActivities from "@/components/carousel/CarouselActivities"
 import Image from "next/image"
-import InformationDropdown from "@/components/dropdown/InformationDropdown"
 import TableDataActivities from "@/components/table/TableDataActivities"
 // import TableActivities2 from "@/components/table/TableActivities2"
 import InformationDropdown1 from "@/components/dropdown/information/InformationDropdown1"
@@ -30,8 +29,8 @@ export default function Activities() {
                     setData(Data.data)
 
                 }
-            } catch (err: any) {
-                console.log(err.message)
+            } catch (err: unknown) {
+                console.log(err)
             }
         }
         getData()
@@ -69,9 +68,9 @@ export default function Activities() {
                     <div className="w-[80%] m-auto ">
                         <div className="w-full">
                             <h3 className="md:mt-7 mt-2 text-koreaRed text-xl font-bold">First year</h3>
-                            <div className="flex justify-between cursor-pointer" onClick={(e) => { setActive(!active) }}>
+                            <div className="flex justify-between cursor-pointer" onClick={(e) => { e.preventDefault();setActive(!active) }}>
                                 <h1 className="md:text-3xl text-2xl mt-2 font-bold">Activities</h1>
-                                <button className="" onClick={(e) => { setActive(!active) }}>
+                                <button className="" onClick={(e) => { e.preventDefault(); setActive(!active) }}>
                                     <Image className={active ? "" : "rotate-180"} src={"/images/logoAbout/up.svg"} width={30} height={30} alt="foto" />
                                 </button>
                             </div>
@@ -93,7 +92,6 @@ export default function Activities() {
                                     <tbody className="md:text-base text-xs">
                                         {
                                             data && data.map((v: any, i: any) => {
-                                                console.log(v)
                                                 console.log("first")
                                                 if (v.year_1.upi || v.year_1.unnes || v.year_1.undiksha) {
 
@@ -135,9 +133,9 @@ export default function Activities() {
 
                         <div>
                             <h3 className="md:mt-7 mt-2 text-koreaRed text-xl font-bold">Second year</h3>
-                            <div className="flex justify-between cursor-pointer" onClick={(e) => { setActive2(!active2) }}>
+                            <div className="flex justify-between cursor-pointer" onClick={(e) => { e.preventDefault(); setActive2(!active2) }}>
                                 <h1 className="md:text-3xl text-2xl mt-2 font-bold">Activities</h1>
-                                <button className="" onClick={(e) => { setActive2(!active2) }}>
+                                <button className="" onClick={(e) => {e.preventDefault(); setActive2(!active2) }}>
                                     <Image className={active2 ? "" : "rotate-180"} src={"/images/logoAbout/up.svg"} width={30} height={30} alt="foto" />
                                 </button>
                             </div>
@@ -198,9 +196,9 @@ export default function Activities() {
 
                         <div>
                             <h3 className="md:mt-7 mt-2 text-koreaRed text-xl font-bold">Third year</h3>
-                            <div className="flex justify-between cursor-pointer" onClick={(e) => { setActive3(!active3) }}>
+                            <div className="flex justify-between cursor-pointer" onClick={(e) => {e.preventDefault(); setActive3(!active3) }}>
                                 <h1 className="md:text-3xl text-2xl mt-2 font-bold">Activities</h1>
-                                <button className="" onClick={(e) => { setActive3(!active3) }}>
+                                <button className="" onClick={(e) => {e.preventDefault(); setActive3(!active3) }}>
                                     <Image className={active3 ? "" : "rotate-180"} src={"/images/logoAbout/up.svg"} width={30} height={30} alt="foto" />
                                 </button>
                             </div>
@@ -261,9 +259,9 @@ export default function Activities() {
 
                         <div>
                             <h3 className="md:mt-7 mt-2 text-koreaRed text-xl font-bold">Fourth year</h3>
-                            <div className="flex justify-between cursor-pointer" onClick={(e) => { setActive4(!active4) }}>
+                            <div className="flex justify-between cursor-pointer" onClick={(e) => {e.preventDefault(); setActive4(!active4) }}>
                                 <h1 className="md:text-3xl text-2xl mt-2 font-bold">Activities</h1>
-                                <button className="" onClick={(e) => { setActive4(!active4) }}>
+                                <button className="" onClick={(e) => { e.preventDefault();setActive4(!active4) }}>
                                     <Image className={active4 ? "" : "rotate-180"} src={"/images/logoAbout/up.svg"} width={30} height={30} alt="foto" />
                                 </button>
                             </div>
@@ -324,9 +322,9 @@ export default function Activities() {
 
                         <div>
                             <h3 className="md:mt-7 mt-2 text-koreaRed text-xl font-bold">Fifth year</h3>
-                            <div className="flex justify-between cursor-pointer" onClick={(e) => { setActive5(!active5) }}>
+                            <div className="flex justify-between cursor-pointer" onClick={(e) => {e.preventDefault(); setActive5(!active5) }}>
                                 <h1 className="md:text-3xl text-2xl mt-2 font-bold">Activities</h1>
-                                <button className="" onClick={(e) => { setActive5(!active5) }}>
+                                <button className="" onClick={(e) => {e.preventDefault(); setActive5(!active5) }}>
                                     <Image className={active5 ? "" : "rotate-180"} src={"/images/logoAbout/up.svg"} width={30} height={30} alt="foto" />
                                 </button>
                             </div>
@@ -387,9 +385,9 @@ export default function Activities() {
 
                         <div>
                             <h3 className="md:mt-7 mt-2 text-koreaRed text-xl font-bold">Sixth  year</h3>
-                            <div className="flex justify-between cursor-pointer" onClick={(e) => { setActive6(!active6) }}>
+                            <div className="flex justify-between cursor-pointer" onClick={(e) => {e.preventDefault(); setActive6(!active6) }}>
                                 <h1 className="md:text-3xl text-2xl mt-2 font-bold">Activities</h1>
-                                <button className="" onClick={(e) => { setActive6(!active6) }}>
+                                <button className="" onClick={(e) => {e.preventDefault(); setActive6(!active6) }}>
                                     <Image className={active6 ? "" : "rotate-180"} src={"/images/logoAbout/up.svg"} width={30} height={30} alt="foto" />
                                 </button>
                             </div>
