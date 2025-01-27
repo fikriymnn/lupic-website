@@ -92,10 +92,10 @@ export default function Activities() {
                                     <tbody className="md:text-base text-xs">
                                         {
                                             data && data.map((v, i) => {
-                                                if (v.year_1.upi || v.year_1.unnes || v.year_1.undiksha) {
+                                                if (v.year_1?.upi || v.year_1?.unnes || v.year_1?.undiksha) {
     
                                                     return (
-                                                        <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_1.upi || ""} unnes={v.year_1.unnes} undiksha={v.year_1.undiksha} />
+                                                        <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_1?.upi || ""} unnes={v.year_1?.unnes} undiksha={v.year_1?.undiksha} />
                                                     )
                                                 }
                                             })
@@ -117,9 +117,9 @@ export default function Activities() {
                                         <tbody className="md:text-base text-xs">
                                             {
                                                 data && data.map((v, i) => {
-                                                    if (v.year_1.upi || v.year_1.unnes || v.year_1.undiksha) {
+                                                    if (v.year_1?.upi || v.year_1?.unnes || v.year_1?.undiksha) {
                                                         return (
-                                                            <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_1.upi || ""} unnes={v.year_1.unnes} undiksha={v.year_1.undiksha} />
+                                                            <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_1?.upi || ""} unnes={v.year_1?.unnes} undiksha={v.year_1?.undiksha} />
                                                         )
                                                     }
                                                 })
@@ -155,9 +155,9 @@ export default function Activities() {
                                     <tbody className="md:text-base text-xs">
                                         {
                                             data && data.map((v, i) => {
-                                                if (v.year_2.upi || v.year_2.unnes || v.year_2.undiksha) {
+                                                if (v.year_2?.upi || v.year_2?.unnes || v.year_2?.undiksha) {
                                                     return (
-                                                        <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_2.upi || ""} unnes={v.year_2.unnes} undiksha={v.year_2.undiksha} />
+                                                        <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_2?.upi || ""} unnes={v.year_2?.unnes} undiksha={v.year_2?.undiksha} />
                                                     )
                                                 }
                                             })
@@ -179,9 +179,9 @@ export default function Activities() {
                                         <tbody className="md:text-base text-xs">
                                             {
                                                 data && data.map((v, i) => {
-                                                    if (v.year_2.upi || v.year_2.unnes || v.year_2.undiksha) {
+                                                    if (v.year_2?.upi || v.year_2?.unnes || v.year_2?.undiksha) {
                                                         return (
-                                                            <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_2.upi || ""} unnes={v.year_2.unnes} undiksha={v.year_2.undiksha} />
+                                                            <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_2?.upi || ""} unnes={v.year_2?.unnes} undiksha={v.year_2?.undiksha} />
                                                         )
                                                     }
                                                 })
@@ -218,9 +218,9 @@ export default function Activities() {
                                     <tbody className="md:text-base text-xs">
                                         {
                                             data && data.map((v, i) => {
-                                                if (v.year_3.upi || v.year_3.unnes || v.year_3.undiksha) {
+                                                if (v.year_3?.upi || v.year_3?.unnes || v.year_3?.undiksha) {
                                                     return (
-                                                        <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_3.upi || ""} unnes={v.year_3.unnes} undiksha={v.year_3.undiksha} />
+                                                        <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_3?.upi || ""} unnes={v.year_3?.unnes} undiksha={v.year_3?.undiksha} />
                                                     )
                                                 }
                                             })
@@ -242,9 +242,9 @@ export default function Activities() {
                                         <tbody className="md:text-base text-xs">
                                             {
                                                 data && data.map((v, i) => {
-                                                    if (v.year_3.upi || v.year_3.unnes || v.year_3.undiksha) {
+                                                    if (v.year_3?.upi || v.year_3?.unnes || v.year_3?.undiksha) {
                                                         return (
-                                                            <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_3.upi || ""} unnes={v.year_3.unnes} undiksha={v.year_3.undiksha} />
+                                                            <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_3?.upi || ""} unnes={v.year_3?.unnes} undiksha={v.year_3?.undiksha} />
                                                         )
                                                     }
                                                 })
@@ -281,9 +281,9 @@ export default function Activities() {
                                     <tbody className="md:text-base text-xs">
                                         {
                                             data && data.map((v, i) => {
-                                                if (v.year_4.upi || v.year_4.unnes || v.year_4.undiksha) {
+                                                if (v.year_4?.upi || v.year_4?.unnes || v.year_4?.undiksha) {
                                                     return (
-                                                        <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_4.upi || ""} unnes={v.year_4.unnes} undiksha={v.year_4.undiksha} />
+                                                        <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_4?.upi || ""} unnes={v.year_4?.unnes} undiksha={v.year_4?.undiksha} />
                                                     )
                                                 }
                                             })
@@ -305,9 +305,9 @@ export default function Activities() {
                                         <tbody className="md:text-base text-xs">
                                             {
                                                 data && data.map((v, i) => {
-                                                    if (v.year_4.upi || v.year_4.unnes || v.year_4.undiksha) {
+                                                    if (v.year_4?.upi || v.year_4?.unnes || v.year_4?.undiksha) {
                                                         return (
-                                                            <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_4.upi || ""} unnes={v.year_4.unnes} undiksha={v.year_4.undiksha} />
+                                                            <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_4?.upi || ""} unnes={v.year_4?.unnes} undiksha={v.year_4?.undiksha} />
                                                         )
                                                     }
                                                 })
@@ -344,9 +344,9 @@ export default function Activities() {
                                     <tbody className="md:text-base text-xs">
                                         {
                                             data && data.map((v, i) => {
-                                                if (v.year_5.upi || v.year_5.unnes || v.year_5.undiksha) {
+                                                if (v.year_5?.upi || v.year_5?.unnes || v.year_5?.undiksha) {
                                                     return (
-                                                        <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_5.upi || ""} unnes={v.year_5.unnes} undiksha={v.year_5.undiksha} />
+                                                        <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_5?.upi || ""} unnes={v.year_5?.unnes} undiksha={v.year_5?.undiksha} />
                                                     )
                                                 }
                                             })
@@ -368,9 +368,9 @@ export default function Activities() {
                                         <tbody className="md:text-base text-xs">
                                             {
                                                 data && data.map((v, i) => {
-                                                    if (v.year_5.upi || v.year_5.unnes || v.year_5.undiksha) {
+                                                    if (v.year_5?.upi || v.year_5?.unnes || v.year_5?.undiksha) {
                                                         return (
-                                                            <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_5.upi || ""} unnes={v.year_5.unnes} undiksha={v.year_5.undiksha} />
+                                                            <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_5?.upi || ""} unnes={v.year_5?.unnes} undiksha={v.year_5?.undiksha} />
                                                         )
                                                     }
                                                 })
@@ -407,9 +407,9 @@ export default function Activities() {
                                     <tbody className="md:text-base text-xs">
                                         {
                                             data && data.map((v, i) => {
-                                                if (v.year_6.upi || v.year_6.unnes || v.year_6.undiksha) {
+                                                if (v.year_6?.upi || v.year_6?.unnes || v.year_6?.undiksha) {
                                                     return (
-                                                        <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_6.upi || ""} unnes={v.year_6.unnes} undiksha={v.year_6.undiksha} />
+                                                        <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_6?.upi || ""} unnes={v.year_6?.unnes} undiksha={v.year_6?.undiksha} />
                                                     )
                                                 }
                                             })
@@ -431,9 +431,9 @@ export default function Activities() {
                                         <tbody className="md:text-base text-xs">
                                             {
                                                 data && data.map((v, i) => {
-                                                    if (v.year_6.upi || v.year_6.unnes || v.year_6.undiksha) {
+                                                    if (v.year_6?.upi || v.year_6?.unnes || v.year_6?.undiksha) {
                                                         return (
-                                                            <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_6.upi || ""} unnes={v.year_6.unnes} undiksha={v.year_6.undiksha} />
+                                                            <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_6?.upi || ""} unnes={v.year_6?.unnes} undiksha={v.year_6?.undiksha} />
                                                         )
                                                     }
                                                 })
