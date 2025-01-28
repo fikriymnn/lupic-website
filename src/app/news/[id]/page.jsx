@@ -53,7 +53,7 @@ export default function detailNews({ params }) {
                                 {v.sub_judul?<h4 className="font-bold text-white md:text-xl text-base text-start bg-koreaBlueMuda px-3 py-2 mb-4 inline-block">{v.sub_judul}</h4>:""}
                                 </div>
                                 {
-                                    sub_content? <p className="md:text-xl text-base">{parse(v.sub_content)}</p>:""
+                                    v.sub_content? <p className="md:text-xl text-base">{parse(v.sub_content)}</p>:""
                                 }
                                
                                 <div className="w-full mt-5 flex flex-wrap justify-center">
