@@ -40,8 +40,8 @@ const Navbar = () => {
                     <li onClick={(e)=>{e.preventDefault(); setActiveService(!activeService)}} className='cursor-pointer'>Services</li>
                 </ul>
             </div>
-            <div className={`w-full flex justify-end  ${activeService?"block":"hidden"} `}>
-                <div className='w-[15%] bg-koreaBlueMuda absolute rounded-b-lg'>
+            <div className={`w-full flex justify-end   ${activeService?"block":"hidden"} ${menuOpen ? 'block' : 'hidden'}`}>
+                <div className='md:w-[15%] w-full bg-koreaBlueMuda absolute rounded-b-lg'>
                     <div className='grid grid-cols-1 w-full justify-items-center align-items-center items-center'>
                         <Link href="/services" className="hover:bg-koreaBlue text-sm py-4 w-full text-center cursor-pointer">Our Product</Link>
                         <Link href="/service_workshop" className="hover:bg-koreaBlue text-sm py-4 border-t w-full text-center cursor-pointer">Workshop</Link>
