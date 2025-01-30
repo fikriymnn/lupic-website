@@ -1,31 +1,33 @@
-'use client'
-import { useState } from 'react';
-import Link from 'next/link';
+"use client";
+import { useState } from "react";
+import Link from "next/link";
 
 const Navbar = () => {
+
     const [menuOpen, setMenuOpen] = useState(false);
     const [activeService, setActiveService] = useState(false);
 
-    return (
+  return (
+    <nav className="bg-koreaBlue text-base text-white sticky top-0 z-50">
+      <div className="md:flex md:justify-between items-center md:px-24 md:px-10 py-2">
+        <div className="flex justify-between">
+          <div className=" bg-koreaRed rounded-full p-1 md:ml-0 ml-3">
+            <img
+              src="/logo_lupic.png"
+              alt="Logo lupic"
+              className="h-10 w-10 object-contain"
+            />
+          </div>
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="block md:hidden text-2xl mx-5"
+            aria-label="Toggle Menu"
+          >
+            {menuOpen ? "X" : "☰"}
+          </button>
+        </div>
 
-        <nav className="bg-koreaBlue text-base text-white sticky top-0 z-50">
-            <div className="md:flex md:justify-between items-center md:px-24 md:px-10 py-2">
-                <div className='flex justify-between'>
-                    <div className=" rounded-full p-1 md:ml-0 ml-3">
-                        <img
-                            src="/logo_lupic.png"
-                            alt="Logo lupic"
-                            className="h-10 w-10 object-contain"
-                        />
-                    </div>
-                    <button
-                        onClick={() => setMenuOpen(!menuOpen)}
-                        className="block md:hidden text-2xl mx-5"
-                        aria-label="Toggle Menu"
-                    >
-                        {menuOpen ? "X" : "☰"}
-                    </button>
-                </div>
+
 
                 <ul
                     className={`${menuOpen ? 'block' : 'hidden'
