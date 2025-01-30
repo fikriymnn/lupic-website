@@ -28,7 +28,7 @@ export default function Activities() {
   //       sub_point: v.sub_point,
   //       sub_sub_point: v.sub_sub_point,
   //       text: v.text,
-  //       year_1: v.year_1,
+  //       year_1: v?.year_1,
   //       year_2: v.year_2,
   //       year_3: v.year_3,
   //       year_4: v.year_4,
@@ -36,7 +36,7 @@ export default function Activities() {
   //       year_6: v.year_6,
   //     }
   //     switch (year) {
-  //       case 1: obj.year_1 = e.target.checked; break;
+  //       case 1: obj?.year_1 = e.target.checked; break;
   //       case 2: obj.year_2 = e.target.checked; break;
   //       case 3: obj.year_3 = e.target.checked; break;
   //       case 4: obj.year_4 = e.target.checked; break;
@@ -265,7 +265,7 @@ export default function Activities() {
                                 }
                               setData2(newData2)
                             }}
-                            value={(year == 1 ? data2[i].year_1.upi : year == 2 ? data2[i].year_2.upi : year == 3 ? data2[i].year_3.upi : year == 4 ? data2[i].year_4.upi : year == 5 ? data2[i].year_5.upi : year == 6 ? data2[i].year_6.upi : "")||""}
+                            value={(year == 1 ? data2[i]?.year_1?.upi : year == 2 ? data2[i].year_2?.upi : year == 3 ? data2[i].year_3?.upi : year == 4 ? data2[i].year_4?.upi : year == 5 ? data2[i].year_5?.upi : year == 6 ? data2[i].year_6?.upi : "")||""}
                           />
                           <input
                             type="text"
@@ -301,7 +301,7 @@ export default function Activities() {
 
                               setData2(newData2)
                             }}
-                            value={(year == 1 ? data2[i].year_1.unnes : year == 2 ? data2[i].year_2.unnes : year == 3 ? data2[i].year_3.unnes : year == 4 ? data2[i].year_4.unnes : year == 5 ? data2[i].year_5.unnes : year == 6 ? data2[i].year_6.unnes : "")||""}
+                            value={(year == 1 ? data2[i].year_1?.unnes : year == 2 ? data2[i].year_2?.unnes : year == 3 ? data2[i].year_3?.unnes : year == 4 ? data2[i].year_4?.unnes : year == 5 ? data2[i].year_5?.unnes : year == 6 ? data2[i].year_6?.unnes : "")||""}
                           />
                           <input
                             type="text"
@@ -336,7 +336,7 @@ export default function Activities() {
                               }
                               setData2(newData2)
                             }}
-                            value={(year == 1 ? data2[i].year_1.undiksha : year == 2 ? data2[i].year_2.undiksha : year == 3 ? data2[i].year_3.undiksha : year == 4 ? data2[i].year_4.undiksha : year == 5 ? data2[i].year_5.undiksha : year == 6 ? data2[i].year_6.undiksha : "")||""}
+                            value={(year == 1 ? data2[i]?.year_1?.undiksha : year == 2 ? data2[i].year_2?.undiksha : year == 3 ? data2[i].year_3?.undiksha : year == 4 ? data2[i].year_4?.undiksha : year == 5 ? data2[i].year_5?.undiksha : year == 6 ? data2[i].year_6?.undiksha : "")||""}
                           />
 <button className={`text-white bg-koreaBlue text-lg px-2 py-1 rounded-lg border-2 mx-3`} type="submit">save</button>
                         </form>
