@@ -50,7 +50,10 @@ const Home = () => {
                 <p className="md:text-3xl text-xl font-bold">LUPIC Big Goals</p>
               </div>
               <div className="flex md:justify-end justify-center align-center md:mr-16 md:mt-0 mt-2">
-                <a href="#" className="md:text-xl text-base text-koreaBlue">
+                <a
+                  href="/activities"
+                  className="md:text-xl text-base text-koreaBlue"
+                >
                   Read More &#8594;
                 </a>
               </div>
