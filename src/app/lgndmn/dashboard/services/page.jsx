@@ -5,12 +5,16 @@ import Editor from "react-simple-wysiwyg";
 import AdminCardFacilities from "@/components/card/AdminCardFacilities";
 import axios from "axios";
 import AdminCardToko from "@/components/card/AdminCardToko";
+import ResponsivePagination from 'react-responsive-pagination';
+import 'react-responsive-pagination/themes/classic.css';
 
 export default function ServicesAdmin() {
   const [data, setData] = useState([])
-  const [form, setForm] = useState({ judul: "",gambar: "",deskripsi:"",harga:0,link_shopee:"",link_tokped:"",content:"" })
+  const [form, setForm] = useState({ judul: "", gambar: "", deskripsi: "", harga: 0, link_shopee: "", link_tokped: "", content: "" })
   const [content, setContent] = useState("");
   const [file, setFile] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPage] = useState(1)
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -54,7 +58,7 @@ export default function ServicesAdmin() {
           link_shopee: form.link_shopee,
           link_tokped: form.link_tokped,
           deskripsi: form.deskripsi,
-          content:content
+          content: content
         })
         if (message.data == "success") {
           window.location.reload()
@@ -69,10 +73,15 @@ export default function ServicesAdmin() {
   useEffect(() => {
     async function getData() {
       try {
-        const Data = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/toko/")
+        const Data = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/toko?limit=8&page=" + currentPage)
+        console.log(Data)
         if (Data.data) {
           setData(Data.data)
           setContent(Data.data.content)
+        }
+        const Data2 = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/toko?count=12")
+        if (Data2.data) {
+          setTotalPage(Data2.data/8)
         }
 
       } catch (err) {
@@ -138,7 +147,7 @@ export default function ServicesAdmin() {
                 onChange={handleChange}
                 value={form.link_tokped}
               />
-               <label className="block text-gray-700 font-medium mb-2 text-xl mt-3">
+              <label className="block text-gray-700 font-medium mb-2 text-xl mt-3">
                 Deskripsi
               </label>
               <input
@@ -176,16 +185,22 @@ export default function ServicesAdmin() {
             <div>
               <h3 className="text-2xl font-bold text-center mt-14 mb-4">List</h3>
             </div>
-            <div>
+            <div className="grid grid-cols-2 justify-items-center">
               {
-                data.map((v,i)=>{
-                  return(
-                    <AdminCardToko key={i} judul={v.judul} deskripsi={v.deskripsi} id={v._id} gambar={v.gambar} harga={v.harga}/>
+                data.map((v, i) => {
+                  return (
+                    <AdminCardToko key={i} judul={v.judul} deskripsi={v.deskripsi} id={v._id} gambar={v.gambar} harga={v.harga} />
                   )
                 })
               }
             </div>
-
+            <div className="w-[20%] m-auto mt-10 mb-16">
+              <ResponsivePagination
+                current={currentPage}
+                total={totalPages}
+                onPageChange={setCurrentPage}
+              />
+            </div>
 
           </div>
         </div>
