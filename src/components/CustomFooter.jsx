@@ -97,17 +97,29 @@ export default function CustomFooter() {
               </h2>
               <ul className="font-medium">
                 <li className="mb-4">
-                  <a href="#" className="hover:underline ">
+                  <a
+                    href="https://kimia.upi.edu/"
+                    target="_blank"
+                    className="hover:underline "
+                  >
                     Kimia UPI
                   </a>
                 </li>
                 <li className="mb-4">
-                  <a href="#" className="hover:underline ">
+                  <a
+                    href="https://unnes.ac.id/kimia-s1/"
+                    target="_blank"
+                    className="hover:underline "
+                  >
                     Kimia UNNES
                   </a>
                 </li>
                 <li className="mb-4">
-                  <a href="#" className="hover:underline ">
+                  <a
+                    href="https://undiksha.ac.id/akademik/fakultas/fakultas-matematika-dan-ilmu-pengetahuan-alam/kimia/"
+                    target="_blank"
+                    className="hover:underline "
+                  >
                     Kimia UNDHIKSA
                   </a>
                 </li>

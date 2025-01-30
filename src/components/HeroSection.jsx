@@ -29,7 +29,7 @@ export default function HeroSection() {
         })`,
       }}
     >
-      <div className="absolute inset-0 bg-gradient-to-b from-koreaBlue to-black opacity-50 z-0"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-gray-500 to-black opacity-75 z-0"></div>
 
       <div className="relative z-10 flex flex-col justify-center items-center">
         <Link href="/activities">
