@@ -10,7 +10,7 @@ const Navbar = () => {
     <nav className="bg-koreaBlue text-base text-white sticky top-0 z-50">
       <div className="md:flex md:justify-between items-center md:px-24 md:px-10 py-2">
         <div className="flex justify-between">
-          <div className=" rounded-full p-1 md:ml-0 ml-3">
+          <div className="bg-koreaRed rounded-full p-1 md:ml-0 ml-3">
             <img
               src="/logo_lupic.png"
               alt="Logo lupic"
