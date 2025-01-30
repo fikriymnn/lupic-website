@@ -1,6 +1,7 @@
 "use client";
 
 import axios from "axios";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function HeroSection() {
@@ -31,9 +32,11 @@ export default function HeroSection() {
       <div className="absolute inset-0 bg-gradient-to-b from-koreaBlue to-black opacity-50 z-0"></div>
 
       <div className="relative z-10 flex flex-col justify-center items-center">
-        <button className="bg-koreaBlue py-3 px-4 md:px-8 rounded-full text-xs font-bold md:text-sm mb-4 hover:bg-red-600">
-          In Collaboration With Great Univ
-        </button>
+        <Link href="/activities">
+          <button className="bg-koreaBlue py-3 px-4 md:px-8 rounded-full text-xs font-bold md:text-sm mb-4 hover:bg-red-600">
+            In Collaboration With Great Univ
+          </button>
+        </Link>
 
         <div className="space-x-4 mb-6">
           <img
@@ -52,9 +55,11 @@ export default function HeroSection() {
           Bali Islands and Community Service
         </p>
 
-        <button className="bg-white text-red-700 py-2 px-4 md:px-6 rounded-lg hover:bg-red-700 hover:text-white">
-          Read More
-        </button>
+        <Link href="/aboutus">
+          <button className="bg-white text-red-700 py-2 px-4 md:px-6 rounded-lg hover:bg-red-700 hover:text-white">
+            Read More
+          </button>
+        </Link>
       </div>
     </div>
   );
