@@ -35,7 +35,7 @@ export default function detailNews({ params }) {
                 <p className="my-1 md:text-lg text-sm"> Author : {data.author}</p>
                 <p className="mb-4 text-sm text-koreaBlueMuda">{data.tanggal}</p>
                 <div className="md:w-full w-[90%] h-[45%] m-auto flex justify-center">
-                    <Image src={data?process.env.NEXT_PUBLIC_API_FILE_URL+data.gambar:""} alt="foto" width={600} height={400} className="md:w-[1000px] md:h-[700px] w-full" />
+                    <Image src={data?process.env.NEXT_PUBLIC_API_FILE_URL+data.gambar:""} alt="foto" width={600} height={400} className="md:w-[800px] md:h-[500px] w-full rounded-xl" />
                 </div>
                 <p className="mt-8 m-auto md:text-lg text-sm w-[80%] text-justify">
                     {data.deskripsi}

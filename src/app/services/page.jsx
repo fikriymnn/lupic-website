@@ -5,7 +5,8 @@ import CardFacilities from "@/components/card/CardFacilities"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import CardServiceToko from "@/components/card/CardServiceToko"
-import ResponsivePagination from 'react-responsive-pagination';
+import dynamic from "next/dynamic";
+const ResponsivePagination = dynamic(() => import("react-responsive-pagination"), { ssr: false });
 import 'react-responsive-pagination/themes/classic.css';
 
 export default function ServiceToko() {
@@ -16,9 +17,14 @@ export default function ServiceToko() {
     useEffect(()=>{
         async function getData(){
             try{
-                const data = await  axios.get(process.env.NEXT_PUBLIC_API_URL+"/api/toko")
-                if(data.data){
-                    setData(data.data)
+                const Data = await  axios.get(process.env.NEXT_PUBLIC_API_URL+"/api/toko?limit=9&page="+currentPage)
+                const Data2 = await  axios.get(process.env.NEXT_PUBLIC_API_URL+"/api/toko?count=12")
+                if(Data.data){
+                    setData(Data.data)
+                }
+                if(Data2.data){
+                    console.log(Data2.data)
+                    setTotalPage(Matn.ceil(Data2.data/16))
                 }
             }catch(err){
                 console.log(err.message)
