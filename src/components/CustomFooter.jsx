@@ -53,7 +53,7 @@ export default function CustomFooter() {
               <h2 className="mb-6 text-lg font-semibold uppercase dark:text-white">
                 Menu
               </h2>
-              <ul className=" dark:text-gray-400 font-medium">
+              <ul className="  font-medium">
                 <li className="mb-4">
                   <a href="/home" className="hover:underline">
                     Home
