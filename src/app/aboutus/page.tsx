@@ -4,28 +4,32 @@ import Navbar from "@/components/Navbar"
 import axios from "axios"
 import Image from "next/image"
 import { useEffect, useState } from "react"
+import { motion } from "framer-motion"
+import { useInView } from "react-intersection-observer";
 
 export default function Aboutus() {
     const [active, setActive] = useState(true)
     const [active2, setActive2] = useState(true)
     const [active3, setActive3] = useState(true)
-    const [data,setData] = useState({gambar:"",pesan:"",deskripsi:"",nama:""})
+    const [data, setData] = useState({ gambar: "", pesan: "", deskripsi: "", nama: "" })
+
+    const { ref, inView } = useInView({ triggerOnce: false, threshold: 0.1 });
 
 
 
-    useEffect(()=>{
-        async function getData(){
-            try{
-                const Data = await axios.get(process.env.NEXT_PUBLIC_API_URL+"/api/aboutus");
-                if(Data.data){
+    useEffect(() => {
+        async function getData() {
+            try {
+                const Data = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/aboutus");
+                if (Data.data) {
                     setData(Data.data)
                 }
-            }catch(err:unknown){
+            } catch (err: unknown) {
                 console.log(err)
             }
         }
         getData()
-    },[])
+    }, [])
 
     return (
         <>
@@ -38,24 +42,35 @@ export default function Aboutus() {
                 </div>
 
                 {/* pc */}
-                <div className="flex justify-center md:block hidden">
+                <motion.div initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.8 }} className="flex justify-center md:block hidden">
                     <div className=" flex justify-center relative w-[95%] mt-24">
-                        <div className="w-80 relative h-40 bg-koreaBlue z-20 left-[85px] top-[200px] rounded-bl-3xl">
-                        </div>
-                        <div className="w-[1500px] h-[300px] relative bg-gradient-to-b from-koreaRed to-black z-30 rounded-2xl flex justify-start items-center text-white">
-                            <Image className="w-[300px] h-[250px] md:ml-10 rounded-lg" src={process.env.NEXT_PUBLIC_API_FILE_URL+data.gambar} alt="foto" width={500} height={500} />
+                        <motion.div initial={{ x: -100, opacity: 0 }}
+                            animate={{ x: 0, opacity: 1 }}
+                            transition={{ duration: 0.8 }} className="w-80 relative h-40 bg-koreaBlue z-20 left-[85px] top-[200px] rounded-bl-3xl">
+                        </motion.div>
+                        <motion.div initial={{ scale: 0.8, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            transition={{ duration: 0.8 }} className="w-[1500px] h-[300px] relative bg-gradient-to-b from-koreaRed to-black z-30 rounded-2xl flex justify-start items-center text-white">
+                            <Image className="w-[300px] h-[250px] md:ml-10 rounded-lg" src={process.env.NEXT_PUBLIC_API_FILE_URL + data.gambar} alt="foto" width={500} height={500} />
                             <div className="px-5">
                                 <p className=" text-justify w-[95%]">{data.pesan}</p>
                                 <h3 className="font-bold md:text-xl text-base mt-5 mb-2">{data.nama}</h3>
                                 <p className="text-xs">{data.deskripsi}</p>
                             </div>
-                        </div>
-                        <div className="w-80 h-40 relative bg-koreaBlue z-10 right-[85px] bottom-[50px] rounded-tr-3xl">
-                        </div>
+                        </motion.div>
+                        <motion.div initial={{ x: 100, opacity: 0 }}
+                            animate={{ x: 0, opacity: 1 }}
+                            transition={{ duration: 0.8 }} className="w-80 h-40 relative bg-koreaBlue z-10 right-[85px] bottom-[50px] rounded-tr-3xl">
+                        </motion.div>
                     </div>
-                </div>
+                </motion.div>
                 {/* mobile */}
-                <div className="flex justify-center md:hidden block w-[100%]">
+                <motion.div ref={ref}
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={inView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ duration: 0.5 }} className="flex justify-center md:hidden block w-[100%]">
                     <div className="w-80 h-28 relative bg-koreaBlue z-20 left-[20px] top-[380px] rounded-bl-3xl">
                     </div>
                     <div className="w-[3000px] h-full  bg-gradient-to-b from-koreaRed to-black z-30 rounded-2xl  text-white mt-10 mauto">
@@ -73,14 +88,22 @@ export default function Aboutus() {
                     </div>
                     <div className="w-80 h-28 relative bg-koreaBlue z-10 right-[14px] bottom-[-20px] rounded-tr-3xl">
                     </div>
-                </div>
+                </motion.div>
 
                 {/* history */}
-                <div className=" mt-24 mb-2">
+                <motion.div
+                    ref={ref} initial={{ opacity: 0 }}
+                    animate={{ opacity: inView ? 1 : 0 }}
+                    transition={{ duration: 1 }} className=" mt-24 mb-2">
                     <h1 className="md:text-4xl text-2xl mt-10 font-bold">Short History</h1>
                     <div className="h-1 w-36 bg-koreaRed md:mt-5 mt-2"></div>
-                </div>
-                <div className="">
+                </motion.div>
+                <motion.div
+                    ref={ref} // Attaching ref to trigger the animation when in view
+                    className=""
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: inView ? 1 : 0 }} // Animate opacity based on inView status
+                    transition={{ duration: 1 }}>
                     <p className="text-justify md:text-xl text-base mt-5">
                         Leading University for International Cooperation (LUPIC) program began in 2012. The program aims to assist universities in developing countries to create, reorganize and systematically train human resources using the excellent resources and experiences from Korean universities. Through this program with the support from the Ministry of Education (MOE) of Korea, more than 41 universities in 18 developing countries had the opportunities to strengthen their educational capabilities and develop their communities (as of 2023).
                     </p>
@@ -102,7 +125,7 @@ export default function Aboutus() {
                     <p className="text-justify md:text-xl text-base">
                         Seoul, Korea
                     </p>
-                </div>
+                </motion.div>
                 {/* history */}
                 <div className=" mt-14">
                     <h3 className="md:text-4xl text-2xl mt-10 font-bold">Sogang University</h3>
@@ -136,15 +159,15 @@ export default function Aboutus() {
 
                     <div className="mt-10">
                         <div>
-                            <div className="flex justify-between items-center w-full h-20 m-auto bg-koreaBlue rounded-[50px] hover:cursor-pointer" onClick={(e) =>{ e.preventDefault(); { setActive(!active) }}}>
+                            <div className="flex justify-between items-center w-full h-20 m-auto bg-koreaBlue rounded-[50px] hover:cursor-pointer" onClick={(e) => { e.preventDefault(); { setActive(!active) } }}>
                                 <div className="bg-gradient-to-b from-koreaBlue to-black rounded-full md:h-24 md:w-28 h-20 w-20 flex items-center">
                                     <Image className="rounded-full m-auto md:h-24 md:w-28 h-20 w-20" src={"/images/logoAbout/upi.jpg"} width={95} height={95} alt="foto" />
                                 </div>
                                 <h3 className="md:w-full w-[50%] md:text-xl text-xs font-bold text-white text-center">UNIVERSITAS PENDIDIKAN INDONESIA</h3>
-                                <button className="md:mr-10 mr-5" onClick={(e) => {e.preventDefault(); { setActive(!active) }}}>
+                                <button className="md:mr-10 mr-5" onClick={(e) => { e.preventDefault(); { setActive(!active) } }}>
                                     <Image className={active ? "" : "rotate-180"} src={"/images/logoAbout/white-up.svg"} width={30} height={30} alt="foto" />
                                 </button>
-                                
+
                             </div>
                             <div className={`w-[85%] m-auto ${active ? 'hidden' : 'block'}`}>
                                 <p className="text-justify md:text-xl text-base mt-5">
@@ -170,51 +193,51 @@ export default function Aboutus() {
                                 </p>
                             </div>
                         </div>
-                        
+
                         <div className="mt-10">
-                            <div className="flex justify-between items-center w-full h-20 m-auto bg-koreaBlue rounded-[50px] hover:cursor-pointer" onClick={(e) =>{ e.preventDefault(); { setActive2(!active2) }}}>
+                            <div className="flex justify-between items-center w-full h-20 m-auto bg-koreaBlue rounded-[50px] hover:cursor-pointer" onClick={(e) => { e.preventDefault(); { setActive2(!active2) } }}>
                                 <div className="bg-gradient-to-b from-koreaBlue to-black rounded-full md:h-24 md:w-28 h-20 w-20 flex items-center">
                                     <Image className="rounded-full m-auto md:h-24 md:w-40 h-20 w-14" src={"/images/logoAbout/unnes_bulet.png"} width={95} height={95} alt="foto" />
                                 </div>
                                 <h3 className="md:w-full w-[50%] md:text-xl text-xs font-bold text-white text-center">UNIVERSITAS NEGERI SEMARANG </h3>
-                                <button className="md:mr-10 mr-5" onClick={(e) => {e.preventDefault(); { setActive2(!active2) }}}>
+                                <button className="md:mr-10 mr-5" onClick={(e) => { e.preventDefault(); { setActive2(!active2) } }}>
                                     <Image className={active2 ? "" : "rotate-180"} src={"/images/logoAbout/white-up.svg"} width={30} height={30} alt="foto" />
                                 </button>
                             </div>
                             <div className={`w-[85%] m-auto ${active2 ? 'hidden' : 'block'}`}>
                                 <p className="text-justify md:text-xl text-base mt-5">
-                                Chemistry Education Study Program: The Chemistry education study program was founded in 1965, has a conservation perspective and has an international reputation. Capitalized by lecturers with a minimum master s degree in both educational and non-educational fields, this study program also has supporting facilities, namely eight laboratories, namely the Lab. Basic Chemistry, Lab. Bioorganics, Lab. Physical Chemistry, Lab. Analytical Chemistry, Lab. Inorganic Chemistry, Lab. Computing, Lab. Instrumentation and Lab. Microteaching. The Microteaching Lab has been equipped with various multimedia equipment as a means for developing and fostering the professional educational skills of prospective chemistry teachers. Modern instruments in the Chemistry Laboratory as a means of increasing the professional competence of prospective teacher students include Gas Chromatography, Atomic Absorption Spectrophotometer, UV-Visible Spectrophotometer, Spectrofluorometer, High Performance Liquid Chromatography, Inductively Coupled Plasma Optical Emission Spectrometer, Surface Area Analyzer and Particle Size Analyzer.
+                                    Chemistry Education Study Program: The Chemistry education study program was founded in 1965, has a conservation perspective and has an international reputation. Capitalized by lecturers with a minimum master s degree in both educational and non-educational fields, this study program also has supporting facilities, namely eight laboratories, namely the Lab. Basic Chemistry, Lab. Bioorganics, Lab. Physical Chemistry, Lab. Analytical Chemistry, Lab. Inorganic Chemistry, Lab. Computing, Lab. Instrumentation and Lab. Microteaching. The Microteaching Lab has been equipped with various multimedia equipment as a means for developing and fostering the professional educational skills of prospective chemistry teachers. Modern instruments in the Chemistry Laboratory as a means of increasing the professional competence of prospective teacher students include Gas Chromatography, Atomic Absorption Spectrophotometer, UV-Visible Spectrophotometer, Spectrofluorometer, High Performance Liquid Chromatography, Inductively Coupled Plasma Optical Emission Spectrometer, Surface Area Analyzer and Particle Size Analyzer.
                                 </p>
                                 <p className="text-justify md:text-xl text-base mt-5">
-                                Chemistry Study Program: In line with the change of IKIP Semarang to Semarang State University (UNNES) on January 27 2000, based on the Decree of the Minister of Education and Culture No. 278/O/1999 concerning the Organization and Work Procedures of Semarang State University, the name FPMIPA was also changed to FMIPA with departments of Mathematics, Physics, Chemistry and Biology which not only manages educational study programs but also non-educational study programs. From then on, the Undergraduate Chemistry Study Program began to be established. The Undergraduate Chemistry Study Program is in the same location as other study programs, namely in Building D FMIPA. The strategic location on Jalan Raya Sekaran, Gunungpati, Semarang City, provides various facilities for students including transportation, shops, banking, polyclinics, culinary centers, places of worship, parking lots, etc. As a means of improving the quality and professionalism of graduates, the lecture process is carried out in a comfortable 3-story building equipped with an LCD projector and a representative laboratory building. The Chemistry Study Program has 6 laboratory rooms, namely the Lab. Basic Chemistry, Lab. Bioorganics, Lab. Physical Chemistry, Lab. Analytical Chemistry, Lab. Inorganic Chemistry, Lab. Computing and Lab. Instrumentation with various sophisticated equipment available includes Gas Chromatography, Surface Area Analyzer, Atomic Absorption Spectrophotometer, Visible Spectrophotometer, UV-Vis Spectrophotometer, Rotary Vacuum Evaporator, Polarimeter, COD reactor, etc. Website link: https://unnes.ac.id/pendidikan-kimia-s1/
+                                    Chemistry Study Program: In line with the change of IKIP Semarang to Semarang State University (UNNES) on January 27 2000, based on the Decree of the Minister of Education and Culture No. 278/O/1999 concerning the Organization and Work Procedures of Semarang State University, the name FPMIPA was also changed to FMIPA with departments of Mathematics, Physics, Chemistry and Biology which not only manages educational study programs but also non-educational study programs. From then on, the Undergraduate Chemistry Study Program began to be established. The Undergraduate Chemistry Study Program is in the same location as other study programs, namely in Building D FMIPA. The strategic location on Jalan Raya Sekaran, Gunungpati, Semarang City, provides various facilities for students including transportation, shops, banking, polyclinics, culinary centers, places of worship, parking lots, etc. As a means of improving the quality and professionalism of graduates, the lecture process is carried out in a comfortable 3-story building equipped with an LCD projector and a representative laboratory building. The Chemistry Study Program has 6 laboratory rooms, namely the Lab. Basic Chemistry, Lab. Bioorganics, Lab. Physical Chemistry, Lab. Analytical Chemistry, Lab. Inorganic Chemistry, Lab. Computing and Lab. Instrumentation with various sophisticated equipment available includes Gas Chromatography, Surface Area Analyzer, Atomic Absorption Spectrophotometer, Visible Spectrophotometer, UV-Vis Spectrophotometer, Rotary Vacuum Evaporator, Polarimeter, COD reactor, etc. Website link: https://unnes.ac.id/pendidikan-kimia-s1/
                                 </p>
                                 <p className="text-justify md:text-xl text-base mt-5">
-                                The existence of clean and beautiful lecture and laboratory buildings, as well as hotspots for all campus areas, makes the Chemistry Study Program very comfortable to use as a place for students to study. Various other supporting facilities such as teleconference rooms, meeting rooms, lecturer rooms, gazebos, spacious waiting rooms, academic administration service rooms with LAN systems and libraries with complete book collections further support the achievement of reliable graduates in the global era. Website link: https://unnes.ac.id/kimia-s1/
+                                    The existence of clean and beautiful lecture and laboratory buildings, as well as hotspots for all campus areas, makes the Chemistry Study Program very comfortable to use as a place for students to study. Various other supporting facilities such as teleconference rooms, meeting rooms, lecturer rooms, gazebos, spacious waiting rooms, academic administration service rooms with LAN systems and libraries with complete book collections further support the achievement of reliable graduates in the global era. Website link: https://unnes.ac.id/kimia-s1/
                                 </p>
-                                
+
                             </div>
                         </div>
                         <div className="mt-10">
-                            <div className="flex justify-between items-center w-full h-20 m-auto bg-koreaBlue rounded-[50px] hover:cursor-pointer" onClick={(e) =>{ e.preventDefault(); { setActive3(!active3) }}}>
+                            <div className="flex justify-between items-center w-full h-20 m-auto bg-koreaBlue rounded-[50px] hover:cursor-pointer" onClick={(e) => { e.preventDefault(); { setActive3(!active3) } }}>
                                 <div className="bg-gradient-to-b from-koreaBlue to-black rounded-full md:h-24 md:w-28 h-20 w-20 flex items-center">
                                     <Image className="rounded-full m-auto pb-1 px-2" src={"/images/logoAbout/upg.png"} width={95} height={95} alt="foto" />
                                 </div>
                                 <h3 className="md:w-full w-[50%] md:text-xl text-xs font-bold text-white text-center">UNIVERSITAS PENDIDIKAN GANESHA </h3>
-                                <button className="md:mr-10 mr-5" onClick={(e) => {e.preventDefault(); { setActive3(!active3) }}}>
+                                <button className="md:mr-10 mr-5" onClick={(e) => { e.preventDefault(); { setActive3(!active3) } }}>
                                     <Image className={active3 ? "" : "rotate-180"} src={"/images/logoAbout/white-up.svg"} width={30} height={30} alt="foto" />
                                 </button>
                             </div>
                             <div className={`w-[85%] m-auto ${active3 ? 'hidden' : 'block'}`}>
                                 <p className="text-justify md:text-xl text-base mt-5">
-                                Chemistry Education Study Program: The Chemistry Education Study Program is one of the study programs under the Chemistry Department of FMIPA Undiksha which is located in Singaraja, Buleleng Regency, Bali Province. The Chemistry Education Study Program began accepting students in 1980 until now. The Chemistry Education Study Program currently has an accreditation rating from BAN-PT with an A rating. Website link: https://undiksha.ac.id/akademik/fakultas/fakultas-matematika-dan-ilmu-pengetahuan-alam/pendidikan-kimia/
+                                    Chemistry Education Study Program: The Chemistry Education Study Program is one of the study programs under the Chemistry Department of FMIPA Undiksha which is located in Singaraja, Buleleng Regency, Bali Province. The Chemistry Education Study Program began accepting students in 1980 until now. The Chemistry Education Study Program currently has an accreditation rating from BAN-PT with an A rating. Website link: https://undiksha.ac.id/akademik/fakultas/fakultas-matematika-dan-ilmu-pengetahuan-alam/pendidikan-kimia/
                                 </p>
                                 <p className="text-justify md:text-xl text-base mt-5">
-                                Chemistry Study Program: Undergraduate Chemistry Study Program, Department of Chemistry, FMIPA Singaraja-Bali was established based on the Letter of the Director General of Higher Education No. 356/KPT/I/2016 dated 16 November 2016 concerning Permit to Open the Undergraduate Chemistry Study Program. As part of the education provider institution, the Undergraduate Chemistry Study Program is committed to providing quality education to produce a superior generation in the field of chemistry with a deep understanding of the concept of sustainable chemistry. This vision supports sustainable development programs and is also in line with Undiksha s vision and mission to become a superior university based on the Tri Hita Karana philosophy.
+                                    Chemistry Study Program: Undergraduate Chemistry Study Program, Department of Chemistry, FMIPA Singaraja-Bali was established based on the Letter of the Director General of Higher Education No. 356/KPT/I/2016 dated 16 November 2016 concerning Permit to Open the Undergraduate Chemistry Study Program. As part of the education provider institution, the Undergraduate Chemistry Study Program is committed to providing quality education to produce a superior generation in the field of chemistry with a deep understanding of the concept of sustainable chemistry. This vision supports sustainable development programs and is also in line with Undiksha s vision and mission to become a superior university based on the Tri Hita Karana philosophy.
                                 </p>
                                 <p className="text-justify md:text-xl text-base mt-5">
-                                Learning in the Undergraduate Chemistry Study Program is carried out by adapting the MBKM curriculum, providing opportunities for students to study on campus and carry out activities outside campus through an industrial internship program. Improving the quality of learning in the Undergraduate Chemistry Study Program continues to be carried out by establishing international collaboration with MCUT Taiwan, University of Gottingen Germany and Sogang University South Korea. As of 2023, the Undergraduate Chemistry Study Program has produced 46 graduates, all of whom have been absorbed in various industries inside and outside Bali. Two of them are also continuing their master s studies at MCUT Taiwan and ITB, and several others have been successful in setting up independent business units. Website link: https://undiksha.ac.id/akademik/fakultas/fakultas-matematika-dan-ilmu-pengetahuan-alam/kimia/
+                                    Learning in the Undergraduate Chemistry Study Program is carried out by adapting the MBKM curriculum, providing opportunities for students to study on campus and carry out activities outside campus through an industrial internship program. Improving the quality of learning in the Undergraduate Chemistry Study Program continues to be carried out by establishing international collaboration with MCUT Taiwan, University of Gottingen Germany and Sogang University South Korea. As of 2023, the Undergraduate Chemistry Study Program has produced 46 graduates, all of whom have been absorbed in various industries inside and outside Bali. Two of them are also continuing their master s studies at MCUT Taiwan and ITB, and several others have been successful in setting up independent business units. Website link: https://undiksha.ac.id/akademik/fakultas/fakultas-matematika-dan-ilmu-pengetahuan-alam/kimia/
                                 </p>
-                                
+
                             </div>
                         </div>
 
