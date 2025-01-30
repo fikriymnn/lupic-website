@@ -86,7 +86,12 @@ export default function CustomFooter() {
                 </li>
                 <li className="mb-4">
                   <a href="/services" className="hover:underline">
-                    Services
+                    Our Products
+                  </a>
+                </li>
+                <li>
+                  <a href="/service_workshop" className="hover:underline">
+                    Workshop
                   </a>
                 </li>
               </ul>
