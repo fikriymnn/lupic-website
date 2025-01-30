@@ -4,6 +4,7 @@ import Link from 'next/link';
 
 const Navbar = () => {
     const [menuOpen, setMenuOpen] = useState(false);
+    const [activeService, setActiveService] = useState(false);
 
     return (
 
@@ -36,19 +37,19 @@ const Navbar = () => {
                     <li><Link href="/news" className="hover:underline">News</Link></li>
                     <li><Link href="/facilities" className="hover:underline">Facilities</Link></li>
                     <li><Link href="/gallery" className="hover:underline">Gallery</Link></li>
-                    <li><Link href="/services" className="hover:underline mb-4">Services</Link></li>
+                    <li onClick={(e)=>{e.preventDefault(); setActiveService(!activeService)}} className='cursor-pointer'>Services</li>
                 </ul>
             </div>
-            {/* <div className='w-full flex justify-end'>
-                <div className='w-[30%] md:h-16 bg-koreaBlueMuda absolute rounded-b-lg'>
-                    <div className='grid grid-cols-3 h-full w-full justify-items-center align-items-center items-center'>
-                        <Link href="/services" className="hover:underline text-base">Toko</Link>
-                        <Link href="/services" className="hover:underline  text-base">Form</Link>
-                        <Link href="/services" className="hover:underline  text-base">Services</Link>
+            <div className={`w-full flex justify-end  ${activeService?"block":"hidden"} `}>
+                <div className='w-[15%] bg-koreaBlueMuda absolute rounded-b-lg'>
+                    <div className='grid grid-cols-1 w-full justify-items-center align-items-center items-center'>
+                        <Link href="/services" className="hover:bg-koreaBlue text-sm py-4 w-full text-center cursor-pointer">Our Product</Link>
+                        <Link href="/service_workshop" className="hover:bg-koreaBlue text-sm py-4 border-t w-full text-center cursor-pointer">Workshop</Link>
+                        {/* <Link href="/services" className="hover:underline  text-base">Services</Link> */}
                     </div>
 
                 </div>
-            </div> */}
+            </div>
 
         </nav>
 
