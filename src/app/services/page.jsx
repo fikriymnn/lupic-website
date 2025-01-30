@@ -37,7 +37,7 @@ export default function ServiceToko() {
         <>
             <Navbar />
             <div className=" text-center m-auto mt-8 mb-4">
-                <h3 className="md:text-4xl text-3xl mt-10 font-bold">Service Toko</h3>
+                <h3 className="md:text-4xl text-3xl mt-10 font-bold">Our Product</h3>
                 <div className="h-1 w-36 bg-koreaRed mt-4 m-auto"></div>
             </div>
             <div className="md:grid md:grid-cols-4 justify-items-center flex flex-wrap m-auto w-[90%] mb-20 md:mt-8 mt-3  justify-evenly items-center">

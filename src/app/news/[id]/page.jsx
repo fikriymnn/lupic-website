@@ -37,9 +37,9 @@ export default function detailNews({ params }) {
                 <div className="md:w-full w-[90%] h-[45%] m-auto flex justify-center">
                     <Image src={data?process.env.NEXT_PUBLIC_API_FILE_URL+data.gambar:""} alt="foto" width={600} height={400} className="md:w-[800px] md:h-[500px] w-full rounded-xl" />
                 </div>
-                <p className="mt-8 m-auto md:text-lg text-sm w-[80%] text-justify">
+                <div className="mt-8 m-auto md:text-lg text-sm w-[80%] text-justify">
                     {data.deskripsi}
-                </p>
+                </div>
                 <div className="mt-6 m-auto md:text-xl text-base w-[80%] text-justify">
                     {parse(data.content)}
                 </div>
