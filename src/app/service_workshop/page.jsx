@@ -19,7 +19,15 @@ export default function Services_workshop() {
         </p>
         <p className="text-justify md:text-xl text-base mt-8 font-bold">
           {" "}
-          1. Small Scale Chemistry (SSC) Workshop
+          1. Workshop Fabrication Laboratory Education (Fablab Edu)
+        </p>
+        <p className="text-justify md:text-xl text-base mt-2">
+          Fablab Edu is a laboratory facility supported by LUPIC to enhance
+          technology-based learning in the fields of chemistry and STEM.
+        </p>
+        <p className="text-justify md:text-xl text-base mt-8 font-bold">
+          {" "}
+          2. Small Scale Chemistry (SSC) Workshop
         </p>
         <p className="text-justify md:text-xl text-base mt-2">
           The Small Scale Chemistry (SSC) Workshop is part of an initiative
@@ -27,13 +35,11 @@ export default function Services_workshop() {
           through more environmentally friendly, cost-effective, and efficient
           methods.
         </p>
-        <p className="text-justify md:text-xl text-base mt-8 font-bold">
+        <p className="text-justify md:text-xl text-base mt-8">
           {" "}
-          2. Fabrication Laboratory Education (Fablab Edu)
-        </p>
-        <p className="text-justify md:text-xl text-base mt-2">
-          Fablab Edu is a laboratory facility supported by LUPIC to enhance
-          technology-based learning in the fields of chemistry and STEM.
+          The fablab workshop will run for 32JP through onsite and online
+          meeting. The figrure and table below showed the flow of the meeting
+          and detail program.
         </p>
       </div>
       <p className="w-[90%] md:w-[80%] m-auto md:text-3xl text-base text-koreaBlue mt-8 font-bold mb-4">
@@ -90,7 +96,7 @@ export default function Services_workshop() {
 
         <p className="md:text-xl m-auto w-[90%] md:w-[80%] text-base mt-6 font-bold mb-3">
           {" "}
-          Online Workshop
+          Online Discussion
         </p>
         <div className="w-[90%] md:w-[80%] m-auto border-2 mb-8 shadow-xl">
           <p className="bg-koreaBlue w-full py-2 text-center font-bold text-lg text-white">
