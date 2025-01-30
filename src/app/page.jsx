@@ -115,12 +115,43 @@ const Home = () => {
                   <h3 className="text-3xl font-bold my-4">Main Activities</h3>
                   <p className="text-base">
                     Lupic's main activities revolve around cutting-edge research
-                    and innovation...
+                    and innovation. Our dedicated team is committed to exploring
+                    uncharted territories, conducting in-depth analyses, and
+                    developing groundbreaking solutions.
                   </p>
                   <div className="flex justify-end md:mt-8 md:mb-3 mb-8 mt-5">
                     <a href="#" className="md:text-lg text-sm text-koreaBlue">
                       Read More &#8594;
                     </a>
+                  </div>
+                </div>
+                <div>
+                  <div className="shadow-md rounded-lg p-5">
+                    <h3 className="text-xl font-bold">
+                      Re-organization of department of partner
+                    </h3>
+                    <p className="text-sm mt-2">
+                      Supporting the construction or re-organization of
+                      department/college of partner universities in developing
+                      countries
+                    </p>
+                  </div>
+                  <div className="mt-2 shadow-md rounded-lg p-5">
+                    <h3 className="text-xl font-bold">
+                      Training lecturers of partner
+                    </h3>
+                    <p className="text-sm mt-2">
+                      Training excellent lecturers/professors of partner
+                      universities through Global Korea Scholarship (GKS)
+                      Program
+                    </p>
+                  </div>
+                  <div className="mt-2 shadow-md rounded-lg p-5">
+                    <h3 className="text-xl font-bold">Operating programs</h3>
+                    <p className="text-sm mt-2">
+                      Operating various programs to contribute to local
+                      community developments
+                    </p>
                   </div>
                 </div>
               </div>
