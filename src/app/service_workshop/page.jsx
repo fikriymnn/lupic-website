@@ -25,16 +25,6 @@ export default function Services_workshop() {
           Fablab Edu is a laboratory facility supported by LUPIC to enhance
           technology-based learning in the fields of chemistry and STEM.
         </p>
-        <p className="text-justify md:text-xl text-base mt-8 font-bold">
-          {" "}
-          2. Small Scale Chemistry (SSC) Workshop
-        </p>
-        <p className="text-justify md:text-xl text-base mt-2">
-          The Small Scale Chemistry (SSC) Workshop is part of an initiative
-          supported by LUPIC to improve the effectiveness of chemistry learning
-          through more environmentally friendly, cost-effective, and efficient
-          methods.
-        </p>
         <p className="text-justify md:text-xl text-base mt-8">
           {" "}
           The fablab workshop will run for 32JP through onsite and online
@@ -137,6 +127,16 @@ export default function Services_workshop() {
           </p>
           <p className="w-full py-2 px-5 md:text-lg text-sm "> Closing</p>
         </div>
+        <p className="text-justify md:text-xl text-base mt-8 font-bold">
+          {" "}
+          2. Small Scale Chemistry (SSC) Workshop
+        </p>
+        <p className="text-justify md:text-xl text-base mt-2 mb-20">
+          The Small Scale Chemistry (SSC) Workshop is part of an initiative
+          supported by LUPIC to improve the effectiveness of chemistry learning
+          through more environmentally friendly, cost-effective, and efficient
+          methods.
+        </p>
       </div>
       <CustomFooter />
     </>
