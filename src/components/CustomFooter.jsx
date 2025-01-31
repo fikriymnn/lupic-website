@@ -40,11 +40,11 @@ export default function CustomFooter() {
                 alt="Logo lupic"
                 className=" w-14 p-1 object-contain"
               />
-              <img
+              {/* <img
                 src="/images/footer/7.png"
                 alt="Logo lupic"
                 className=" w-14 p-1 object-contain"
-              />
+              /> */}
             </div>
           </div>
           <div className="grid grid-cols-2 gap-3 sm:gap-6 sm:grid-cols-3 md:w-[90%] w-full">
