@@ -14,7 +14,7 @@ export default function Services_workshop() {
       </div>
       <div className="w-[90%] h-screen md:w-[80%] m-auto mt-10 mb-10">
         <div className="flex items-center justify-center mt-64">
-            <button className="h-20 bg-red-700 text-white text-3xl py-2 px-4 md:px-6 rounded-lg hover:bg-blue-700 hover:text-white">Click here to join the test</button>
+            <button className="bg-red-700 text-white py-2 px-4 md:px-6 rounded-lg hover:bg-blue-700 hover:text-white">Click here to join the test</button>
         </div>
       </div>
 
