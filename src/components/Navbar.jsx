@@ -10,9 +10,9 @@ const Navbar = () => {
     <nav className="bg-koreaBlue text-base text-white sticky top-0 z-50">
       <div className="md:flex md:justify-between items-center md:px-24 md:px-10 py-2">
         <div className="flex justify-between">
-          <div className="bg-koreaRed rounded-full p-1 md:ml-0 ml-3">
+          <div className="bg-white rounded-full p-1 md:ml-0 ml-3">
             <img
-              src="/logo_lupic.png"
+              src="/images/lupic-logo.png"
               alt="Logo lupic"
               className="h-10 w-10 object-contain"
             />
@@ -90,6 +90,12 @@ const Navbar = () => {
               className="hover:bg-koreaBlue text-sm py-4 border-t w-full text-center cursor-pointer"
             >
               Workshop
+            </Link>
+            <Link
+              href="/service_teacher"
+              className="hover:bg-koreaBlue text-sm py-4 border-t w-full text-center cursor-pointer"
+            >
+              Pre-Service Teacher Evaluation
             </Link>
             {/* <Link href="/services" className="hover:underline  text-base">Services</Link> */}
           </div>
