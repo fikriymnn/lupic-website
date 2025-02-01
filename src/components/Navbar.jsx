@@ -70,6 +70,11 @@ const Navbar = () => {
           >
             Services
           </li>
+          <li>
+            <Link href="/vid_page" className="hover:underline">
+              Downloads
+            </Link>
+          </li>
         </ul>
       </div>
       <div
