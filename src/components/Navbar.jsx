@@ -61,6 +61,11 @@ const Navbar = () => {
               Gallery
             </Link>
           </li>
+          <li>
+            <Link href="/vid_page" className="hover:underline">
+              Teaching Material
+            </Link>
+          </li>
           <li
             onClick={(e) => {
               e.preventDefault();
@@ -70,11 +75,7 @@ const Navbar = () => {
           >
             Services
           </li>
-          <li>
-            <Link href="/vid_page" className="hover:underline">
-              Downloads
-            </Link>
-          </li>
+          
         </ul>
       </div>
       <div
