@@ -76,7 +76,7 @@ const VidPage = () => {
         </div>
         <div className="container mx-auto px-4 py-16">
           <h1 className="text-center text-3xl font-bold text-black">
-            Teaching Material
+            Books/Modules
           </h1>
           <div className="h-1 w-36 bg-koreaRed mb-8 m-auto"></div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
