@@ -49,7 +49,28 @@ const VidPage = () => {
       cover: "/3.png",
       author: "",
       pdfLink: "/3.pdf"
-    }
+    },
+    {
+      id: 4,
+      title: "Petunjuk Praktikum Pemisahan dan Pemurnian Skala Kecil",
+      cover: "/4.png",
+      author: "",
+      pdfLink: "/4.pdf"
+    },
+    {
+      id: 5,
+      title: "Kewirausahaan Kimia Berkelanjutan",
+      cover: "/5.png",
+      author: "",
+      pdfLink: "/5.pdf"
+    },
+    {
+      id: 6,
+      title: "Buku Ajar Kimia Lingkungan",
+      cover: "/6.png",
+      author: "",
+      pdfLink: "/6.pdf"
+    },
   ];
 
   return (
