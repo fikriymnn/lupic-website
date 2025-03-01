@@ -32,7 +32,7 @@ export default function Dashboard() {
       const formData = new FormData();
       formData.append('file', fileHero);
 
-      const data = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/file", formData, {
+      const data = await axios.post(process.env.NEXT_PUBLIC_API_STORAGE + "/api/file", formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -62,7 +62,7 @@ export default function Dashboard() {
     formData.append('file', fileCarousel);
 
     try {
-      const data = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/file",formData, {
+      const data = await axios.post(process.env.NEXT_PUBLIC_API_STORAGE + "/api/file",formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
