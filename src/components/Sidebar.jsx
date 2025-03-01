@@ -70,7 +70,12 @@ const Sidebar = () => {
               <span>Service Toko</span>
             </a>
           </li>
-         
+          <li className="mb-2">
+            <a href="/lgndmn/dashboard/jadwal" className={`flex items-center space-x-2 p-2 hover:bg-koreaBlueMuda rounded ${adminPath[3]=="services"?"bg-koreaBlueMuda":""}`}>
+              <FaStore />
+              <span>Jadwal</span>
+            </a>
+          </li>
         </ul>
       </nav>
       <div className="p-4 border-t border-gray-700">
