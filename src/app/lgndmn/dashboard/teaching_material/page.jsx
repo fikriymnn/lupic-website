@@ -39,7 +39,8 @@ export default function Teaching_Material() {
 
     try {
       const message = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/video/", {
-
+        judul: form.judul,
+        link: form.link
       })
       if (message.data == "success") {
         window.location.reload()
@@ -58,12 +59,50 @@ export default function Teaching_Material() {
     }));
   };
 
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+  const handleFileChange =  (e) => {
+    e.preventDefault()
+    async function getDatas(){
+      try {
+        const formData = new FormData();
+        formData.append('file', e.target.files[0]);
+  
+        const getData = await axios.post(process.env.NEXT_PUBLIC_API_STORAGE + "/api/file", formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        })
+        if(getData.data){
+          setFile(getData.data);
+        }
+      } catch (error) {
+        console.log(error.message)
+      }
+    }
+    
+    getDatas()
   };
 
-  const handleFileChange2 = (e) => {
-    setFile2(e.target.files[0]);
+  const handleFileChange2 =  (e) => {
+    e.preventDefault()
+    async function getData(){
+      try {
+        const formData2 = new FormData();
+        formData2.append('file', e.target.files[0]);
+  
+        const getData2 = await axios.post(process.env.NEXT_PUBLIC_API_STORAGE + "/api/file", formData2, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        })
+        if(getData2.data){
+          setFile2(getData2.data);
+        }
+  
+      } catch (error) {
+        console.log(error.message)
+      }
+    }
+    getData()
   };
 
 
@@ -83,43 +122,25 @@ export default function Teaching_Material() {
     e.preventDefault();
 
     try {
+      console.log(file)
       if (!file) {
-        alert("Pilih file terlebih dahulu!");
+        alert("Pilih file terlebih dahulu! 1");
         return;
       }
       if (!file2) {
-        alert("Pilih file terlebih dahulu!");
+        alert("Pilih file terlebih dahulu! 2");
         return;
       }
-
-      const formData = new FormData();
-      formData.append('file', file);
-
-      const getData = await axios.post(process.env.NEXT_PUBLIC_API_STORAGE + "/api/file", formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      })
-      const formData2 = new FormData();
-      formData.append('file', file2);
-
-      const getData2 = await axios.post(process.env.NEXT_PUBLIC_API_STORAGE + "/api/file", formData2, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      })
-      if (getData.data) {
-        if (getData2.data) {
           const message = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/modul/", {
-            file: getData.data,
-            cover: getData2.data,
-            link: form2.link
+            file: file,
+            cover: file2,
+            judul: form2.judul
           })
+          console.log( file+file2)
           if (message.data == "success") {
             window.location.reload()
           }
-        }
-      }
+      
 
     } catch (err) {
       console.log(err.message)
@@ -130,10 +151,11 @@ export default function Teaching_Material() {
   useEffect(() => {
     async function getData() {
       try {
-        const Data = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/modul")
-        const Data2 = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/video")
+        const Data = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/video")
+        const Data2 = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/modul")
         if (Data.data) {
           setData(Data.data)
+          console.log(data)
         }
         if (Data2.data) {
           setData2(Data2.data)
@@ -191,18 +213,18 @@ export default function Teaching_Material() {
                 Upload
               </button>
             </form>
-            <div className="grid grid-cols-2 justify-items-center">
+            <div className="grid grid-cols-2 justify-items-center my-4">
               {data.map((video, index) => (
-                <div key={index} className="bg-gray-900 text-white p-4 rounded-lg shadow-lg">
+                <div key={index} className="w-[350px] bg-gray-900 text-white p-4 rounded-lg shadow-lg">
                   <ReactPlayer
                     url={video.link}
                     controls
                     width="100%"
                     height="200px"
                   />
-                  <h3 className="text-lg font-semibold mt-2">{video.judul}</h3>
-                  <button className="w-20" onClick={handleDelete}>
-                    <p className="text-sm text-white bg-koreaRed p-2 rounded-2xl">Delete</p>
+                  <h3 className="text-lg font-semibold mt-2 line-clamp-2 ">{video.judul}</h3>
+                  <button className="w-20" onClick={(e)=>handleDelete(video._id)}>
+                    <p className="text-sm text-white bg-koreaRed p-2 rounded-2xl my-2">Delete</p>
                   </button>
                 </div>
               ))}
@@ -231,7 +253,7 @@ export default function Teaching_Material() {
                   className="mt-2 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                   name="judul"
                   onChange={handleChange2}
-                  value={data?.nama || ""}
+                  value={form2?.judul || ""}
                 />
                 <label className="block text-gray-700 font-medium mb-2 text-xl mt-3">
                   Cover
@@ -251,18 +273,18 @@ export default function Teaching_Material() {
                 upload
               </button>
             </form>
-            <div className="grid grid-cols-2 justify-items-center">
+            <div className="grid grid-cols-2 justify-items-center my-5">
               {
                 data2.map((book, index) => (
-                <div key={index} className="bg-white shadow-lg p-4 text-center rounded-lg">
-                  <img src={book.image} alt={book.title} className="w-full h-48 object-cover rounded-md" />
-                  <h3 className="text-lg font-semibold mt-2">{book.title}</h3>
-                  <a href={book.pdf} download>
+                <div key={index} className= " w-[300px] bg-white shadow-lg p-4 text-center rounded-lg my-3">
+                  <img src={process.env.NEXT_PUBLIC_API_FILE_URL+book.cover} alt={book.judul} className="w-full h-48 object-cover rounded-md" />
+                  <h3 className="text-base line-clamp-2 font-semibold mt-2">{book.judul}</h3>
+                  <a href={process.env.NEXT_PUBLIC_API_FILE_URL+book.file} download>
                     <button className="mt-2 bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded">
                       Unduh PDF
                     </button>
                   </a>
-                  <button className="w-20" onClick={handleDelete2}>
+                  <button className="w-20 ml-3" onClick={(e)=>handleDelete2(book._id)}>
                     <p className="text-sm text-white bg-koreaRed p-2 rounded-2xl">Delete</p>
                   </button>
                   
