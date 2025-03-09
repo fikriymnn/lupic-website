@@ -75,44 +75,44 @@ export default function Services_workshop() {
         </table>
       </div>
       <br/>
-      <div class=" w-[80%] m-auto">
-        <table class="w-full border border-gray-300 bg-white shadow-md">
+      <div className=" w-[80%] m-auto">
+        <table className="w-full border border-gray-300 bg-white shadow-md">
           <thead>
-            <tr class="bg-gray-200">
-              <th class="border border-gray-300 px-4 py-2 text-left">Kategori</th>
-              <th class="border border-gray-300 px-4 py-2 text-center">Jumlah</th>
+            <tr className="bg-gray-200">
+              <th className="border border-gray-300 px-4 py-2 text-left">Kategori</th>
+              <th className="border border-gray-300 px-4 py-2 text-center">Jumlah</th>
             </tr>
           </thead>
           <tbody>
-            <tr class="bg-gray-100 font-semibold">
-              <td colSpan="2" class="border border-gray-300 px-4 py-2 text-center">PAEDAGOGI</td>
+            <tr className="bg-gray-100 font-semibold">
+              <td colSpan="2" className="border border-gray-300 px-4 py-2 text-center">PAEDAGOGI</td>
             </tr>
             <tr>
-              <td class="border border-gray-300 px-4 py-2">Lingkungan pembelajaran yang aman dan nyaman bagi peserta didik</td>
-              <td class="border border-gray-300 px-4 py-2 text-center">3</td>
+              <td className="border border-gray-300 px-4 py-2">Lingkungan pembelajaran yang aman dan nyaman bagi peserta didik</td>
+              <td className="border border-gray-300 px-4 py-2 text-center">3</td>
             </tr>
-            <tr class="bg-gray-50">
-              <td class="border border-gray-300 px-4 py-2">Pembelajaran efektif yang berpusat pada peserta didik</td>
-              <td class="border border-gray-300 px-4 py-2 text-center">5</td>
-            </tr>
-            <tr>
-              <td class="border border-gray-300 px-4 py-2">Asesmen, umpan balik, dan pelaporan yang berpusat pada peserta didik</td>
-              <td class="border border-gray-300 px-4 py-2 text-center">5</td>
-            </tr>
-            <tr class="bg-gray-100 font-semibold">
-              <td colSpan="2" class="border border-gray-300 px-4 py-2 text-center">PROFESIONAL</td>
+            <tr className="bg-gray-50">
+              <td className="border border-gray-300 px-4 py-2">Pembelajaran efektif yang berpusat pada peserta didik</td>
+              <td className="border border-gray-300 px-4 py-2 text-center">5</td>
             </tr>
             <tr>
-              <td class="border border-gray-300 px-4 py-2">Pengetahuan konten pembelajaran dan cara mengajarkannya</td>
-              <td class="border border-gray-300 px-4 py-2 text-center">3</td>
+              <td className="border border-gray-300 px-4 py-2">Asesmen, umpan balik, dan pelaporan yang berpusat pada peserta didik</td>
+              <td className="border border-gray-300 px-4 py-2 text-center">5</td>
             </tr>
-            <tr class="bg-gray-50">
-              <td class="border border-gray-300 px-4 py-2">Karakteristik dan cara belajar peserta didik</td>
-              <td class="border border-gray-300 px-4 py-2 text-center">5</td>
+            <tr className="bg-gray-100 font-semibold">
+              <td colSpan="2" className="border border-gray-300 px-4 py-2 text-center">PROFESIONAL</td>
             </tr>
             <tr>
-              <td class="border border-gray-300 px-4 py-2">Kurikulum dan cara menggunakannya</td>
-              <td class="border border-gray-300 px-4 py-2 text-center">4</td>
+              <td className="border border-gray-300 px-4 py-2">Pengetahuan konten pembelajaran dan cara mengajarkannya</td>
+              <td className="border border-gray-300 px-4 py-2 text-center">3</td>
+            </tr>
+            <tr className="bg-gray-50">
+              <td className="border border-gray-300 px-4 py-2">Karakteristik dan cara belajar peserta didik</td>
+              <td className="border border-gray-300 px-4 py-2 text-center">5</td>
+            </tr>
+            <tr>
+              <td className="border border-gray-300 px-4 py-2">Kurikulum dan cara menggunakannya</td>
+              <td className="border border-gray-300 px-4 py-2 text-center">4</td>
             </tr>
           </tbody>
         </table>
