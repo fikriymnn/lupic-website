@@ -1,6 +1,6 @@
 "use client"
 import React from "react";
-import { FaHome, FaUser, FaCog, FaSignOutAlt, FaNewspaper, FaCamera, FaStore, FaHistory, FaAddressCard } from "react-icons/fa";
+import { FaHome, FaUser, FaCog, FaSignOutAlt, FaNewspaper, FaCamera, FaStore, FaHistory, FaAddressCard, FaBook } from "react-icons/fa";
 import { usePathname } from "next/navigation";
 import { FaHouseMedical, FaScrewdriverWrench } from "react-icons/fa6";
 import axios from "axios";
@@ -71,11 +71,17 @@ const Sidebar = () => {
             </a>
           </li>
           <li className="mb-2">
+            <a href="/lgndmn/dashboard/teaching_material" className={`flex items-center space-x-2 p-2 hover:bg-koreaBlueMuda rounded ${adminPath[3]=="teaching_material"?"bg-koreaBlueMuda":""}`}>
+              <FaBook />
+              <span>Teaching Material</span>
+            </a>
+          </li>
+          {/* <li className="mb-2">
             <a href="/lgndmn/dashboard/jadwal" className={`flex items-center space-x-2 p-2 hover:bg-koreaBlueMuda rounded ${adminPath[3]=="services"?"bg-koreaBlueMuda":""}`}>
               <FaStore />
               <span>Jadwal</span>
             </a>
-          </li>
+          </li> */}
         </ul>
       </nav>
       <div className="p-4 border-t border-gray-700">
