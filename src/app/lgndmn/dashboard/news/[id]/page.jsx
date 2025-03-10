@@ -52,21 +52,23 @@ export default function EditNews({params} ) {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        
-
+        console.log("tes")
         try {
+            console.log("tes")
+            
             if (file) {
-                const formData = new FormData();
-            formData.append('file', file);
-
-            const getData = await axios.post(process.env.NEXT_PUBLIC_API_STORAGE + "/api/file", formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            })
+                    const formData = new FormData();
+                formData.append('file', file);
+    
+                const getData = await axios.post(process.env.NEXT_PUBLIC_API_STORAGE + "/api/file", formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                })
             
-            
-            if (getData.data) {
+                if(getData){
+                console.log(getData)
+                console.log(getData)
                 const message = await axios.put(process.env.NEXT_PUBLIC_API_URL + "/api/news/"+id, {
                     author: data.author,
                     judul: data.judul,
@@ -80,7 +82,9 @@ export default function EditNews({params} ) {
                     alert("Success")
                     window.location.reload()
                   }
+                }
             }else{
+                console.log(88)
                     const message = await axios.put(process.env.NEXT_PUBLIC_API_URL + "/api/news/"+id, {
                         author: data.author,
                         judul: data.judul,
@@ -88,13 +92,13 @@ export default function EditNews({params} ) {
                         deskripsi: data.deskripsi,
                         content: content,
                         sub_content: subContent,
-                        tanggal: new Date().toLocaleDateString("id-ID")
+                        tanggal: data.tanggal
                     })
+                    console.log(message)
                     if (message.data == "success") {
                         alert("Success")
                         window.location.reload()
                       }
-            }
             }
             }catch (err) {
                 console.log(err.message)
@@ -129,7 +133,7 @@ export default function EditNews({params} ) {
                     <div className="m-auto w-full">
 
                         <div className=" m-auto bg-white p-6 rounded-lg shadow-lg w-[80%]">
-                            <form onSubmit={handleSubmit} method="post">
+                            <form onSubmit={handleSubmit}>
                                 <label className="block text-gray-700 font-medium mb-2 text-xl mt-3">
                                     Nama Author
                                 </label>
@@ -288,7 +292,7 @@ export default function EditNews({params} ) {
                                     type="submit"
                                     className="mt-4 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-200"
                                 >
-                                    Upload
+                                    Update
                                 </button>
                             </form>
                         </div>
