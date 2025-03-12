@@ -1,6 +1,6 @@
 export default function CustomFooter() {
   return (
-    <footer className="bg-koreaRed w-full">
+    <footer className="bg-koreaBlue w-full">
       <div className="mx-auto w-full max-w-screen-xl p-4 py-2 lg:py-8">
         <div className="md:flex md:justify-between w-full">
           <div className="md:mb-0 mb-10 md:w-[30%] w-[90%]">
