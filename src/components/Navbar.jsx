@@ -19,7 +19,7 @@ const Navbar = () => {
       <div className="md:flex md:justify-between items-center px-10 md:px-24 py-2">
         <div className="flex justify-between w-full md:w-auto">
           <div className="bg-white rounded-full p-1 md:ml-0 ml-3">
-            <Image
+            <img
               src="/images/lupic-logo.png"
               alt="Logo lupic"
               width={40}
