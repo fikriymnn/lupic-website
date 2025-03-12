@@ -49,6 +49,7 @@ export default function AddNews() {
     };
 
     const handleSubmit = async (e) => {
+        e.preventDefault()
         if (!file) {
             alert("Pilih file terlebih dahulu!");
             return;
@@ -58,7 +59,7 @@ export default function AddNews() {
             const formData = new FormData();
             formData.append('file', file);
 
-            const getData = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/file", formData, {
+            const getData = await axios.post(process.env.NEXT_PUBLIC_API_STORAGE + "/api/file", formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -203,7 +204,7 @@ export default function AddNews() {
                                                                                 const formData = new FormData();
                                                                                 formData.append('file', c.target.files[0]);
                                                                     
-                                                                                const getData = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/file", formData, {
+                                                                                const getData = await axios.post(process.env.NEXT_PUBLIC_API_STORAGE + "/api/file", formData, {
                                                                                     headers: {
                                                                                         'Content-Type': 'multipart/form-data',
                                                                                     },

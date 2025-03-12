@@ -6,7 +6,7 @@ import Editor from 'react-simple-wysiwyg';
 import AdminPartnerDropdown from "@/components/dropdown/AdminPartnerDropdown";
 import axios from "axios";
 
-export default function Aboutus() {
+export default function Jadwal() {
   const [data, setData] = useState({ _id: "",nama:"",deskripsi:"",pesan:"" })
   const [file, setFile] = useState("");
   const [currentFile, setCurrentFile] = useState("");
