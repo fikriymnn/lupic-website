@@ -8,14 +8,14 @@ const Navbar = () => {
   const [activeService, setActiveService] = useState(false);
   const [activeLink, setActiveLink] = useState(false);
 
-  const closeMenu = () => setMenuOpen(false);
-  const closeDropdowns = () => {
+  const closeMenu = () => {
+    setMenuOpen(false);
     setActiveService(false);
     setActiveLink(false);
   };
 
   return (
-    <nav className="bg-koreaRed text-base text-white sticky top-0 z-50">
+    <nav className="bg-koreaRed text-white sticky top-0 z-50">
       <div className="md:flex md:justify-between items-center px-10 md:px-24 py-2">
         <div className="flex justify-between w-full md:w-auto">
           <div className="bg-white rounded-full p-1 md:ml-0 ml-3">
@@ -39,7 +39,7 @@ const Navbar = () => {
         <ul
           className={`${
             menuOpen ? "block" : "hidden"
-          } md:flex space-y-8 md:space-y-0 md:space-x-10 mt-4 md:mt-0 py-3`}
+          } md:flex space-y-4 md:space-y-0 md:space-x-10 mt-4 md:mt-0 py-3`}
         >
           {[
             { href: "/", label: "Home" },
@@ -60,67 +60,69 @@ const Navbar = () => {
           {/* Dropdown Services */}
           <li className="relative">
             <button
-              onClick={() => {
-                setActiveService(!activeService);
-                setActiveLink(false); // Tutup dropdown Link jika Services dibuka
-              }}
-              className="cursor-pointer focus:outline-none"
+              onClick={() => setActiveService(!activeService)}
+              className="cursor-pointer focus:outline-none flex justify-between w-full md:w-auto"
             >
               Services
+              <span className="md:hidden">{activeService ? "▲" : "▼"}</span>
             </button>
 
-            {activeService && (
-              <div className="absolute left-1/2 transform -translate-x-1/2 top-full mt-2 min-w-[150px] md:w-auto bg-koreaRed rounded-lg shadow-lg z-50">
-                {[
-                  { href: "/services", label: "Our Products" },
-                  { href: "/service_workshop", label: "Workshop" },
-                  { href: "/service_teacher", label: "Pre-Service Teacher Evaluation" },
-                ].map((item) => (
+            <ul
+              className={`${
+                activeService ? "block" : "hidden"
+              } md:absolute md:left-1/2 md:transform md:-translate-x-1/2 md:top-full mt-2 md:min-w-[150px] bg-koreaRed md:rounded-lg shadow-lg z-50 md:border md:border-white`}
+            >
+              {[
+                { href: "/services", label: "Our Products" },
+                { href: "/service_workshop", label: "Workshop" },
+                { href: "/service_teacher", label: "Pre-Service Teacher Evaluation" },
+              ].map((item) => (
+                <li key={item.href} className="md:border-t">
                   <Link
-                    key={item.href}
                     href={item.href}
-                    className="block hover:bg-koreaBlue text-sm py-4 border-t w-full text-center cursor-pointer"
-                    onClick={closeDropdowns}
+                    className="block hover:bg-koreaBlue text-sm py-2 px-4 md:py-4 text-left"
+                    onClick={closeMenu}
                   >
                     {item.label}
                   </Link>
-                ))}
-              </div>
-            )}
+                </li>
+              ))}
+            </ul>
           </li>
 
           {/* Dropdown Link */}
           <li className="relative">
             <button
-              onClick={() => {
-                setActiveLink(!activeLink);
-                setActiveService(false); // Tutup dropdown Services jika Link dibuka
-              }}
-              className="cursor-pointer focus:outline-none"
+              onClick={() => setActiveLink(!activeLink)}
+              className="cursor-pointer focus:outline-none flex justify-between w-full md:w-auto"
             >
               Link
+              <span className="md:hidden">{activeLink ? "▲" : "▼"}</span>
             </button>
 
-            {activeLink && (
-              <div className="absolute left-1/2 transform -translate-x-1/2 top-full mt-2 min-w-[150px] md:w-auto bg-koreaRed rounded-lg shadow-lg z-50">
-                {[
-                  { href: "https://chemprolab.id", label: "chemprolab.id" },
-                  { href: "https://www.tokopedia.com/fablabedu", label: "www.tokopedia.com/fablabedu" },
-                  { href: "https://sciencelove.com/", label: "sciencelove.com" },
-                ].map((item) => (
+            <ul
+              className={`${
+                activeLink ? "block" : "hidden"
+              } md:absolute md:left-1/2 md:transform md:-translate-x-1/2 md:top-full mt-2 md:min-w-[150px] bg-koreaRed md:rounded-lg shadow-lg z-50 md:border md:border-white`}
+            >
+              {[
+                { href: "https://chemprolab.id", label: "chemprolab.id" },
+                { href: "https://www.tokopedia.com/fablabedu", label: "tokopedia.com/fablabedu" },
+                { href: "https://sciencelove.com/", label: "sciencelove.com" },
+              ].map((item) => (
+                <li key={item.href} className="md:border-t">
                   <a
-                    key={item.href}
                     href={item.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block hover:bg-koreaBlue text-sm py-4 border-t w-full text-center cursor-pointer"
-                    onClick={closeDropdowns}
+                    className="block hover:bg-koreaBlue text-sm py-2 px-4 md:py-4 text-left"
+                    onClick={closeMenu}
                   >
                     {item.label}
                   </a>
-                ))}
-              </div>
-            )}
+                </li>
+              ))}
+            </ul>
           </li>
         </ul>
       </div>
