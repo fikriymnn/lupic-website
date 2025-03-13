@@ -15,7 +15,8 @@ export default function CardNews({ gambar, judul, deskripsi, tanggal, id }) {
       className="md:w-[400px] md:p-4 w-[90%] md:mx-5 mt-4 "
     >
       <div className="w-full">
-        <Image
+        <img
+        priority="true"
           src={process.env.NEXT_PUBLIC_API_FILE_URL + gambar}
           alt="foto"
           width={600}
