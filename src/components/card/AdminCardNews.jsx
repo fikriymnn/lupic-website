@@ -26,7 +26,7 @@ export default function AdminCardNews({judul,deskripsi,tanggal,id,gambar}){
     return(
         <div className="md:w-[350px] w-[90%] md:mx-5 mt-4">
         <div className="w-full">
-            <Image src={process.env.NEXT_PUBLIC_API_FILE_URL+gambar} alt="foto" width={1000} height={1000} className="w-[500px] h-[250px] rounded-xl"/>
+            <img src={process.env.NEXT_PUBLIC_API_FILE_URL+gambar} alt="foto"  className="w-[500px] h-[250px] rounded-xl"/>
             <h3 className="font-bold text-lg md:mt-2 mt-2 mb-1 text-koreaBlue">{truncateText(judul,9)}</h3>
             <p className=" text-koreaBlueMuda text-xs">{tanggal}</p>
             <p className="text-justify text-base h-14">{truncateText(deskripsi,12)}</p>

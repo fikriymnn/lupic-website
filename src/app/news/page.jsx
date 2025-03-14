@@ -11,6 +11,7 @@ import { motion } from "framer-motion";
 
 export default function News() {
   const [currentPage, setCurrentPage] = useState(1);
+  const [data3,setData3] = useState({ judul: "", deskripsi: "", tanggal: "", _id: "", gambar: "" })
   const [data, setData] = useState([
     { judul: "", deskripsi: "", tanggal: "", _id: "", gambar: "" },
   ]);
@@ -59,12 +60,20 @@ export default function News() {
             currentPage +
             "&limit=10"
         );
+        
         const Data2 = await axios.get(
           process.env.NEXT_PUBLIC_API_URL + "/api/news"
+        );
+        const Data3 = await axios.get(
+          process.env.NEXT_PUBLIC_API_URL +
+            "/api/news?page=" +
+            1 +
+            "&limit=1"
         );
         if (Data.data) {
           setData(Data.data);
           setTotalPage(Math.ceil(Data2.data.length / 10));
+          setData3(Data3.data[0])
           console.log(totalPages);
         }
       } catch (err) {
@@ -151,26 +160,24 @@ export default function News() {
         </div>
         {/* News Highlight */}
         <div className="mt-8 w-full">
-          <a className="md:flex m-auto w-full" href={"/news/" + data[0]._id}>
+          <a className="md:flex m-auto w-full" href={"/news/" + data3._id}>
             <div className="md:w-[50%]">
-              <Image
-                src={process.env.NEXT_PUBLIC_API_FILE_URL + data[0].gambar}
+              <img
+                src={process.env.NEXT_PUBLIC_API_FILE_URL + data3.gambar}
                 alt=""
-                width={800}
-                height={500}
                 className="md:w-[600px] md:h-[400px] w-full h-[250px] rounded-lg"
               />
             </div>
 
             <div className="md:px-5 md:w-[50%]">
               <h3 className="md:text-4xl mt-3 line-clamp-2 text-2xl font-bold mb-2 text-koreaBlue md:text-start ">
-                {data[0].judul}
+                {data3.judul}
               </h3>
               <p className="text-sm mb-2 text-koreaBlueMuda md:text-start">
-                {data[0].tanggal}
+                {data3.tanggal}
               </p>
               <p className="text-justify md:text-xl text-sm line-clamp-6">
-                {data[0].deskripsi}
+                {data3.deskripsi}
               </p>
             </div>
           </a>
