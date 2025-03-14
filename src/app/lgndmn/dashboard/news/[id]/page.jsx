@@ -224,7 +224,7 @@ export default function EditNews({params} ) {
                                                         subContent[i].sub_gambar && subContent[i].sub_gambar.map((v, a) => {
                                                             return (
                                                                 <div key={a} className="border-2 border-dashed border-gray-300 p-4 rounded-lg text-center">
-                                                                     <img alt="foto" src={`${process.env.NEXT_PUBLIC_API_FILE_URL}` + v} className=" m-auto py-5" />
+                                                                     <img alt="foto" src={`${process.env.NEXT_PUBLIC_API_FILE_URL}` + v} className=" m-auto py-5 w-full" />
                                                                     <input
                                                                         type="file"
                                                             
