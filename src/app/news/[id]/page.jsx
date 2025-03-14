@@ -35,7 +35,7 @@ export default function detailNews({ params }) {
                 <p className="my-1 md:text-lg text-sm"> Author : {data.author}</p>
                 <p className="mb-4 text-sm text-koreaBlueMuda">{data.tanggal}</p>
                 <div className="md:w-full w-[90%] h-[45%] m-auto flex justify-center">
-                    <Image src={data?process.env.NEXT_PUBLIC_API_FILE_URL+data.gambar:""} alt="foto" width={600} height={400} className="md:w-[800px] md:h-[500px] w-full rounded-xl" />
+                    <img src={data?process.env.NEXT_PUBLIC_API_FILE_URL+data.gambar:""} alt="foto" className="md:w-[800px] md:h-[500px] w-full rounded-xl" />
                 </div>
                 <div className="mt-8 m-auto md:text-lg text-sm w-[80%] text-justify">
                     {data.deskripsi}
@@ -61,7 +61,7 @@ export default function detailNews({ params }) {
                                         v.sub_gambar&&v.sub_gambar.map((w,u)=>{
                                             if(w!==""){
                                                 return(
-                                                    <Image key={u} className="w-[60%] mb-4 mx-4" src={process.env.NEXT_PUBLIC_API_FILE_URL+w} alt="foto" width={600} height={600} />
+                                                    <img key={u} className="w-[60%] mb-4 mx-4" src={process.env.NEXT_PUBLIC_API_FILE_URL+w} alt="foto" />
                                                 )
                                             }
                                            

@@ -32,7 +32,49 @@ export default function Services_workshop() {
           and detail program.
         </p>
       </div>
-      <p className="w-[90%] md:w-[80%] m-auto md:text-3xl text-base text-koreaBlue mt-8 font-bold mb-4">
+
+
+      {/* <div className="w-[85%] m-auto md:mt-8 mt-1">
+        <div className="md:block md:justify-items-start grid grid-cols-1 justify-items-center">
+          <h1 className="md:text-5xl text-2xl mt-10 font-bold ">
+            Another News
+          </h1>
+          <div className="h-1 w-36 bg-koreaRed md:mt-3 mt-2"></div>
+        </div>
+        <div className="grid md:grid-cols-3 justify-items-center grid-cols-1 md:mt-4 mt-2">
+          {data &&
+            data.map((v, i) => {
+              if (i !== 0) {
+                return (
+                  <motion.div
+                    className="mx-5"
+                    key={i}
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <CardNews
+                      gambar={v.gambar}
+                      key={i}
+                      judul={v.judul}
+                      deskripsi={v.deskripsi}
+                      tanggal={v.tanggal}
+                      id={v._id}
+                    />
+                  </motion.div>
+                );
+              }
+            })}
+        </div>
+      </div>
+      <div className="w-[20%] m-auto mt-10 mb-16">
+        <ResponsivePagination
+          current={currentPage}
+          total={totalPages}
+          onPageChange={setCurrentPage}
+        />
+      </div> */}
+
+      {/* <p className="w-[90%] md:w-[80%] m-auto md:text-3xl text-base text-koreaBlue mt-8 font-bold mb-4">
         {" "}
         Workshop Timeline
       </p>
@@ -137,7 +179,7 @@ export default function Services_workshop() {
           through more environmentally friendly, cost-effective, and efficient
           methods.
         </p>
-      </div>
+      </div> */}
       <CustomFooter />
     </>
   );

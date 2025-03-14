@@ -5,10 +5,8 @@ import Editor from "react-simple-wysiwyg";
 import AdminCardFacilities from "@/components/card/AdminCardFacilities";
 import Image from 'next/image'
 import axios from "axios";
-import { use } from "react";
 
-export default function EditNews({params} ) {
-    const {id} = use(params)
+export default function AddEvent() {
     const [file, setFile] = useState("");
     const [content, setContent] = useState('');
     const [data, setData] = useState({
@@ -52,22 +50,33 @@ export default function EditNews({params} ) {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        console.log("tes")
+        if (!file) {
+            alert("Pilih file terlebih dahulu!");
+            return;
+        }
+
         try {
-            console.log("tes")
+            const formData = new FormData();
+            formData.append('file', file);
+
+            const getData = await axios.post(process.env.NEXT_PUBLIC_API_STORAGE + "/api/file", formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            })
             
-            if (file) {
-                    const formData = new FormData();
-                formData.append('file', file);
-    
-                const getData = await axios.post(process.env.NEXT_PUBLIC_API_STORAGE + "/api/file", formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                    },
-                })
             
-                if(getData){
-                const message = await axios.put(process.env.NEXT_PUBLIC_API_URL + "/api/news/"+id, {
+            if (getData.data) {
+                const obj = {
+                    judul: data.judul,
+                    gambar: getData.data,
+                    deskripsi: data.deskripsi,
+                    content: content,
+                    sub_content: subContent,
+                    tanggal: new Date().toLocaleDateString("id-ID")
+                }
+                console.log(obj)
+                const message = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/news", {
                     author: data.author,
                     judul: data.judul,
                     gambar: getData.data,
@@ -78,47 +87,13 @@ export default function EditNews({params} ) {
                 })
                 if (message.data == "success") {
                     alert("Success")
-                    window.location.reload()
+                    // window.location.reload()
                   }
-                }
-            }else{
-                console.log(88)
-                    const message = await axios.put(process.env.NEXT_PUBLIC_API_URL + "/api/news/"+id, {
-                        author: data.author,
-                        judul: data.judul,
-                        gambar: data.gambar,
-                        deskripsi: data.deskripsi,
-                        content: content,
-                        sub_content: subContent,
-                        tanggal: data.tanggal
-                    })
-                    console.log(message)
-                    if (message.data == "success") {
-                        alert("Success")
-                        window.location.reload()
-                      }
             }
             }catch (err) {
                 console.log(err.message)
             }
         }
-
-        useEffect(()=>{
-            async function getData(){
-                try {
-                    const Data = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/news/"+id)
-                    if (Data.data) {
-                      setData(Data.data)
-                      setContent(Data.data.content)
-                      setSubContent(Data.data.sub_content)
-                    }
-            
-                  } catch (err) {
-                    console.log(err.message)
-                  }
-            }
-            getData()
-        },[])
 
     return (
             <div className="flex">
@@ -126,12 +101,12 @@ export default function EditNews({params} ) {
                 <div className="w-64"></div>
                 <div className="w-full mb-16">
                     <div className="p-6 mt-8 text-center">
-                        <h1 className="text-3xl font-bold text-koreaBlue">UPDATE NEWS</h1>
+                        <h1 className="text-3xl font-bold text-koreaBlue">ADD NEWS</h1>
                     </div>
                     <div className="m-auto w-full">
 
                         <div className=" m-auto bg-white p-6 rounded-lg shadow-lg w-[80%]">
-                            <form onSubmit={handleSubmit}>
+                            <form onSubmit={handleSubmit} method="post">
                                 <label className="block text-gray-700 font-medium mb-2 text-xl mt-3">
                                     Nama Author
                                 </label>
@@ -155,7 +130,6 @@ export default function EditNews({params} ) {
                                     onChange={handleChange}
                                     value={data.judul||""}
                                 />
-                                <img alt="foto" src={`${process.env.NEXT_PUBLIC_API_FILE_URL}` + data.gambar} className="w-[800px] h-[400px] m-auto py-5" />
                                 <label className="block text-gray-700 font-medium mb-2 text-xl mt-3">
                                     Gambar
                                 </label>
@@ -200,7 +174,6 @@ export default function EditNews({params} ) {
                                                         placeholder="Masukkan nama..."
                                                         className="mt-2 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                                                         name="sub_judul"
-                                                        value={e.sub_judul}
                                                         onChange={(a) => {
                                                             let newSubContent = [...subContent]
                                                             newSubContent[i].sub_judul = a.target.value
@@ -224,10 +197,8 @@ export default function EditNews({params} ) {
                                                         subContent[i].sub_gambar && subContent[i].sub_gambar.map((v, a) => {
                                                             return (
                                                                 <div key={a} className="border-2 border-dashed border-gray-300 p-4 rounded-lg text-center">
-                                                                     <img alt="foto" src={`${process.env.NEXT_PUBLIC_API_FILE_URL}` + v} className=" m-auto py-5" />
                                                                     <input
                                                                         type="file"
-                                                            
                                                                         onChange={(c) => {
                                                                             async function getData(){
                                                                                 const formData = new FormData();
@@ -290,7 +261,7 @@ export default function EditNews({params} ) {
                                     type="submit"
                                     className="mt-4 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-200"
                                 >
-                                    Update
+                                    Upload
                                 </button>
                             </form>
                         </div>

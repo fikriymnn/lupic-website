@@ -7,7 +7,7 @@ import Image from 'next/image'
 import axios from "axios";
 import { use } from "react";
 
-export default function EditNews({params} ) {
+export default function EditEvent({params} ) {
     const {id} = use(params)
     const [file, setFile] = useState("");
     const [content, setContent] = useState('');
