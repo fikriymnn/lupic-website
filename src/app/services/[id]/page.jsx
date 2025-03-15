@@ -51,7 +51,7 @@ export default function EditToko({ params }) {
           </h3>
         </div>
         <div className="md:w-[80%] w-[90%]  m-auto grid md:grid-cols-2 grid-cols-1 justify-items-center">
-          <Image
+          <ing
             src={process.env.NEXT_PUBLIC_API_FILE_URL + data.gambar}
             alt="foto"
             width={600}
