@@ -27,7 +27,7 @@ export default function CardFacilities({gambar,judul,deskripsi,content,_id}){
     return(
         <a className="mx-5 mt-4 block">
         <div className="w-[300px] shadow-xl rounded-xl">
-            <Image src={process.env.NEXT_PUBLIC_API_FILE_URL+gambar} alt="foto" width={1000} height={1000} className="w-[300px] h-[300px] rounded-xl"/>
+            <img src={process.env.NEXT_PUBLIC_API_FILE_URL+gambar} alt="foto" className="w-[300px] h-[300px] rounded-xl"/>
             <div className=" p-2"> 
             <h3 className="font-bold text-center text-xl md:mt-2 mt-2 mb-1 text-koreaBlue">{judul}</h3>
             <p className="m-auto w-[90%] text-sm text-justify pb-2">{truncateText(deskripsi,30)}</p>
