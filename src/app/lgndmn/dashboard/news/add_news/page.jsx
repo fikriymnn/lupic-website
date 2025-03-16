@@ -73,7 +73,7 @@ export default function AddNews() {
                     deskripsi: data.deskripsi,
                     content: content,
                     sub_content: subContent,
-                    tanggal: new Date().toLocaleDateString("id-ID")
+                    tanggal: data.tanggal
                 }
                 console.log(obj)
                 const message = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/news", {
@@ -118,13 +118,24 @@ export default function AddNews() {
                                     onChange={handleChange}
                                     value={data.author||""}
                                 />
+                                <label className="block text-gray-700 font-medium mb-2 text-xl mt-3">
+                                    Tanggal
+                                </label>
+                                <input
+                                    type="text"
+                                    placeholder="Masukkan tanggal..."
+                                    className="mt-2 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                    name="tanggal"
+                                    onChange={handleChange}
+                                    value={data.tanggal||""}
+                                />
 
                                 <label className="block text-gray-700 font-medium mb-2 text-xl mt-3">
                                     Judul
                                 </label>
                                 <input
                                     type="text"
-                                    placeholder="Masukkan nama..."
+                                    placeholder="Masukkan judul..."
                                     className="mt-2 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                                     name="judul"
                                     onChange={handleChange}
@@ -148,7 +159,7 @@ export default function AddNews() {
                                 </label>
                                 <input
                                     type="text"
-                                    placeholder="Masukkan nama..."
+                                    placeholder="Masukkan deskripsi..."
                                     className="mt-2 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                                     name="deskripsi"
                                     onChange={handleChange}
@@ -171,7 +182,7 @@ export default function AddNews() {
                                                     </label>
                                                     <input
                                                         type="text"
-                                                        placeholder="Masukkan nama..."
+                                                        placeholder="Masukkan sub judul..."
                                                         className="mt-2 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                                                         name="sub_judul"
                                                         onChange={(a) => {

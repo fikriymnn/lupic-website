@@ -2,7 +2,7 @@
 import React from "react";
 import { FaHome, FaUser, FaCog, FaSignOutAlt, FaNewspaper, FaCamera, FaStore, FaHistory, FaAddressCard, FaBook } from "react-icons/fa";
 import { usePathname } from "next/navigation";
-import { FaHouseMedical, FaScrewdriverWrench } from "react-icons/fa6";
+import { FaCalendarDays, FaHouseMedical, FaScrewdriverWrench } from "react-icons/fa6";
 import axios from "axios";
 
 const Sidebar = () => {
@@ -74,6 +74,12 @@ const Sidebar = () => {
             <a href="/lgndmn/dashboard/teaching_material" className={`flex items-center space-x-2 p-2 hover:bg-koreaBlueMuda rounded ${adminPath[3]=="teaching_material"?"bg-koreaBlueMuda":""}`}>
               <FaBook />
               <span>Teaching Material</span>
+            </a>
+          </li>
+          <li className="mb-2">
+            <a href="/lgndmn/dashboard/event" className={`flex items-center space-x-2 p-2 hover:bg-koreaBlueMuda rounded ${adminPath[3]=="event"?"bg-koreaBlueMuda":""}`}>
+              <FaCalendarDays />
+              <span>Event</span>
             </a>
           </li>
           {/* <li className="mb-2">

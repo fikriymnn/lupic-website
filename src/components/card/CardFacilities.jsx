@@ -12,11 +12,9 @@ export default function CardFacilities({ gambar, judul, deskripsi, id }) {
   return (
     <a className="mx-5 mt-4 hover:bg-gray-200 block" href={"/facilities/" + id}>
       <div className="w-[300px] shadow-xl rounded-xl">
-        <Image
+        <img
           src={process.env.NEXT_PUBLIC_API_FILE_URL + gambar}
           alt="foto"
-          width={1000}
-          height={1000}
           className="w-[300px] h-[300px] rounded-xl"
         />
         <div className=" p-2">
