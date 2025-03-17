@@ -101,7 +101,7 @@ const VidPage = () => {
       <h2 className="text-2xl font-bold mt-8 mb-4 text-center">Books/Modules</h2>
       <div className="w-[95%] justify-items-center m-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {books.map((book, index) => (
-          <div key={index} className="w-[330px] bg-white shadow-lg p-4 text-white text-center rounded-lg bg-gray-800">
+          <div key={index} className="w-[330px] bg-white shadow-lg p-4 text-center rounded-lg bg-gray-800">
           <img src={process.env.NEXT_PUBLIC_API_FILE_URL+book.cover} alt={book.judul} className="w-full h-48 object-cover rounded-md" />
           <h3 className="text-lg font-semibold mt-2">{book.judul}</h3>
           <a href={process.env.NEXT_PUBLIC_API_FILE_URL+book.file} download>

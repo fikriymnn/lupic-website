@@ -1,8 +1,43 @@
+'use client'
 import Navbar from "@/components/Navbar";
 import CustomFooter from "@/components/CustomFooter";
 import Image from "next/image";
+import { useState,useEffect } from "react";
+import ResponsivePagination from "react-responsive-pagination";
+import "react-responsive-pagination/themes/classic.css";
+import axios from "axios";
+import { motion } from "framer-motion";
+import CardEvent from "../../components/card/CardEvent";
 
 export default function Services_workshop() {
+  const [data,setData] = useState([])
+  const [totalPages,setTotalPages] = useState(1)
+  const [currentPage,setCurrentPage] = useState(1)
+  
+  useEffect(() => {
+    async function getData() {
+      try {
+        const Data = await axios.get(
+          process.env.NEXT_PUBLIC_API_URL +
+            "/api/event?page=" +
+            currentPage +
+            "&limit=10"
+        );
+        
+        const Data2 = await axios.get(
+          process.env.NEXT_PUBLIC_API_URL + "/api/event"
+        );
+        if (Data.data) {
+          setData(Data.data);
+          console.log(Data.data)
+          setTotalPages(Math.ceil(Data2.data.length / 10));
+        }
+      } catch (err) {
+        console.log(err.message);
+      }
+    }
+    getData();
+  }, [currentPage]);
   return (
     <>
       <Navbar />
@@ -34,17 +69,17 @@ export default function Services_workshop() {
       </div>
 
 
-      {/* <div className="w-[85%] m-auto md:mt-8 mt-1">
-        <div className="md:block md:justify-items-start grid grid-cols-1 justify-items-center">
-          <h1 className="md:text-5xl text-2xl mt-10 font-bold ">
-            Another News
+      <div className="w-[85%] m-auto md:mt-8 mt-1">
+        <div className="md:block md:justify-items-start grid grid-cols-1 justify-items-center md:ml-10 m-auto">
+          <h1 className="md:text-3xl text-xl mt-10 font-bold ">
+           Event Workshop
           </h1>
-          <div className="h-1 w-36 bg-koreaRed md:mt-3 mt-2"></div>
+          <div className="h-1 w-48 bg-koreaRed md:mt-3 mt-2 mb-10 "></div>
         </div>
         <div className="grid md:grid-cols-3 justify-items-center grid-cols-1 md:mt-4 mt-2">
           {data &&
             data.map((v, i) => {
-              if (i !== 0) {
+
                 return (
                   <motion.div
                     className="mx-5"
@@ -52,17 +87,18 @@ export default function Services_workshop() {
                     whileHover={{ scale: 1.05 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <CardNews
+                    <CardEvent
                       gambar={v.gambar}
                       key={i}
                       judul={v.judul}
-                      deskripsi={v.deskripsi}
-                      tanggal={v.tanggal}
+                      waktu={v.judul}
+                      jam={v.jam} lokasi={v.lokasi}
+                      harga={v.harga}
                       id={v._id}
                     />
                   </motion.div>
                 );
-              }
+              
             })}
         </div>
       </div>
@@ -72,7 +108,7 @@ export default function Services_workshop() {
           total={totalPages}
           onPageChange={setCurrentPage}
         />
-      </div> */}
+      </div>
 
       {/* <p className="w-[90%] md:w-[80%] m-auto md:text-3xl text-base text-koreaBlue mt-8 font-bold mb-4">
         {" "}
