@@ -7,6 +7,7 @@ import AdminCardNews from "@/components/card/AdminCardNews";
 import ResponsivePagination from 'react-responsive-pagination';
 import 'react-responsive-pagination/themes/classic.css';
 import axios from "axios";
+import AdminCardEvent from "../../../../components/card/AdminCardEvent";
 
 
 export default function Event() {
@@ -14,7 +15,6 @@ export default function Event() {
   const [totalPages,setTotalPages] = useState(1)
   const [data, setData] = useState([]);
   const [search,setSearch] = useState("")
-
 
   useEffect(() => {
     async function getData() {
@@ -57,7 +57,7 @@ export default function Event() {
               {
                 data && data.map((v, i) => {
                   return (
-                    <AdminCardNews gambar={v.gambar} judul={v.judul} content={v.content} tanggal={v.tanggal} id={v._id} key={i} />
+                    <AdminCardEvent gambar={v.gambar} judul={v.judul} content={v.content} tanggal={v.tanggal} id={v._id} key={i} />
                   )
                 })
               }

@@ -32,7 +32,7 @@ export default function AdminCardEvent({judul,content,tanggal,id,gambar}){
             <p className="text-justify text-base h-14">{truncateText(content,12)}</p>
         </div>
         <div className="flex justify-evenly pb-5 mt-2">
-            <button className="w-20" onClick={(e) => { window.location.href = "/lgndmn/dashboard/news/"+id }}>
+            <button className="w-20" onClick={(e) => { window.location.href = "/lgndmn/dashboard/event/"+id }}>
                     <p className="text-sm text-white bg-koreaBlueMuda p-2 rounded-2xl">Edit</p>
                 </button>
                 <button className="w-20" onClick={onDelete}>
