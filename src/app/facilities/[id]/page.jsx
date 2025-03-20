@@ -33,7 +33,7 @@ export default function detailFacility({ params }) {
                     <h3 className="md:text-4xl text-xl mt-10 font-bold text-koreaBlue">{data.judul}</h3>
                 </div>
                 <div className="md:w-full w-[90%] h-[45%] m-auto flex justify-center">
-                    <Image src={process.env.NEXT_PUBLIC_API_FILE_URL + data.gambar} alt="foto" width={600} height={600} className="md:w-[500px] md:h-[500px] w-full" />
+                    <img src={process.env.NEXT_PUBLIC_API_FILE_URL + data.gambar} alt="foto" width={600} height={600} className="md:w-[500px] md:h-[500px] w-full" />
                 </div>
                 <p className="mt-8 m-auto md:text-xl text-lg w-[70%] text-justify md:mb-8 mb-4">
                     {data.deskripsi}
