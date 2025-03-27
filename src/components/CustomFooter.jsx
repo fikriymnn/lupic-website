@@ -103,8 +103,6 @@ export default function CustomFooter() {
               <ul className="font-medium">
                 <li className="mb-4">
                   <a
-                    href="https://kimia.upi.edu/"
-                    target="_blank"
                     className="hover:underline "
                   >
                     Kimia UPI
@@ -112,8 +110,6 @@ export default function CustomFooter() {
                 </li>
                 <li className="mb-4">
                   <a
-                    href="https://unnes.ac.id/kimia-s1/"
-                    target="_blank"
                     className="hover:underline "
                   >
                     Kimia UNNES
@@ -121,8 +117,6 @@ export default function CustomFooter() {
                 </li>
                 <li className="mb-4">
                   <a
-                    href="https://undiksha.ac.id/akademik/fakultas/fakultas-matematika-dan-ilmu-pengetahuan-alam/kimia/"
-                    target="_blank"
                     className="hover:underline "
                   >
                     Kimia UNDHIKSA

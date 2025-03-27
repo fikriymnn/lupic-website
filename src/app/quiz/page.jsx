@@ -3,9 +3,9 @@ import React, { useState, useEffect } from "react";
 
 const quizQuestions = [
   {
-    question: "Apa ibukota Jepang?",
+    question: "Apa ibukota Korea?",
     options: ["Seoul", "Tokyo", "Beijing", "Bangkok"],
-    answer: ["Tokyo"],
+    answer: ["Seoul"],
   },
   {
     question: "Berapa hasil dari 5 + 3?",
