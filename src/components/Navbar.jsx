@@ -69,7 +69,7 @@ const Navbar = () => {
               items: [
                 { href: "/vid_page", label: "Videos" },
                 { href: "/booksmodules_page", label: "Books/Modules" },
-                { href: "", label: "Conference Paper" },
+                { href: "/conferencepaper_page", label: "Conference Paper" },
               ],
             },
             {
