@@ -26,6 +26,7 @@ export default function QuizApp() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [timeElapsed, setTimeElapsed] = useState(0);
   const [timerRunning, setTimerRunning] = useState(false);
+  const [point, setPoint] = useState(0);
 
   useEffect(() => {
     let timer;
@@ -46,18 +47,116 @@ export default function QuizApp() {
 
   const handleChange = (option) => {
     const question = quizQuestions[currentQuestionIndex].question;
+    console.log(answers)
     setAnswers((prev) => {
       const selected = prev[question] || [];
+
       return {
         ...prev,
         [question]: selected.includes(option)
           ? selected.filter((item) => item !== option)
           : [...selected, option],
       };
-    });
+    }
+    );
+  };
+
+  const calculatePoints = () => {
+    const arry = Object.values(answers)
+    function countCommonValues(array1, array2) {
+      const set1 = new Set(array1);
+      const commonValuesCount = new Set(array2.filter(value => set1.has(value))).size;
+      return commonValuesCount;
+    }
+    let pp = 0
+    for (let i = 0; i < quizQuestions.length; i++) {
+      let count = countCommonValues(arry[i], quizQuestions[i].answer)
+      if (quizQuestions[i].answer.length == 1) {
+        if (count == 1) {
+          if (arry[i].length == 1) {
+            pp+=2
+          } else if (arry[i].length == 2) {
+            pp+=1.75
+          } else if (arry[i].length == 3) {
+            pp+=1.5
+          } else if (arry[i].length == 4) {
+            pp+=1.25
+            console.log(1.25)
+          }
+        } else if (count == 0) {
+          if (arry[i].length == 0) {
+            pp+=1
+          }else if (arry[i].length == 1) {
+            pp+=0.76
+          } else if (arry[i].length == 2) {
+            pp+=0.33
+          } else if (arry[i].length == 3) {
+            pp+=0
+          }
+        }
+
+      } else if (quizQuestions[i].answer.length == 2) {
+        if (count == 1) {
+          if (arry[i].length == 1) {
+            pp+=1.83
+          } else if (arry[i].length == 2) {
+            pp+=1.33
+          } else if (arry[i].length == 3) {
+            pp+=1.167
+          } 
+        } else if (count == 2) {
+          if (arry[i].length == 2) {
+            pp+=2
+          } else if (arry[i].length == 3) {
+            pp+=1.67
+          } else if (arry[i].length == 4) {
+            pp+=1.5
+            console.log(1.5)
+          }
+        } else if (count == 0) {
+          if (arry[i].length == 0) {
+            pp+=1
+          }else if (arry[i].length == 1) {
+            pp+=0.5
+          } else if (arry[i].length == 2) {
+            pp+=0
+          }
+        }
+      } else if (quizQuestions[i].answer.length == 3) {
+        if (count == 1) {
+          if (arry[i].length == 1) {
+            pp+=1.67
+          } else if (arry[i].length == 2) {
+            pp+=1.167
+          }
+        } else if (count == 2) {
+          if (arry[i].length == 2) {
+            pp+=1.83
+          } else if (arry[i].length == 3) {
+            pp+=1.33
+          }
+        } else if (count == 3) {
+          if (arry[i].length == 3) {
+            pp+=2
+          } else if (arry[i].length == 4) {
+            pp+=1.5
+            console.log(1.5)
+          } 
+        } else if (count == 0) {
+          if (arry[i].length == 0) {
+            pp+=1
+          }else if (arry[i].length == 1) {
+            pp+=0
+          }
+        }
+      }
+    }
+    setPoint(prev=>prev+pp)
+    console.log(pp)
   };
 
   const handleSubmit = () => {
+    calculatePoints();
     setSubmitted(true);
     setTimerRunning(false);
   };
@@ -89,6 +188,13 @@ export default function QuizApp() {
       percentage: ((correct / quizQuestions.length) * 100).toFixed(2),
     };
   };
+
+  useEffect(() => {
+    quizQuestions.forEach((v) => {
+      answers[v.question] = []
+    }
+    )
+  }, [])
 
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
@@ -143,10 +249,11 @@ export default function QuizApp() {
 
             {!submitted ? (
               <>
-                <div className="w-[30%] bg-white p-6 rounded shadow-md">
+                <div className="w-[80%] bg-white p-6 rounded shadow-md mb-8">
                   <h2 className="text-lg font-semibold">
                     {quizQuestions[currentQuestionIndex].question}
                   </h2>
+                  {quizQuestions[currentQuestionIndex].img ? <img src={quizQuestions[currentQuestionIndex].img} /> : ""}
                   <div className="mt-2">
                     {quizQuestions[currentQuestionIndex].options.map((option) => (
                       <label key={option} className="block">
@@ -187,6 +294,7 @@ export default function QuizApp() {
             ) : (
               <>
                 {/* Summary */}
+                <p className="text-3xl">{point}</p>
                 <table className="border-collapse w-3/4 text-center mt-4">
                   <thead>
                     <tr className="bg-gray-200">
