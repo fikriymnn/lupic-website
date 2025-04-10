@@ -184,7 +184,7 @@ export default function News() {
         </div>
       </div>
       {/* other news */}
-      <div className="w-[85%] m-auto md:mt-8 mt-1">
+      <div className="md:w-[85%] w-[95%] m-auto md:mt-8 mt-1">
         <div className="md:block md:justify-items-start grid grid-cols-1 justify-items-center">
           <h1 className="md:text-5xl text-2xl mt-10 font-bold ">
             Another News

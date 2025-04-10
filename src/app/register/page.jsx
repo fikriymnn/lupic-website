@@ -44,7 +44,7 @@ export default function Register(){
               onChange={(e) => setNama(e.target.value)}
               required
               className="w-full px-4 py-2 mt-2 border rounded-lg focus:ring focus:ring-blue-300"
-              placeholder="Agung muhammad"
+              placeholder="nama user"
             />
           </div>
           <div>
@@ -55,7 +55,7 @@ export default function Register(){
               onChange={(e) => setEmail(e.target.value)}
               required
               className="w-full px-4 py-2 mt-2 border rounded-lg focus:ring focus:ring-blue-300"
-              placeholder="admin@example.com"
+              placeholder="user@example.com"
             />
           </div>
           <div>
@@ -73,9 +73,18 @@ export default function Register(){
             type="submit"
             className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-200"
           >
-            Login
+            submit
           </button>
         </form>
+        <p className="text-sm text-gray-600 text-center mt-4">
+      Sudah punya akun?{' '}
+      <a
+        href="/login"
+        className="text-blue-600 hover:text-blue-800 font-medium transition duration-200"
+      >
+        Klik login
+      </a>
+    </p>
       </div>
     </div>
     <CustomFooter />

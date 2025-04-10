@@ -10,7 +10,7 @@ const quizQuestions = [
   },
   {
     question: "Letak Zn2+ dalam tabel periodik adalah…. (diketahui nomor nomor atom Zn=30)",
-    options: ["Golongan 10, periode 4", "Golongan 11, periode 4", "Golongan 12, periode 4 ", "Golongan 14, periode 4"],
+    options: ["Golongan 10, periode 4", "Golongan 11, periode 4", "Golongan 12, periode 4", "Golongan 14, periode 4"],
     answer: ["Golongan 12, periode 4"],
   },
   {
@@ -29,7 +29,40 @@ const quizQuestions = [
     options: ["Perubahan entalpi reaksi dapat dihitung menggunakan hukum Hess dengan rumus: ΔHreaksi=∑ΔHf∘(reaktan)−∑ΔHf∘(produk)", "Nilai ΔHreaksi adalah -1367 kJ/mol.", "Jika entalpi pembakaran karbon dan hidrogen diketahui, hukum Hess dapat digunakan untuk menghitung ΔHf∘​ etanol.", "Reaksi ini merupakan reaksi endoterm karena memerlukan oksigen dalam jumlah besar."],
     answer: ["Nilai ΔHreaksi adalah -1367 kJ/mol.","Jika entalpi pembakaran karbon dan hidrogen diketahui, hukum Hess dapat digunakan untuk menghitung ΔHf∘​ etanol."],
   },
+  {
+    question: "Berikut ini adalah tindakan-tindakan yang sesuai untuk menangani siswa yang berperilaku sulit",
+    options: ["Bicara dengan mereka secara personal", "Menggunakan tutor Sebaya", "Pengendalian tingkat keparahan perilaku sulit peserta didik", "Mengisolasi dari peserta didik lainnya"],
+    answer: ["Bicara dengan mereka secara personal","Menggunakan tutor Sebaya","Pengendalian tingkat keparahan perilaku sulit peserta didik"],
+  },
+  {
+    question: "Langkah pertama dalam desain pembelajaran yang terstruktur adalah…",
+    options: [
+       "Menentukan metode evaluasi",
+       "Merumuskan tujuan pembelajaran", 
+       "Memilih materi pembelajaran",
+      "Melaksananakan kegiatan pembelajaran"],
+    answer: ["Merumuskan tujuan pembelajaran"],
+  },
+  {
+    question: "Berikut ini pernyataan yang tepat sesuai prinsip-prinsip penyusunan laporan capaian belajar siswa adalah ….",
+    options: [
+       "Laporan harus mencakup aspek perkembangan kognitif, dan afektif,",
+       "Laporan harus transparan dan mudah dipahami oleh siswa dan orang tua.", 
+       "Laporan harus memuat informasi perkembangan akademik siswa",
+      "Laporan harus didasarkan pada data dan fakta yang objektif"],
+    answer: ["Laporan harus transparan dan mudah dipahami oleh siswa dan orang tua.","Laporan harus didasarkan pada data dan fakta yang objektif"],
+  },
 ];
+
+// {
+//   question: "Berikut ini adalah tindakan-tindakan yang sesuai untuk menangani siswa yang berperilaku sulit",
+//   options: [
+//      "",
+//      "", 
+//      "",
+//     ""],
+//   answer: [""],
+// },
 
 const huruf = ["A","B","C","D"]
 
