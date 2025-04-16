@@ -31,7 +31,7 @@ export default function Login() {
     return (
         <>
             <Navbar />
-            <div className="flex justify-center items-center h-[520px]">
+            <div className="flex justify-center items-center h-[600px]">
                 <div className="bg-white p-8 rounded-lg shadow-lg w-96">
                     <h2 className="text-2xl font-bold text-center mb-4">LOGIN</h2>
                     <form onSubmit={handleSubmit} className="space-y-4">

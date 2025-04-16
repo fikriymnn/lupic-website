@@ -8,6 +8,9 @@ export default function Register(){
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [nama, setNama] = useState("");
+  const [tglLahir, setTglLahir] = useState('');
+    const [whatsapp, setWhatsapp] = useState('');
+    const [instansi, setInstansi] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,7 +35,7 @@ export default function Register(){
   return (
     <>
     <Navbar />
-    <div className="flex justify-center items-center h-[520px]">
+    <div className="flex justify-center items-center h-[600px]">
       <div className="bg-white p-8 rounded-lg shadow-lg w-96">
         <h2 className="text-2xl font-bold text-center mb-4">REGISTER</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -48,6 +51,17 @@ export default function Register(){
             />
           </div>
           <div>
+            <label className="block text-gray-700 font-medium">Tanggal Lahir</label>
+            <input
+              type="text"
+              value={tglLahir}
+              onChange={(e) => setTglLahir(e.target.value)}
+              required
+              className="w-full px-4 py-2 mt-2 border rounded-lg focus:ring focus:ring-blue-300"
+              placeholder="tgl lahir user"
+            />
+          </div>
+          <div>
             <label className="block text-gray-700 font-medium">Email</label>
             <input
               type="email"
@@ -56,6 +70,28 @@ export default function Register(){
               required
               className="w-full px-4 py-2 mt-2 border rounded-lg focus:ring focus:ring-blue-300"
               placeholder="user@example.com"
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700 font-medium">no Whatsapp</label>
+            <input
+              type="text"
+              value={whatsapp}
+              onChange={(e) => setWhatsapp(e.target.value)}
+              required
+              className="w-full px-4 py-2 mt-2 border rounded-lg focus:ring focus:ring-blue-300"
+              placeholder="no whatsapp user"
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700 font-medium">instansi</label>
+            <input
+              type="text"
+              value={instansi}
+              onChange={(e) => setInstansi(e.target.value)}
+              required
+              className="w-full px-4 py-2 mt-2 border rounded-lg focus:ring focus:ring-blue-300"
+              placeholder="instansi user"
             />
           </div>
           <div>
