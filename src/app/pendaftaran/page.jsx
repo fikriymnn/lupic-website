@@ -31,12 +31,12 @@ export default function pendaftaran() {
     <>
       <Navbar />
       <div className="h-screen bg-gray-100 flex items-center justify-center px-4">
-        <div className="bg-white p-8 rounded-2xl shadow-md w-[50%] my-4 ">
+        <div className="bg-white p-10 rounded-2xl shadow-md w-[60%] my-4 ">
           {/* Judul Halaman */}
-          <h1 className="text-3xl font-bold text-center mb-10">
-            Form pendaftaran pre-service teacher test
+          <h1 className="text-2xl font-bold text-center mb-4">
+            FORM PENDAFTARAN PRE-SERVICE TEACHER TEST
           </h1>
-
+          <div className="h-1 w-36 bg-koreaRed mt-4 mb-6 m-auto"></div>
           {/* Form */}
           <form className="space-y-4 grid grid-cols-2 items-center justify-items-center" onSubmit={handleSubmit}>
             {/* Nama Lengkap */}
@@ -115,7 +115,7 @@ export default function pendaftaran() {
             {/* Tombol Submit */}
             
           </form>
-          <div className="flex w-full justify-center mt-8">
+          <div className="flex w-full justify-center mt-10">
           <button
               type="submit"
               className=" bg-blue-600 text-white py-2 rounded-xl hover:bg-blue-700 transition w-[50%] m-auto"

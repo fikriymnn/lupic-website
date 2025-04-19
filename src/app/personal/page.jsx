@@ -14,7 +14,8 @@ export default function personal() {
         <div className="h-screen m-auto flex">
         <div className="bg-white shadow-lg p-6 w-[95%] mx-auto">
             <h2 className="text-3xl font-bold mb-4 text-center mt-[2%]">Daftar Registrasi Teacher Test</h2>
-            <table className="border-collapse shadow-md mt-10 w-[95%] m-auto rounded-t ">
+            <div className="h-1 w-36 bg-koreaRed mt-4 m-auto"></div>
+            <table className="border-collapse shadow-md mt-10 w-[95%] m-auto rounded-t mb-10">
             <thead>
                 <tr className="bg-koreaBlue rounded-lg ">
                     <th className="shadow-y-md  text-white p-3">No</th>

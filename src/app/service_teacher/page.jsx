@@ -2,8 +2,10 @@
 import Navbar from "@/components/Navbar";
 import CustomFooter from "@/components/CustomFooter";
 import Image from "next/image";
+import { useState } from "react";
 
 export default function Services_workshop() {
+  const [login,setLogin] = useState(true)
   return (
     <>
       <Navbar />
@@ -13,6 +15,8 @@ export default function Services_workshop() {
         </h3>
         <div className="h-1 w-36 bg-koreaRed mt-4 m-auto"></div>
       </div>
+      
+
       <div className="m-auto w-[85%] text-justify md:mt-10 text-lg">
         <p>
           Selamat datang di platform resmi Uji Kompetensi Calon Guru Kimia yang diselenggarakan oleh Program Studi Pendidikan Kimia UPI dan didukung oleh Leading University Project for International Cooperation (LUPIC), Sogang University, Korea Selatan. Ujian ini bertujuan untuk mengukur kompetensi dan kesiapan calon guru dalam mengajar mata pelajaran kimia di tingkat sekolah menengah. Ujian ini mencakup kompetensi konten kimia sekolah, pedagogik, serta profesional dalam pembelajaran.
@@ -117,6 +121,11 @@ export default function Services_workshop() {
             </tr>
           </tbody>
         </table>
+      </div>
+      <div className="w-full flex justify-center">
+      <div onClick={(e)=>{window.location.href = `${login?"pendaftaran":"login"}`}} className="cursor-pointer px-6 text-xl py-3 hover:bg-blue-800 bg-blue-400 text-white rounded-lg mb-14 mt-10">
+        Klik untuk daftar test
+      </div>
       </div>
 
       <CustomFooter />
