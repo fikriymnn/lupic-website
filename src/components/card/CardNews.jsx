@@ -14,14 +14,14 @@ export default function CardNews({ gambar, judul, deskripsi, tanggal, id }) {
       href={"/news/" + id}
       className="md:w-[400px] md:p-4 w-[90%] md:mx-5 mt-4 "
     >
-      <div className="w-full">
+      <div className="w-[400px]">
         <img
         priority="true"
           src={process.env.NEXT_PUBLIC_API_FILE_URL + gambar}
           alt="foto"
           width={600}
           height={300}
-          className="w-[400px] h-[250px] rounded-xl"
+          className="w-full h-[250px] rounded-xl"
         />
         <h3 className="font-bold line-clamp-2 text-lg md:mt-2 mt-2 text-koreaBlue">
           {judul}

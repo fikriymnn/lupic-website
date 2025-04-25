@@ -1,12 +1,12 @@
 import React from 'react';
-import './Loading.css'; // Opsional, jika ingin menambahkan styling
+
 
 const Loading = () => {
     return (
-        <div className="loading-container">
-            <div className="spinner"></div>
-            <p>Loading...</p>
-        </div>
+        <div className="flex flex-col items-center justify-center h-screen space-y-4">
+        <div className="w-10 h-10 border-4 border-green-500 border-t-transparent rounded-full animate-spin"></div>
+        <p className="text-gray-600 text-lg">Loading...</p>
+      </div>
     );
 };
 
