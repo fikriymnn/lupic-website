@@ -184,7 +184,7 @@ export default function News() {
         </div>
       </div>
       {/* other news */}
-      <div className="w-[85%] m-auto md:mt-8 mt-1">
+      <div className="md:w-[85%] w-[95%] m-auto md:mt-8 mt-1">
         <div className="md:block md:justify-items-start grid grid-cols-1 justify-items-center">
           <h1 className="md:text-5xl text-2xl mt-10 font-bold ">
             Another News
@@ -194,7 +194,7 @@ export default function News() {
         <div className="grid md:grid-cols-3 justify-items-center grid-cols-1 md:mt-4 mt-2">
           {data &&
             data.map((v, i) => {
-              if (i !== 0) {
+
                 return (
                   <motion.div
                     className="mx-5"
@@ -212,7 +212,7 @@ export default function News() {
                     />
                   </motion.div>
                 );
-              }
+  
             })}
         </div>
       </div>

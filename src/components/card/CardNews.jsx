@@ -27,7 +27,7 @@ export default function CardNews({ gambar, judul, deskripsi, tanggal, id }) {
           {judul}
         </h3>
         <p className=" text-koreaBlueMuda text-xs">{tanggal}</p>
-        <p className="text-justify line-clamp-2 text-base">{deskripsi}</p>
+        <p className="text-justify line-clamp-2 text-base md:mb-0 mb-8">{deskripsi}</p>
       </div>
     </a>
   );

@@ -5,6 +5,7 @@ import Image from "next/image";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [login, setLogin] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
 
   const toggleDropdown = (dropdown) => {
@@ -109,6 +110,16 @@ const Navbar = () => {
               </ul>
             </li>
           ))}
+
+          {/* {[
+            { href: `${login?"/personal":"/login"}`, label: "Personal" },
+          ].map((item) => (
+            <li key={item.href}>
+              <Link href={item.href} className="hover:underline" onClick={closeMenu}>
+                {item.label}
+              </Link>
+            </li>
+          ))} */}
         </ul>
       </div>
     </nav>

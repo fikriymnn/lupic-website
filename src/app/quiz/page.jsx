@@ -2,22 +2,69 @@
 import React, { useState, useEffect } from "react";
 
 const quizQuestions = [
-  {
-    question: "Apa ibukota Korea?",
-    options: ["Seoul", "Tokyo", "Beijing", "Bangkok"],
-    answer: ["Seoul"],
+{
+    question: "Tabel berikut menunjukkan jumlah proton, neutron, dan electron dalam 4 partikel yang berbeda, W, X, Y, dan Z",
+    img:"/soal/no2.png",
+    options: ["W dan Y", "W dan Z", "X dan Y", "X dan Z"],
+    answer: ["W dan Y"],
   },
   {
-    question: "Berapa hasil dari 5 + 3?",
-    options: ["6", "7", "8", "9"],
-    answer: ["8"],
+    question: "Letak Zn2+ dalam tabel periodik adalah…. (diketahui nomor nomor atom Zn=30)",
+    options: ["Golongan 10, periode 4", "Golongan 11, periode 4", "Golongan 12, periode 4", "Golongan 14, periode 4"],
+    answer: ["Golongan 12, periode 4"],
   },
   {
-    question: "Pilih ilmuwan yang berkontribusi dalam fisika?",
-    options: ["Newton", "Einstein", "Tesla", "Edison"],
-    answer: ["Newton", "Einstein", "Tesla"],
+    question: "Untuk senyawa N2, O2, F2, pernyataan manakah yang benar?",
+    options: ["Energi ikatan F2 paling besar karena memiliki Panjang ikatan tertinggi", "Ikatan N2 paling sulit diputus karena memiliki orde ikatan terbesar", "Semakin tinggi orde ikatan maka semakin lemah ikatannya", "Semakin panjang suatu ikatan maka semakin lemah ikatannya"],
+    answer: ["Ikatan N2 paling sulit diputus karena memiliki orde ikatan terbesar","Semakin panjang suatu ikatan maka semakin lemah ikatannya"],
+  },
+  {
+    question: "Berdasarkan teori VSEPR, pernyataan yang benar tentang XeCl2 adalah ….",
+    options: ["Bentuk molekulnya linear", "Bentuk molekulnya huruf V", "Memiliki geometri molekul tetrahedral", "Memiliki group elektron 4"],
+    answer: ["Bentuk molekulnya linear","Memiliki group elektron 4"],
+  },
+  {
+    question: "Diketahui entalpi pembentukan standar (ΔHf∘​) dari beberapa senyawa sebagai berikut:",
+    img:"/soal/no3.png",
+    options: ["Perubahan entalpi reaksi dapat dihitung menggunakan hukum Hess dengan rumus: ΔHreaksi=∑ΔHf∘(reaktan)−∑ΔHf∘(produk)", "Nilai ΔHreaksi adalah -1367 kJ/mol.", "Jika entalpi pembakaran karbon dan hidrogen diketahui, hukum Hess dapat digunakan untuk menghitung ΔHf∘​ etanol.", "Reaksi ini merupakan reaksi endoterm karena memerlukan oksigen dalam jumlah besar."],
+    answer: ["Nilai ΔHreaksi adalah -1367 kJ/mol.","Jika entalpi pembakaran karbon dan hidrogen diketahui, hukum Hess dapat digunakan untuk menghitung ΔHf∘​ etanol."],
+  },
+  {
+    question: "Berikut ini adalah tindakan-tindakan yang sesuai untuk menangani siswa yang berperilaku sulit",
+    options: ["Bicara dengan mereka secara personal", "Menggunakan tutor Sebaya", "Pengendalian tingkat keparahan perilaku sulit peserta didik", "Mengisolasi dari peserta didik lainnya"],
+    answer: ["Bicara dengan mereka secara personal","Menggunakan tutor Sebaya","Pengendalian tingkat keparahan perilaku sulit peserta didik"],
+  },
+  {
+    question: "Langkah pertama dalam desain pembelajaran yang terstruktur adalah…",
+    options: [
+       "Menentukan metode evaluasi",
+       "Merumuskan tujuan pembelajaran", 
+       "Memilih materi pembelajaran",
+      "Melaksananakan kegiatan pembelajaran"],
+    answer: ["Merumuskan tujuan pembelajaran"],
+  },
+  {
+    question: "Berikut ini pernyataan yang tepat sesuai prinsip-prinsip penyusunan laporan capaian belajar siswa adalah ….",
+    options: [
+       "Laporan harus mencakup aspek perkembangan kognitif, dan afektif,",
+       "Laporan harus transparan dan mudah dipahami oleh siswa dan orang tua.", 
+       "Laporan harus memuat informasi perkembangan akademik siswa",
+      "Laporan harus didasarkan pada data dan fakta yang objektif"],
+    answer: ["Laporan harus transparan dan mudah dipahami oleh siswa dan orang tua.","Laporan harus didasarkan pada data dan fakta yang objektif"],
   },
 ];
+
+// {
+//   question: "Berikut ini adalah tindakan-tindakan yang sesuai untuk menangani siswa yang berperilaku sulit",
+//   options: [
+//      "",
+//      "", 
+//      "",
+//     ""],
+//   answer: [""],
+// },
+
+const huruf = ["A","B","C","D"]
 
 export default function QuizApp() {
   const [started, setStarted] = useState(false);
@@ -206,15 +253,22 @@ export default function QuizApp() {
 
   return (
     <div className="flex items-center justify-center bg-gray-100">
+      <div onClick={(e)=>window.location.href = "/service_teacher"} className="border-4 rounded-lg text-2xl px-3 py-1 absolute top-0 right-0 mr-10 mt-5 cursor-pointer">
+        X
+      </div>
       {!started ? (
-        <div className="text-center">
-          <h1 className="text-3xl font-bold mb-4">Selamat Datang di Quiz</h1>
+        <div className="text-center h-screen flex items-center justify-center">
+          <div className="m-auto">
+          <h1 className="text-3xl font-bold mb-2">Practice Test</h1>
+          <p className="text-lg mb-4">Klik tombol "start" untuk memulai practice test</p>
           <button
             onClick={handleStartQuiz}
-            className="px-6 py-3 bg-blue-500 text-white font-bold rounded-lg shadow-lg hover:bg-blue-600"
+            className="px-10 py-3 bg-blue-500 text-white font-bold rounded-lg shadow-lg hover:bg-blue-600"
           >
-            Mulai Quiz
+            Start
           </button>
+           </div> 
+          
         </div>
       ) : (
         <div className="flex w-full">
@@ -244,26 +298,26 @@ export default function QuizApp() {
 
           {/* Konten utama */}
           <div className="flex flex-col items-center w-full p-6">
-            <h1 className="text-2xl font-bold mb-2">Quiz Pilihan Ganda</h1>
+            <h1 className="text-2xl font-bold mb-2">Practice Test</h1>
             <p className="mb-4 text-gray-600">Waktu: {formatTime(timeElapsed)}</p>
 
             {!submitted ? (
               <>
                 <div className="w-[80%] bg-white p-6 rounded shadow-md mb-8">
-                  <h2 className="text-lg font-semibold">
+                  <h2 className="text-lg font-semibold mb-2">
                     {quizQuestions[currentQuestionIndex].question}
                   </h2>
-                  {quizQuestions[currentQuestionIndex].img ? <img src={quizQuestions[currentQuestionIndex].img} /> : ""}
+                  {quizQuestions[currentQuestionIndex].img ? <img className="mb-2" src={quizQuestions[currentQuestionIndex].img} /> : ""}
                   <div className="mt-2">
-                    {quizQuestions[currentQuestionIndex].options.map((option) => (
-                      <label key={option} className="block">
+                    {quizQuestions[currentQuestionIndex].options.map((option,i) => (
+                      <label key={option} className="block w-[70%] mb-2">
                         <input
                           type="checkbox"
                           checked={answers[quizQuestions[currentQuestionIndex].question]?.includes(option) || false}
                           onChange={() => handleChange(option)}
                           className="mr-2"
                         />
-                        {option}
+                        {`${huruf[i]}. ${option}`}
                       </label>
                     ))}
                   </div>
