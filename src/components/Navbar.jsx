@@ -111,7 +111,7 @@ const Navbar = () => {
             </li>
           ))}
 
-          {[
+          {/* {[
             { href: `${login?"/personal":"/login"}`, label: "Personal" },
           ].map((item) => (
             <li key={item.href}>
@@ -119,7 +119,7 @@ const Navbar = () => {
                 {item.label}
               </Link>
             </li>
-          ))}
+          ))} */}
         </ul>
       </div>
     </nav>

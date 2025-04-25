@@ -194,7 +194,7 @@ export default function News() {
         <div className="grid md:grid-cols-3 justify-items-center grid-cols-1 md:mt-4 mt-2">
           {data &&
             data.map((v, i) => {
-              if (i !== 0) {
+
                 return (
                   <motion.div
                     className="mx-5"
@@ -212,7 +212,7 @@ export default function News() {
                     />
                   </motion.div>
                 );
-              }
+  
             })}
         </div>
       </div>
