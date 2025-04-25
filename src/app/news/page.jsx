@@ -58,7 +58,7 @@ export default function News() {
           process.env.NEXT_PUBLIC_API_URL +
             "/api/news?page=" +
             currentPage +
-            "&limit=10"
+            "&limit=9"
         );
         
         const Data2 = await axios.get(
@@ -72,7 +72,7 @@ export default function News() {
         );
         if (Data.data) {
           setData(Data.data);
-          setTotalPage(Math.ceil(Data2.data.length / 10));
+          setTotalPage(Math.ceil(Data2.data.length / 9));
           setData3(Data3.data[0])
           console.log(totalPages);
         }
@@ -124,7 +124,6 @@ export default function News() {
             <div className="grid md:grid-cols-3 justify-items-center grid-cols-1 md:mt-4 mt-2">
               {dataSearch &&
                 dataSearch.map((v, i) => {
-                  if (i !== 0) {
                     return (
                       <CardNews
                         gambar={v.gambar}
@@ -135,7 +134,7 @@ export default function News() {
                         id={v._id}
                       />
                     );
-                  }
+                  
                 })}
             </div>
           </div>
