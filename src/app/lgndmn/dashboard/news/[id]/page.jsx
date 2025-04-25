@@ -6,11 +6,13 @@ import AdminCardFacilities from "@/components/card/AdminCardFacilities";
 import Image from 'next/image'
 import axios from "axios";
 import { use } from "react";
+import Loading from "@/components/Loading";
 
 export default function EditNews({ params }) {
     const { id } = use(params)
     const [file, setFile] = useState("");
     const [content, setContent] = useState('');
+    const [loading, setLoading] = useState(false);
     const [data, setData] = useState({
         judul: "", deskripsi: "", gambar: "", sub_content: [{ sub_judul: "", sub_content: "", sub_gambar: [""] }], tanggal: "", author: "", content: ""
     })
@@ -55,8 +57,9 @@ export default function EditNews({ params }) {
         console.log("tes")
         try {
             console.log("tes")
-
+            setLoading(true)
             if (file) {
+
                 const formData = new FormData();
                 formData.append('file', file);
 
@@ -76,11 +79,16 @@ export default function EditNews({ params }) {
                         sub_content: subContent,
                         tanggal: data.tanggal
                     })
-                    if (message.data == "success") {
-                        alert("Success")
-                        window.location.reload()
-                    }
+                    setTimeout(() => {
+                        if (message.data == "success") {
+                            alert("Success")
+                            setLoading(false)
+                            window.location.reload()
+                        }
+                    }, 1000)
+
                 }
+
             } else {
                 console.log(88)
                 const message = await axios.put(process.env.NEXT_PUBLIC_API_URL + "/api/news/" + id, {
@@ -93,12 +101,16 @@ export default function EditNews({ params }) {
                     tanggal: data.tanggal
                 })
                 console.log(message)
-                if (message.data == "success") {
-                    alert("Success")
-                    window.location.reload()
-                }
+                setTimeout(() => {
+                    if (message.data == "success") {
+                        alert("Success")
+                        setLoading(false)
+                        window.location.reload()
+                    }
+                }, 1000)
             }
         } catch (err) {
+            setLoading(false)
             console.log(err.message)
         }
     }
@@ -125,10 +137,11 @@ export default function EditNews({ params }) {
             <Sidebar />
             <div className="w-64"></div>
             <div className="w-full mb-16">
+
                 <div className="p-6 mt-8 text-center">
                     <h1 className="text-3xl font-bold text-koreaBlue">UPDATE NEWS</h1>
                 </div>
-                <div className="m-auto w-full">
+                {loading ? <Loading /> : <div className="m-auto w-full">
 
                     <div className=" m-auto bg-white p-6 rounded-lg shadow-lg w-[80%]">
                         <form onSubmit={handleSubmit}>
@@ -304,7 +317,8 @@ export default function EditNews({ params }) {
                             </button>
                         </form>
                     </div>
-                </div>
+                </div>}
+
             </div >
         </div>
     );
