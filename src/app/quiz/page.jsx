@@ -297,7 +297,7 @@ export default function QuizApp() {
           </div>
 
           {/* Konten utama */}
-          <div className="flex flex-col items-center w-full p-6">
+          <div className="flex flex-col items-center w-full p-6 min-h-screen">
             <h1 className="text-2xl font-bold mb-2">Practice Test</h1>
             <p className="mb-4 text-gray-600">Waktu: {formatTime(timeElapsed)}</p>
 

@@ -4,8 +4,9 @@ import Sidebar from "@/components/Sidebar";
 import Image from "next/image";
 import axios from "axios";
 
-export default function Pendaftaran({params}) {
-    const {id} = use(params)
+
+export default function Pendaftarann({params}) {
+  const {id} = use(params)
   const dataJadwal = [
     { hari: 'Senin', tanggal: '14 April 2025', status: 'dibuka' },
     { hari: 'Rabu', tanggal: '16 April 2025', status: 'dibuka' },
@@ -23,13 +24,23 @@ export default function Pendaftaran({params}) {
           <div className=" m-auto bg-white p-3 rounded-lg w-[80%]">
               {/* List Peserta */}
               <div className="border shadow-md rounded-md mb-10">
-                <div className="text-center bg-koreaBlue rounded-t-md text-white font-semibold border-b border-black py-2">
-                  LIST TANGGAL {id}
+                <div className="text-center bg-koreaBlue rounded-t-md text-white font-semibold border-b border-black py-4 grid grid-cols-6 justify-items-center px-5">
+                <p>No</p>
+                <p>Nama</p>
+                <p>Tgl Lahir</p>
+                <p>No Whatsapp</p>
+                <p>Email</p>
+                <p>Instansi</p>
                 </div>
-                <div className="p-5">
+                <div className="p-2">
                   {['Senin', 'Rabu', 'Jumat'].map((hari, idx) => (
-                    <div key={idx} className="shadow-md font-bold hover:bg-gray-200 border-2 mx-2 my-2 px-4 py-2 rounded">
-                      {hari}
+                    <div key={idx} className="shadow-md hover:bg-gray-200 border-2 mx-2 my-2 px-2 py-2 rounded grid grid-cols-6 justify-items-center">
+                      <p>1</p>
+                      <p>Luthfi Khaeri ihsan</p>
+                      <p>asdsa</p>
+                      <p>asdsa</p>
+                      <p>asdsa</p>
+                      <p>asdsa</p>
                     </div>
                   ))}
                 </div>

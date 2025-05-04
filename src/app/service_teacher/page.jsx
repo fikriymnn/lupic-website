@@ -2,10 +2,29 @@
 import Navbar from "@/components/Navbar";
 import CustomFooter from "@/components/CustomFooter";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function Services_workshop() {
-  const [login,setLogin] = useState(true)
+  const [login, setLogin] = useState(false)
+
+
+  useEffect(() => {
+    async function checkLogin() {
+      try{
+        const data = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/public/user", { withCredentials: true });
+        if (data.data) {
+          setLogin(true)
+        } else {
+          setLogin(false)
+        }
+      }catch(err){
+        setLogin(false)
+      }
+    }
+    checkLogin()
+
+  }, [])
   return (
     <>
       <Navbar />
@@ -15,7 +34,7 @@ export default function Services_workshop() {
         </h3>
         <div className="h-1 w-36 bg-koreaRed mt-4 m-auto"></div>
       </div>
-      
+
 
       <div className="m-auto w-[85%] text-justify md:mt-10 text-lg">
         <p>
@@ -29,7 +48,7 @@ export default function Services_workshop() {
       </div>
       <div className="w-[90%] md:w-[80%] m-auto mb-16">
         <div className="flex items-center justify-center mt-16">
-          <button className="bg-red-700 text-white text-2xl py-3 px-4 md:px-10 rounded-lg hover:bg-blue-700 hover:text-white" onClick={(e)=>{window.location.href = "/quiz"}}>Mulai Tes</button>
+          <button className="bg-red-700 text-white text-lg py-2 px-4 md:px-10 rounded-lg hover:bg-blue-700 hover:text-white" onClick={(e) => { window.location.href = "/quiz" }}>Mulai Tes</button>
         </div>
       </div>
       <div className="m-auto w-[80%]">
@@ -79,7 +98,7 @@ export default function Services_workshop() {
           </tbody>
         </table>
       </div>
-      <br/>
+      <br />
       <div className=" w-[80%] m-auto mb-8">
         <table className="w-full border border-gray-300 bg-white shadow-md">
           <thead>
@@ -123,9 +142,9 @@ export default function Services_workshop() {
         </table>
       </div>
       <div className="w-full flex justify-center">
-      <div onClick={(e)=>{window.location.href = `${login?"pendaftaran":"login"}`}} className="cursor-pointer px-6 text-xl py-3 hover:bg-blue-800 bg-blue-400 text-white rounded-lg mb-14 mt-10">
-        Klik untuk daftar test
-      </div>
+        <div onClick={(e) => { window.location.href = `${login ? "pendaftaran" : "login"}` }} className="cursor-pointer px-6 text-lg py-2 hover:bg-blue-800 bg-blue-400 text-white rounded-lg mb-14 mt-10">
+          Klik untuk daftar test
+        </div>
       </div>
 
       <CustomFooter />
