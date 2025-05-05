@@ -97,7 +97,7 @@ export default function pendaftaran() {
 
   async function getListJadwal() {
     try {
-      const data = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/jadwal", { withCredentials: true });
+      const data = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/jadwal?status=Aktif", { withCredentials: true });
       if (data.data) {
         console.log(data.data)
         let newData = []

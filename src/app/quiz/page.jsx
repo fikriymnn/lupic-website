@@ -52,7 +52,81 @@ const quizQuestions = [
       "Laporan harus didasarkan pada data dan fakta yang objektif"],
     answer: ["Laporan harus transparan dan mudah dipahami oleh siswa dan orang tua.","Laporan harus didasarkan pada data dan fakta yang objektif"],
   },
+  {
+    question: "Suatu reaksi berlangsung dalam sistem tertutup pada suhu tetap: N2(g) + 3H2(g) ⇌ 2NH3 (g)Pernyataan berikut yang benar mengenai karakteristik kesetimbangan sistem ini adalah.",
+    options: [
+       "Laju berkurangnya reaktan sama dengan laju bertambahnya produk",
+       "Kesetimbangan akan tercapai ketika semua reaktan berubah menjadi produk, lalu produk kembali membentuk reaktan sampai habis", 
+       "Saat kesetimbangan, ada reaktan selain produk, karena adanya pereaksi pembatas",
+      "Kesetimbangan hanya dapat dicapai jika reaksi dimulai dari reaktan, produk maupun campurannya"],
+    answer: ["Laju berkurangnya reaktan sama dengan laju bertambahnya produk","Kesetimbangan akan tercapai ketika semua reaktan berubah menjadi produk, lalu produk kembali membentuk reaktan sampai habis"],
+  },
+  {
+    question: "Di antara reaksi di bawah ini, jika pada kesetimbangan volumenya diperkecil sebesar dua kali dari keadaan semula, maka yang menghasilkan produk lebih banyak adalah",
+    options: [
+       "CaCO3(s) ⇌ CaO(s) + CO2(g)",
+       "N2O4(g) ⇌ 2NO2(g)", 
+       "C(s) + O2(g) ⇌ CO2(g)",
+      "2NO(g) + O2(g) ⇌ 2NO2(g)"],
+    answer: ["2NO(g) + O2(g) ⇌ 2NO2(g)"],
+  },
+  {
+    question: "Guru tersebut kemudian melakukan beberapa percobaan",
+    img:"/soal/no4.png",
+    options: [
+       "pH larutan A lebih tinggi sehingga A merupakan asam yang lebih kuat",
+       "pH larutan B lebih rendah, dengan demikian mengalami ionisasi lebih banyak/sempurna dalam air", 
+       "Daya hantar listrik larutan A lebih baik daripada larutan B karena A lebih stabil dalam air",
+      "Jika kedua larutan memiliki konsentrasi yang sama, maka jumlah ion H⁺ dalam larutan B lebih banyak dibandingkan larutan A"],
+    answer: ["pH larutan B lebih rendah, dengan demikian mengalami ionisasi lebih banyak/sempurna dalam air","Jika kedua larutan memiliki konsentrasi yang sama, maka jumlah ion H⁺ dalam larutan B lebih banyak dibandingkan larutan A"],
+  },
+  {
+    question: "Suatu larutan mengandung asam asetat (CH₃COOH) dan natrium asetat (CH₃COONa). Ketika sedikit asam klorida (HCl) ditambahkan, pH larutan relatif tetap. Hal utama yang bertanggung jawab atas fakta tersebut adalah",
+    options: [
+       "HCl yang ditambahkan dinetralkan sepenuhnya oleh CH3COOH dari larutan penyangga, sehingga tidak terjadi perubahan pH",
+       "Ion asetat (CH₃COO⁻) bereaksi dengan ion H⁺ dari HCl, membentuk asam asetat dan meminimalkan perubahan pH", 
+       "Larutan penyangga mengencerkan HCl yang ditambahkan, sehingga mengurangi efeknya terhadap pH",
+      "Komponen asam dan basa konjugat dari penyangga saling menetralkan, sehingga pH relatif tidak berubah"],
+    answer: ["Ion asetat (CH₃COO⁻) bereaksi dengan ion H⁺ dari HCl, membentuk asam asetat dan meminimalkan perubahan pH"],
+  },
+  {
+    question: "Diketahui garam sukar larut yang mengandung anion dari asam lemah. Ditanyakan kelarutannya ketika pH diubah",
+    options: [
+       "HCl 0,2 M",
+       "HCl 0,1 M", 
+       "HCl 0,02 M",
+      "HCl 0,01 M"],
+    answer: ["HCl 0,01 M"],
+  },
+  {
+    question: "Penguasaan siswa terhadap bahan pembelajaran menurut peta konsep yang disusun ditentukan oleh banyaknya",
+    options: [
+       "proposisi",
+       "contoh", 
+       "kata penghubung",
+      "ikatan silang"],
+    answer: ["ikatan silang"],
+  },
+  {
+    question: "Pembelajaran makromolekul cocok diterapkan pada siswa kimia kelas X menggunakan",
+    options: [
+       "Pendekatan lingkungan dengan model project based learning",
+       "Pendekatan konsep dengan model inkuiri", 
+       "Pendekatan eksperimen dengan model saintifik",
+      "Pendekatan keterampilan proses sains dengan model praktikum"],
+    answer: ["Pendekatan lingkungan dengan model project based learning"],
+  },
+  {
+    question: "Pernyataan yang merupakan ciri-ciri dari pembelajaran kontekstual adalah",
+    options: [
+       "menggabungkan content dengan pengalaman harian",
+       "mendorong pemahaman teori dengan praktik", 
+       "aktivitas minds on harus ada, namun hands on tidak mesti ada",
+      "penilaian dapat dilakukan dengan observasi"],
+    answer: ["menggabungkan content dengan pengalaman harian","mendorong pemahaman teori dengan praktik","aktivitas minds on harus ada, namun hands on tidak mesti ada","penilaian dapat dilakukan dengan observasi"],
+  },
 ];
+
 
 // {
 //   question: "Berikut ini adalah tindakan-tindakan yang sesuai untuk menangani siswa yang berperilaku sulit",
