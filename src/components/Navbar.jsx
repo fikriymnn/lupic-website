@@ -1,11 +1,12 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import axios from "axios";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [login, setLogin] = useState(false);
+  const [login, setLogin] = useState(true);
   const [activeDropdown, setActiveDropdown] = useState(null);
 
   const toggleDropdown = (dropdown) => {
@@ -16,6 +17,37 @@ const Navbar = () => {
     setMenuOpen(false);
     setActiveDropdown(null);
   };
+
+  const onLogout = async (e) => {
+    e.preventDefault();
+    try{
+      const Data = await axios.delete(process.env.NEXT_PUBLIC_API_URL + "/api/public/logout", { withCredentials: true });
+      if (Data.data == "success") {
+        alert("Logout success")
+        window.location.href = "/"
+      } else {
+        alert("Logout failed")
+      }
+    }catch(err){
+
+    }
+  }
+
+  useEffect(() => {
+    async function checkLogin() {
+      try{
+        const data = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/public/user", { withCredentials: true });
+        if (data.data) {
+          setLogin(true);
+        } else {
+          setLogin(false);
+        }
+      }catch(err){
+        setLogin(false);
+      }
+    }
+    checkLogin();
+  }, []);
 
   return (
     <nav className="bg-koreaRed text-white sticky top-0 z-50">
@@ -111,15 +143,21 @@ const Navbar = () => {
             </li>
           ))}
 
-          {/* {[
-            { href: `${login?"/personal":"/login"}`, label: "Personal" },
+          {[
+            { href: `${login?"/personal":"/login"}`, label:  `${login?"Personal":"Login"}` },
           ].map((item) => (
             <li key={item.href}>
               <Link href={item.href} className="hover:underline" onClick={closeMenu}>
                 {item.label}
               </Link>
             </li>
-          ))} */}
+          ))}
+          {login ? (<li >
+              <Link href={""} className="hover:underline" onClick={onLogout}>
+                Logout
+              </Link>
+            </li>) : ("")}
+          
         </ul>
       </div>
     </nav>
