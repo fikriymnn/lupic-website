@@ -44,10 +44,7 @@ const Home = () => {
 
   return (
     <>
-      <Head>
-        <title>LPIC Home</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      </Head>
+
       <Navbar />
       <motion.div
         initial={{ opacity: 0 }}
