@@ -164,18 +164,18 @@ export default function News() {
               <img
                 src={process.env.NEXT_PUBLIC_API_FILE_URL + data3.gambar}
                 alt=""
-                className="md:w-[600px] md:h-[400px] w-full h-[250px] rounded-lg"
+                className="md:w-[500px] md:h-[300px] w-full h-[220px] rounded-lg"
               />
             </div>
 
             <div className="md:px-5 md:w-[50%]">
-              <h3 className="md:text-4xl mt-3 line-clamp-2 text-2xl font-bold mb-2 text-koreaBlue md:text-start ">
+              <h3 className="md:text-3xl mt-3 line-clamp-2 text-2xl font-bold mb-2 text-koreaBlue md:text-start ">
                 {data3.judul}
               </h3>
-              <p className="text-sm mb-2 text-koreaBlueMuda md:text-start">
+              <p className="text-xs mb-2 text-koreaBlueMuda md:text-start">
                 {data3.tanggal}
               </p>
-              <p className="text-justify md:text-xl text-sm line-clamp-6">
+              <p className="text-justify md:text-lg text-sm line-clamp-6">
                 {data3.deskripsi}
               </p>
             </div>
