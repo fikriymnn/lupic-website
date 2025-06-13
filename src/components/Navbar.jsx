@@ -112,7 +112,9 @@ const Navbar = () => {
                 { href: "https://www.tokopedia.com/fablabedu", label: "tokopedia.com/fablabedu" },
                 { href: "https://sciencelove.com/", label: "sciencelove.com" },
                 { href: "https://ejournal.upi.edu/index.php/JPI", label: "ejournal.upi.edu/JPI" },
-                { href: "2. https://ejournal.upi.edu/index.php/JRPPK", label: "ejournal.upi.edu/JRPPK" },
+                { href: "https://ejournal.upi.edu/index.php/JRPPK", label: "ejournal.upi.edu/JRPPK" },
+                { href: "https://phet.colorado.edu/en/simulations/filter?type=html", label: "phet.colorado.edu/en/" },
+                
               ],
             },
           ].map((dropdown) => (
