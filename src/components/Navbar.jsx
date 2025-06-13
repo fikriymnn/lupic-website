@@ -71,7 +71,7 @@ const Navbar = () => {
           </button>
         </div>
 
-        <ul className={`${menuOpen ? "block" : "hidden"} md:flex space-y-4 md:space-y-0 md:space-x-10 mt-4 md:mt-0 py-3`}>
+        <ul className={`${menuOpen ? "block" : "hidden"} md:flex space-y-4 md:space-y-0 md:space-x-10 mt-4 md:mt-0 py-3 md:text-sm`}>
           {[
             { href: "/", label: "Home" },
             { href: "/aboutus", label: "About Us" },
