@@ -40,6 +40,26 @@ export default function CustomFooter() {
                 alt="Logo lupic"
                 className=" w-14 p-1 object-contain"
               />
+              <img
+                src="/images/footer/8.png"
+                alt="Logo lupic"
+                className=" w-14 p-1 object-contain"
+              />
+              <img
+                src="/images/footer/9.png"
+                alt="Logo lupic"
+                className=" w-14 p-1 object-contain"
+              />
+              <img
+                src="/images/footer/10.png"
+                alt="Logo lupic"
+                className=" w-14 p-1 object-contain"
+              />
+              <img
+                src="/images/footer/11.png"
+                alt="Logo lupic"
+                className=" w-14 p-1 object-contain"
+              />
               {/* <img
                 src="/images/footer/7.png"
                 alt="Logo lupic"
