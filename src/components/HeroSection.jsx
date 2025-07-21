@@ -24,9 +24,8 @@ export default function HeroSection() {
     <div
       className="relative bg-cover bg-center h-screen text-white flex flex-col justify-center items-center px-4 md:px-6"
       style={{
-        backgroundImage: `url(${
-          process.env.NEXT_PUBLIC_API_FILE_URL + gambar
-        })`,
+        backgroundImage: `url(${process.env.NEXT_PUBLIC_API_FILE_URL + gambar
+          })`,
       }}
     >
       <div className="absolute inset-0 bg-gradient-to-b from-gray-500 to-black opacity-75 z-0"></div>
@@ -40,7 +39,7 @@ export default function HeroSection() {
 
         <div className="space-x-4 mb-6">
           <img
-            src="/images/logo-instansi-home-new.png"
+            src="/images/logo-instansi.png"
             alt="Logo-logo instansi"
             className="h-8 md:h-24"
           />
