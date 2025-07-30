@@ -320,7 +320,7 @@ export default function Teaching_Material() {
             </form>
             <div className="grid grid-cols-2 justify-items-center my-4">
               {data.map((video, index) => (
-                <div key={index} className="w-[350px] bg-gray-900 text-white p-4 rounded-lg shadow-lg">
+                <div key={index} className="w-[350px] my-4 bg-gray-900 text-white p-4 rounded-lg shadow-lg">
                   <ReactPlayer
                     url={video.link}
                     controls
