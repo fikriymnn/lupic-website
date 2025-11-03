@@ -7,7 +7,7 @@ import ResponsivePagination from "react-responsive-pagination";
 import "react-responsive-pagination/themes/classic.css";
 import axios from "axios";
 import { motion } from "framer-motion";
-import CardEvent from "../../components/card/CardEvent";
+import CardEvent from "../../../components/card/CardEvent";
 
 export default function Services_workshop() {
   const [data,setData] = useState([])
