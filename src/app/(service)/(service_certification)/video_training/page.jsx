@@ -1,4 +1,4 @@
-export default function Training_video() {
+export default function Video_pembelajaran() {
     return(
         <p>
         Training Video Page

@@ -115,15 +115,15 @@ const Navbar = () => {
                 { href: "/services", label: "Our Products" },
                 { href: "/service_workshop", label: "Workshop" },
                 { href: "/service_teacher", label: "Pre-Service Teacher Evaluation" },
-                // {
-                //   label: "Teacher Certification Training",
-                //   subItems: [
-                //     { href: "/knowlage_test", label: "Knowlage Test" },
-                //     { href: "/case_study", label: "Case Study" },
-                //     { href: "/lesson_plans", label: "Lessons Plans" },
-                //     { href: "/video", label: "Video" }
-                //   ],
-                // },
+                {
+                  label: "Teacher Certification Training",
+                  subItems: [
+                    { href: "/knowlage_test", label: "Knowlage Test" },
+                    { href: "/case_study", label: "Case Study" },
+                    { href: "/lesson_plans", label: "Lessons Plans" },
+                    { href: "/video", label: "Video" }
+                  ],
+                },
                 { href: "/service_inservice", label: "In Service Teacher Training" },
               ],
             },
