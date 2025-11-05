@@ -144,6 +144,7 @@ const Navbar = () => {
                 { href: "https://ejournal.upi.edu/index.php/JPI", label: "ejournal.upi.edu/JPI" },
                 { href: "https://ejournal.upi.edu/index.php/JRPPK", label: "ejournal.upi.edu/JRPPK" },
                 { href: "https://phet.colorado.edu/en/simulations/filter?type=html", label: "phet.colorado.edu/en/" },
+                { href: "https://reader.edus.news", label: "reader.edus.news" },
               ],
             },
           ].map((dropdown) => (
