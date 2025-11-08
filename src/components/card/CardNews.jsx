@@ -1,4 +1,7 @@
+"use client";
 import Image from "next/image";
+import { motion } from "framer-motion";
+import { formatTanggalIndonesia } from "@/utils/formatTanggal"
 
 export default function CardNews({ gambar, judul, deskripsi, tanggal, id }) {
   const truncateText = (text, maxWords) => {
@@ -10,25 +13,31 @@ export default function CardNews({ gambar, judul, deskripsi, tanggal, id }) {
   };
 
   return (
-    <a
-      href={"/news/" + id}
-      className="md:w-[350px] md:p-4 w-[90%] md:mx-5 mt-4 "
+    <motion.a
+      href={`/news/${id}`}
+      whileHover={{ scale: 1.03, y: -5 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
+      className="block bg-white rounded-xl shadow-md hover:shadow-xl overflow-hidden transition-all duration-300 w-full max-w-[350px] pb-4"
     >
-      <div className="w-[350px]">
-        <img
-        priority="true"
-          src={process.env.NEXT_PUBLIC_API_FILE_URL + gambar}
-          alt="foto"
-          width={600}
-          height={300}
-          className="w-full h-[200px] rounded-xl"
+      <div className="relative w-full h-[200px]">
+        <Image
+          src={`${process.env.NEXT_PUBLIC_API_FILE_URL}${gambar}`}
+          alt={judul}
+          fill
+          priority
+          className="object-cover rounded-t-xl"
         />
-        <h3 className="font-bold line-clamp-2 text-base md:mt-2 mt-2 text-koreaBlue">
+      </div>
+
+      <div className="p-6 h-[150px]">
+        <h3 className="font-bold text-base text-koreaBlue line-clamp-2 mb-1">
           {judul}
         </h3>
-        <p className=" text-koreaBlueMuda text-xs">{tanggal}</p>
-        <p className="text-justify line-clamp-2 text-sm md:mb-0 mb-8">{deskripsi}</p>
+        <p className="text-xs text-koreaBlueMuda mb-2">{formatTanggalIndonesia(tanggal)}</p>
+        <p className="text-xs text-gray-700 line-clamp-2">
+          {deskripsi}
+        </p>
       </div>
-    </a>
+    </motion.a>
   );
 }

@@ -14,7 +14,7 @@ export default function TableActivities2({ point, sub_point, data, title_sub_poi
         <>
             <div className="w-[100%] shadow">
                 <div className="md:grid flex grid-cols-2 align-items-center w-full b-black bg-koreaBlueMuda rounded-t-xl">
-                    <p className="w-full md:place-self-start md:p-4 py-3 px-3 md:text-lg text-xs font-bold">{title_sub_point} </p>
+                    <p className="w-full md:place-self-start md:p-4 py-3 px-3 md:text-lg text-xs font-semibold text-white">{title_sub_point} </p>
                     <div className="md:place-self-end m-auto md:hidden block w-[50%] ">
                         <select className="h-8 w-[90%] bg-koreaBlueMuda border-2 rounded-xl pl-2 md:text-base text-sm text-white bg-koreaBlue" name="year" onChange={(e) => {
                             setCurrentYear(e.target.value)
