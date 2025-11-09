@@ -46,15 +46,15 @@ export default function Home() {
 
   const { ref: refGoals, inView: inViewGoals } = useInView({
     triggerOnce: true,
-    threshold: 0.15,
+    threshold: 0.30,
   });
   const { ref: refActivities, inView: inViewActivities } = useInView({
     triggerOnce: true,
-    threshold: 0.15,
+    threshold: 0.30,
   });
   const { ref: refNews, inView: inViewNews } = useInView({
     triggerOnce: true,
-    threshold: 0.15,
+    threshold: 0.30,
   });
 
   useEffect(() => {
@@ -150,7 +150,7 @@ export default function Home() {
                 className="relative group"
               >
                 <div className="absolute -inset-1 bg-gradient-to-r from-koreaBlue via-purple-500 to-koreaRed rounded-3xl opacity-20 group-hover:opacity-30 blur transition-opacity" />
-                <div className="relative bg-white p-14 rounded-2xl">
+                <div className="relative bg-white md:p-14  py-6 px-4 rounded-2xl">
                   <Image
                     src="/images/goals.png"
                     alt="LUPIC Goals"

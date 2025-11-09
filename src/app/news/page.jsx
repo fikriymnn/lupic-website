@@ -197,7 +197,7 @@ export default function News() {
 
                 return (
                   <motion.div
-                    className="mx-5"
+                    className=""
                     key={i}
                     whileHover={{ scale: 1.05 }}
                     transition={{ duration: 0.3 }}

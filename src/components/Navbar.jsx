@@ -5,7 +5,7 @@ import axios from "axios";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [login, setLogin] = useState(true);
+  const [login, setLogin] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [scrolled, setScrolled] = useState(false);
 
@@ -41,22 +41,23 @@ const Navbar = () => {
         alert("Logout failed");
       }
     } catch (err) {
-  
+
     }
   };
 
-  useEffect(() => {
-    async function checkLogin() {
-      try {
-        const data = await axios.get(
-          process.env.NEXT_PUBLIC_API_URL + "/api/public/user",
-          { withCredentials: true }
-        );
-        setLogin(!!data.data);
-      } catch (err) {
-        setLogin(false);
-      }
+  async function checkLogin() {
+    try {
+      const data = await axios.get(
+        process.env.NEXT_PUBLIC_API_URL + "/api/public/user",
+        { withCredentials: true }
+      );
+      setLogin(!!data.data);
+    } catch (err) {
+      setLogin(false);
     }
+  }
+
+  useEffect(() => {
     checkLogin();
   }, []);
 
@@ -73,7 +74,7 @@ const Navbar = () => {
     {
       label: "Services",
       items: [
-        { href: "/services", label: "Our Products" },
+        { href: "/service_product", label: "Our Products" },
         { href: "/service_workshop", label: "Workshop" },
         { href: "/service_teacher", label: "Pre-Service Teacher Evaluation" },
         {
@@ -112,9 +113,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-koreaRed shadow-lg py-2" : "bg-koreaRed py-3"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 bg-koreaRed py-3`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
@@ -157,9 +156,8 @@ const Navbar = () => {
                 >
                   {dropdown.label}
                   <svg
-                    className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                      activeDropdown === dropdown.label ? "rotate-180" : ""
-                    }`}
+                    className={`w-3.5 h-3.5 transition-transform duration-200 ${activeDropdown === dropdown.label ? "rotate-180" : ""
+                      }`}
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -170,11 +168,10 @@ const Navbar = () => {
 
                 {/* Dropdown Menu */}
                 <div
-                  className={`absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl overflow-hidden transition-all duration-200 ${
-                    activeDropdown === dropdown.label
+                  className={`absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl overflow-hidden transition-all duration-200 ${activeDropdown === dropdown.label
                       ? "opacity-100 visible translate-y-0"
                       : "opacity-0 invisible -translate-y-2"
-                  }`}
+                    }`}
                 >
                   {dropdown.items.map((item, idx) =>
                     item.subItems ? (
@@ -192,9 +189,8 @@ const Navbar = () => {
                             <Link
                               key={sub.href}
                               href={sub.href}
-                              className={`block px-4 py-3 text-sm text-gray-700 hover:bg-koreaRed hover:text-white transition-colors duration-150 ${
-                                subIdx > 0 ? "border-t border-gray-100" : ""
-                              }`}
+                              className={`block px-4 py-3 text-sm text-gray-700 hover:bg-koreaRed hover:text-white transition-colors duration-150 ${subIdx > 0 ? "border-t border-gray-100" : ""
+                                }`}
                               onClick={closeMenu}
                             >
                               {sub.label}
@@ -208,9 +204,8 @@ const Navbar = () => {
                         href={item.href}
                         target={item.external ? "_blank" : "_self"}
                         rel={item.external ? "noopener noreferrer" : ""}
-                        className={`block px-4 py-3 text-sm text-gray-700 hover:bg-koreaRed hover:text-white transition-colors duration-150 ${
-                          idx > 0 ? "border-t border-gray-100" : ""
-                        }`}
+                        className={`block px-4 py-3 text-sm text-gray-700 hover:bg-koreaRed hover:text-white transition-colors duration-150 ${idx > 0 ? "border-t border-gray-100" : ""
+                          }`}
                         onClick={closeMenu}
                       >
                         {item.label}
@@ -270,9 +265,8 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         <div
-          className={`lg:hidden overflow-hidden transition-all duration-300 ${
-            menuOpen ? "max-h-screen opacity-100 mt-4" : "max-h-0 opacity-0"
-          }`}
+          className={`lg:hidden overflow-hidden transition-all duration-300 ${menuOpen ? "max-h-screen opacity-100 mt-4" : "max-h-0 opacity-0"
+            }`}
         >
           <div className="bg-white/5 rounded-lg backdrop-blur-sm p-4 space-y-2">
             {mainMenuItems.map((item) => (
@@ -295,9 +289,8 @@ const Navbar = () => {
                 >
                   {dropdown.label}
                   <svg
-                    className={`w-4 h-4 transition-transform duration-200 ${
-                      activeDropdown === dropdown.label ? "rotate-180" : ""
-                    }`}
+                    className={`w-4 h-4 transition-transform duration-200 ${activeDropdown === dropdown.label ? "rotate-180" : ""
+                      }`}
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"

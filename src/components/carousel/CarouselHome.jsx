@@ -30,7 +30,7 @@ export default function CarouselHome() {
             }
         }
         getData()
-    },)
+    },[])
 
     return (
         <div className='md:w-[80%] w-[90%] m-auto m-auto py-8 rounded-t-xl rounded-bl-xl rounded-br-[100px] '>
