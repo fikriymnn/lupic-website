@@ -39,11 +39,11 @@ export default function Activities() {
     return (
         <>
             <Navbar />
-            <div className="max-w-6xl mx-auto px-4 md:px-8 flex justify-center pt-16 mt-14 mb-14">
+            <div className="max-w-6xl mx-auto px-4 md:px-8 flex justify-center pt-16 mt-14">
                 <CarouselActivities />
             </div>
             <div className="max-w-6xl px-4 md:px-8 text-center m-auto mb-4">
-                <h3 className="md:text-5xl text-3xl md:mt-10 mt-4 font-bold">Our Goals</h3>
+                <h3 className="md:text-5xl text-3xl md:mt-8 mt-4 font-bold">Our Goals</h3>
                 <div className="h-1 w-36 bg-koreaRed md:mt-5 mt-3 m-auto"></div>
             </div>
             <div className="max-w-6xl mx-auto px-4 md:px-8">

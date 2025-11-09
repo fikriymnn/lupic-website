@@ -5,7 +5,8 @@ import axios from "axios";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [login, setLogin] = useState(false);
+  const [login, setLogin] = useState(true);
+  const [activeSubDropdown, setActiveSubDropdown] = useState(true);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [scrolled, setScrolled] = useState(false);
 
@@ -20,11 +21,17 @@ const Navbar = () => {
 
   const toggleDropdown = (dropdown) => {
     setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
+    setActiveSubDropdown(null);
+  };
+
+  const toggleSubDropdown = (sub) => {
+    setActiveSubDropdown(activeSubDropdown === sub ? null : sub);
   };
 
   const closeMenu = () => {
     setMenuOpen(false);
     setActiveDropdown(null);
+    setActiveSubDropdown(null);
   };
 
   const onLogout = async (e) => {
@@ -41,23 +48,22 @@ const Navbar = () => {
         alert("Logout failed");
       }
     } catch (err) {
-
+      console.error("Logout error:", err);
     }
   };
 
-  async function checkLogin() {
-    try {
-      const data = await axios.get(
-        process.env.NEXT_PUBLIC_API_URL + "/api/public/user",
-        { withCredentials: true }
-      );
-      setLogin(!!data.data);
-    } catch (err) {
-      setLogin(false);
-    }
-  }
-
   useEffect(() => {
+    async function checkLogin() {
+      try {
+        const data = await axios.get(
+          process.env.NEXT_PUBLIC_API_URL + "/api/public/user",
+          { withCredentials: true }
+        );
+        setLogin(!!data.data);
+      } catch (err) {
+        setLogin(false);
+      }
+    }
     checkLogin();
   }, []);
 
@@ -113,7 +119,9 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 bg-koreaRed py-3`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled ? "bg-koreaRed shadow-lg py-2" : "bg-koreaRed py-3"
+      }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
@@ -156,8 +164,9 @@ const Navbar = () => {
                 >
                   {dropdown.label}
                   <svg
-                    className={`w-3.5 h-3.5 transition-transform duration-200 ${activeDropdown === dropdown.label ? "rotate-180" : ""
-                      }`}
+                    className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                      activeDropdown === dropdown.label ? "rotate-180" : ""
+                    }`}
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -168,10 +177,11 @@ const Navbar = () => {
 
                 {/* Dropdown Menu */}
                 <div
-                  className={`absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl overflow-hidden transition-all duration-200 ${activeDropdown === dropdown.label
+                  className={`absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl overflow-hidden transition-all duration-200 ${
+                    activeDropdown === dropdown.label
                       ? "opacity-100 visible translate-y-0"
                       : "opacity-0 invisible -translate-y-2"
-                    }`}
+                  }`}
                 >
                   {dropdown.items.map((item, idx) =>
                     item.subItems ? (
@@ -184,13 +194,14 @@ const Navbar = () => {
                         </button>
 
                         {/* Sub-dropdown */}
-                        <div className="absolute left-full top-0 ml-2 w-56 bg-white rounded-lg shadow-xl overflow-hidden opacity-0 invisible group-hover/sub:opacity-100 group-hover/sub:visible transition-all duration-200">
+                        <div className="mx-auto border border-gray-100 z-40 top-0 w-56 rounded-lg shadow-xl overflow-hidden opacity-0 group-hover/sub:opacity-100 group-hover/sub:block hidden transition-all duration-200">
                           {item.subItems.map((sub, subIdx) => (
                             <Link
                               key={sub.href}
                               href={sub.href}
-                              className={`block px-4 py-3 text-sm text-gray-700 hover:bg-koreaRed hover:text-white transition-colors duration-150 ${subIdx > 0 ? "border-t border-gray-100" : ""
-                                }`}
+                              className={`block px-4 py-3 text-sm text-gray-700 hover:bg-koreaRed hover:text-white transition-colors duration-150 ${
+                                subIdx > 0 ? "border-t border-gray-100" : ""
+                              }`}
                               onClick={closeMenu}
                             >
                               {sub.label}
@@ -204,8 +215,9 @@ const Navbar = () => {
                         href={item.href}
                         target={item.external ? "_blank" : "_self"}
                         rel={item.external ? "noopener noreferrer" : ""}
-                        className={`block px-4 py-3 text-sm text-gray-700 hover:bg-koreaRed hover:text-white transition-colors duration-150 ${idx > 0 ? "border-t border-gray-100" : ""
-                          }`}
+                        className={`block px-4 py-3 text-sm text-gray-700 hover:bg-koreaRed hover:text-white transition-colors duration-150 ${
+                          idx > 0 ? "border-t border-gray-100" : ""
+                        }`}
                         onClick={closeMenu}
                       >
                         {item.label}
@@ -265,8 +277,9 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         <div
-          className={`lg:hidden overflow-hidden transition-all duration-300 ${menuOpen ? "max-h-screen opacity-100 mt-4" : "max-h-0 opacity-0"
-            }`}
+          className={`lg:hidden overflow-hidden transition-all duration-300 ${
+            menuOpen ? "max-h-screen opacity-100 mt-4" : "max-h-0 opacity-0"
+          }`}
         >
           <div className="bg-white/5 rounded-lg backdrop-blur-sm p-4 space-y-2">
             {mainMenuItems.map((item) => (
@@ -289,8 +302,9 @@ const Navbar = () => {
                 >
                   {dropdown.label}
                   <svg
-                    className={`w-4 h-4 transition-transform duration-200 ${activeDropdown === dropdown.label ? "rotate-180" : ""
-                      }`}
+                    className={`w-4 h-4 transition-transform duration-200 ${
+                      activeDropdown === dropdown.label ? "rotate-180" : ""
+                    }`}
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -301,24 +315,40 @@ const Navbar = () => {
 
                 {activeDropdown === dropdown.label && (
                   <div className="ml-4 space-y-1 bg-white/5 rounded-md p-2">
-                    {dropdown.items.map((item) =>
+                    {dropdown.items.map((item) =>{
+                    console.log(item)
                       item.subItems ? (
-                        <div key={item.label} className="space-y-1">
-                          <div className="text-white px-3 py-2 text-sm font-medium">
+                        <div key={item.label} className=" space-y-1 z-100">
+                          <button
+                            onClick={() => toggleSubDropdown(item.label)}
+                            className="w-full flex justify-between items-center text-white px-3 py-2 text-sm font-medium hover:bg-white/10 transition-colors duration-200 rounded"
+                          >
                             {item.label}
-                          </div>
-                          <div className="ml-3 space-y-1">
-                            {item.subItems.map((sub) => (
-                              <Link
-                                key={sub.href}
-                                href={sub.href}
-                                className="block text-white/80 px-3 py-2 rounded text-sm hover:bg-white/10 transition-colors duration-200"
-                                onClick={closeMenu}
-                              >
-                                {sub.label}
-                              </Link>
-                            ))}
-                          </div>
+                            <svg
+                              className={`w-4 h-4 transition-transform duration-200 ${
+                                activeSubDropdown === item.label ? "rotate-180" : ""
+                              }`}
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                            </svg>
+                          </button>
+                          {activeSubDropdown === item.label && (
+                            <div className="ml-3 space-y-1 bg-white/5 rounded p-2">
+                              {item.subItems.map((sub) => (
+                                <Link
+                                  key={sub.href}
+                                  href={sub.href}
+                                  className="block text-white/80 px-3 py-2 rounded text-sm hover:bg-white/10 transition-colors duration-200"
+                                  onClick={closeMenu}
+                                >
+                                  {sub.label}
+                                </Link>
+                              ))}
+                            </div>
+                          )}
                         </div>
                       ) : (
                         <Link
@@ -331,7 +361,7 @@ const Navbar = () => {
                         >
                           {item.label}
                         </Link>
-                      )
+                      )}
                     )}
                   </div>
                 )}

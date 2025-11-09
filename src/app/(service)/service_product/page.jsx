@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import dynamic from "next/dynamic";
-import Navbar from "@/components/Navbar";
 import CustomFooter from "@/components/CustomFooter";
+import Navbar from "@/components/Navbar";
 import CardServiceToko from "@/components/card/CardServiceToko";
 
 // Import pagination secara dinamis
@@ -50,7 +50,7 @@ export default function ServiceToko() {
       <Navbar />
 
      {/* Title */}
-        <div className="max-w-6xl mx-auto md:block grid grid-cols-1 justify-items-center md:justify-items-start md:pt-16 pt-24 px-4 md:px-8 mb-8">
+        <div className="max-w-6xl mx-auto md:block grid grid-cols-1 justify-items-center md:justify-items-start md:pt-16 pt-24 mb-8">
           <h1 className="md:text-5xl text-4xl md:mt-10 font-bold">
             Our Products
           </h1>

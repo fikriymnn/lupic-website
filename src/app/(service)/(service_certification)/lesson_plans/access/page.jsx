@@ -33,7 +33,7 @@ const SUMBER_INFORMASI_OPTIONS = [
   "Lainnya",
 ];
 
-export default function FormBukaVideo({ onBack }) {
+export default function FormBukaModul({ onBack }) {
   const [isMounted, setIsMounted] = useState(false);
   const [formData, setFormData] = useState({
     nama: "",
