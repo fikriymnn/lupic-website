@@ -70,12 +70,19 @@ const Sidebar = () => {
               <span className="text-sm">Service Toko</span>
             </a>
           </li>
+          
           <li className="mb-2">
             <a href="/lgndmn/dashboard/teaching_material" className={`flex items-center space-x-2 p-2 hover:bg-koreaBlueMuda rounded ${adminPath[3]=="teaching_material"?"bg-koreaBlueMuda":""}`}>
               <FaBook />
               <span className="text-sm">Teaching Material</span>
             </a>
           </li>
+          {/* <li className="mb-2">
+            <a href="/lgndmn/dashboard/studycase" className={`flex items-center space-x-2 p-2 hover:bg-koreaBlueMuda rounded ${adminPath[3]=="services"?"bg-koreaBlueMuda":""}`}>
+              <FaStore />
+              <span className="text-sm">Teacher Study Case</span>
+            </a>
+          </li> */}
           <li className="mb-2">
             <a href="/lgndmn/dashboard/event" className={`flex items-center space-x-2 p-2 hover:bg-koreaBlueMuda rounded ${adminPath[3]=="event"?"bg-koreaBlueMuda":""}`}>
               <FaCalendarDays />

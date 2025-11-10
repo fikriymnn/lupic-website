@@ -39,15 +39,15 @@ export default function Activities() {
     return (
         <>
             <Navbar />
-            <div className="w-full flex justify-center mt-14 mb-14">
+            <div className="max-w-6xl mx-auto px-4 md:px-8 flex justify-center pt-16 mt-14">
                 <CarouselActivities />
             </div>
-            <div className=" text-center m-auto mb-4">
-                <h3 className="md:text-4xl text-3xl md:mt-10 mt-4 font-bold">Our Goals</h3>
+            <div className="max-w-6xl px-4 md:px-8 text-center m-auto mb-4">
+                <h3 className="md:text-5xl text-3xl md:mt-8 mt-4 font-bold">Our Goals</h3>
                 <div className="h-1 w-36 bg-koreaRed md:mt-5 mt-3 m-auto"></div>
             </div>
-            <div>
-                <div className="mt-5 m-auto md:w-[80%] w-[90%] pb-16">
+            <div className="max-w-6xl mx-auto px-4 md:px-8">
+                <div className="mt-5 m-auto pb-16">
                     <div className="md:mt-10 mt-7">
                         <div className="my-10">
                             <InformationDropdown1 />
@@ -65,7 +65,7 @@ export default function Activities() {
                     </div>
                 </div>
                 <div className="mb-20 w-full">
-                    <div className="w-[80%] m-auto ">
+                    <div className="m-auto">
                         <div className="w-full">
                             <h3 className="md:mt-7 mt-2 text-koreaRed text-xl font-bold">First year</h3>
                             <div className="flex justify-between cursor-pointer" onClick={(e) => { e.preventDefault();setActive(!active) }}>

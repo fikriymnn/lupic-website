@@ -44,7 +44,7 @@ export default function CarouselActivities() {
         getData()
     }, [])
     return (
-        <div className='md:w-[80%] w-[90%] m-auto bg-gradient-to-b from-koreaBlue to-black py-8 rounded-t-xl rounded-bl-xl rounded-br-[100px] '>
+        <div className='m-auto bg-gradient-to-b from-koreaBlue to-black py-8 rounded-t-xl rounded-bl-xl rounded-br-[100px] '>
             <div className='grid md:grid-cols-2 grid-cols-1 justify-items-center items-start w-full m-auto '>
                 <div className='m-auto w-[70%] md:hidden block'>
                     <Slider {...settings}>

@@ -13,9 +13,7 @@ export default function Aboutus() {
     const [active3, setActive3] = useState(true)
     const [data, setData] = useState({ gambar: "", pesan: "", deskripsi: "", nama: "" })
 
-    const { ref, inView } = useInView({ triggerOnce: false, threshold: 0.1 });
-
-
+    const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
 
     useEffect(() => {
         async function getData() {
@@ -34,7 +32,7 @@ export default function Aboutus() {
     return (
         <>
             <Navbar />
-            <div className="md:w-[85%] w-[90%] m-auto">
+            <div className="max-w-6xl md:px-8 px-4 m-auto pt-16">
                 {/* hero section */}
                 <div className="">
                     <h1 className="md:text-4xl text-2xl mt-10 font-bold">Greetings from coordinator LUPIC</h1>

@@ -37,7 +37,7 @@ export default function Register() {
   return (
     <>
       <Navbar />
-      <div className="flex justify-center items-center min-h-screen my-4">
+      <div className="flex justify-center items-center min-h-screen my-4 pt-20">
         <div className="bg-white p-8 rounded-lg shadow-lg w-96">
           <h2 className="text-2xl font-bold text-center mb-4">REGISTER</h2>
           <form onSubmit={handleSubmit} className="space-y-4">

@@ -87,8 +87,9 @@ export default function News() {
     <>
       <Navbar />
       {/* hero section */}
+      <main className="max-w-6xl md:px-8 px-4 m-auto pt-16">
       <div className="w-full flex justify-center mt-14 md:mb-14 mb-7">
-        <div className="md:w-[85%] w-[90%] m-auto bg-gradient-to-b from-koreaBlue to-black md:py-20 py-16 rounded-tl-xl rounded-br-xl rounded-tr-[100px] rounded-bl-[100px]">
+        <div className="max-w-6xl md:px-8 px-4 m-auto bg-gradient-to-b from-koreaBlue to-black md:py-20 py-16 rounded-tl-xl rounded-br-xl rounded-tr-[100px] rounded-bl-[100px]">
           <div className="md:px-20 px-5 grid md:flex grid-cols-1 justify-items-center items-start w-full m-auto ">
             <div className="m-auto md:w-[50%] w-[90%] ">
               <h3 className=" md:text-4xl text-3xl font-bold text-white mb-3">
@@ -119,7 +120,7 @@ export default function News() {
       </div>
       {searchActive ? (
         <div>
-          <div className="w-[85%] m-auto md:mt-8 mt-1">
+          <div className="m-auto md:mt-8 mt-1">
             <div className="md:block md:justify-items-start grid grid-cols-1 justify-items-center"></div>
             <div className="grid md:grid-cols-3 justify-items-center grid-cols-1 md:mt-4 mt-2">
               {dataSearch &&
@@ -150,7 +151,7 @@ export default function News() {
         ""
       )}
       {/* latest news */}
-      <div className="w-[85%] m-auto">
+      <div className="m-auto">
         <div className="md:block grid grid-cols-1 justify-items-center md:justify-items-start">
           <h1 className="md:text-5xl text-2xl md:mt-10 font-bold">
             Latest News
@@ -183,20 +184,20 @@ export default function News() {
         </div>
       </div>
       {/* other news */}
-      <div className="md:w-[85%] w-[95%] m-auto md:mt-8 mt-1">
+      <div className="m-auto md:mt-8 mt-1">
         <div className="md:block md:justify-items-start grid grid-cols-1 justify-items-center">
           <h1 className="md:text-5xl text-2xl mt-10 font-bold ">
             Another News
           </h1>
           <div className="h-1 w-36 bg-koreaRed md:mt-3 mt-2"></div>
         </div>
-        <div className="grid md:grid-cols-3 justify-items-center grid-cols-1 md:mt-4 mt-2">
+        <div className="grid md:grid-cols-3 justify-items-center grid-cols-1 md:mt-8 mt-4 gap-8">
           {data &&
             data.map((v, i) => {
 
                 return (
                   <motion.div
-                    className="mx-5"
+                    className=""
                     key={i}
                     whileHover={{ scale: 1.05 }}
                     transition={{ duration: 0.3 }}
@@ -222,7 +223,7 @@ export default function News() {
           onPageChange={setCurrentPage}
         />
       </div>
-
+          </main>
       <CustomFooter />
     </>
   );

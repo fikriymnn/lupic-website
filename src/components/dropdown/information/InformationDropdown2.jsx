@@ -13,14 +13,11 @@ export default function InformationDropdown2() {
         async function getData() {
             try{
                 const Data = await axios.get(process.env.NEXT_PUBLIC_API_URL+"/api/activity_goals")
-                console.log(Data)
                 if(Data.data){
                     setData(Data.data)
-                    console.log(data)
                     if(data){
                         setLoading(false)
                     }
-                    
                 }
             }catch(err){
                 console.log(err.message)
@@ -36,7 +33,7 @@ export default function InformationDropdown2() {
                     <div className="bg-gradient-to-b from-koreaRed to-black rounded-full md:h-24 md:w-24 h-20 w-20 flex items-center">
                         <p className="md:text-4xl text-xl font-bold text-white m-auto text-center">02</p>
                     </div>
-                    <h3 className="md:text-xl w-[50%] text-xs font-bold text-white text-center">Expansion of STEM-linked Education for the Scientific Competence of Prospective Teachers</h3>
+                    <h3 className="md:text-lg w-[50%] text-xs font-bold text-white text-center">Expansion of STEM-linked Education for the Scientific Competence of Prospective Teachers</h3>
                     <button className="md:mr-10 mr-5" onClick={(e) => { setActive(!active) }}>
                         <Image className={active ? "" : "rotate-180"} src={"/images/logoAbout/white-up.svg"} width={30} height={30} alt="foto" />
                     </button>
