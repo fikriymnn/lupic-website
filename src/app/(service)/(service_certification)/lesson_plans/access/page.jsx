@@ -34,59 +34,59 @@ const SUMBER_INFORMASI_OPTIONS = [
 ];
 
 export default function FormBukaModul() {
-//   const [isMounted, setIsMounted] = useState(false);
-//   const [formData, setFormData] = useState({
-//     nama: "",
-//     email: "",
-//     no_whatsapp: "",
-//     provinsi: "",
-//     jenjang_sekolah: "",
-//     nama_instansi: "",
-//     mata_pelajaran: "",
-//     status_ppg: "",
-//     sumber_informasi: [] ,
-//     sumber_informasi_lainnya: "",
-//     bukti_pembayaran: null
-//   });
+  const [isMounted, setIsMounted] = useState(false);
+  const [formData, setFormData] = useState({
+    nama: "",
+    email: "",
+    no_whatsapp: "",
+    provinsi: "",
+    jenjang_sekolah: "",
+    nama_instansi: "",
+    mata_pelajaran: "",
+    status_ppg: "",
+    sumber_informasi: [] ,
+    sumber_informasi_lainnya: "",
+    bukti_pembayaran: null
+  });
 
-//   useEffect(() => {
-//     setIsMounted(true);
-//   }, []);
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
-//   if (!isMounted) return null; // pastikan render hanya di client
+  if (!isMounted) return null; // pastikan render hanya di client
 
-//   const handleChange = (field, value) => {
-//     setFormData((prev) => ({ ...prev, [field]: value }));
-//   };
+  const handleChange = (field, value) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
 
-//   const handleSumberInfoChange = (option) => {
-//     setFormData((prev) => {
-//       const alreadySelected = prev.sumber_informasi.includes(option);
-//       return {
-//         ...prev,
-//         sumber_informasi: alreadySelected
-//           ? prev.sumber_informasi.filter((item) => item !== option)
-//           : [...prev.sumber_informasi, option],
-//       };
-//     });
-//   };
+  const handleSumberInfoChange = (option) => {
+    setFormData((prev) => {
+      const alreadySelected = prev.sumber_informasi.includes(option);
+      return {
+        ...prev,
+        sumber_informasi: alreadySelected
+          ? prev.sumber_informasi.filter((item) => item !== option)
+          : [...prev.sumber_informasi, option],
+      };
+    });
+  };
 
-//   const handleFileChange = (e) => {
-//     const file = e.target.files?.[0] || null;
-//     setFormData((prev) => ({ ...prev, bukti_pembayaran: file }));
-//   };
+  const handleFileChange = (e) => {
+    const file = e.target.files?.[0] || null;
+    setFormData((prev) => ({ ...prev, bukti_pembayaran: file }));
+  };
 
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     console.log("Form submitted:", formData);
-//     alert("Formulir berhasil dikirim! Silakan tunggu konfirmasi akses dari admin.");
-//   };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Form submitted:", formData);
+    alert("Formulir berhasil dikirim! Silakan tunggu konfirmasi akses dari admin.");
+  };
 
-  return (
+return (
     <>
     <Navbar/>
 
-    {/* <div className="min-h-screen bg-gray-100 py-16">
+    <div className="min-h-screen bg-gray-100 py-16">
       <div className="max-w-4xl mx-auto p-6 ">
         <button
           className="mb-6 px-4 py-2 bg-white rounded-lg shadow hover:shadow-md transition flex items-center gap-2"
@@ -239,8 +239,8 @@ export default function FormBukaModul() {
           </form>
         </div>
       </div>
-    </div>*/
-    <Footer/> }
+    </div>
+    <Footer/> 
         </>
   );
 }
