@@ -49,7 +49,7 @@ const mockUseCases = [
   }
 ];
 
-export default function Studycase({ onBack, onAddClick, onEditClick }){
+export default function Studycase(){
   const [useCases, setUseCases] = useState(mockUseCases);
 
   const handleDelete = (id) => {
@@ -71,7 +71,7 @@ export default function Studycase({ onBack, onAddClick, onEditClick }){
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-end items-center mb-8">
           <button
-            onClick={() => onAddClick()}
+       
             className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition flex items-center gap-2 font-medium"
           >
             <Plus size={20} />
@@ -113,7 +113,7 @@ export default function Studycase({ onBack, onAddClick, onEditClick }){
                     <td className="px-6 py-4">
                       <div className="flex justify-center gap-2">
                         <button
-                          onClick={() => onEditClick(useCase)}
+       
                           className="p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
                         >
                           <Edit size={18} />
