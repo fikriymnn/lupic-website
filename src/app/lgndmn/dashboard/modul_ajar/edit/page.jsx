@@ -67,8 +67,8 @@ const SUMBER_INFORMASI_OPTIONS = [
   'Lainnya'
 ];
 
-export default function EditModulForm({ modul, onBack, onSave }) {
-  const [formData, setFormData] = useState(modul || {
+export default function EditModulForm() {
+  const [formData, setFormData] = useState({
     judulModul: '',
     deskripsi: '',
     jenjang: 'SD',
@@ -90,7 +90,7 @@ export default function EditModulForm({ modul, onBack, onSave }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Saving modul:', formData);
-    onSave(formData);
+    (formData);
   };
 
   return (
@@ -98,13 +98,13 @@ export default function EditModulForm({ modul, onBack, onSave }) {
       <div className="max-w-4xl mx-auto">
         <div className="flex items-center gap-4 mb-8">
           <button
-            onClick={onBack}
+
             className="p-2 bg-white rounded-lg shadow hover:shadow-md transition"
           >
             <ChevronLeft size={24} />
           </button>
           <h1 className="text-4xl font-bold text-gray-800">
-            {modul ? 'Edit Modul Ajar' : 'Tambah Modul Ajar'}
+            Edit Modul Ajar
           </h1>
         </div>
 
@@ -227,7 +227,7 @@ export default function EditModulForm({ modul, onBack, onSave }) {
             </button>
             <button
               type="button"
-              onClick={onBack}
+
               className="px-6 py-3 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition font-medium"
             >
               Batal
