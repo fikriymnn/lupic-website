@@ -33,7 +33,7 @@ const SUMBER_INFORMASI_OPTIONS = [
   "Lainnya",
 ];
 
-export default function FormBukaVideo({ onBack }) {
+export default function FormBukaVideo() {
   const [isMounted, setIsMounted] = useState(false);
   const [formData, setFormData] = useState({
     nama: "",
@@ -80,7 +80,6 @@ export default function FormBukaVideo({ onBack }) {
     e.preventDefault();
     console.log("Form submitted:", formData);
     alert("Formulir berhasil dikirim! Silakan tunggu konfirmasi akses dari admin.");
-    onBack();
   };
 
   return (
@@ -90,7 +89,6 @@ export default function FormBukaVideo({ onBack }) {
     <div className="min-h-screen bg-gray-100 py-16">
       <div className="max-w-4xl mx-auto p-6 ">
         <button
-          onClick={onBack}
           className="mb-6 px-4 py-2 bg-white rounded-lg shadow hover:shadow-md transition flex items-center gap-2"
         >
           <ChevronLeft size={20} />
@@ -234,7 +232,6 @@ export default function FormBukaVideo({ onBack }) {
               </button>
               <button
                 type="button"
-                onClick={onBack}
                 className="px-6 py-3 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition font-medium"
               >
                 Batal
