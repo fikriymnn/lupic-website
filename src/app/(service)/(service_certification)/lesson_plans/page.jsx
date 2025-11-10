@@ -81,7 +81,7 @@ const SUMBER_INFORMASI_OPTIONS = [
   'Lainnya'
 ];
 
-export default function ModulAjarList({ onBukaModul, onAdminClick }) {
+export default function ModulAjarList() {
   const [moduls, setModuls] = useState(mockModulAjar);
   const [filteredModuls, setFilteredModuls] = useState(mockModulAjar);
   const [currentPage, setCurrentPage] = useState(1);
