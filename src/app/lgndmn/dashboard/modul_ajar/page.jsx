@@ -67,7 +67,7 @@ const SUMBER_INFORMASI_OPTIONS = [
   'Lainnya'
 ];
 
-export default function AdminModulPanel({ onBack, onAddClick, onAccessClick, onEditClick }){
+export default function AdminModulPanel( ){
   const [moduls, setModuls] = useState(mockModulAjar);
 
   const handleDelete = (id) => {
@@ -82,7 +82,7 @@ export default function AdminModulPanel({ onBack, onAddClick, onAccessClick, onE
         <div className="flex justify-between items-center mb-8">
           <div className="flex items-center gap-4">
             <button
-              onClick={onBack}
+
               className="p-2 bg-white rounded-lg shadow hover:shadow-md transition"
             >
               <ChevronLeft size={24} />
@@ -90,14 +90,12 @@ export default function AdminModulPanel({ onBack, onAddClick, onAccessClick, onE
             <h1 className="text-4xl font-bold text-gray-800">Admin Modul Ajar</h1>
           </div>
           <button
-            onClick={onAddClick}
             className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition flex items-center gap-2 font-medium"
           >
             <Plus size={20} />
             Tambah Modul
           </button>
         </div>
-
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {moduls.map((modul) => (
             <div key={modul._id} className="bg-white rounded-xl shadow-lg p-6">
@@ -127,7 +125,7 @@ export default function AdminModulPanel({ onBack, onAddClick, onAccessClick, onE
 
               <div className="space-y-2">
                 <button
-                  onClick={() => onAccessClick(modul)}
+                  onClick={() => (modul)}
                   className="w-full px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition flex items-center justify-center gap-2"
                 >
                   <Users size={18} />
@@ -136,7 +134,7 @@ export default function AdminModulPanel({ onBack, onAddClick, onAccessClick, onE
                 
                 <div className="flex gap-2">
                   <button
-                    onClick={() => onEditClick(modul)}
+
                     className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition flex items-center justify-center gap-2"
                   >
                     <Edit size={18} />
