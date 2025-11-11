@@ -1,6 +1,7 @@
 "use client"
 import React, { useState } from 'react';
 import Navbar from "@/components/Navbar";
+import CustomFooter from "@/components/CustomFooter";
 import { Download, BookOpen, GraduationCap, Sparkles, Clock, CheckCircle } from 'lucide-react';
 
 export default function ModulAjarDetail() {
@@ -167,6 +168,7 @@ export default function ModulAjarDetail() {
         </div>
       </div>
     </div>
+    <CustomFooter/>
     </>
   );
 }

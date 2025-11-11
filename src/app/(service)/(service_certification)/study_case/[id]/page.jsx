@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import { useState } from 'react';
 import { ChevronLeft, Send } from 'lucide-react';
 import { useRouter } from "next/navigation";
+import CustomFooter from "@/components/CustomFooter"
 
 const useCase = {
     _id: '1',
@@ -164,6 +165,7 @@ export default function UseCaseDetail(){
         )}
       </div>
     </div>
+    <CustomFooter/>
         </>
   );
 };

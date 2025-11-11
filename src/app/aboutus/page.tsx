@@ -34,7 +34,7 @@ export default function Aboutus() {
             <Navbar />
             <div className="max-w-6xl md:px-8 px-4 m-auto pt-16">
                 {/* hero section */}
-                <div className="">
+                <div>
                     <h1 className="md:text-4xl text-2xl mt-10 font-bold">Greetings from coordinator LUPIC</h1>
                     <div className="h-1 w-36 bg-koreaRed md:mt-5 mt-2"></div>
                 </div>
