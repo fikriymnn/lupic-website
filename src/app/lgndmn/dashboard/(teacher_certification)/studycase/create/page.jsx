@@ -1,45 +1,28 @@
 "use client";
 import { useState } from 'react';
 import { ChevronLeft, Trash2 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import Sidebar from "@/components/Sidebar";
 
-const useCase =   {
-    _id: '3',
-    judulKasus: 'Integrasi Materi IPA: Siklus Air dan Perubahan Wujud',
-    deskripsi: 'Pembelajaran IPA terpadu mengenai siklus air dengan konsep perubahan wujud zat',
-    jenjang: 'SD',
-    topikIPA: 'IPA Terpadu',
-    kompetensiGuru: 'Pedagogik',
-    narasiLengkap: 'Guru SD mengintegrasikan pembelajaran tentang siklus air dengan materi perubahan wujud zat. Melalui demonstrasi sederhana dan video animasi, siswa memahami bagaimana air menguap, mengembun, dan turun kembali sebagai hujan. Pembelajaran ini menggabungkan aspek fisika dan biologi.',
-    pertanyaanAnalisis: [
-      'Apa keuntungan pembelajaran IPA terpadu untuk siswa SD?',
-      'Media apa saja yang efektif untuk materi ini?'
-    ],
-    pembahasan: 'Pembelajaran IPA terpadu membantu siswa melihat keterkaitan antar konsep sehingga lebih bermakna. Media seperti video animasi, demonstrasi langsung, dan model 3D sangat efektif untuk memvisualisasikan proses yang abstrak.'
-  }
-
-
-
-export default function AddUseCase() {
+export default function CreateUseCase() {
   const [editingUseCase, setEditingUseCase] = useState(null);
-  const [formData, setFormData] = useState(useCase || {
+  const [formData, setFormData] = useState({
     judulKasus: '',
     deskripsi: '',
     jenjang: 'SD',
     topikIPA: 'Fisika',
     kompetensiGuru: 'Pedagogik',
     narasiLengkap: '',
-    pertanyaanAnalisis: ['', '', ''],
+    pertanyaanAnalisis: '',
     pembahasan: ''
   });
 
   const handleChange = (field, value) => {
-    setFormData({...formData, [field]: value});
+    setFormData({ ...formData, [field]: value });
   };
 
-  const handleQuestionChange = (index, value) => {
-    const newQuestions = [...formData.pertanyaanAnalisis];
-    newQuestions[index] = value;
-    setFormData({...formData, pertanyaanAnalisis: newQuestions});
+  const handleQuestionChange = (value) => {
+    setFormData({ ...formData, pertanyaanAnalisis: value });
   };
 
   const addQuestion = () => {
@@ -49,37 +32,33 @@ export default function AddUseCase() {
     });
   };
 
-  const removeQuestion = (index) => {
-    const newQuestions = formData.pertanyaanAnalisis.filter((_, i) => i !== index);
-    setFormData({...formData, pertanyaanAnalisis: newQuestions});
-  };
-
-      const onSave = (formData) => {
-    console.log('Saving:', formData);
-    alert(editingUseCase ? 'Kasus berhasil diupdate!' : 'Kasus baru berhasil ditambahkan!');
-    setCurrentPage('admin');
-  }
-
-
   const handleSubmit = (e) => {
     e.preventDefault();
     onSave(formData);
   };
 
-  
+  const onSave = (formData) => {
+    console.log('Saving:', formData);
+    alert(editingUseCase ? 'Kasus berhasil diupdate!' : 'Kasus baru berhasil ditambahkan!');
+    setCurrentPage('admin');
+  }
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
-      <div className="max-w-4xl mx-auto">
-        <div className="flex items-center gap-4 mb-8">
-          <button
-            className="p-2 bg-white rounded-lg shadow hover:shadow-md transition"
-          >
-            <ChevronLeft size={24} />
-          </button>
-          <h1 className="text-4xl font-bold text-gray-800">
-            {useCase ? 'Edit Kasus' : 'Tambah Kasus Baru'}
-          </h1>
-        </div>
+    <div className="flex">
+      <Sidebar />
+      <div className="w-64 bg-gray-100"></div>
+      <div className="w-full">
+
+        <div className="m-auto w-full">
+          <div className="min-h-screen p-4 w-[90%] m-auto">
+
+            <div className="max-w-7xl">
+      <div className="max-w-7xl">
+                    <div className="mb-8">
+                <h1 className="text-3xl lg:text-4xl font-bold text-blue-600 mb-2">
+                  Create Study Case
+                </h1>
+              </div>
 
         <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-lg p-8 space-y-6">
           <div>
@@ -173,35 +152,19 @@ export default function AddUseCase() {
               <label className="block text-sm font-semibold text-gray-700">
                 Pertanyaan Analisis *
               </label>
-              <button
-                type="button"
-                onClick={addQuestion}
-                className="px-3 py-1 bg-indigo-600 text-white text-sm rounded-lg hover:bg-indigo-700 transition"
-              >
-                + Tambah Pertanyaan
-              </button>
             </div>
-            {formData.pertanyaanAnalisis.map((question, index) => (
-              <div key={index} className="flex gap-2 mb-3">
-                <input
-                  type="text"
-                  required
-                  value={question}
-                  onChange={(e) => handleQuestionChange(index, e.target.value)}
-                  placeholder={`Pertanyaan ${index + 1}`}
-                  className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                />
-                {formData.pertanyaanAnalisis.length > 1 && (
-                  <button
-                    type="button"
-                    onClick={() => removeQuestion(index)}
-                    className="p-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
-                  >
-                    <Trash2 size={18} />
-                  </button>
-                )}
-              </div>
-            ))}
+
+            <div className="flex gap-2 mb-3">
+              <input
+                type="text"
+                required
+                value={formData.pertanyaanAnalisis}
+                onChange={(e) => handleQuestionChange(e.target.value)}
+                placeholder={`Pertanyaan Analisis`}
+                className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              />
+            </div>
+
           </div>
 
           <div>
@@ -221,17 +184,15 @@ export default function AddUseCase() {
               type="submit"
               className="flex-1 px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition font-medium"
             >
-              {useCase ? 'Update Kasus' : 'Simpan Kasus'}
-            </button>
-            <button
-              type="button"
-              className="px-6 py-3 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition font-medium"
-            >
-              Batal
+           Simpan Study Case
             </button>
           </div>
         </form>
       </div>
+    </div>
+    </div>
+    </div>
+    </div>
     </div>
   );
 };
