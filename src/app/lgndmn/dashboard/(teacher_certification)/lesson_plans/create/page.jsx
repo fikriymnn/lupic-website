@@ -1,6 +1,7 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Download, BookOpen, Edit, Trash2, Plus, Users, CheckCircle, XCircle, Upload, Filter } from 'lucide-react';
+import Sidebar from "@/components/Sidebar";
 
 const mockModulAjar = [
   {
@@ -68,7 +69,7 @@ const SUMBER_INFORMASI_OPTIONS = [
 ];
 
 export default function AddModulForm() {
-  
+
   const [formData, setFormData] = useState({
     judulModul: '',
     deskripsi: '',
@@ -80,12 +81,12 @@ export default function AddModulForm() {
   });
 
   const handleChange = (field, value) => {
-    setFormData({...formData, [field]: value});
+    setFormData({ ...formData, [field]: value });
   };
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    setFormData({...formData, file: file});
+    setFormData({ ...formData, file: file });
   };
 
   const handleSubmit = (e) => {
@@ -95,144 +96,150 @@ export default function AddModulForm() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
-      <div className="max-w-4xl mx-auto">
-        <div className="flex items-center gap-4 mb-8">
-          <button
-    
-            className="p-2 bg-white rounded-lg shadow hover:shadow-md transition"
-          >
-            <ChevronLeft size={24} />
-          </button>
-          <h1 className="text-4xl font-bold text-gray-800">
-           Tambah Modul Ajar
-          </h1>
-        </div>
+      <div className="max-w-7xl">
+        <div className="flex">
+          <Sidebar />
+          <div className="w-64 bg-gray-100"></div>
+          <div className="w-full">
+            <div className=" w-full">
+              <div className="p-4 w-[90%] mx-auto">
+                <div className="max-w-7xl">
+                  {/* Title */}
+                  <div className="mb-8">
+                    <h1 className="text-3xl lg:text-4xl font-bold text-blue-600 mb-2">
+                      Create Modul
+                    </h1>
+                  </div>
+                  <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-lg p-8 space-y-6">
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        Judul Modul *
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={formData.judulModul}
+                        onChange={(e) => handleChange('judulModul', e.target.value)}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      />
+                    </div>
 
-        <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-lg p-8 space-y-6">
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
-              Judul Modul *
-            </label>
-            <input
-              type="text"
-              required
-              value={formData.judulModul}
-              onChange={(e) => handleChange('judulModul', e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-            />
-          </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        Deskripsi *
+                      </label>
+                      <textarea
+                        required
+                        value={formData.deskripsi}
+                        onChange={(e) => handleChange('deskripsi', e.target.value)}
+                        rows="3"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
+                      />
+                    </div>
 
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
-              Deskripsi *
-            </label>
-            <textarea
-              required
-              value={formData.deskripsi}
-              onChange={(e) => handleChange('deskripsi', e.target.value)}
-              rows="3"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
-            />
-          </div>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div>
+                        <label className="block text-sm font-semibold text-gray-700 mb-2">
+                          Jenjang *
+                        </label>
+                        <select
+                          required
+                          value={formData.jenjang}
+                          onChange={(e) => handleChange('jenjang', e.target.value)}
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                        >
+                          <option value="SD">SD</option>
+                          <option value="SMP">SMP</option>
+                        </select>
+                      </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Jenjang *
-              </label>
-              <select
-                required
-                value={formData.jenjang}
-                onChange={(e) => handleChange('jenjang', e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-              >
-                <option value="SD">SD</option>
-                <option value="SMP">SMP</option>
-              </select>
-            </div>
+                      <div>
+                        <label className="block text-sm font-semibold text-gray-700 mb-2">
+                          Topik IPA *
+                        </label>
+                        <select
+                          required
+                          value={formData.topikIPA}
+                          onChange={(e) => handleChange('topikIPA', e.target.value)}
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                        >
+                          <option value="Fisika">Fisika</option>
+                          <option value="Biologi">Biologi</option>
+                          <option value="IPA Terpadu">IPA Terpadu</option>
+                        </select>
+                      </div>
 
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Topik IPA *
-              </label>
-              <select
-                required
-                value={formData.topikIPA}
-                onChange={(e) => handleChange('topikIPA', e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-              >
-                <option value="Fisika">Fisika</option>
-                <option value="Biologi">Biologi</option>
-                <option value="IPA Terpadu">IPA Terpadu</option>
-              </select>
-            </div>
+                      <div>
+                        <label className="block text-sm font-semibold text-gray-700 mb-2">
+                          Status *
+                        </label>
+                        <select
+                          required
+                          value={formData.status}
+                          onChange={(e) => handleChange('status', e.target.value)}
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                        >
+                          <option value="GRATIS">GRATIS</option>
+                          <option value="BERBAYAR">BERBAYAR</option>
+                        </select>
+                      </div>
+                    </div>
 
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Status *
-              </label>
-              <select
-                required
-                value={formData.status}
-                onChange={(e) => handleChange('status', e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-              >
-                <option value="GRATIS">GRATIS</option>
-                <option value="BERBAYAR">BERBAYAR</option>
-              </select>
-            </div>
-          </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        Tujuan Pembelajaran *
+                      </label>
+                      <textarea
+                        required
+                        value={formData.tujuanPembelajaran}
+                        onChange={(e) => handleChange('tujuanPembelajaran', e.target.value)}
+                        rows="3"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
+                      />
+                    </div>
 
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
-              Tujuan Pembelajaran *
-            </label>
-            <textarea
-              required
-              value={formData.tujuanPembelajaran}
-              onChange={(e) => handleChange('tujuanPembelajaran', e.target.value)}
-              rows="3"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
-            />
-          </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        File Modul (PDF)
+                      </label>
+                      <div className="flex items-center gap-4">
+                        <label className="flex-1 cursor-pointer">
+                          <div className="w-full px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg hover:border-purple-500 transition flex items-center justify-center gap-2 text-gray-600">
+                            <Upload size={20} />
+                            <span>
+                              {formData.file ? formData.file.name : 'Pilih file modul (PDF)'}
+                            </span>
+                          </div>
+                          <input
+                            type="file"
+                            accept=".pdf"
+                            onChange={handleFileChange}
+                            className="hidden"
+                          />
+                        </label>
+                      </div>
+                    </div>
 
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
-              File Modul (PDF)
-            </label>
-            <div className="flex items-center gap-4">
-              <label className="flex-1 cursor-pointer">
-                <div className="w-full px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg hover:border-purple-500 transition flex items-center justify-center gap-2 text-gray-600">
-                  <Upload size={20} />
-                  <span>
-                    {formData.file ? formData.file.name : 'Pilih file modul (PDF)'}
-                  </span>
+                    <div className="flex gap-4 pt-4">
+                      <button
+                        type="submit"
+                        className="flex-1 px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition font-medium"
+                      >
+                        Simpan Modul
+                      </button>
+                      <button
+                        type="button"
+                        className="px-6 py-3 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition font-medium"
+                      >
+                        Batal
+                      </button>
+                    </div>
+                  </form>
                 </div>
-                <input
-                  type="file"
-                  accept=".pdf"
-                  onChange={handleFileChange}
-                  className="hidden"
-                />
-              </label>
+              </div>
             </div>
           </div>
-
-          <div className="flex gap-4 pt-4">
-            <button
-              type="submit"
-              className="flex-1 px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition font-medium"
-            >
-              Simpan Modul
-            </button>
-            <button
-              type="button"
-              className="px-6 py-3 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition font-medium"
-            >
-              Batal
-            </button>
-          </div>
-        </form>
+        </div>
       </div>
     </div>
   );

@@ -1,6 +1,8 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Download, BookOpen, Edit, Trash2, Plus, Users, CheckCircle, XCircle, Upload, Filter } from 'lucide-react';
+import Sidebar from "@/components/Sidebar";
+import { useRouter } from 'next/navigation';
 
 const mockModulAjar = [
   {
@@ -67,7 +69,8 @@ const SUMBER_INFORMASI_OPTIONS = [
   'Lainnya'
 ];
 
-export default function AdminModulPanel( ){
+export default function AdminModulPanel() {
+  const router = useRouter()
   const [moduls, setModuls] = useState(mockModulAjar);
 
   const handleDelete = (id) => {
@@ -77,80 +80,86 @@ export default function AdminModulPanel( ){
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <div className="flex items-center gap-4">
-            <button
-
-              className="p-2 bg-white rounded-lg shadow hover:shadow-md transition"
-            >
-              <ChevronLeft size={24} />
-            </button>
-            <h1 className="text-4xl font-bold text-gray-800">Admin Modul Ajar</h1>
-          </div>
-          <button
-            className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition flex items-center gap-2 font-medium"
-          >
-            <Plus size={20} />
-            Tambah Modul
-          </button>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {moduls.map((modul) => (
-            <div key={modul._id} className="bg-white rounded-xl shadow-lg p-6">
-              <div className="flex flex-wrap gap-2 mb-3">
-                <span className="px-3 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full">
-                  {modul.jenjang}
-                </span>
-                <span className="px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full">
-                  {modul.topikIPA}
-                </span>
-                <span className={`px-3 py-1 text-xs font-semibold rounded-full ${
-                  modul.status === 'GRATIS' 
-                    ? 'bg-emerald-100 text-emerald-800' 
-                    : 'bg-orange-100 text-orange-800'
-                }`}>
-                  {modul.status}
-                </span>
+    <div className="flex">
+      <Sidebar />
+      <div className="w-64 bg-gray-100"></div>
+      <div className="w-full">
+        <div className="m-auto w-full">
+          <div className="min-h-screen p-4 w-[90%] m-auto">
+            <div className="max-w-7xl">
+              {/* Title */}
+              <div className="mb-8">
+                <h1 className="text-3xl lg:text-4xl font-bold text-blue-600 mb-2">
+                  Teacher Lesson Plans
+                </h1>
               </div>
-
-              <h3 className="text-xl font-bold text-gray-800 mb-2 line-clamp-2">
-                {modul.judulModul}
-              </h3>
-
-              <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-                {modul.deskripsi}
-              </p>
-
-              <div className="space-y-2">
+              {/* Create Data */}
+              <div className="items-center mb-8">
                 <button
-                  onClick={() => (modul)}
-                  className="w-full px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition flex items-center justify-center gap-2"
+                  onClick={() => router.push("/lgndmn/dashboard/lesson_plans/create")}
+                  className="px-4 py-2 bg-indigo-600 text-sm text-white rounded-lg hover:bg-indigo-700 transition flex items-center gap-2 font-medium"
                 >
-                  <Users size={18} />
-                  Lihat Access
+                  <Plus size={20} />
+                  Tambah Modul
                 </button>
-                
-                <div className="flex gap-2">
-                  <button
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {moduls.map((modul) => (
+                  <div key={modul._id} className="bg-white rounded-xl shadow-lg p-6 flex flex-col">
+                    <div className="flex flex-wrap gap-2 mb-3">
+                      <span className="px-3 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full">
+                        {modul.jenjang}
+                      </span>
+                      <span className="px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full">
+                        {modul.topikIPA}
+                      </span>
+                      <span className={`px-3 py-1 text-xs font-semibold rounded-full ${modul.status === 'GRATIS'
+                        ? 'bg-emerald-100 text-emerald-800'
+                        : 'bg-orange-100 text-orange-800'
+                        }`}>
+                        {modul.status}
+                      </span>
+                    </div>
 
-                    className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition flex items-center justify-center gap-2"
-                  >
-                    <Edit size={18} />
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleDelete(modul._id)}
-                    className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition flex items-center justify-center gap-2"
-                  >
-                    <Trash2 size={18} />
-                    Hapus
-                  </button>
-                </div>
+                    <h3 className="text-xl font-bold text-gray-800 mb-2 line-clamp-2">
+                      {modul.judulModul}
+                    </h3>
+
+                    <p className="text-gray-600 text-sm mb-4 line-clamp-2 flex-1">
+                      {modul.deskripsi}
+                    </p>
+
+                    <div className="space-y-2">
+                      <button
+                        onClick={() => (modul)}
+                        className="w-full px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition flex items-center justify-center gap-2"
+                      >
+                        <Users size={18} />
+                        Lihat Access
+                      </button>
+
+                      <div className="flex gap-2">
+                        <button
+
+                          className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition flex items-center justify-center gap-2"
+                        >
+                          <Edit size={18} />
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => handleDelete(modul._id)}
+                          className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition flex items-center justify-center gap-2"
+                        >
+                          <Trash2 size={18} />
+                          Hapus
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
-          ))}
+          </div>
         </div>
       </div>
     </div>

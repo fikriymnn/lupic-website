@@ -5,12 +5,14 @@ import dynamic from "next/dynamic";
 import CustomFooter from "@/components/CustomFooter";
 import Navbar from "@/components/Navbar";
 import { BiDetail } from "react-icons/bi";
+import Image from "next/image";
 
 const ResponsivePagination = dynamic(
   () => import("react-responsive-pagination"),
   { ssr: false }
 );
 import "react-responsive-pagination/themes/classic.css";
+import { useRouter } from "next/navigation";
 
 // Mock data
 const mockModulAjar = [
@@ -62,6 +64,7 @@ const jenjangOptions = ["Semua", "SD", "SMP"];
 const topikIPAOptions = ["Semua", "Fisika", "Biologi", "IPA Terpadu"];
 
 export default function ModulAjarList() {
+  const router = useRouter()
   const [moduls] = useState(mockModulAjar);
   const [filteredModuls, setFilteredModuls] = useState(mockModulAjar);
   const [currentPage, setCurrentPage] = useState(1);
@@ -143,47 +146,54 @@ export default function ModulAjarList() {
                 key={modul._id}
                 className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition transform hover:-translate-y-1"
               >
-                <div className="p-6 h-full flex flex-col">
-                  <div className="relative h-64 bg-koreaBlueMuda mb-4">
-                    <img
-                      src={modul.cover}
+
+                <div className="h-full flex flex-col">
+                  <div className="relative h-48 w-full overflow-hidden">
+                    <Image
+                      src={
+                        modul.cover}
                       alt={modul.judulModul}
-                      className="w-full h-full object-cover"
-                      loading="lazy"
+                      fill
+                      className="object-cover opacity-80"
                     />
+                    <div className="absolute top-3 right-3">
+                      <span
+                        className={`px-3 py-1 rounded-full text-xs font-bold ${modul.status === "GRATIS"
+                          ? "bg-green-500 text-white"
+                          : "bg-yellow-400 text-gray-900"
+                          }`}
+                      >
+                        {modul.status}
+                      </span>
+                    </div>
                   </div>
-                  <div className="flex flex-wrap gap-2 mb-3">
-                    <span className="px-3 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full">
-                      {modul.jenjang}
-                    </span>
-                    <span className="px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full">
-                      {modul.topikIPA}
-                    </span>
-                    <span
-                      className={`px-3 py-1 text-xs font-semibold rounded-full ${modul.status === "GRATIS"
-                          ? "bg-emerald-100 text-emerald-800"
-                          : "bg-orange-100 text-orange-800"
-                        }`}
+                  <div className="p-6 flex flex-col">
+                    <div className="flex flex-wrap gap-2 mb-3">
+                      <span className="px-3 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full">
+                        {modul.jenjang}
+                      </span>
+                      <span className="px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full">
+                        {modul.topikIPA}
+                      </span>
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-800 mb-3 line-clamp-2">
+                      {modul.judulModul}
+                    </h3>
+                    <p className="text-gray-600 mb-4 line-clamp-2">
+                      {modul.deskripsi}
+                    </p>
+                    <div className="flex items-end justify-end flex-1 ">
+                    <button className="px-4 py-2 bg-koreaBlueMuda text-white rounded-lg transition-colors text-sm font-semibold flex items-center gap-1"
+                      onClick={() => { router.push("/lesson_plans/123") }}
                     >
-                      {modul.status}
-                    </span>
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-800 mb-3 line-clamp-2">
-                    {modul.judulModul}
-                  </h3>
-                  <p className="text-gray-600 mb-4 line-clamp-2">
-                    {modul.deskripsi}
-                  </p>
-                  <div className="space-y-2 flex-1 flex items-end">
-                    <button
-                      onClick={() => { }}
-                      className="w-full px-4 py-2 bg-koreaBlueMuda text-white rounded-lg font-medium flex items-center justify-center gap-2"
-                    >
-                      <BiDetail size={18} />
                       Detail
+                      <ChevronRight className="w-4 h-4" />
                     </button>
                   </div>
+                  </div>
+                  
                 </div>
+
               </div>
             ))}
           </div>
@@ -226,8 +236,8 @@ export default function ModulAjarList() {
                     key={jenjang}
                     onClick={() => setFilterJenjang(jenjang)}
                     className={`py-2 rounded-lg font-semibold transition-colors ${filterJenjang === jenjang
-                        ? "bg-purple-600 text-white"
-                        : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                      ? "bg-purple-600 text-white"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                       }`}
                   >
                     {jenjang}
@@ -247,8 +257,8 @@ export default function ModulAjarList() {
                     key={topik}
                     onClick={() => setFilterTopikIPA(topik)}
                     className={`py-2 rounded-lg font-semibold transition-colors ${filterTopikIPA === topik
-                        ? "bg-purple-600 text-white"
-                        : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                      ? "bg-purple-600 text-white"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                       }`}
                   >
                     {topik}
