@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { ChevronLeft, Trash2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import Sidebar from "@/components/Sidebar";
+import axios from 'axios';
 
 export default function CreateUseCase() {
   const [editingUseCase, setEditingUseCase] = useState(null);
@@ -16,6 +17,8 @@ export default function CreateUseCase() {
     pertanyaanAnalisis: '',
     pembahasan: ''
   });
+
+
 
   const handleChange = (field, value) => {
     setFormData({ ...formData, [field]: value });
@@ -32,15 +35,25 @@ export default function CreateUseCase() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSave(formData);
+      alert('Kasus baru berhasil ditambahkan!');
+      try{
+        const res = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/study_case",formData,{
+          withCredentials:true
+        } )
+        if(res){
+          alert("Create studycase successfully!")
+        }
+      }catch(err){
+        alert(err.message)
+      }
+
   };
 
   const onSave = (formData) => {
     console.log('Saving:', formData);
-    alert(editingUseCase ? 'Kasus berhasil diupdate!' : 'Kasus baru berhasil ditambahkan!');
-    setCurrentPage('admin');
+
   }
 
   return (

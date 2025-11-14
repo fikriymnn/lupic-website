@@ -68,7 +68,7 @@ const SUMBER_INFORMASI_OPTIONS = [
   'Lainnya'
 ];
 
-export default function AddModulForm() {
+export default function EditModulForm() {
 
   const [formData, setFormData] = useState({
     judulModul: '',
@@ -77,6 +77,7 @@ export default function AddModulForm() {
     topikIPA: 'Fisika',
     tujuanPembelajaran: '',
     status: 'GRATIS',
+    cover:null,
     file: null
   });
 
@@ -85,6 +86,11 @@ export default function AddModulForm() {
   };
 
   const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setFormData({ ...formData, file: file });
+  };
+
+  const handleFileCoverChange = (e) => {
     const file = e.target.files[0];
     setFormData({ ...formData, file: file });
   };
@@ -107,7 +113,7 @@ export default function AddModulForm() {
                   {/* Title */}
                   <div className="mb-8">
                     <h1 className="text-3xl lg:text-4xl font-bold text-blue-600 mb-2">
-                      Create Modul
+                      Edit Modul
                     </h1>
                   </div>
                   <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-lg p-8 space-y-6">
@@ -197,7 +203,27 @@ export default function AddModulForm() {
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
                       />
                     </div>
-
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        File Cover (JPG,PNG,JPEG)
+                      </label>
+                      <div className="flex items-center gap-4">
+                        <label className="flex-1 cursor-pointer">
+                          <div className="w-full px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg hover:border-purple-500 transition flex items-center justify-center gap-2 text-gray-600">
+                            <Upload size={20} />
+                            <span>
+                              {formData.cover ? formData.cover.name : 'Pilih file cover (JPG,PNG,JPEG)'}
+                            </span>
+                          </div>
+                          <input
+                            type="file"
+                            accept=".pdf"
+                            onChange={handleFileCoverChange}
+                            className="hidden"
+                          />
+                        </label>
+                      </div>
+                    </div>
                     <div>
                       <label className="block text-sm font-semibold text-gray-700 mb-2">
                         File Modul (PDF)
@@ -223,7 +249,7 @@ export default function AddModulForm() {
                     <div className="flex gap-4 pt-4">
                       <button
                         type="submit"
-                        className="flex-1 px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition font-medium"
+                        className="flex-1 px-6 py-3 bg-koreaBlueMuda text-white rounded-lg hover:bg-purple-700 transition font-medium"
                       >
                         Simpan Modul
                       </button>

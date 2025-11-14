@@ -178,6 +178,16 @@ const Sidebar = () => {
 
             {isTeacherDropdownOpen && (
               <ul className="mt-1 ml-4 space-y-1 border-l-2 border-blue-400 pl-3">
+                                <li>
+                  <a
+                    href="/lgndmn/dashboard/knowlage_test"
+                    className={`flex items-center space-x-2 p-2 rounded-lg text-sm transition-colors duration-200 hover:bg-blue-500 ${
+                      adminPath[3] === "knowlage_test" ? "bg-blue-500" : ""
+                    }`}
+                  >
+                    <span>Knowlage Test</span>
+                  </a>
+                </li>
                 <li>
                   <a
                     href="/lgndmn/dashboard/studycase"

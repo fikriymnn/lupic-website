@@ -1,8 +1,9 @@
 "use client";
 import Sidebar from "@/components/Sidebar";
-import { useState } from "react";
-import { ChevronLeft, Plus, Edit, Trash2 } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ChevronLeft, Plus, Edit, Trash2, Eye } from "lucide-react";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 const mockUseCases = [
   {
@@ -52,13 +53,31 @@ const mockUseCases = [
 
 export default function Studycase() {
   const router = useRouter()
-  const [useCases, setUseCases] = useState(mockUseCases);
+  const [useCases, setUseCases] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1)
+  const [totalPage, setTotalPage] = useState(0)
 
   const handleDelete = (id) => {
     if (window.confirm('Apakah Anda yakin ingin menghapus kasus ini?')) {
       setUseCases(useCases.filter(uc => uc._id !== id));
     }
   };
+
+  const getStudycase = async () => {
+    try {
+      const res = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/study_case?page="+currentPage+"&limit=12")
+      if (res.data) {
+        setUseCases(res.data.data)
+        setTotalPage(res.data.totalPage)
+      }
+    } catch (err) {
+      console.log(err.message)
+    }
+  }
+
+  useEffect(() => {
+    getStudycase()
+  }, [currentPage])
 
   return (
     <div className="flex">
@@ -77,7 +96,7 @@ export default function Studycase() {
               </div>
               <div className="items-center mb-8">
                 <button
-                  onClick={()=>router.push("/lgndmn/dashboard/studycase/create")}
+                  onClick={() => router.push("/lgndmn/dashboard/studycase/create")}
                   className="px-4 py-2 bg-indigo-600 text-sm text-white rounded-lg hover:bg-indigo-700 transition flex items-center gap-2 font-medium"
                 >
                   <Plus size={20} />
@@ -117,9 +136,16 @@ export default function Studycase() {
                             </span>
                           </td>
                           <td className="px-6 py-4">
+
                             <div className="flex justify-center gap-2">
                               <button
-                                onClick={()=>router.push("/lgndmn/dashboard/studycase/1/edit")}
+                                onClick={() => router.push("/lgndmn/dashboard/studycase/1")}
+                                className="inline-flex items-center gap-1 px-3 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors"
+                              >
+                                <Eye className="w-4 h-4" />
+                              </button>
+                              <button
+                                onClick={() => router.push("/lgndmn/dashboard/studycase/1/edit")}
                                 className="p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
                               >
                                 <Edit size={18} />
@@ -136,6 +162,14 @@ export default function Studycase() {
                       ))}
                     </tbody>
                   </table>
+                  {totalPage > 1 && (
+                    <div className="flex justify-center mt-8 pt-6 border-t border-gray-200">
+                      <ResponsivePagination
+                        current={currentPage}
+                        total={totalPage}
+                        onPageChange={setCurrentPage}
+                      />
+                    </div>)}
                 </div>
               </div>
             </div>

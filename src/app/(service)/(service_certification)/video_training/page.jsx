@@ -3,6 +3,14 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
+import CustomFooter from "@/components/CustomFooter";
+import dynamic from "next/dynamic";
+
+const ResponsivePagination = dynamic(
+  () => import("react-responsive-pagination"),
+  { ssr: false }
+);
+import "react-responsive-pagination/themes/classic.css";
 import { useRouter } from "next/navigation";
 import {
   Play,
@@ -12,14 +20,7 @@ import {
   BookOpen,
   ChevronRight,
 } from "lucide-react";
-import CustomFooter from "@/components/CustomFooter";
-import dynamic from "next/dynamic";
 
-const ResponsivePagination = dynamic(
-  () => import("react-responsive-pagination"),
-  { ssr: false }
-);
-import "react-responsive-pagination/themes/classic.css";
 
 // ====== Data Dummy ======
 const mockvideosdata = [
