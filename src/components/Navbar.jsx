@@ -6,7 +6,7 @@ import axios from "axios";
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [login, setLogin] = useState(true);
-  const [activeSubDropdown, setActiveSubDropdown] = useState(true);
+  const [activeSubDropdown, setActiveSubDropdown] = useState(null);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [scrolled, setScrolled] = useState(false);
 
@@ -309,9 +309,9 @@ const Navbar = () => {
                 {activeDropdown === dropdown.label && (
                   <div className="ml-4 space-y-1 bg-white/5 rounded-md p-2">
                     {dropdown.items.map((item) => {
-                      console.log(item)
-                      item.subItems ? (
-                        <div key={item.label} className=" space-y-1 z-100">
+                      // PERBAIKAN: Tambahkan return statement
+                      return item.subItems ? (
+                        <div key={item.label} className="space-y-1">
                           <button
                             onClick={() => toggleSubDropdown(item.label)}
                             className="w-full flex justify-between items-center text-white px-3 py-2 text-sm font-medium hover:bg-white/10 transition-colors duration-200 rounded"
@@ -353,9 +353,8 @@ const Navbar = () => {
                         >
                           {item.label}
                         </Link>
-                      )
-                    }
-                    )}
+                      );
+                    })}
                   </div>
                 )}
               </div>
