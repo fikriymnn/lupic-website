@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Download, BookOpen, Edit, Trash2, Plus, Users, CheckCircle, XCircle, Upload, Filter } from 'lucide-react';
 import Sidebar from "@/components/Sidebar";
+import axios from 'axios';
 
 const mockModulAjar = [
   {
@@ -77,27 +78,64 @@ export default function AddModulForm() {
     topikIPA: 'Fisika',
     tujuanPembelajaran: '',
     status: 'GRATIS',
-    file: null,
-    cover:null,
+    file: "",
+    cover: "",
   });
 
   const handleChange = (field, value) => {
     setFormData({ ...formData, [field]: value });
   };
 
-  const handleFileChange = (e) => {
+  const handleFileChange = async (e) => {
+    e.preventDefault()
     const file = e.target.files[0];
-    setFormData({ ...formData, file: file });
+    const formData = new FormData();
+    try {
+      formData.append('file', file);
+      const getData = await axios.post(process.env.NEXT_PUBLIC_API_STORAGE + "/api/file", formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      if (getData.data) {
+        setFormData((e)=>({ ...e, file: getData.data }));
+      }
+    } catch (err) {
+      console.log(err)
+    }
   };
 
-  const handleFileCoverChange = (e) => {
+  const handleFileCoverChange = async (e) => {
+     e.preventDefault()
     const file = e.target.files[0];
-    setFormData({ ...formData, cover: file });
+    const formData = new FormData();
+    try {
+      formData.append('file', file);
+      const getData = await axios.post(process.env.NEXT_PUBLIC_API_STORAGE + "/api/file", formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      if (getData.data) {
+        setFormData((e)=>({ ...e, cover: getData.data }));
+      }
+    } catch (err) {
+      console.log(err)
+    }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Saving modul:', formData);
+    console.log(formData)
+    try {
+      const res = await axios.put(process.env.NEXT_PUBLIC_API_URL + "/api/modul_ajar/"+id, formData, { withCredentials: true })
+      if (res) {
+        alert("Update modul success")
+        window.location.href = "/lgndmn/dashboard/lesson_plans/"+id+"/edit"
+      }
+    } catch (err) {
+      console.log(err)
+    }
   };
 
   return (
@@ -209,17 +247,26 @@ export default function AddModulForm() {
                       </label>
                       <div className="flex items-center gap-4">
                         <label className="flex-1 cursor-pointer">
-                          <div className="w-full px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg hover:border-purple-500 transition flex items-center justify-center gap-2 text-gray-600">
+                          <div className="w-full px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg hover:border-purple-500 transition flex flex-col items-center justify-center gap-2 text-gray-600">
+
                             <Upload size={20} />
-                            <span>
-                              {formData.cover ? formData.cover.name : 'Pilih file cover (JPG,PNG,JPEG)'}
-                            </span>
+
+                            {formData.cover ? (
+                              <img
+                                src={`${process.env.NEXT_PUBLIC_API_FILE_URL}${formData.cover}`}
+                                alt="Preview Cover"
+                                className="w-48 h-48 object-cover rounded-md"
+                              />
+                            ) : (
+                              <span>Pilih file cover (JPG, PNG, JPEG)</span>
+                            )}
                           </div>
+
                           <input
                             type="file"
-                            accept=".pdf"
                             onChange={handleFileCoverChange}
                             className="hidden"
+                            name="cover"
                           />
                         </label>
                       </div>
@@ -234,12 +281,13 @@ export default function AddModulForm() {
                           <div className="w-full px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg hover:border-purple-500 transition flex items-center justify-center gap-2 text-gray-600">
                             <Upload size={20} />
                             <span>
-                              {formData.file ? formData.file.name : 'Pilih file modul (PDF)'}
+                              {formData.file ? 'Modul sudah terpilih' : 'Pilih file modul (PDF)'}
                             </span>
                           </div>
                           <input
                             type="file"
                             accept=".pdf"
+                            name="file"
                             onChange={handleFileChange}
                             className="hidden"
                           />
@@ -250,15 +298,9 @@ export default function AddModulForm() {
                     <div className="flex gap-4 pt-4">
                       <button
                         type="submit"
-                        className="flex-1 px-6 py-3 bg-koreaBlueMuda text-white rounded-lg hover:bg-purple-700 transition font-medium"
+                        className="flex-1 px-6 py-3 bg-koreaBlueMuda text-white rounded-lg transition font-medium"
                       >
                         Simpan Modul
-                      </button>
-                      <button
-                        type="button"
-                        className="px-6 py-3 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition font-medium"
-                      >
-                        Batal
                       </button>
                     </div>
                   </form>

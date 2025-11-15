@@ -6,6 +6,7 @@ import CustomFooter from "@/components/CustomFooter";
 import Navbar from "@/components/Navbar";
 import { BiDetail } from "react-icons/bi";
 import Image from "next/image";
+import axios from "axios";
 
 const ResponsivePagination = dynamic(
   () => import("react-responsive-pagination"),
@@ -14,96 +15,72 @@ const ResponsivePagination = dynamic(
 import "react-responsive-pagination/themes/classic.css";
 import { useRouter } from "next/navigation";
 
-// Mock data
-const mockModulAjar = [
-  {
-    _id: "1",
-    judulModul: "Hukum Newton dan Penerapannya",
-    deskripsi:
-      "Modul pembelajaran lengkap tentang Hukum Newton dengan pendekatan kontekstual",
-    jenjang: "SMP",
-    topikIPA: "Fisika",
-    tujuanPembelajaran:
-      "Siswa mampu memahami dan menerapkan konsep Hukum Newton dalam kehidupan sehari-hari",
-    status: "BERBAYAR",
-    file: "/files/modul-newton.pdf",
-    cover:
-      "https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=800&h=500&fit=crop",
-  },
-  {
-    _id: "2",
-    judulModul: "Fotosintesis dan Respirasi Tumbuhan",
-    deskripsi:
-      "Modul pembelajaran interaktif tentang proses fotosintesis dan respirasi pada tumbuhan",
-    jenjang: "SD",
-    topikIPA: "Biologi",
-    tujuanPembelajaran:
-      "Siswa dapat menjelaskan proses fotosintesis dan respirasi tumbuhan",
-    status: "GRATIS",
-    file: "/files/modul-fotosintesis.pdf",
-    cover:
-      "https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=800&h=500&fit=crop",
-  },
-  {
-    _id: "3",
-    judulModul: "Siklus Air dan Perubahan Wujud",
-    deskripsi: "Modul IPA terpadu tentang siklus air dan perubahan wujud zat",
-    jenjang: "SD",
-    topikIPA: "IPA Terpadu",
-    tujuanPembelajaran:
-      "Siswa memahami siklus air dan berbagai perubahan wujud zat",
-    status: "BERBAYAR",
-    file: "/files/modul-siklus-air.pdf",
-    cover:
-      "https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=800&h=500&fit=crop",
-  },
-];
-
 // === Options untuk filter ===
 const jenjangOptions = ["Semua", "SD", "SMP"];
 const topikIPAOptions = ["Semua", "Fisika", "Biologi", "IPA Terpadu"];
 
 export default function ModulAjarList() {
   const router = useRouter()
-  const [moduls] = useState(mockModulAjar);
-  const [filteredModuls, setFilteredModuls] = useState(mockModulAjar);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [moduls, setModuls] = useState([]);
+  const [totalPages, setTotalPages] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [showFilterModal, setShowFilterModal] = useState(false);
   const [filterJenjang, setFilterJenjang] = useState("Semua");
   const [filterTopikIPA, setFilterTopikIPA] = useState("Semua");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(false);
 
-  const itemsPerPage = 6;
+  // 🔥 Fetch ke Backend
+  const fetchStudyCase = async () => {
+    try {
+      setLoading(true);
 
-  // Filter otomatis setiap kali ada perubahan
-  useEffect(() => {
-    let filtered = moduls.filter((modul) => {
-      const cocokSearch = modul.judulModul
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase());
-      const cocokJenjang =
-        filterJenjang === "Semua" || modul.jenjang === filterJenjang;
-      const cocokTopik =
-        filterTopikIPA === "Semua" || modul.topikIPA === filterTopikIPA;
-      return cocokSearch && cocokJenjang && cocokTopik;
-    });
+      const params = {
+        page: currentPage,
+        limit: 12,
+      };
 
-    setFilteredModuls(filtered);
-    setCurrentPage(1);
-  }, [searchQuery, filterJenjang, filterTopikIPA, moduls]);
+      if (filterTopikIPA !== "Semua") params.topikIPA = filterTopikIPA;
+      if (filterJenjang !== "Semua") params.jenjang = filterJenjang;
+      if (searchQuery.trim() !== "") params.search = searchQuery;
 
-  const resetFilters = () => {
-    setFilterJenjang("Semua");
-    setFilterTopikIPA("Semua");
-    setSearchQuery("");
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/modul_ajar`,
+        { params }
+      );
+      console.log(res.data)
+
+      setModuls(res.data.data);
+      setTotalPages(res.data.totalPages);
+    } catch (err) {
+      console.error("Failed to fetch cases:", err);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const totalPages = Math.ceil(filteredModuls.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentItems = filteredModuls.slice(
-    startIndex,
-    startIndex + itemsPerPage
-  );
+  // Trigger fetch setiap ada perubahan filter/page
+  useEffect(() => {
+    fetchStudyCase();
+  }, [currentPage, filterTopikIPA, filterJenjang]);
+
+  // Search delay
+  useEffect(() => {
+    const delay = setTimeout(() => {
+      setCurrentPage(1);
+      fetchStudyCase();
+    }, 500);
+
+    return () => clearTimeout(delay);
+  }, [searchQuery]);
+
+  const resetFilters = () => {
+    setFilterTopikIPA("Semua");
+    setFilterJenjang("Semua");
+    setSearchQuery("");
+    setCurrentPage(1);
+  };
+
 
   return (
     <>
@@ -112,7 +89,7 @@ export default function ModulAjarList() {
         <div className="max-w-6xl px-4 md:px-8 mx-auto">
           {/* Title */}
           <div className="max-w-6xl mx-auto md:block grid grid-cols-1 justify-items-center md:justify-items-start mb-8">
-            <h1 className="md:text-5xl text-4xl md:mt-10 font-bold">
+            <h1 className="md:text-4xl text-4xl md:mt-10 font-bold">
               Modul Ajar
             </h1>
             <div className="h-1 w-36 bg-koreaRed md:mt-3 mt-2"></div>
@@ -141,7 +118,7 @@ export default function ModulAjarList() {
 
           {/* Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-8">
-            {currentItems.map((modul) => (
+            {moduls.map((modul) => (
               <div
                 key={modul._id}
                 className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition transform hover:-translate-y-1"
@@ -150,30 +127,26 @@ export default function ModulAjarList() {
                 <div className="h-full flex flex-col">
                   <div className="relative h-48 w-full overflow-hidden">
                     <Image
-                      src={
-                        modul.cover}
+                      src={modul.cover?`${process.env.NEXT_PUBLIC_API_FILE_URL}${modul.cover}`:""}
                       alt={modul.judulModul}
                       fill
                       className="object-cover opacity-80"
                     />
-                    <div className="absolute top-3 right-3">
-                      <span
-                        className={`px-3 py-1 rounded-full text-xs font-bold ${modul.status === "GRATIS"
-                          ? "bg-green-500 text-white"
-                          : "bg-yellow-400 text-gray-900"
-                          }`}
-                      >
-                        {modul.status}
-                      </span>
-                    </div>
                   </div>
                   <div className="p-6 flex flex-col">
                     <div className="flex flex-wrap gap-2 mb-3">
                       <span className="px-3 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full">
                         {modul.jenjang}
                       </span>
+                     
                       <span className="px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full">
                         {modul.topikIPA}
+                      </span>
+                       <span className={`px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full ${modul.status === "GRATIS"
+                          ? "bg-green-500 text-white"
+                          : "bg-yellow-400 text-gray-900"
+                          }`}>
+                        {modul.status}
                       </span>
                     </div>
                     <h3 className="text-xl font-bold text-gray-800 mb-3 line-clamp-2">
@@ -183,15 +156,15 @@ export default function ModulAjarList() {
                       {modul.deskripsi}
                     </p>
                     <div className="flex items-end justify-end flex-1 ">
-                    <button className="px-4 py-2 bg-koreaBlueMuda text-white rounded-lg transition-colors text-sm font-semibold flex items-center gap-1"
-                      onClick={() => { router.push("/lesson_plans/123") }}
-                    >
-                      Detail
-                      <ChevronRight className="w-4 h-4" />
-                    </button>
+                      <button className="px-4 py-2 bg-koreaBlueMuda text-white rounded-lg transition-colors text-sm font-semibold flex items-center gap-1"
+                        onClick={() => { router.push("/lesson_plans/"+modul._id) }}
+                      >
+                        Detail
+                        <ChevronRight className="w-4 h-4" />
+                      </button>
+                    </div>
                   </div>
-                  </div>
-                  
+
                 </div>
 
               </div>

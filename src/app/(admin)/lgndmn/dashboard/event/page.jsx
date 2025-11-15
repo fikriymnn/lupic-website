@@ -1,13 +1,10 @@
 "use client"
 import React, { useEffect, useState } from "react";
 import Sidebar from "@/components/Sidebar";
-import Editor from "react-simple-wysiwyg";
-import AdminCardFacilities from "@/components/card/AdminCardFacilities";
-import AdminCardNews from "@/components/card/AdminCardNews";
 import ResponsivePagination from 'react-responsive-pagination';
 import 'react-responsive-pagination/themes/classic.css';
 import axios from "axios";
-import AdminCardEvent from "../../../../components/card/AdminCardEvent";
+import AdminCardEvent from "@/components/card/AdminCardEvent";
 
 
 export default function Event() {

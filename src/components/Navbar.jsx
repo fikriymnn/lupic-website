@@ -8,15 +8,25 @@ const Navbar = () => {
   const [login, setLogin] = useState(true);
   const [activeSubDropdown, setActiveSubDropdown] = useState(null);
   const [activeDropdown, setActiveDropdown] = useState(null);
-  const [scrolled, setScrolled] = useState(false);
 
-  // Handle scroll effect
+  // Suppress hydration warnings caused by browser extensions
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+    const originalError = console.error;
+    console.error = (...args) => {
+      if (
+        typeof args[0] === 'string' &&
+        (args[0].includes('Hydration failed') ||
+          args[0].includes('hydrated but some attributes') ||
+          args[0].includes("didn't match"))
+      ) {
+        return;
+      }
+      originalError.apply(console, args);
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    return () => {
+      console.error = originalError;
+    };
   }, []);
 
   const toggleDropdown = (dropdown) => {
@@ -119,8 +129,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-koreaRed shadow-lg py-2" : "bg-koreaRed py-3"
-        }`}
+      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-koreaRed shadow-lg py-2"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
@@ -158,8 +167,11 @@ const Navbar = () => {
                 onMouseEnter={() => setActiveDropdown(dropdown.label)}
                 onMouseLeave={() => setActiveDropdown(null)}
               >
-                <button className="text-white px-3 py-2 rounded-md font-medium hover:bg-white/10 transition-colors duration-200 flex items-center gap-1 whitespace-nowrap"
+                <button
+                  id={`nav-dropdown-${dropdown.label.toLowerCase().replace(/\s+/g, '-')}`}
+                  className="text-white px-3 py-2 rounded-md font-medium hover:bg-white/10 transition-colors duration-200 flex items-center gap-1 whitespace-nowrap"
                   style={{ fontSize: '0.8125rem' }}
+                  type="button"
                 >
                   {dropdown.label}
                   <svg
@@ -183,7 +195,11 @@ const Navbar = () => {
                   {dropdown.items.map((item, idx) =>
                     item.subItems ? (
                       <div key={item.label} className="relative group/sub">
-                        <button className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-koreaRed hover:text-white transition-colors duration-150 flex items-center justify-between border-t border-gray-100">
+                        <button
+                          id={`nav-subitem-${item.label.toLowerCase().replace(/\s+/g, '-')}`}
+                          className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-koreaRed hover:text-white transition-colors duration-150 flex items-center justify-between border-t border-gray-100"
+                          type="button"
+                        >
                           {item.label}
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -237,23 +253,29 @@ const Navbar = () => {
               >
                 {login ? "Personal" : "Login"}
               </Link>
-              {login && (
-                <button
-                  onClick={onLogout}
-                  className="text-white px-3 py-2 rounded-md font-medium hover:bg-white/10 transition-colors duration-200 whitespace-nowrap"
-                  style={{ fontSize: '0.8125rem' }}
-                >
-                  Logout
-                </button>
-              )}
+              <div>
+                {login && (
+                  <button
+                    id="nav-logout-btn"
+                    onClick={onLogout}
+                    className="text-white px-3 py-2 rounded-md font-medium hover:bg-white/10 transition-colors duration-200 whitespace-nowrap"
+                    style={{ fontSize: '0.8125rem' }}
+                    type="button"
+                  >
+                    Logout
+                  </button>
+                )}
+              </div>
             </div>
           </div>
 
           {/* Mobile Menu Button */}
           <button
+            id="nav-mobile-menu-btn"
             onClick={() => setMenuOpen(!menuOpen)}
             className="lg:hidden text-white p-2 rounded-md hover:bg-white/10 transition-colors duration-200"
             aria-label="Toggle Menu"
+            type="button"
           >
             <svg
               className="w-6 h-6"
@@ -291,8 +313,10 @@ const Navbar = () => {
             {dropdownMenus.map((dropdown) => (
               <div key={dropdown.label} className="space-y-1">
                 <button
+                  id={`nav-mobile-dropdown-${dropdown.label.toLowerCase().replace(/\s+/g, '-')}`}
                   onClick={() => toggleDropdown(dropdown.label)}
                   className="w-full flex justify-between items-center text-white px-4 py-3 rounded-md text-sm font-medium hover:bg-white/10 transition-colors duration-200"
+                  type="button"
                 >
                   {dropdown.label}
                   <svg
@@ -309,12 +333,13 @@ const Navbar = () => {
                 {activeDropdown === dropdown.label && (
                   <div className="ml-4 space-y-1 bg-white/5 rounded-md p-2">
                     {dropdown.items.map((item) => {
-                      // PERBAIKAN: Tambahkan return statement
                       return item.subItems ? (
                         <div key={item.label} className="space-y-1">
                           <button
+                            id={`nav-mobile-subitem-${item.label.toLowerCase().replace(/\s+/g, '-')}`}
                             onClick={() => toggleSubDropdown(item.label)}
                             className="w-full flex justify-between items-center text-white px-3 py-2 text-sm font-medium hover:bg-white/10 transition-colors duration-200 rounded"
+                            type="button"
                           >
                             {item.label}
                             <svg
@@ -371,8 +396,10 @@ const Navbar = () => {
               </Link>
               {login && (
                 <button
+                  id="nav-mobile-logout-btn"
                   onClick={onLogout}
                   className="w-full text-left text-white px-4 py-3 rounded-md text-sm font-medium hover:bg-white/10 transition-colors duration-200"
+                  type="button"
                 >
                   Logout
                 </button>

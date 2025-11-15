@@ -93,7 +93,7 @@ export default function CaseStudy() {
     <Navbar/>
       <div className="min-h-screen bg-gray-100 p-6 md:pt-16 pt-20 pb-16">
         <div className="max-w-6xl mx-auto px-4 md:px-8">
-          <h1 className="md:text-5xl text-2xl mt-10 font-bold">Study Case</h1>
+          <h1 className="md:text-4xl text-2xl mt-10 font-bold">Study Case</h1>
           <div className="h-1 w-36 bg-koreaRed md:mt-4 mt-2"></div>
 
           {/* Search + Filter */}
@@ -127,7 +127,7 @@ export default function CaseStudy() {
               studyCase.map((useCase) => (
                 <div
                   key={useCase._id}
-                  className="bg-white rounded-xl shadow-lg p-6 hover:-translate-y-1 transition"
+                  className="bg-white rounded-xl shadow-lg p-6 hover:-translate-y-1 transition flex flex-col"
                 >
                   <div className="flex gap-2 mb-3">
                     <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs">
@@ -141,11 +141,11 @@ export default function CaseStudy() {
                     </span>
                   </div>
 
-                  <h3 className="text-xl font-bold mb-2 line-clamp-2">
+                  <h3 className="text-lg font-bold mb-2 line-clamp-2">
                     {useCase.judulKasus}
                   </h3>
 
-                  <p className="text-gray-600 mb-4 line-clamp-3">
+                  <p className="text-gray-600 text-sm mb-4 line-clamp-3 flex-1">
                     {useCase.deskripsi}
                   </p>
 
@@ -193,7 +193,7 @@ export default function CaseStudy() {
                   onClick={() => setFilterJenjang(item)}
                   className={`p-2 rounded-lg ${
                     filterJenjang === item
-                      ? "bg-purple-600 text-white"
+                      ? "bg-koreaBlueMuda text-white"
                       : "bg-gray-200"
                   }`}
                 >
@@ -211,7 +211,7 @@ export default function CaseStudy() {
                   onClick={() => setFilterTopik(item)}
                   className={`p-2 rounded-lg ${
                     filterTopik === item
-                      ? "bg-purple-600 text-white"
+                      ? "bg-koreaBlueMuda text-white"
                       : "bg-gray-200"
                   }`}
                 >
@@ -229,7 +229,7 @@ export default function CaseStudy() {
                   onClick={() => setFilterKompetensi(item)}
                   className={`p-2 rounded-lg ${
                     filterKompetensi === item
-                      ? "bg-purple-600 text-white"
+                      ? "bg-koreaBlueMuda text-white"
                       : "bg-gray-200"
                   }`}
                 >
@@ -247,7 +247,7 @@ export default function CaseStudy() {
                 Reset
               </button>
               <button
-                className="flex-1 py-2 bg-purple-600 text-white rounded-lg"
+                className="flex-1 py-2 bg-koreaBlueMuda text-white rounded-lg"
                 onClick={() => setShowFilterModal(false)}
               >
                 Terapkan

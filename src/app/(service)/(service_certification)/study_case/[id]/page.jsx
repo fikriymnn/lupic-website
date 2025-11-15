@@ -6,10 +6,19 @@ import { ChevronLeft, Send } from "lucide-react";
 import { useRouter } from "next/navigation";
 import CustomFooter from "@/components/CustomFooter";
 import { use } from "react";
+import axios from "axios";
+
+const formatted = (iso) => {
+  return new Intl.DateTimeFormat("id-ID", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  }).format(new Date(iso))
+}
 
 export default function UseCaseDetail({ params }) {
   const router = useRouter();
-  const {id} =  use(params);
+  const { id } = use(params);
 
   const [useCase, setUseCase] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -17,6 +26,8 @@ export default function UseCaseDetail({ params }) {
   const [showPembahasan, setShowPembahasan] = useState(false);
   const [forumMessages, setForumMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const [user, setUser] = useState({})
+
 
   // 🔥 FETCH DATA DETAIL STUDY CASE
   useEffect(() => {
@@ -25,14 +36,27 @@ export default function UseCaseDetail({ params }) {
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/api/study_case/id/${id}`
         );
+        const resUser = await axios.get(
+          process.env.NEXT_PUBLIC_API_URL + "/api/public/user",
+          { withCredentials: true }
+        );
 
         if (!res.ok) throw new Error("Gagal mengambil data");
-
         const data = await res.json();
         setUseCase(data);
+        setAnswers(data.answer.answer)
+        if (data.answer.answer) {
+          console.log(data)
+          setShowPembahasan(true)
+        }
+        setForumMessages(data.forums)
 
         // jika backend memiliki data forum
         if (data.forums) setForumMessages(data.forums);
+        if (resUser.data) {
+          console.log(resUser)
+          setUser(resUser.data)
+        }
 
       } catch (err) {
         console.error("Error fetch detail:", err);
@@ -44,20 +68,26 @@ export default function UseCaseDetail({ params }) {
     fetchDetail();
   }, [id]);
 
-  const handleSendMessage = () => {
-    if (newMessage.trim()) {
-      setForumMessages([
-        ...forumMessages,
-        {
-          userId: "currentUser",
-          userName: "Anda",
-          message: newMessage,
-          timestamp: new Date(),
-        },
-      ]);
-      setNewMessage("");
+  const onSubmitAnswer = async () => {
+    try {
+      await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/study_case_answer", { studyCaseId: useCase._id, userId: user._id, answer: answers }, { withCredentials: true })
+    } catch (err) {
+      console.log(err.message)
     }
-  };
+  }
+
+  const onSubmitForum = async (e) => {
+    e.preventDefault()
+    try {
+      const res = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/study_case_forum", { studyCaseId: useCase._id, userId: user._id, message: newMessage, name: user.nama }, { withCredentials: true })
+      if (res.data) {
+        window.location.href = "/study_case/" + id
+      }
+    } catch (err) {
+      console.log(err.message)
+    }
+  }
+
 
   if (loading)
     return (
@@ -76,11 +106,11 @@ export default function UseCaseDetail({ params }) {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-gray-100 p-6">
+      <div className="min-h-screen bg-gray-100 pt-24 pb-16">
         <div className="max-w-4xl mx-auto">
           <button
             className="mb-6 px-4 py-2 bg-white rounded-lg shadow hover:shadow-md transition flex items-center gap-2"
-            onClick={() => router.push("/case_study")}
+            onClick={() => router.push("/study_case")}
           >
             <ChevronLeft size={20} />
             Kembali
@@ -121,18 +151,24 @@ export default function UseCaseDetail({ params }) {
               </p>
               <textarea
                 value={answers}
+                readOnly={answers?true:false}
                 onChange={(e) => setAnswers(e.target.value)}
                 placeholder="Tulis jawaban Anda di sini..."
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 resize-none"
                 rows="4"
               />
+              {
+                !answers && (<button
+                  onClick={() => {
+                    onSubmitAnswer()
+                    setShowPembahasan(true)
+                  }}
+                  className="mt-3 px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition font-medium"
+                >
+                  Submit Jawaban
+                </button>)
+              }
 
-              <button
-                onClick={() => setShowPembahasan(true)}
-                className="mt-3 px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition font-medium"
-              >
-                Submit Jawaban
-              </button>
             </div>
 
             {/* PEMBAHASAN */}
@@ -158,10 +194,10 @@ export default function UseCaseDetail({ params }) {
                   <div key={index} className="bg-gray-50 rounded-lg p-4">
                     <div className="flex justify-between items-start mb-2">
                       <span className="font-semibold text-indigo-600">
-                        {msg.userName}
+                        {msg.name}
                       </span>
                       <span className="text-sm text-gray-500">
-                        {new Date(msg.timestamp).toLocaleTimeString("id-ID", {
+                        {new Date(msg.createdAt).toLocaleTimeString("id-ID", {
                           hour: "2-digit",
                           minute: "2-digit",
                         })}
@@ -181,7 +217,7 @@ export default function UseCaseDetail({ params }) {
                   className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
                 />
                 <button
-                  onClick={handleSendMessage}
+                  onClick={onSubmitForum}
                   className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition flex items-center gap-2"
                 >
                   <Send size={20} />

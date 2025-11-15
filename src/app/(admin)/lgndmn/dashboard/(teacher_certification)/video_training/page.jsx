@@ -272,7 +272,7 @@ export default function VideoTrainingAdmin() {
         </div>
 
         {/* Stats Card */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+        {/* <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
             <div className="flex items-center justify-between">
               <div>
@@ -312,7 +312,7 @@ export default function VideoTrainingAdmin() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* Video Grid */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
@@ -377,14 +377,14 @@ export default function VideoTrainingAdmin() {
                     {/* Action Buttons */}
                     <div className="flex gap-2 pt-4 border-t border-gray-100">
                       <button
-                        onClick={() => { window.location.href = `/lgndmn/dashboard/video_training/${video._id}` }}
+                        onClick={() => { window.location.href = `/lgndmn/dashboard/video_training/${video._id}/edit` }}
                         className="flex-1 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium py-2 px-3 rounded-lg transition-colors duration-200 flex items-center justify-center gap-1"
                       >
                         <Edit className="w-4 h-4" />
                         Edit
                       </button>
                       <button
-                        onClick={() => { window.location.href = `/lgndmn/dashboard/video_training/access/${video._id}` }}
+                        onClick={() => { window.location.href = `/lgndmn/dashboard/video_training/${video._id}` }}
                         className="flex-1 bg-green-500 hover:bg-green-600 text-white text-sm font-medium py-2 px-3 rounded-lg transition-colors duration-200 flex items-center justify-center gap-1"
                       >
                         <Users className="w-4 h-4" />

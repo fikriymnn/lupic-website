@@ -2,6 +2,7 @@
 import { Play, Filter, X, Search, BookOpen, ChevronRight, ExternalLink, Target, FileText } from 'lucide-react';
 import CustomFooter from "@/components/CustomFooter";
 import Navbar from "@/components/Navbar";
+import { useRouter } from 'next/navigation';
 
 const videoData = {
   _id: "1",
@@ -17,6 +18,7 @@ const videoData = {
 
 
 export default function DetailVideoTraining() {
+  const router = useRouter()
   const handleBackToList = () => {
   };
   return (
@@ -70,8 +72,8 @@ export default function DetailVideoTraining() {
               </h1>
 
               <button
-                onClick={() => { }}
-                className="w-full px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition font-medium flex items-center justify-center gap-2"
+                onClick={() => {router.push('/video_training/access') }}
+                className="w-full px-4 py-2 bg-koreaBlueMuda text-white rounded-lg transition font-medium flex items-center justify-center gap-2"
               >
                 <BookOpen size={18} />
                 Buka Video
@@ -84,7 +86,7 @@ export default function DetailVideoTraining() {
           {videoData.tujuanPembelajaran && (
             <div className="bg-white rounded-2xl shadow-lg p-6 mb-6">
               <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                <Target className="w-6 h-6 text-purple-600" />
+                <Target className="w-6 h-6 text-koreaBlueMuda" />
                 Tujuan Pembelajaran
               </h2>
               <p className="text-gray-700 leading-relaxed">
@@ -97,7 +99,7 @@ export default function DetailVideoTraining() {
           {videoData.deskripsi && (
             <div className="bg-white rounded-2xl shadow-lg p-6">
               <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                <FileText className="w-6 h-6 text-purple-600" />
+                <FileText className="w-6 h-6 text-koreaBlueMuda" />
                 Deskripsi Video
               </h2>
               <p className="text-gray-700 leading-relaxed">

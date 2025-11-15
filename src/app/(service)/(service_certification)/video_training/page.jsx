@@ -140,7 +140,7 @@ export default function VideoTrainingApp() {
         <div className="max-w-6xl mx-auto px-4 md:px-8 py-8">
           {/* Title */}
           <div className="max-w-6xl mx-auto grid grid-cols-1 justify-items-center md:justify-items-start mb-8">
-            <h1 className="md:text-5xl text-4xl md:mt-10 font-bold">
+            <h1 className="md:text-4xl text-4xl md:mt-10 font-bold">
               Video Pembelajaran
             </h1>
             <div className="h-1 w-36 bg-koreaRed md:mt-3 mt-2"></div>

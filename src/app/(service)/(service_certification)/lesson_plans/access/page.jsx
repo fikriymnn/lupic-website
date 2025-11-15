@@ -6,6 +6,7 @@ import {
   ChevronLeft,
   Upload,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const modul = {
   _id: "1",
@@ -34,6 +35,7 @@ const SUMBER_INFORMASI_OPTIONS = [
 ];
 
 export default function FormBukaModul() {
+  const router = useRouter()
   const [isMounted, setIsMounted] = useState(false);
   const [formData, setFormData] = useState({
     nama: "",
@@ -89,6 +91,7 @@ return (
     <div className="min-h-screen bg-gray-100 py-16">
       <div className="max-w-4xl mx-auto p-6 ">
         <button
+          onClick={()=>{router.push("/lesson_plans")}}
           className="mb-6 px-4 py-2 bg-white rounded-lg shadow hover:shadow-md transition flex items-center gap-2"
         >
           <ChevronLeft size={20} />
@@ -225,15 +228,9 @@ return (
             <div className="flex gap-4 pt-4">
               <button
                 type="submit"
-                className="flex-1 px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition font-medium"
+                className="flex-1 px-6 py-3 bg-koreaBlueMuda text-white rounded-lg transition font-medium"
               >
                 Kirim Formulir
-              </button>
-              <button
-                type="button"
-                className="px-6 py-3 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition font-medium"
-              >
-                Batal
               </button>
             </div>
           </form>

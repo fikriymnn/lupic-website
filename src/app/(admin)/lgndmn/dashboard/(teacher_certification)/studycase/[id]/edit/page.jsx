@@ -1,8 +1,9 @@
 "use client";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ChevronLeft, Trash2 } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import Sidebar from "@/components/Sidebar";
+import axios from 'axios';
 
 const useCase = {
   _id: '3',
@@ -14,40 +15,56 @@ const useCase = {
   narasiLengkap: 'Guru SD mengintegrasikan pembelajaran tentang siklus air dengan materi perubahan wujud zat. Melalui demonstrasi sederhana dan video animasi, siswa memahami bagaimana air menguap, mengembun, dan turun kembali sebagai hujan. Pembelajaran ini menggabungkan aspek fisika dan biologi.',
   pertanyaanAnalisis:
     'Apa keuntungan pembelajaran IPA terpadu untuk siswa SD?',
-  pembahasan: 'Pembelajaran IPA terpadu membantu siswa melihat keterkaitan antar konsep sehingga lebih bermakna. Media seperti video animasi, demonstrasi langsung, dan model 3D sangat efektif untuk memvisualisasikan proses yang abstrak.'
+  pembahasan: 'Pembelajaran IPA terpadu membantu siswa melihat keterkaitan antar konsep sehingga lebih bermakna. Media seperti video animasi, demonstrasi langsung, dan model 3D sangat efektif untuk memvisualisasikan proses yang abstrak.',
 }
 
 export default function EditUseCase() {
+  const {id} = useParams()
   const [editingUseCase, setEditingUseCase] = useState(null);
-  const [formData, setFormData] = useState(useCase || {
+  const [formData, setFormData] = useState({
     judulKasus: '',
     deskripsi: '',
     jenjang: 'SD',
     topikIPA: 'Fisika',
     kompetensiGuru: 'Pedagogik',
     narasiLengkap: '',
-    pertanyaanAnalisis: 's',
+    pertanyaanAnalisis: '',
     pembahasan: ''
   });
+
+  async function getData(){
+    try{
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/study_case/id/${id}`)
+      if(res.data){
+        setFormData(res.data)
+      }
+    }catch(err){
+      console.log(err.message)
+    }
+  }
+
+  useEffect(()=>{
+    getData()
+  },[])
 
   const handleChange = (field, value) => {
     setFormData({ ...formData, [field]: value });
   };
 
-  const handleQuestionChange = (value) => {
-    setFormData({ ...formData, pertanyaanAnalisis: value });
-  };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSave(formData);
+    try{
+      const res = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/api/study_case/${id}`,formData,{withCredentials:true})
+      if(res){
+        alert("update success")
+        window.location.href = "/lgndmn/dashboard/studycase/"+id+"/edit"
+      }
+    }catch(err){
+      console.log(err.message)
+    }
   };
 
-  const onSave = (formData) => {
-    console.log('Saving:', formData);
-    alert(editingUseCase ? 'Kasus berhasil diupdate!' : 'Kasus baru berhasil ditambahkan!');
-    setCurrentPage('admin');
-  }
 
   return (
     <div className="flex">
@@ -165,7 +182,7 @@ export default function EditUseCase() {
                 type="text"
                 required
                 value={formData.pertanyaanAnalisis}
-                onChange={(e) => handleQuestionChange(e.target.value)}
+                onChange={(e) => handleChange('pertanyaanAnalisis',e.target.value)}
                 placeholder={`Pertanyaan Analisis`}
                 className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
               />
