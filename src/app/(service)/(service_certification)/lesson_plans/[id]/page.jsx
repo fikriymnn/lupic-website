@@ -1,9 +1,12 @@
 "use client"
 import React, { useState } from 'react';
 import Navbar from "@/components/Navbar";
+import CustomFooter from "@/components/CustomFooter";
 import { Download, BookOpen, GraduationCap, Sparkles, Clock, CheckCircle } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export default function ModulAjarDetail() {
+  const router = useRouter()
   // Data contoh - nanti diganti dengan data dari API
   const [modul] = useState({
     judulModul: "Energi dan Perubahannya dalam Kehidupan Sehari-hari",
@@ -88,19 +91,19 @@ export default function ModulAjarDetail() {
               {/* Download Section */}
               <div className="p-6">
                   <button
-                      onClick={() => {}}
+                      onClick={() => {router.push("/lesson_plans/access")}}
                       className="w-full px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition font-medium flex items-center justify-center gap-2"
                     >
                       <BookOpen size={18} />
                       Buka Modul
                     </button>
-                    <button
+                    {/* <button
                       onClick={() => handleDownloadPDF(modul)}
                       className="w-full px-4 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition font-medium flex items-center justify-center gap-2"
                     >
                       <Download size={18} />
                       Unduh PDF
-                    </button>
+                    </button> */}
 
                 <div className="mt-6 space-y-3">
                   <div className="flex items-center gap-3 text-gray-600">
@@ -167,6 +170,7 @@ export default function ModulAjarDetail() {
         </div>
       </div>
     </div>
+    <CustomFooter/>
     </>
   );
 }

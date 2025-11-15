@@ -165,7 +165,7 @@ export default function Home() {
         </section>
 
         {/* Activities Section - Redesigned layout */}
-        <section ref={refActivities} className="relative py-8 md:py-16 from-gray-50">
+        <section ref={refActivities} className="relative py-8 md:pt-16 from-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               variants={fadeUp}

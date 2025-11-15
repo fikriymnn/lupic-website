@@ -67,14 +67,10 @@ export default function CardServiceToko({ gambar, judul, deskripsi, id, harga })
             {deskripsi}
           </p>
 
-          {/* Divider */}
-          <div className="h-px bg-gray-200 my-3" />
-
           {/* Price & Button Section */}
           <div className="flex items-center justify-between pt-1">
             {/* Price */}
             <div className="flex flex-col">
-              <span className="text-gray-500 text-xs">Price</span>
               <span className="text-koreaRed font-bold text-lg">
                 Rp{formatPrice(harga)}
               </span>
@@ -96,8 +92,6 @@ export default function CardServiceToko({ gambar, judul, deskripsi, id, harga })
           </div>
         </div>
 
-        {/* Bottom Accent Line */}
-        <div className="h-1 bg-gradient-to-r from-koreaBlue via-koreaRed to-koreaBlue transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
       </div>
     </a>
   );
@@ -151,9 +145,6 @@ export function CardServiceTokoCompact({ gambar, judul, deskripsi, id, harga }) 
             </button>
           </div>
         </div>
-
-        {/* Bottom Border */}
-        <div className="h-1 bg-gradient-to-r from-koreaBlue to-koreaRed transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
       </div>
     </a>
   );
