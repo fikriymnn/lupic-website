@@ -246,7 +246,7 @@ export default function AdminModulPanel() {
                 </div>
 
                 {/* Title */}
-                <h3 className="text-xl font-bold text-gray-800 mb-2 line-clamp-2">
+                <h3 className="text-lg font-bold text-gray-800 mb-2 line-clamp-2">
                   {modul.judulModul}
                 </h3>
 

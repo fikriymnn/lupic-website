@@ -3,11 +3,13 @@ import axios from "axios";
 import React, { useState } from "react";
 import Navbar from "@/components/Navbar"
 import CustomFooter from "@/components/CustomFooter"
+import { useSearchParams } from "next/navigation";
 
 export default function Login() {
+    const searchQuery = useSearchParams()
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-      const [showPassword, setShowPassword] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -19,7 +21,12 @@ export default function Login() {
             })
             if (Data.data == "success") {
                 alert("Login success")
-                window.location.href = "/"
+                if (searchQuery.get('prev')) {
+                    window.location.href = `/${searchQuery.get('prev')}`
+                } else {
+                    window.location.href = "/"
+                }
+
             } else {
                 alert("login failed")
             }
@@ -58,7 +65,7 @@ export default function Login() {
                                 placeholder="********"
                             />
                         </div>
-                        <p className="text-red-400 text-xs mb-2 cursor-pointer" onClick={(e)=>setShowPassword(!showPassword)}>show password</p>
+                        <p className="text-red-400 text-xs mb-2 cursor-pointer" onClick={(e) => setShowPassword(!showPassword)}>show password</p>
                         <button
                             type="submit"
                             className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-200"
