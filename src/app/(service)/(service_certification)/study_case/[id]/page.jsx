@@ -23,6 +23,7 @@ export default function UseCaseDetail({ params }) {
   const [useCase, setUseCase] = useState(null);
   const [loading, setLoading] = useState(true);
   const [answers, setAnswers] = useState("");
+  const [newAnswers, setNewAnswers] = useState("");
   const [showPembahasan, setShowPembahasan] = useState(false);
   const [forumMessages, setForumMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
@@ -33,29 +34,29 @@ export default function UseCaseDetail({ params }) {
   useEffect(() => {
     async function fetchDetail() {
       try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/study_case/id/${id}`
-        );
         const resUser = await axios.get(
           process.env.NEXT_PUBLIC_API_URL + "/api/public/user",
           { withCredentials: true }
         );
+        console.log("fetch1")
 
-        if (!res.ok) throw new Error("Gagal mengambil data");
-        const data = await res.json();
-        setUseCase(data);
-        setAnswers(data.answer.answer)
-        if (data.answer.answer) {
-          console.log(data)
-          setShowPembahasan(true)
-        }
-        setForumMessages(data.forums)
-
-        // jika backend memiliki data forum
-        if (data.forums) setForumMessages(data.forums);
         if (resUser.data) {
-          console.log(resUser)
+          console.log("fetch2")
+          const data = await axios.get(
+            `${process.env.NEXT_PUBLIC_API_URL}/api/study_case/id/${id}?userId=${resUser.data._id}`)
           setUser(resUser.data)
+          setUseCase(data.data);
+          console.log("fetch3")
+          setAnswers(data.data?.answer?.answer)
+          setForumMessages(data.data.forums)
+          if (data.data) {
+            console.log("fetch4")
+          }
+          console.log(data.data)
+          if (data.data.answer?.answer) {
+
+            setShowPembahasan(true)
+          }
         }
 
       } catch (err) {
@@ -150,15 +151,14 @@ export default function UseCaseDetail({ params }) {
                 {useCase.pertanyaanAnalisis}
               </p>
               <textarea
-                value={answers}
-                readOnly={answers?true:false}
-                onChange={(e) => setAnswers(e.target.value)}
+                value={answers ? answers : newAnswers}
+                onChange={(e) => setNewAnswers(e.target.value)}
                 placeholder="Tulis jawaban Anda di sini..."
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 resize-none"
                 rows="4"
               />
               {
-                !answers && (<button
+                !answers && <button
                   onClick={() => {
                     onSubmitAnswer()
                     setShowPembahasan(true)
@@ -166,8 +166,10 @@ export default function UseCaseDetail({ params }) {
                   className="mt-3 px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition font-medium"
                 >
                   Submit Jawaban
-                </button>)
+                </button>
               }
+
+
 
             </div>
 

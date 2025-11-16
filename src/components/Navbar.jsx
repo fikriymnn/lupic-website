@@ -200,7 +200,7 @@ const Navbar = () => {
                           className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-koreaRed hover:text-white transition-colors duration-150 flex items-center justify-between border-t border-gray-100"
                           type="button"
                         >
-                          {item.label}
+                          <p>{item.label}</p>
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                           </svg>
@@ -231,7 +231,7 @@ const Navbar = () => {
                           }`}
                         onClick={closeMenu}
                       >
-                        {item.label}
+                        <p>{item.label}</p>
                         {item.external && (
                           <svg className="inline-block w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -318,7 +318,7 @@ const Navbar = () => {
                   className="w-full flex justify-between items-center text-white px-4 py-3 rounded-md text-sm font-medium hover:bg-white/10 transition-colors duration-200"
                   type="button"
                 >
-                  {dropdown.label}
+                  <p>{dropdown.label}</p>
                   <svg
                     className={`w-4 h-4 transition-transform duration-200 ${activeDropdown === dropdown.label ? "rotate-180" : ""
                       }`}
@@ -341,7 +341,7 @@ const Navbar = () => {
                             className="w-full flex justify-between items-center text-white px-3 py-2 text-sm font-medium hover:bg-white/10 transition-colors duration-200 rounded"
                             type="button"
                           >
-                            {item.label}
+                            <p>{item.label}</p>
                             <svg
                               className={`w-4 h-4 transition-transform duration-200 ${activeSubDropdown === item.label ? "rotate-180" : ""
                                 }`}

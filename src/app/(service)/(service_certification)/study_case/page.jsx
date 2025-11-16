@@ -13,6 +13,7 @@ const ResponsivePagination = dynamic(
   () => import("react-responsive-pagination"),
   { ssr: false }
 );
+
 import "react-responsive-pagination/themes/classic.css";
 const topikOptions = ["Semua", "Energi", "Listrik", "Ekosistem", "Perubahan Zat"];
 const jenjangOptions = ["Semua", "SD", "SMP"];
@@ -21,6 +22,7 @@ const kompetensiOptions = ["Semua", "Pedagogik", "Profesional"];
 export default function CaseStudy() {
   const router = useRouter();
 
+  const [user, setUser] = useState({})
   const [studyCase, setStudyCase] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -55,7 +57,7 @@ export default function CaseStudy() {
         `${process.env.NEXT_PUBLIC_API_URL}/api/study_case`,
         { params }
       );
-
+ 
       setStudyCase(res.data.data);
       setTotalPages(res.data.totalPages);
     } catch (err) {
@@ -65,9 +67,23 @@ export default function CaseStudy() {
     }
   };
 
+  async function getUser(){
+    try{
+const resUser = await axios.get(
+        process.env.NEXT_PUBLIC_API_URL + "/api/public/user",
+        { withCredentials: true }
+      );
+      setUser(resUser.data)
+    }catch(err){
+      setUser(false)
+    }
+         
+  }
+
   // Trigger fetch setiap ada perubahan filter/page
   useEffect(() => {
     fetchStudyCase();
+    getUser()
   }, [currentPage, filterTopik, filterJenjang, filterKompetensi]);
 
   // Search delay
@@ -88,9 +104,16 @@ export default function CaseStudy() {
     setCurrentPage(1);
   };
 
+  if (loading)
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <p className="text-gray-600">Loading...</p>
+      </div>
+    );
+
   return (
     <>
-    <Navbar/>
+      <Navbar />
       <div className="min-h-screen bg-gray-100 p-6 md:pt-16 pt-20 pb-16">
         <div className="max-w-6xl mx-auto px-4 md:px-8">
           <h1 className="md:text-4xl text-2xl mt-10 font-bold">Study Case</h1>
@@ -113,7 +136,7 @@ export default function CaseStudy() {
               className="px-6 py-2 bg-koreaBlueMuda text-white rounded-xl flex items-center gap-2"
               onClick={() => setShowFilterModal(true)}
             >
-              <Filter className="w-5 h-5" /> Filter
+              <Filter className="w-5 h-5" /><p> Filter</p>
             </button>
           </div>
 
@@ -151,7 +174,14 @@ export default function CaseStudy() {
 
                   <button
                     className="w-full py-2 bg-indigo-600 text-white rounded-lg"
-                    onClick={() => router.push(`/study_case/${useCase._id}`)}
+                    onClick={() => {
+                      if (!user) {
+                        router.push("/login?prev=study_case")
+                      }else{
+                        router.push("/study_case/"+useCase._id)
+                      }
+                    }
+                    }
                   >
                     Pelajari Kasus
                   </button>
@@ -191,11 +221,10 @@ export default function CaseStudy() {
                 <button
                   key={item}
                   onClick={() => setFilterJenjang(item)}
-                  className={`p-2 rounded-lg ${
-                    filterJenjang === item
-                      ? "bg-koreaBlueMuda text-white"
-                      : "bg-gray-200"
-                  }`}
+                  className={`p-2 rounded-lg ${filterJenjang === item
+                    ? "bg-koreaBlueMuda text-white"
+                    : "bg-gray-200"
+                    }`}
                 >
                   {item}
                 </button>
@@ -209,11 +238,10 @@ export default function CaseStudy() {
                 <button
                   key={item}
                   onClick={() => setFilterTopik(item)}
-                  className={`p-2 rounded-lg ${
-                    filterTopik === item
-                      ? "bg-koreaBlueMuda text-white"
-                      : "bg-gray-200"
-                  }`}
+                  className={`p-2 rounded-lg ${filterTopik === item
+                    ? "bg-koreaBlueMuda text-white"
+                    : "bg-gray-200"
+                    }`}
                 >
                   {item}
                 </button>
@@ -227,11 +255,10 @@ export default function CaseStudy() {
                 <button
                   key={item}
                   onClick={() => setFilterKompetensi(item)}
-                  className={`p-2 rounded-lg ${
-                    filterKompetensi === item
-                      ? "bg-koreaBlueMuda text-white"
-                      : "bg-gray-200"
-                  }`}
+                  className={`p-2 rounded-lg ${filterKompetensi === item
+                    ? "bg-koreaBlueMuda text-white"
+                    : "bg-gray-200"
+                    }`}
                 >
                   {item}
                 </button>
@@ -256,7 +283,7 @@ export default function CaseStudy() {
           </div>
         </div>
       )}
-      <CustomFooter/>
+      <CustomFooter />
     </>
   );
 }
