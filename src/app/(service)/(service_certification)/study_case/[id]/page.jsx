@@ -8,13 +8,7 @@ import CustomFooter from "@/components/CustomFooter";
 import { use } from "react";
 import axios from "axios";
 
-const formatted = (iso) => {
-  return new Intl.DateTimeFormat("id-ID", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  }).format(new Date(iso))
-}
+
 
 export default function UseCaseDetail({ params }) {
   const router = useRouter();

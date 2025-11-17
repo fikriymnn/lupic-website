@@ -28,6 +28,7 @@ export default function ModulAjarList() {
   const [filterJenjang, setFilterJenjang] = useState("Semua");
   const [filterTopikIPA, setFilterTopikIPA] = useState("Semua");
   const [currentPage, setCurrentPage] = useState(1);
+  const [user, setUser] = useState({})
   const [loading, setLoading] = useState(false);
 
   // 🔥 Fetch ke Backend
@@ -48,8 +49,6 @@ export default function ModulAjarList() {
         `${process.env.NEXT_PUBLIC_API_URL}/api/modul_ajar`,
         { params }
       );
-      console.log(res.data)
-
       setModuls(res.data.data);
       setTotalPages(res.data.totalPages);
     } catch (err) {
@@ -58,6 +57,22 @@ export default function ModulAjarList() {
       setLoading(false);
     }
   };
+
+  async function getUser() {
+    try {
+      const resUser = await axios.get(
+        process.env.NEXT_PUBLIC_API_URL + "/api/public/user",
+        { withCredentials: true }
+      );
+      setUser(resUser.data)
+    } catch (err) {
+      setUser(false)
+    }
+  }
+
+  useEffect(() => {
+    getUser()
+  }, [])
 
   // Trigger fetch setiap ada perubahan filter/page
   useEffect(() => {
@@ -127,8 +142,8 @@ export default function ModulAjarList() {
                 <div className="h-full flex flex-col">
                   <div className="relative h-48 w-full overflow-hidden">
                     <Image
-                      src={modul.cover?`${process.env.NEXT_PUBLIC_API_FILE_URL}${modul.cover}`:""}
-                      alt={modul.judulModul}
+                      src={`${process.env.NEXT_PUBLIC_API_FILE_URL}${modul?.cover}`}
+                      alt={"image"}
                       fill
                       className="object-cover opacity-80"
                     />
@@ -138,14 +153,14 @@ export default function ModulAjarList() {
                       <span className="px-3 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full">
                         {modul.jenjang}
                       </span>
-                     
+
                       <span className="px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full">
                         {modul.topikIPA}
                       </span>
-                       <span className={`px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full ${modul.status === "GRATIS"
-                          ? "bg-green-500 text-white"
-                          : "bg-yellow-400 text-gray-900"
-                          }`}>
+                      <span className={`px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full ${modul.status === "GRATIS"
+                        ? "bg-green-500 text-white"
+                        : "bg-yellow-400 text-gray-900"
+                        }`}>
                         {modul.status}
                       </span>
                     </div>
@@ -157,7 +172,13 @@ export default function ModulAjarList() {
                     </p>
                     <div className="flex items-end justify-end flex-1 ">
                       <button className="px-4 py-2 bg-koreaBlueMuda text-white rounded-lg transition-colors text-sm font-semibold flex items-center gap-1"
-                        onClick={() => { router.push("/lesson_plans/"+modul._id) }}
+                        onClick={() => {
+                          if (!user) {
+                            router.push("/login?prev=lesson_plans")
+                          } else {
+                            router.push("/lesson_plans/" + modul._id)
+                          }
+                        }}
                       >
                         Detail
                         <ChevronRight className="w-4 h-4" />

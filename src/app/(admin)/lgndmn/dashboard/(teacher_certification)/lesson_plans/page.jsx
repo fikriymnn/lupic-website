@@ -20,31 +20,6 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import axios from 'axios';
 
-const mockModulAjar = [
-  {
-    _id: '1',
-    judulModul: 'Hukum Newton dan Penerapannya',
-    deskripsi: 'Modul pembelajaran lengkap tentang Hukum Newton dengan pendekatan kontekstual',
-    jenjang: 'SMP',
-    topikIPA: 'Fisika',
-    tujuanPembelajaran: 'Siswa mampu memahami dan menerapkan konsep Hukum Newton dalam kehidupan sehari-hari',
-    status: 'BERBAYAR',
-    file: '/files/modul-newton.pdf',
-    cover: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=800&h=500&fit=crop",
-  },
-  {
-    _id: '2',
-    judulModul: 'Fotosintesis dan Respirasi Tumbuhan',
-    deskripsi: 'Modul pembelajaran interaktif tentang proses fotosintesis dan respirasi pada tumbuhan',
-    jenjang: 'SD',
-    topikIPA: 'Biologi',
-    tujuanPembelajaran: 'Siswa dapat menjelaskan proses fotosintesis dan respirasi tumbuhan',
-    status: 'GRATIS',
-    file: '/files/modul-fotosintesis.pdf',
-    cover: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=800&h=500&fit=crop",
-  },
-];
-
 // === Options untuk filter ===
 const jenjangOptions = ["Semua", "SD", "SMP"];
 const topikIPAOptions = ["Semua", "Fisika", "Biologi", "IPA Terpadu"];
@@ -121,8 +96,6 @@ export default function AdminModulPanel() {
     setSearchQuery("");
     setCurrentPage(1);
   };
-
-  if(loading) return null
 
   return (
     <div className="flex min-h-screen bg-gray-50">

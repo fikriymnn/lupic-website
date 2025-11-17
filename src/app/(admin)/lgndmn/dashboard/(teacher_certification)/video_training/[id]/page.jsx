@@ -1,91 +1,76 @@
 "use client"
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Eye, Download, CheckCircle, XCircle } from 'lucide-react';
 import Sidebar from "@/components/Sidebar";
+import axios from 'axios';
+import { useParams } from 'next/navigation';
 
-// Dummy Data
-const dummyUsers = [
-  {
-    id: 1,
-    nama: "Ibu Sarah Wijaya",
-    email: "sarah@email.com",
-    no_whatsapp: "081234567890",
-    provinsi: "Jawa Timur",
-    jenjang: "SMP",
-    instansi: "SMP Negeri 1 Surabaya",
-    mata_pelajaran: "IPA",
-    status_ppg: "PPG Calon Guru/PPG luar jabatan (Prajabatan)",
-    sumber_informasi: "Media Sosial (Instagram, Facebook, TikTok, X, dll.)",
-    status: "NO ACCESS",
-    bukti_pembayaran: "https://example.com/bukti1.jpg",
-    tanggal: "2024-11-10"
-  },
-  {
-    id: 2,
-    nama: "Bapak Ahmad Hidayat",
-    email: "ahmad@email.com",
-    no_whatsapp: "082345678901",
-    provinsi: "Jawa Barat",
-    jenjang: "SMA",
-    instansi: "SMA Negeri 2 Bandung",
-    mata_pelajaran: "Matematika",
-    status_ppg: "PPG Dalam Jabatan",
-    sumber_informasi: "Rekomendasi Teman/Kolega",
-    status: "ACCESS",
-    bukti_pembayaran: "https://example.com/bukti2.jpg",
-    tanggal: "2024-11-12"
-  },
-  {
-    id: 3,
-    nama: "Ibu Dewi Lestari",
-    email: "dewi@email.com",
-    no_whatsapp: "083456789012",
-    provinsi: "DKI Jakarta",
-    jenjang: "SD",
-    instansi: "SD Negeri 01 Jakarta Selatan",
-    mata_pelajaran: "Bahasa Indonesia",
-    status_ppg: "PPG Calon Guru/PPG luar jabatan (Prajabatan)",
-    sumber_informasi: "Website/Blog",
-    status: "NO ACCESS",
-    bukti_pembayaran: "https://example.com/bukti3.jpg",
-    tanggal: "2024-11-13"
-  }
-];
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('id-ID', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
 
-export default function VideoTraining() {
+export default function AdminDashboardVideoTraining() {
+  const {id} = useParams()
   const [currentPage, setCurrentPage] = useState('list'); // 'list' atau 'detail'
   const [selectedUser, setSelectedUser] = useState(null);
-  const [users, setUsers] = useState(dummyUsers);
+  const [users, setUsers] = useState([]);
 
   const handleViewDetail = (user) => {
     setSelectedUser(user);
     setCurrentPage('detail');
   };
 
-  const handleToggleStatus = (userId) => {
-    setUsers(users.map(user => {
-      if (user.id === userId) {
-        return {
-          ...user,
-          status: user.status === "ACCESS" ? "NO ACCESS" : "ACCESS"
-        };
-      }
-      return user;
-    }));
+  const handleToggleStatus = async (userId,status) => {
+    try {
+      const res = await axios.put(process.env.NEXT_PUBLIC_API_URL+"/api/video_pembelajaran_access/"+userId,{status:(status=="ACCESS"?"NO ACCESS":"ACCESS")})
+      setUsers(users.map(user => {
+        if (user._id === userId) {
+          return {
+            ...user,
+            status: user.status === "ACCESS" ? "NO ACCESS" : "ACCESS"
+          };
+        }
+        return user;
+      }));
 
-    // Update selected user jika sedang di halaman detail
-    if (selectedUser && selectedUser.id === userId) {
-      setSelectedUser({
-        ...selectedUser,
-        status: selectedUser.status === "ACCESS" ? "NO ACCESS" : "ACCESS"
-      });
+      // Update selected user jika sedang di halaman detail
+      if (selectedUser && selectedUser._id === userId) {
+        setSelectedUser({
+          ...selectedUser,
+          status: selectedUser.status === "ACCESS" ? "NO ACCESS" : "ACCESS"
+        });
+      }
+    } catch (err) {
+      console.log(err)
     }
+
   };
 
   const handleBackToList = () => {
     setCurrentPage('list');
     setSelectedUser(null);
   };
+
+  async function getData() {
+    try {
+      const res = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/video_pembelajaran_access/" + id)
+      if (res.data) {
+        console.log(res.data)
+        setUsers(res.data)
+      }
+    } catch (err) {
+      console.log(err.message)
+    }
+  }
+
+  useEffect(() => {
+    getData()
+  }, [])
 
   // LIST PAGE
   if (currentPage === 'list') {
@@ -105,7 +90,7 @@ export default function VideoTraining() {
                   </h1>
                 </div>
                 {/* Stats Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
                   <div className="bg-white rounded-lg shadow-sm p-6">
                     <div className="flex items-center justify-between">
                       <div>
@@ -143,7 +128,7 @@ export default function VideoTraining() {
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
 
                 {/* Table */}
                 <div className="bg-white rounded-lg shadow-sm overflow-hidden">
@@ -175,25 +160,25 @@ export default function VideoTraining() {
                         </tr>
                       </thead>
                       <tbody className="bg-white divide-y divide-gray-200">
-                        {users.map((user) => (
-                          <tr key={user.id} className="hover:bg-gray-50 transition-colors">
+                        {users.map((user,i) => (
+                          <tr key={i} className="hover:bg-gray-50 transition-colors">
                             <td className="px-6 py-4">
                               <div className="font-medium text-gray-900">{user.nama}</div>
                               <div className="text-sm text-gray-500">{user.email}</div>
                             </td>
-                            <td className="px-6 py-4 text-sm text-gray-700">
-                              {user.tanggal}
+                            <td className="px-6 py-4 text-xs text-gray-700">
+                              {formatDate(user.createdAt)}
                             </td>
                             <td className="px-6 py-4 text-sm text-gray-700">
                               {user.no_whatsapp}
                             </td>
                             <td className="px-6 py-4 text-sm text-gray-700">
-                              {user.instansi}
+                              {user.nama_instansi}
                             </td>
                             <td className="px-6 py-4">
                               <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${user.status === "ACCESS"
-                                  ? "bg-green-100 text-green-800"
-                                  : "bg-red-100 text-red-800"
+                                ? "bg-green-100 text-green-800"
+                                : "bg-red-100 text-red-800"
                                 }`}>
                                 {user.status}
                               </span>
@@ -218,10 +203,10 @@ export default function VideoTraining() {
                                   Detail
                                 </button>
                                 <button
-                                  onClick={() => handleToggleStatus(user.id)}
+                                  onClick={() => handleToggleStatus(user._id,user.status)}
                                   className={`px-3 py-2 text-sm font-medium rounded-lg transition-colors ${user.status === "ACCESS"
-                                      ? "bg-red-600 hover:bg-red-700 text-white"
-                                      : "bg-green-600 hover:bg-green-700 text-white"
+                                    ? "bg-red-600 hover:bg-red-700 text-white"
+                                    : "bg-green-600 hover:bg-green-700 text-white"
                                     }`}
                                 >
                                   {user.status === "ACCESS" ? "Revoke" : "Grant"}
@@ -308,7 +293,7 @@ export default function VideoTraining() {
                   {/* Instansi */}
                   <div className="border-b border-gray-200 pb-4">
                     <label className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Instansi</label>
-                    <p className="text-lg text-gray-900 mt-1">{selectedUser.instansi}</p>
+                    <p className="text-lg text-gray-900 mt-1">{selectedUser.nama_instansi}</p>
                   </div>
 
                   {/* Mata Pelajaran */}
@@ -334,8 +319,8 @@ export default function VideoTraining() {
                     <label className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Status</label>
                     <div className="mt-2">
                       <span className={`inline-flex items-center px-4 py-2 rounded-lg text-sm font-semibold ${selectedUser.status === "ACCESS"
-                          ? "bg-green-100 text-green-800"
-                          : "bg-red-100 text-red-800"
+                        ? "bg-green-100 text-green-800"
+                        : "bg-red-100 text-red-800"
                         }`}>
                         {selectedUser.status}
                       </span>
@@ -363,8 +348,8 @@ export default function VideoTraining() {
                   <button
                     onClick={() => handleToggleStatus(selectedUser.id)}
                     className={`flex-1 py-3 px-6 rounded-lg font-semibold transition-colors ${selectedUser.status === "ACCESS"
-                        ? "bg-red-600 hover:bg-red-700 text-white"
-                        : "bg-green-600 hover:bg-green-700 text-white"
+                      ? "bg-red-600 hover:bg-red-700 text-white"
+                      : "bg-green-600 hover:bg-green-700 text-white"
                       }`}
                   >
                     {selectedUser.status === "ACCESS" ? "Ubah ke NO ACCESS" : "Ubah ke ACCESS"}

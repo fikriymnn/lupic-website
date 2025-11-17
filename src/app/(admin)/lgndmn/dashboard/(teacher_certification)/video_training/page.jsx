@@ -4,213 +4,121 @@ import Sidebar from "@/components/Sidebar";
 import ResponsivePagination from 'react-responsive-pagination';
 import 'react-responsive-pagination/themes/classic.css';
 import { Play, Edit, Trash2, Users, Search, Filter, X } from 'lucide-react';
+import { useRouter } from "next/navigation";
+import axios from "axios";
 
-// Data Dummy
-const mockVideosData = [
-  {
-    _id: "1",
-    judul: "Pengenalan Energi dan Bentuk-bentuknya",
-    tujuanPembelajaran: "Siswa mampu memahami konsep energi dan mengidentifikasi berbagai bentuk energi dalam kehidupan sehari-hari",
-    deskripsi: "Video pembelajaran interaktif tentang konsep dasar energi, meliputi energi kinetik, potensial, panas, listrik, dan cahaya. Dilengkapi dengan animasi dan contoh aplikasi dalam kehidupan nyata.",
-    linkVideo: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    jenjang: "SMP",
-    topikIPA: "Energi",
-    status: "GRATIS",
-    createdAt: "2025-01-10T08:00:00Z",
-  },
-  {
-    _id: "2",
-    judul: "Rangkaian Listrik Sederhana",
-    tujuanPembelajaran: "Siswa dapat membuat dan memahami prinsip kerja rangkaian listrik sederhana",
-    deskripsi: "Pembelajaran praktis tentang listrik, cara membuat rangkaian seri dan paralel, serta memahami komponen dasar seperti baterai, lampu, dan saklar.",
-    linkVideo: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    jenjang: "SD",
-    topikIPA: "Listrik",
-    status: "BERBAYAR",
-    createdAt: "2025-01-12T10:30:00Z",
-  },
-  {
-    _id: "3",
-    judul: "Gaya dan Gerak dalam Kehidupan Sehari-hari",
-    tujuanPembelajaran: "Siswa mampu menjelaskan hubungan antara gaya dan gerak benda",
-    deskripsi: "Eksplorasi konsep gaya, gesekan, gravitasi, dan pengaruhnya terhadap gerakan benda. Dengan demonstrasi eksperimen sederhana yang mudah dipahami.",
-    linkVideo: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    jenjang: "SMP",
-    topikIPA: "Gaya",
-    status: "GRATIS",
-    createdAt: "2025-01-15T14:20:00Z",
-  },
-  {
-    _id: "4",
-    judul: "Ekosistem dan Rantai Makanan",
-    tujuanPembelajaran: "Siswa dapat memahami hubungan antar makhluk hidup dalam ekosistem",
-    deskripsi: "Penjelasan lengkap tentang ekosistem, produsen, konsumen, dekomposer, dan rantai makanan. Dilengkapi dengan contoh ekosistem lokal Indonesia.",
-    linkVideo: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    jenjang: "SD",
-    topikIPA: "Ekosistem",
-    status: "GRATIS",
-    createdAt: "2025-01-18T09:15:00Z",
-  },
-  {
-    _id: "5",
-    judul: "Perubahan Wujud Zat",
-    tujuanPembelajaran: "Siswa mampu mengidentifikasi dan menjelaskan berbagai perubahan wujud zat",
-    deskripsi: "Video pembelajaran tentang mencair, membeku, menguap, mengembun, menyublim dengan eksperimen menarik dan mudah dipraktikkan di rumah.",
-    linkVideo: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    jenjang: "SMP",
-    topikIPA: "Perubahan Zat",
-    status: "BERBAYAR",
-    createdAt: "2025-01-20T11:45:00Z",
-  },
-  {
-    _id: "6",
-    judul: "Sistem Tata Surya dan Planet",
-    tujuanPembelajaran: "Siswa dapat mengenal planet-planet dalam tata surya dan karakteristiknya",
-    deskripsi: "Perjalanan menakjubkan menjelajahi tata surya, mengenal 8 planet, satelit, asteroid, dan komet. Visualisasi 3D yang memukau.",
-    linkVideo: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    jenjang: "SD",
-    topikIPA: "Astronomi",
-    status: "GRATIS",
-    createdAt: "2025-01-22T13:30:00Z",
-  },
-  {
-    _id: "7",
-    judul: "Fotosintesis pada Tumbuhan",
-    tujuanPembelajaran: "Siswa memahami proses fotosintesis dan pentingnya bagi kehidupan",
-    deskripsi: "Penjelasan detail proses fotosintesis dengan animasi, mulai dari penyerapan cahaya matahari hingga produksi oksigen dan glukosa.",
-    linkVideo: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    jenjang: "SMP",
-    topikIPA: "Biologi",
-    status: "BERBAYAR",
-    createdAt: "2025-01-25T10:00:00Z",
-  },
-  {
-    _id: "8",
-    judul: "Siklus Air dan Manfaatnya",
-    tujuanPembelajaran: "Siswa dapat menjelaskan proses siklus air di alam",
-    deskripsi: "Video pembelajaran tentang perjalanan air dari laut ke atmosfer dan kembali ke bumi, pentingnya siklus air bagi kehidupan.",
-    linkVideo: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    jenjang: "SD",
-    topikIPA: "Hidrologi",
-    status: "GRATIS",
-    createdAt: "2025-01-28T15:20:00Z",
-  },
-  {
-    _id: "9",
-    judul: "Magnet dan Sifat-sifatnya",
-    tujuanPembelajaran: "Siswa mampu mengidentifikasi sifat-sifat magnet dan penerapannya",
-    deskripsi: "Pembelajaran interaktif tentang kutub magnet, medan magnet, gaya tarik menarik dan tolak menolak, serta aplikasi magnet dalam teknologi.",
-    linkVideo: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    jenjang: "SMP",
-    topikIPA: "Magnet",
-    status: "GRATIS",
-    createdAt: "2025-01-30T08:45:00Z",
-  },
-  {
-    _id: "10",
-    judul: "Sistem Pencernaan Manusia",
-    tujuanPembelajaran: "Siswa dapat memahami organ-organ pencernaan dan fungsinya",
-    deskripsi: "Perjalanan makanan dari mulut hingga usus besar, penjelasan lengkap fungsi setiap organ pencernaan dengan animasi 3D yang detail.",
-    linkVideo: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    jenjang: "SD",
-    topikIPA: "Anatomi",
-    status: "BERBAYAR",
-    createdAt: "2025-02-01T12:00:00Z",
-  },
+function getYouTubeVideoId(url) {
+  try {
+    // 1. Jika URL dalam bentuk youtu.be/xxxx
+    let shortMatch = url.match(/youtu\.be\/([^?]+)/);
+    if (shortMatch) return shortMatch[1];
+
+    // 2. Jika URL dalam bentuk youtube.com/watch?v=xxxx
+    let watchMatch = url.match(/v=([^&]+)/);
+    if (watchMatch) return watchMatch[1];
+
+    // 3. Jika URL dalam bentuk embed/xxxx
+    let embedMatch = url.match(/embed\/([^?]+)/);
+    if (embedMatch) return embedMatch[1];
+
+    // 4. Jika URL Shorts (youtube.com/shorts/xxxx)
+    let shortsMatch = url.match(/shorts\/([^?]+)/);
+    if (shortsMatch) return shortsMatch[1];
+
+    // 5. Jika URL punya parameter videoId
+    let paramMatch = url.match(/videoId=([^&]+)/);
+    if (paramMatch) return paramMatch[1];
+
+    return null; // Tidak ketemu ID
+  } catch (error) {
+    return null;
+  }
+}
+
+const topikIPAOptions = [
+  "Semua",
+  "Energi",
+  "Listrik",
+  "Gaya",
+  "Ekosistem",
+  "Perubahan Zat",
 ];
 
 export default function VideoTrainingAdmin() {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [allData] = useState(mockVideosData);
+  const router = useRouter()
   const [data, setData] = useState([]);
-  const [search, setSearch] = useState("");
-  const [searchInput, setSearchInput] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [totalItems, setTotalItems] = useState(0);
-  const [filterJenjang, setFilterJenjang] = useState("Semua");
-  const [filterStatus, setFilterStatus] = useState("Semua");
+  const [totalPages, setTotalPages] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
   const [showFilterModal, setShowFilterModal] = useState(false);
-  const itemsPerPage = 9;
-
-  // Debounce search input
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setSearch(searchInput);
-      setCurrentPage(1);
-    }, 500);
-    return () => clearTimeout(timer);
-  }, [searchInput]);
-
-  useEffect(() => {
-    // Filter data dummy
-    let filtered = [...allData];
-
-    // Filter by search
-    if (search.trim()) {
-      filtered = filtered.filter(video =>
-        video.judul.toLowerCase().includes(search.toLowerCase()) ||
-        video.deskripsi.toLowerCase().includes(search.toLowerCase())
-      );
-    }
-
-    // Filter by jenjang
-    if (filterJenjang !== "Semua") {
-      filtered = filtered.filter(video => video.jenjang === filterJenjang);
-    }
-
-    // Filter by status
-    if (filterStatus !== "Semua") {
-      filtered = filtered.filter(video => video.status === filterStatus);
-    }
-
-    // Set total items
-    setTotalItems(filtered.length);
-    setTotalPages(Math.ceil(filtered.length / itemsPerPage));
-
-    // Paginate
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const paginatedData = filtered.slice(startIndex, startIndex + itemsPerPage);
-    
-    setData(paginatedData);
-  }, [currentPage, search, filterJenjang, filterStatus, allData]);
-
-  const getYouTubeVideoId = (url) => {
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-    const match = url?.match(regExp);
-    return match && match[2].length === 11 ? match[2] : null;
-  };
-
-  const handleDelete = async (id, judul) => {
-    if (!confirm(`Apakah Anda yakin ingin menghapus video "${judul}"?`)) return;
-    
-    // Simulate delete (untuk dummy data)
-    alert("Video berhasil dihapus (simulasi)");
-    
-    // Untuk production, uncomment code dibawah:
-    /*
+  const [filterJenjang, setFilterJenjang] = useState("Semua");
+  const [filterTopikIPA, setFilterTopikIPA] = useState("Semua");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  // 🔥 Fetch ke Backend
+  const fetchStudyCase = async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/video_training/${id}`, {
-        method: 'DELETE'
-      });
-      const result = await response.json();
-      
-      if (result === "success") {
-        alert("Video berhasil dihapus");
-        window.location.reload();
-      }
+      setLoading(true);
+
+      const params = {
+        page: currentPage,
+        limit: 12,
+      };
+
+      if (filterTopikIPA !== "Semua") params.topikIPA = filterTopikIPA;
+      if (filterJenjang !== "Semua") params.jenjang = filterJenjang;
+      if (searchQuery.trim() !== "") params.search = searchQuery;
+
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/video_pembelajaran`,
+        { params }
+      );
+
+      setData(res.data.data);
+      setTotalPages(res.data.totalPages);
+      console.log(res.data)
     } catch (err) {
-      console.error("Error deleting video:", err);
-      alert("Gagal menghapus video");
+      console.error("Failed to fetch cases:", err);
+    } finally {
+      setLoading(false);
     }
-    */
   };
+
+  const handleDelete = async (id) => {
+    if (window.confirm('Apakah Anda yakin ingin menghapus video ini?')) {
+      try {
+        const res = await axios.delete(process.env.NEXT_PUBLIC_API_URL + "/api/video_pembelajaran/" + id)
+        if (res.data) {
+          window.location.href = "/lgndmn/dashboard/video_training"
+        }
+      } catch (err) {
+        console.log(err.message)
+      }
+    }
+  }
+
+  // Trigger fetch setiap ada perubahan filter/page
+  useEffect(() => {
+    fetchStudyCase();
+  }, [currentPage, filterTopikIPA, filterJenjang]);
+
+  // Search delay
+  useEffect(() => {
+    const delay = setTimeout(() => {
+      setCurrentPage(1);
+      fetchStudyCase();
+    }, 500);
+
+    return () => clearTimeout(delay);
+  }, [searchQuery]);
 
   const resetFilters = () => {
+    setFilterTopikIPA("Semua");
     setFilterJenjang("Semua");
-    setFilterStatus("Semua");
-    setSearchInput("");
+    setSearchQuery("");
+    setCurrentPage(1);
   };
+
+
 
   return (
     <div className="flex min-h-screen bg-gray-50">
@@ -234,14 +142,14 @@ export default function VideoTrainingAdmin() {
               <input
                 type="text"
                 placeholder="Cari video..."
-                value={searchInput}
-                onChange={(e) => setSearchInput(e.target.value)}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
               />
               <Search className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-              {searchInput && (
+              {searchQuery && (
                 <button
-                  onClick={() => setSearchInput("")}
+                  onClick={() => setSearchQuery("")}
                   className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
                 >
                   <X className="w-5 h-5" />
@@ -271,49 +179,6 @@ export default function VideoTrainingAdmin() {
           </div>
         </div>
 
-        {/* Stats Card */}
-        {/* <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600">Total Video</p>
-                <p className="text-2xl font-bold text-blue-600">{totalItems}</p>
-              </div>
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                <Play className="w-6 h-6 text-blue-600" />
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600">Halaman</p>
-                <p className="text-2xl font-bold text-green-600">{currentPage}/{totalPages}</p>
-              </div>
-              <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600">Hasil {search ? "Pencarian" : "Halaman Ini"}</p>
-                <p className="text-2xl font-bold text-purple-600">{data.length}</p>
-              </div>
-              <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
-                <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
-                </svg>
-              </div>
-            </div>
-          </div>
-        </div> */}
-
         {/* Video Grid */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
           {loading ? (
@@ -325,7 +190,7 @@ export default function VideoTrainingAdmin() {
               <Play className="mx-auto h-16 w-16 text-gray-400 mb-4" />
               <h3 className="text-lg font-medium text-gray-900 mb-2">Tidak ada video</h3>
               <p className="text-gray-500">
-                {search ? "Tidak ditemukan hasil untuk pencarian Anda" : "Belum ada video yang ditambahkan"}
+                {searchQuery ? "Tidak ditemukan hasil untuk pencarian Anda" : "Belum ada video yang ditambahkan"}
               </p>
             </div>
           ) : (
@@ -344,13 +209,6 @@ export default function VideoTrainingAdmin() {
                         <Play className="w-8 h-8 text-blue-600 ml-1" />
                       </div>
                     </div>
-                    <div className="absolute top-3 right-3">
-                      <span className={`px-3 py-1 rounded-full text-xs font-bold ${
-                        video.status === "GRATIS" ? "bg-green-500 text-white" : "bg-yellow-400 text-gray-900"
-                      }`}>
-                        {video.status}
-                      </span>
-                    </div>
                   </div>
 
                   {/* Content */}
@@ -363,6 +221,11 @@ export default function VideoTrainingAdmin() {
                       </span>
                       <span className="px-2 py-1 rounded-lg text-xs font-semibold bg-gray-100 text-gray-700">
                         {video.topikIPA}
+                      </span>
+                       <span className={`px-2 py-1 rounded-lg text-xs font-semibold bg-gray-100 text-gray-700 ${
+                        video.status === "GRATIS" ? "bg-green-500 text-white" : "bg-yellow-400 text-gray-900"
+                      }`}>
+                        {video.status}
                       </span>
                     </div>
 
@@ -403,7 +266,6 @@ export default function VideoTrainingAdmin() {
               ))}
             </div>
           )}
-
           {/* Pagination */}
           {!loading && data.length > 0 && totalPages > 1 && (
             <div className="flex justify-center mt-8 pt-6 border-t border-gray-200">
@@ -451,24 +313,21 @@ export default function VideoTrainingAdmin() {
               </div>
             </div>
 
-            {/* Status Filter */}
-            <div className="mb-6">
-              <label className="block text-sm font-semibold text-gray-700 mb-3">Status</label>
-              <div className="grid grid-cols-3 gap-2">
-                {["Semua", "GRATIS", "BERBAYAR"].map((status) => (
-                  <button
-                    key={status}
-                    onClick={() => setFilterStatus(status)}
-                    className={`py-2 rounded-lg font-semibold transition-colors ${
-                      filterStatus === status
-                        ? "bg-blue-600 text-white"
-                        : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+           {/* Topik */}
+            <p className="font-semibold mb-2">Topik</p>
+            <div className="grid grid-cols-2 gap-2 mb-4">
+              {topikIPAOptions.map((item) => (
+                <button
+                  key={item}
+                  onClick={() => setFilterTopikIPA(item)}
+                  className={`p-2 rounded-lg ${filterTopikIPA === item
+                    ? "bg-koreaBlueMuda text-white"
+                    : "bg-gray-200"
                     }`}
-                  >
-                    {status}
-                  </button>
-                ))}
-              </div>
+                >
+                  {item}
+                </button>
+              ))}
             </div>
 
             {/* Actions */}

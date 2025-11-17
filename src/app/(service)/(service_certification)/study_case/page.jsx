@@ -57,7 +57,7 @@ export default function CaseStudy() {
         `${process.env.NEXT_PUBLIC_API_URL}/api/study_case`,
         { params }
       );
- 
+
       setStudyCase(res.data.data);
       setTotalPages(res.data.totalPages);
     } catch (err) {
@@ -67,17 +67,17 @@ export default function CaseStudy() {
     }
   };
 
-  async function getUser(){
-    try{
-const resUser = await axios.get(
+  async function getUser() {
+    try {
+      const resUser = await axios.get(
         process.env.NEXT_PUBLIC_API_URL + "/api/public/user",
         { withCredentials: true }
       );
       setUser(resUser.data)
-    }catch(err){
+    } catch (err) {
       setUser(false)
     }
-         
+
   }
 
   // Trigger fetch setiap ada perubahan filter/page
@@ -177,8 +177,8 @@ const resUser = await axios.get(
                     onClick={() => {
                       if (!user) {
                         router.push("/login?prev=study_case")
-                      }else{
-                        router.push("/study_case/"+useCase._id)
+                      } else {
+                        router.push("/study_case/" + useCase._id)
                       }
                     }
                     }

@@ -1,9 +1,13 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "@/components/Sidebar";
 import { Upload } from "lucide-react";
+import axios from "axios";
+import { useParams, useRouter } from "next/navigation";
 
-export default function EditVideoModul() {
+export default function CreateVideoModul() {
+  const router = useRouter()
+  const { id } = useParams()
   const [formData, setFormData] = useState({
     judul: "",
     tujuanPembelajaran: "",
@@ -15,13 +19,40 @@ export default function EditVideoModul() {
   });
 
   const handleChange = (field, value) => {
+    console.log(formData)
     setFormData({ ...formData, [field]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const res = await axios.put(process.env.NEXT_PUBLIC_API_URL + "/api/video_pembelajaran/" + id, formData)
+      if (res.data) {
+        alert("Video pembelajaran berhasil diupdate!")
+        router.push("/lgndmn/dashboard/video_training")
+      }
+    } catch (err) {
+      console.log(err.message)
+    }
     console.log("Saving video modul:", formData);
   };
+
+  const getData = async () => {
+    try {
+      const res = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/video_pembelajaran/" + id)
+      if(res.data){
+        console.log(res.data)
+        setFormData(res.data)
+      }
+    } catch (err) {
+      console.log(err.message)
+    }
+  }
+  useEffect(() => {
+    getData()
+  }, [])
+
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
@@ -38,7 +69,7 @@ export default function EditVideoModul() {
                 {/* Title */}
                 <div className="mb-8">
                   <h1 className="text-3xl lg:text-4xl font-bold text-blue-600 mb-2">
-                    Edit Video Modul
+                    Create Video Modul
                   </h1>
                 </div>
 
@@ -167,15 +198,9 @@ export default function EditVideoModul() {
                   <div className="flex gap-4 pt-4">
                     <button
                       type="submit"
-                      className="flex-1 px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition font-medium"
+                      className="flex-1 px-6 py-3 bg-koreaBlueMuda text-white rounded-lg transition font-medium"
                     >
                       Simpan Video Modul
-                    </button>
-                    <button
-                      type="button"
-                      className="px-6 py-3 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition font-medium"
-                    >
-                      Batal
                     </button>
                   </div>
                 </form>

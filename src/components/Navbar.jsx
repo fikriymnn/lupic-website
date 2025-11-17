@@ -8,6 +8,7 @@ const Navbar = () => {
   const [login, setLogin] = useState(true);
   const [activeSubDropdown, setActiveSubDropdown] = useState(null);
   const [activeDropdown, setActiveDropdown] = useState(null);
+  const [isMounted,setIsMounted] = useState(false)
 
   // Suppress hydration warnings caused by browser extensions
   useEffect(() => {

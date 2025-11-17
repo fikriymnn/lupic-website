@@ -1,9 +1,12 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "@/components/Sidebar";
 import { Upload } from "lucide-react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export default function CreateVideoModul() {
+  const router = useRouter()
   const [formData, setFormData] = useState({
     judul: "",
     tujuanPembelajaran: "",
@@ -15,13 +18,25 @@ export default function CreateVideoModul() {
   });
 
   const handleChange = (field, value) => {
+    console.log(formData)
     setFormData({ ...formData, [field]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    try{
+      const res = await axios.post(process.env.NEXT_PUBLIC_API_URL+"/api/video_pembelajaran",formData)
+      if(res.data){
+        alert("Video pembelajaran berhasil dibuat!")
+        router.push("/lgndmn/dashboard/video_training")
+      }
+    }catch(err){
+      console.log(err.message)
+    }
     console.log("Saving video modul:", formData);
   };
+
+ 
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
@@ -167,15 +182,9 @@ export default function CreateVideoModul() {
                   <div className="flex gap-4 pt-4">
                     <button
                       type="submit"
-                      className="flex-1 px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition font-medium"
+                      className="flex-1 px-6 py-3 bg-koreaBlueMuda text-white rounded-lg transition font-medium"
                     >
                       Simpan Video Modul
-                    </button>
-                    <button
-                      type="button"
-                      className="px-6 py-3 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition font-medium"
-                    >
-                      Batal
                     </button>
                   </div>
                 </form>
