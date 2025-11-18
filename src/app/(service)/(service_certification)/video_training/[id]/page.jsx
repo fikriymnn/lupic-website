@@ -42,7 +42,7 @@ export default function DetailVideoTraining() {
   const { id } = useParams()
   const router = useRouter()
   const [videoData, setVideoData] = useState()
-  const [access, setAccess] = useState({})
+  const [access, setAccess] = useState(false)
   const [user,setUser] = useState()
 
   const getData = async () => {

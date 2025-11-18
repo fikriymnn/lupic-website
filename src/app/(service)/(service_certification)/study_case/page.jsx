@@ -22,7 +22,7 @@ const kompetensiOptions = ["Semua", "Pedagogik", "Profesional"];
 export default function CaseStudy() {
   const router = useRouter();
 
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState(false)
   const [studyCase, setStudyCase] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -116,8 +116,16 @@ export default function CaseStudy() {
       <Navbar />
       <div className="min-h-screen bg-gray-100 p-6 md:pt-16 pt-20 pb-16">
         <div className="max-w-6xl mx-auto px-4 md:px-8">
-          <h1 className="md:text-4xl text-2xl mt-10 font-bold">Study Case</h1>
-          <div className="h-1 w-36 bg-koreaRed md:mt-4 mt-2"></div>
+          <div className="max-w-6xl mx-auto md:block grid grid-cols-1 justify-items-center md:justify-items-start mb-8">
+            <h1 className="md:text-4xl text-4xl md:mt-10 font-bold">
+              Study Case
+            </h1>
+            <div className="h-1 w-36 bg-koreaRed md:mt-3 mt-2"></div>
+          </div>
+
+          <p className="text-gray-700 mb-8 leading-relaxed">
+            Fitur Studi Kasus merupakan simulasi pembelajaran berbasis permasalahan yang dirancang untuk mengembangkan kemampuan analisis dan refleksi calon guru dalam konteks nyata. Fitur ini menyajikan berbagai kasus otentik yang sering muncul dalam praktik pembelajaran IPA di sekolah dasar dan menengah pertama
+          </p>
 
           {/* Search + Filter */}
           <div className="flex flex-col md:flex-row gap-3 mb-8 mt-6">
@@ -150,7 +158,7 @@ export default function CaseStudy() {
               studyCase.map((useCase) => (
                 <div
                   key={useCase._id}
-                  className="bg-white rounded-xl shadow-lg p-6 hover:-translate-y-1 transition flex flex-col"
+                  className="bg-white rounded-lg shadow-lg p-6 hover:-translate-y-1 transition flex flex-col"
                 >
                   <div className="flex gap-2 mb-3">
                     <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs">

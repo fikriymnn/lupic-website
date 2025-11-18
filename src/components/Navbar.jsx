@@ -98,7 +98,7 @@ const Navbar = () => {
         {
           label: "Teacher Certification Training",
           subItems: [
-            { href: "/knowlage_test", label: "Knowledge Test" },
+            { href: "/knowledge_test", label: "Knowledge Test" },
             { href: "/study_case", label: "Study Case" },
             { href: "/lesson_plans", label: "Lesson Plans" },
             { href: "/video_training", label: "Video Training" },

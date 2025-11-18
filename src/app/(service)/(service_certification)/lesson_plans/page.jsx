@@ -110,6 +110,10 @@ export default function ModulAjarList() {
             <div className="h-1 w-36 bg-koreaRed md:mt-3 mt-2"></div>
           </div>
 
+          <p className="text-gray-700 mb-8 leading-relaxed">
+            Fitur Modul Ajar merupakan bagian dari website layanan InspiraPPG yang berfungsi sebagai sumber pembelajaran utama bagi calon guru. Fitur ini menyediakan kumpulan modul ajar berbasis Kurikulum Merdeka yang disusun secara sistematis untuk jenjang SD dan SMP pada bidang IPA.
+          </p>
+
           {/* Search & Filter Bar */}
           <div className="flex flex-col md:flex-row gap-3 mb-8">
             <div className="w-96 relative">
@@ -136,7 +140,7 @@ export default function ModulAjarList() {
             {moduls.map((modul) => (
               <div
                 key={modul._id}
-                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition transform hover:-translate-y-1"
+                className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition transform hover:-translate-y-1"
               >
 
                 <div className="h-full flex flex-col">

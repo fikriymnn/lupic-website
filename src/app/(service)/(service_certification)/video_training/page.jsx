@@ -155,6 +155,9 @@ export default function VideoTrainingApp() {
             </h1>
             <div className="h-1 w-36 bg-koreaRed md:mt-3 mt-2"></div>
           </div>
+          <p className="text-gray-700 mb-8 leading-relaxed">
+            Fitur Video Pembelajaran merupakan bagian dari website layanan Inspira PPG yang berfungsi sebagai media latihan dan observasi pembelajaran bagi calon guru. Fitur ini menyediakan kumpulan video berbasis praktik mengajar yang disusun sesuai Kurikulum Merdeka untuk jenjang SD dan SMP pada bidang IPA.
+          </p>
 
           {/* Search & Filter */}
           <div className="flex flex-col md:flex-row gap-3 mb-8">
@@ -183,7 +186,7 @@ export default function VideoTrainingApp() {
               {data.map((video) => (
                 <div
                   key={video._id}
-                  className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 h-full flex flex-col"
+                  className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 h-full flex flex-col"
                 >
                   <div className="relative h-48 w-full overflow-hidden">
                     <Image
