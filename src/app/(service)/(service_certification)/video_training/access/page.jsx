@@ -6,7 +6,7 @@ import {
   ChevronLeft,
   Upload,
 } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 
 const modul = {
@@ -37,7 +37,7 @@ const SUMBER_INFORMASI_OPTIONS = [
 
 export default function FormBukaVideo() {
   const router = useRouter()
-  const searchParams = useSearchParams()
+  const searchParams = useRouter()
   const [isMounted, setIsMounted] = useState(false);
   const [formData, setFormData] = useState({
     nama: "",

@@ -3,10 +3,10 @@ import axios from "axios";
 import React, { useState } from "react";
 import Navbar from "@/components/Navbar"
 import CustomFooter from "@/components/CustomFooter"
-import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
-    const searchQuery = useSearchParams()
+    const searchQuery = useRouter()
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
