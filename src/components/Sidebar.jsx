@@ -34,10 +34,12 @@ const Sidebar = () => {
       const data = await response.json();
 
       if (data === "success") {
+        window.location.href = "/lgndmn"
         window.location.href = "/";
       }
     } catch (err) {
-      alert("Logout failed");
+      console.log(err)
+      window.location.href = "/lgndmn"
     }
   };
 

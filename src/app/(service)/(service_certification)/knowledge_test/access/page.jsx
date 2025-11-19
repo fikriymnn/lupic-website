@@ -35,7 +35,7 @@ const SUMBER_INFORMASI_OPTIONS = [
   "Lainnya",
 ];
 
-export default function FormBukaModul() {
+export default function FormBukaKnowledgeTest() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [isMounted, setIsMounted] = useState(false);
@@ -136,7 +136,7 @@ export default function FormBukaModul() {
       <div className="min-h-screen bg-gray-100 py-16">
         <div className="max-w-4xl mx-auto p-6 ">
           <button
-            onClick={() => { router.push("/lesson_plans/" + searchParams.get('modulId')) }}
+            onClick={() => { router.push("/knowledge_test")}}
             className="mb-6 px-4 py-2 bg-white rounded-lg shadow hover:shadow-md transition flex items-center gap-2"
           >
             <ChevronLeft size={20} />
@@ -145,7 +145,7 @@ export default function FormBukaModul() {
           <div className="bg-white rounded-xl shadow-lg p-8">
             <div className="mb-6">
               <h1 className="text-3xl font-bold text-gray-800 mb-2">
-                Formulir Akses Modul
+                Formulir Akses Knowledge Test Exercise
               </h1>
               <p className="text-gray-600">
                 Modul: <span className="font-semibold">{searchParams.get("modulName")}</span>

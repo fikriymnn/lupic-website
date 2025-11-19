@@ -20,50 +20,36 @@ import {
   BookOpen,
   ChevronRight,
 } from "lucide-react";
+import axios from "axios";
 
 
-// ====== Data Dummy ======
-const mockvideosdata = [
-  {
-    _id: "1",
-    judul: "Pengenalan Energi dan Bentuk-bentuknya",
-    tujuanPembelajaran:
-      "Siswa mampu memahami konsep energi dan mengidentifikasi berbagai bentuk energi dalam kehidupan sehari-hari",
-    deskripsi:
-      "Video pembelajaran interaktif tentang konsep dasar energi, meliputi energi kinetik, potensial, panas, listrik, dan cahaya. Dilengkapi dengan animasi dan contoh aplikasi dalam kehidupan nyata.",
-    linkVideo: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    jenjang: "SMP",
-    topikIPA: "Energi",
-    status: "GRATIS",
-    createdAt: "2025-01-10T08:00:00Z",
-  },
-  {
-    _id: "2",
-    judul: "Rangkaian Listrik Sederhana",
-    tujuanPembelajaran:
-      "Siswa dapat membuat dan memahami prinsip kerja rangkaian listrik sederhana",
-    deskripsi:
-      "Pembelajaran praktis tentang listrik, cara membuat rangkaian seri dan paralel, serta memahami komponen dasar seperti baterai, lampu, dan saklar.",
-    linkVideo: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    jenjang: "SD",
-    topikIPA: "Listrik",
-    status: "BERBAYAR",
-    createdAt: "2025-01-12T10:30:00Z",
-  },
-  {
-    _id: "3",
-    judul: "Gaya dan Gerak dalam Kehidupan Sehari-hari",
-    tujuanPembelajaran:
-      "Siswa mampu menjelaskan hubungan antara gaya dan gerak benda",
-    deskripsi:
-      "Eksplorasi konsep gaya, gesekan, gravitasi, dan pengaruhnya terhadap gerakan benda. Dengan demonstrasi eksperimen sederhana yang mudah dipahami.",
-    linkVideo: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    jenjang: "SMP",
-    topikIPA: "Gaya",
-    status: "GRATIS",
-    createdAt: "2025-01-15T14:20:00Z",
-  },
-];
+function getYouTubeVideoId(url) {
+  try {
+    // 1. Jika URL dalam bentuk youtu.be/xxxx
+    let shortMatch = url.match(/youtu\.be\/([^?]+)/);
+    if (shortMatch) return shortMatch[1];
+
+    // 2. Jika URL dalam bentuk youtube.com/watch?v=xxxx
+    let watchMatch = url.match(/v=([^&]+)/);
+    if (watchMatch) return watchMatch[1];
+
+    // 3. Jika URL dalam bentuk embed/xxxx
+    let embedMatch = url.match(/embed\/([^?]+)/);
+    if (embedMatch) return embedMatch[1];
+
+    // 4. Jika URL Shorts (youtube.com/shorts/xxxx)
+    let shortsMatch = url.match(/shorts\/([^?]+)/);
+    if (shortsMatch) return shortsMatch[1];
+
+    // 5. Jika URL punya parameter videoId
+    let paramMatch = url.match(/videoId=([^&]+)/);
+    if (paramMatch) return paramMatch[1];
+
+    return null; // Tidak ketemu ID
+  } catch (error) {
+    return null;
+  }
+}
 
 const topikOptions = [
   "Semua",
@@ -78,59 +64,83 @@ const topikOptions = [
 export default function VideoTrainingApp() {
   const router = useRouter()
   const [isMounted, setIsMounted] = useState(false);
-  const [videosData] = useState(mockvideosdata);
-  const [filteredVideos, setFilteredVideos] = useState(mockvideosdata);
+  const [data, setData] = useState([]);
+  const [totalPages, setTotalPages] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-  const [filterJenjang, setFilterJenjang] = useState("Semua");
-  const [filterTopik, setFilterTopik] = useState("Semua");
   const [showFilterModal, setShowFilterModal] = useState(false);
+  const [filterJenjang, setFilterJenjang] = useState("Semua");
+  const [filterTopikIPA, setFilterTopikIPA] = useState("Semua");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6;
+  const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState(false)
+  // 🔥 Fetch ke Backend
+  const fetchStudyCase = async () => {
+    try {
+      setLoading(true);
 
-  // Fix hydration - ensure component is mounted
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+      const params = {
+        page: currentPage,
+        limit: 12,
+      };
 
-  const getYouTubeVideoId = (url) => {
-    const regExp =
-      /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-    const match = url.match(regExp);
-    return match && match[2].length === 11 ? match[2] : null;
+      if (filterTopikIPA !== "Semua") params.topikIPA = filterTopikIPA;
+      if (filterJenjang !== "Semua") params.jenjang = filterJenjang;
+      if (searchQuery.trim() !== "") params.search = searchQuery;
+
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/video_pembelajaran`,
+        { params }
+      );
+
+      setData(res.data.data);
+      setTotalPages(res.data.totalPages);
+    } catch (err) {
+      console.error("Failed to fetch cases:", err);
+    } finally {
+      setLoading(false);
+    }
   };
 
+  // Trigger fetch setiap ada perubahan filter/page
   useEffect(() => {
-    // Filter video
-    const filtered = videosData.filter((video) => {
-      const matchSearch =
-        video.judul.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        video.deskripsi.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchJenjang =
-        filterJenjang === "Semua" || video.jenjang === filterJenjang;
-      const matchTopik =
-        filterTopik === "Semua" || video.topikIPA === filterTopik;
-      return matchSearch && matchJenjang && matchTopik;
-    });
-    setFilteredVideos(filtered);
-    setCurrentPage(1);
-  }, [videosData, searchQuery, filterTopik, filterJenjang]);
+    fetchStudyCase();
+  }, [currentPage, filterTopikIPA, filterJenjang]);
 
-  const totalPages = Math.ceil(filteredVideos.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentItems = filteredVideos.slice(
-    startIndex,
-    startIndex + itemsPerPage
-  );
+  // Search delay
+  useEffect(() => {
+    const delay = setTimeout(() => {
+      setCurrentPage(1);
+      fetchStudyCase();
+    }, 500);
+
+    return () => clearTimeout(delay);
+  }, [searchQuery]);
 
   const resetFilters = () => {
+    setFilterTopikIPA("Semua");
     setFilterJenjang("Semua");
-    setFilterTopik("Semua");
     setSearchQuery("");
+    setCurrentPage(1);
   };
 
-  // Prevent hydration mismatch
+  async function getUser() {
+    try {
+      const resUser = await axios.get(
+        process.env.NEXT_PUBLIC_API_URL + "/api/public/user",
+        { withCredentials: true }
+      );
+      setUser(resUser.data)
+    } catch (err) {
+      setUser(false)
+    }
+  }
+
+  useEffect(() => {
+    getUser()
+    setIsMounted(true)
+  }, [])
   if (!isMounted) {
-    return null;
+    return null
   }
 
   return (
@@ -145,7 +155,10 @@ export default function VideoTrainingApp() {
             </h1>
             <div className="h-1 w-36 bg-koreaRed md:mt-3 mt-2"></div>
           </div>
-
+          <p className="text-gray-700 mb-8 leading-relaxed">
+            Fitur Video Pembelajaran merupakan bagian dari website layanan Inspira PPG yang berfungsi sebagai media latihan dan observasi pembelajaran bagi calon guru. Fitur ini menyediakan kumpulan video berbasis praktik mengajar yang disusun sesuai Kurikulum Merdeka untuk jenjang SD dan SMP pada bidang IPA.
+          </p>
+          
           {/* Search & Filter */}
           <div className="flex flex-col md:flex-row gap-3 mb-8">
             <div className="w-full md:w-96 relative">
@@ -168,12 +181,12 @@ export default function VideoTrainingApp() {
           </div>
 
           {/* Video Grid */}
-          {currentItems.length > 0 ? (
+          {data.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {currentItems.map((video) => (
+              {data.map((video) => (
                 <div
                   key={video._id}
-                  className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 h-full flex flex-col"
+                  className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 h-full flex flex-col"
                 >
                   <div className="relative h-48 w-full overflow-hidden">
                     <Image
@@ -190,32 +203,21 @@ export default function VideoTrainingApp() {
                         <Play className="w-8 h-8 text-purple-600 ml-1" />
                       </div>
                     </div>
-                    <div className="absolute top-3 right-3">
-                      <span
-                        className={`px-3 py-1 rounded-full text-xs font-bold ${
-                          video.status === "GRATIS"
-                            ? "bg-green-500 text-white"
-                            : "bg-yellow-400 text-gray-900"
-                        }`}
-                      >
-                        {video.status}
-                      </span>
-                    </div>
                   </div>
 
                   <div className="p-5 flex flex-col h-full flex-1">
                     <div className="flex gap-2 mb-3">
                       <span
-                        className={`px-2 py-1 rounded-lg text-xs font-semibold ${
-                          video.jenjang === "SD"
-                            ? "bg-blue-100 text-blue-700"
-                            : "bg-purple-100 text-purple-700"
-                        }`}
+                        className={`px-2 py-1 rounded-xl text-xs font-semibold bg-blue-100 text-blue-700`}
                       >
                         {video.jenjang}
                       </span>
-                      <span className="px-2 py-1 rounded-lg text-xs font-semibold bg-gray-100 text-gray-700">
+                      <span className="px-2 py-1 rounded-xl text-xs font-semibold bg-gray-100 text-gray-700">
                         {video.topikIPA}
+                      </span>
+                      <span className={`px-2 py-1 rounded-xl text-xs font-semibold bg-gray-100 text-gray-700 ${video.status === "GRATIS" ? "bg-green-500 text-white" : "bg-yellow-400 text-gray-900"
+                        }`}>
+                        {video.status}
                       </span>
                     </div>
 
@@ -228,7 +230,13 @@ export default function VideoTrainingApp() {
 
                     <div className="flex items-end justify-end flex-1">
                       <button className="px-4 py-2 bg-koreaBlueMuda text-white rounded-lg transition-colors text-sm font-semibold flex items-center gap-1"
-                      onClick={()=>{router.push("/video_training/123")}}
+                        onClick={() => {
+                          if (!user) {
+                            router.push("/login?prev=video_training")
+                          } else {
+                            router.push("/video_training/" + video._id)
+                          }
+                        }}
                       >
                         Detail
                         <ChevronRight className="w-4 h-4" />
@@ -289,11 +297,10 @@ export default function VideoTrainingApp() {
                     <button
                       key={jenjang}
                       onClick={() => setFilterJenjang(jenjang)}
-                      className={`py-2 rounded-lg font-semibold transition-colors ${
-                        filterJenjang === jenjang
-                          ? "bg-koreaBlueMuda text-white"
-                          : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                      }`}
+                      className={`py-2 rounded-lg font-semibold transition-colors ${filterJenjang === jenjang
+                        ? "bg-koreaBlueMuda text-white"
+                        : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                        }`}
                     >
                       {jenjang}
                     </button>
@@ -310,12 +317,11 @@ export default function VideoTrainingApp() {
                   {topikOptions.map((topik) => (
                     <button
                       key={topik}
-                      onClick={() => setFilterTopik(topik)}
-                      className={`py-2 rounded-lg font-semibold transition-colors ${
-                        filterTopik === topik
-                          ? "bg-koreaBlueMuda text-white"
-                          : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                      }`}
+                      onClick={() => setFilterTopikIPA(topik)}
+                      className={`py-2 rounded-lg font-semibold transition-colors ${filterTopikIPA === topik
+                        ? "bg-koreaBlueMuda text-white"
+                        : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                        }`}
                     >
                       {topik}
                     </button>
