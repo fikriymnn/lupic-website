@@ -214,15 +214,13 @@ export default function VideoTrainingAdmin() {
                   {/* Content */}
                   <div className="p-4">
                     <div className="flex gap-2 mb-3">
-                      <span className={`px-2 py-1 rounded-lg text-xs font-semibold ${
-                        video.jenjang === "SD" ? "bg-blue-100 text-blue-700" : "bg-purple-100 text-purple-700"
-                      }`}>
+                      <span className={`px-2 py-1 rounded-xl text-xs font-semibold bg-blue-100 text-blue-700`}>
                         {video.jenjang}
                       </span>
-                      <span className="px-2 py-1 rounded-lg text-xs font-semibold bg-gray-100 text-gray-700">
+                      <span className="px-2 py-1 rounded-xl text-xs font-semibold bg-gray-100 text-gray-700">
                         {video.topikIPA}
                       </span>
-                       <span className={`px-2 py-1 rounded-lg text-xs font-semibold bg-gray-100 text-gray-700 ${
+                       <span className={`px-2 py-1 rounded-xl text-xs font-semibold bg-gray-100 text-gray-700 ${
                         video.status === "GRATIS" ? "bg-green-500 text-white" : "bg-yellow-400 text-gray-900"
                       }`}>
                         {video.status}
@@ -301,11 +299,10 @@ export default function VideoTrainingAdmin() {
                   <button
                     key={jenjang}
                     onClick={() => setFilterJenjang(jenjang)}
-                    className={`py-2 rounded-lg font-semibold transition-colors ${
-                      filterJenjang === jenjang
+                    className={`py-2 rounded-lg font-semibold transition-colors ${filterJenjang === jenjang
                         ? "bg-blue-600 text-white"
                         : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                    }`}
+                      }`}
                   >
                     {jenjang}
                   </button>
@@ -313,7 +310,7 @@ export default function VideoTrainingAdmin() {
               </div>
             </div>
 
-           {/* Topik */}
+            {/* Topik */}
             <p className="font-semibold mb-2">Topik</p>
             <div className="grid grid-cols-2 gap-2 mb-4">
               {topikIPAOptions.map((item) => (

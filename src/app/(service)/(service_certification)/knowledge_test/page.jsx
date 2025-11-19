@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import CustomFooter from "@/components/CustomFooter";
 import { useRouter } from 'next/navigation';
 
+
 /**
  * LatihanTesObjektifPage.jsx
  * Halaman landing untuk menu "Latihan Tes Objektif" yang menjelaskan
@@ -117,7 +118,7 @@ export default function LatihanTesObjektifPage() {
 
                             <div>
                                 <button
-                                    onClick={handleStartTrial}
+                                    onClick={()=>router.push("/knowledge_test/gratis")}
                                     className="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors"
                                 >
                                     Mulai Tes

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from "@/components/Navbar";
 import CustomFooter from "@/components/CustomFooter";
-import { Download, BookOpen, GraduationCap, Sparkles, Clock, CheckCircle } from 'lucide-react';
+import { Download, BookOpen, ChevronLeft, Sparkles, Clock, CheckCircle } from 'lucide-react';
 import { useParams, useRouter } from 'next/navigation';
 import axios from 'axios';
 
@@ -89,6 +89,13 @@ export default function ModulAjarDetail() {
       <Navbar />
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 py-16">
         <div className="max-w-6xl mx-auto px-4 py-8">
+           <button
+            onClick={() => { router.push("/lesson_plans") }}
+            className="mb-6 px-4 py-2 bg-white rounded-lg shadow hover:shadow-md transition flex items-center gap-2"
+          >
+            <ChevronLeft size={20} />
+            Kembali
+          </button>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Kolom Kiri - Cover & Download */}
             <div className="lg:col-span-1">
@@ -157,13 +164,10 @@ export default function ModulAjarDetail() {
                 </h1>
 
                 <div className="flex flex-wrap gap-2 mb-6">
-                  <span className={`px-3 py-2 rounded-full text-sm font-semibold ${modul?.jenjang === 'SD'
-                    ? 'bg-blue-100 text-blue-700'
-                    : 'bg-purple-100 text-purple-700'
-                    }`}>
+                  <span className={`px-3 py-2 rounded-full text-sm font-semibold bg-blue-100 text-blue-700`}>
                     {modul?.jenjang}
                   </span>
-                  <span className={`px-4 py-2 rounded-full text-sm font-semibold ${getTopikColor(modul.topikIPA)}`}>
+                  <span className={`px-4 py-2 rounded-full text-sm font-semibold bg-gray-100 text-gray-700`}>
                     {modul?.topikIPA}
                   </span>
                   <span className={`px-3 py-2 rounded-full text-sm font-bold ${modul?.status === 'GRATIS'

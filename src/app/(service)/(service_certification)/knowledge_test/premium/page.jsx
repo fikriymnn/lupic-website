@@ -1,6 +1,8 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import { Clock, X, CheckCircle, XCircle, AlertCircle, History, ArrowLeft } from 'lucide-react';
+import Navbar from "@/components/Navbar";
+import CustomFooter from "@/components/CustomFooter";
 
 // Mock Data
 const MOCK_PAKETS = [
@@ -183,7 +185,7 @@ const MOCK_USER_HISTORY = {
         tidak_terjawab: 3,
         nilai: 76.92
       },
-      
+
       jumlah_soal: 65,
       nama: 'John Doe',
       email: 'john@example.com',
@@ -275,16 +277,16 @@ export default function TestSimulationApp() {
   const handleStartTest = () => {
     const allQuestions = [];
     const categories = Object.keys(MOCK_QUESTIONS);
-    
+
     categories.forEach(category => {
       const categoryQuestions = shuffleArray(MOCK_QUESTIONS[category]).map(q => ({
         ...q,
         pilihan: shuffleArray(q.pilihan)
       }));
-      
+
       allQuestions.push(...categoryQuestions);
     });
-    
+
     setQuestions(allQuestions);
     setAnswers({});
     setCurrentQuestionIndex(0);
@@ -313,7 +315,7 @@ export default function TestSimulationApp() {
 
     const endTime = Date.now();
     const timeSpent = Math.floor((endTime - startTime) / 1000);
-    
+
     let correct = 0;
     let incorrect = 0;
     let unanswered = 0;
@@ -399,8 +401,8 @@ export default function TestSimulationApp() {
       } else if (item.type === 'IMAGE') {
         return (
           <div key={index} className="mb-4">
-            <img 
-              src={item.value} 
+            <img
+              src={item.value}
               alt={`Soal ${currentQuestionIndex + 1}`}
               className="max-w-full h-auto rounded-lg shadow-md"
             />
@@ -414,157 +416,167 @@ export default function TestSimulationApp() {
   // Paket List Page
   if (page === 'paket-list') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
-        <div className="max-w-4xl mx-auto">
-          <div className="flex justify-between items-center mb-8">
-            <h1 className="text-4xl font-bold text-gray-800">
-              Latihan Tes Objektif
-            </h1>
-            <button
-              onClick={() => setPage('history')}
-              className="flex items-center gap-2 px-6 py-3 bg-white text-indigo-600 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all"
-            >
-              <History className="w-5 h-5" />
-              History Pengerjaan
-            </button>
-          </div>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {MOCK_PAKETS.map(paket => {
-              const paketAttempts = userHistory.attempts.filter(a => a.paketId === paket.id);
-              const hasAttempts = paketAttempts.length > 0;
-              const bestScore = hasAttempts ? Math.max(...paketAttempts.map(a => a.nilai.nilai)) : 0;
-              
-              return (
-                <div key={paket.id} className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-2xl font-bold text-gray-800">{paket.paket}</h3>
-                    <div className="flex flex-col gap-2">
-                      <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                        paket.status === 'PREMIUM' ? 'bg-yellow-400 text-yellow-900' : 'bg-green-400 text-green-900'
-                      }`}>
-                        {paket.status}
-                      </span>
-                      {hasAttempts && (
-                        <span className="px-3 py-1 rounded-full text-xs font-semibold bg-blue-500 text-white">
-                          {paketAttempts.length}x Dikerjakan
+      <>
+        <Navbar />
+        <div className="min-h-screen bg-gray-50 p-8 pt-24">
+          <div className="max-w-4xl mx-auto">
+            <div className="max-w-6xl mx-auto md:block grid grid-cols-1 justify-items-center md:justify-items-start mb-8">
+              <h1 className="md:text-4xl text-4xl font-bold">
+                Latihan Tes Objektif
+              </h1>
+              <div className="h-1 w-36 bg-koreaRed md:mt-3 mt-2"></div>
+            </div>
+            <div className="flex justify-between items-center mb-8">
+              <button
+                onClick={() => setPage('history')}
+                className="flex items-center gap-2 px-6 py-3 bg-white text-indigo-600 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all"
+              >
+                <History className="w-5 h-5" />
+                History Pengerjaan
+              </button>
+            </div>
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {MOCK_PAKETS.map(paket => {
+                const paketAttempts = userHistory.attempts.filter(a => a.paketId === paket.id);
+                const hasAttempts = paketAttempts.length > 0;
+                const bestScore = hasAttempts ? Math.max(...paketAttempts.map(a => a.nilai.nilai)) : 0;
+
+                return (
+                  <div key={paket.id} className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-2xl font-bold text-gray-800">{paket.paket}</h3>
+                      <div className="flex flex-col gap-2">
+                        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${paket.status === 'PREMIUM' ? 'bg-yellow-400 text-yellow-900' : 'bg-green-400 text-green-900'
+                          }`}>
+                          {paket.status}
                         </span>
-                      )}
+                        {hasAttempts && (
+                          <span className="px-3 py-1 rounded-full text-xs font-semibold bg-blue-500 text-white">
+                            {paketAttempts.length}x Dikerjakan
+                          </span>
+                        )}
+                      </div>
                     </div>
+                    <p className="text-gray-600 mb-4">{paket.deskripsi}</p>
+                    {hasAttempts && (
+                      <div className="mb-4 p-3 bg-green-50 rounded-lg">
+                        <p className="text-sm text-gray-600">Nilai Terbaik:</p>
+                        <p className="text-2xl font-bold text-green-600">{bestScore.toFixed(2)}%</p>
+                      </div>
+                    )}
+                    <button
+                      onClick={() => handleSelectPaket(paket)}
+                      className="w-full py-3 rounded-lg font-semibold transition-colors bg-indigo-600 text-white hover:bg-indigo-700"
+                    >
+                      {hasAttempts ? 'Kerjakan Lagi' : 'Mulai Paket'}
+                    </button>
                   </div>
-                  <p className="text-gray-600 mb-4">{paket.deskripsi}</p>
-                  {hasAttempts && (
-                    <div className="mb-4 p-3 bg-green-50 rounded-lg">
-                      <p className="text-sm text-gray-600">Nilai Terbaik:</p>
-                      <p className="text-2xl font-bold text-green-600">{bestScore.toFixed(2)}%</p>
-                    </div>
-                  )}
-                  <button
-                    onClick={() => handleSelectPaket(paket)}
-                    className="w-full py-3 rounded-lg font-semibold transition-colors bg-indigo-600 text-white hover:bg-indigo-700"
-                  >
-                    {hasAttempts ? 'Kerjakan Lagi' : 'Mulai Paket'}
-                  </button>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
-      </div>
+        <CustomFooter />
+      </>
     );
   }
 
   // History Page
   if (page === 'history') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex items-center gap-4 mb-8">
-            <button
-              onClick={() => setPage('paket-list')}
-              className="p-2 hover:bg-white rounded-full transition-colors"
-            >
-              <ArrowLeft className="w-6 h-6 text-gray-700" />
-            </button>
-            <h1 className="text-4xl font-bold text-gray-800">
-              History Pengerjaan Tes
-            </h1>
-          </div>
-
-          {userHistory.attempts.length === 0 ? (
-            <div className="bg-white rounded-lg shadow-lg p-12 text-center">
-              <History className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-              <p className="text-xl text-gray-600">Belum ada riwayat pengerjaan</p>
+      <>
+        <Navbar />
+        <div className="min-h-screen bg-gray-50 p-8">
+          <div className="max-w-6xl mx-auto">
+            <div className="flex items-center gap-4 mb-8">
               <button
                 onClick={() => setPage('paket-list')}
-                className="mt-6 px-6 py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+                className="p-2 hover:bg-white rounded-full transition-colors"
               >
-                Mulai Tes Sekarang
+                <ArrowLeft className="w-6 h-6 text-gray-700" />
               </button>
+              <h1 className="text-4xl font-bold text-gray-800">
+                History Pengerjaan Tes
+              </h1>
             </div>
-          ) : (
-            <div className="space-y-4">
-              {userHistory.attempts.map((attempt, index) => (
-                <div key={attempt.id} className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
-                  <div className="flex justify-between items-start">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-2">
-                        <h3 className="text-2xl font-bold text-gray-800">{attempt.paket}</h3>
-                        <span className="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-sm font-semibold">
-                          Percobaan #{userHistory.attempts.length - index}
-                        </span>
+
+            {userHistory.attempts.length === 0 ? (
+              <div className="bg-white rounded-lg shadow-lg p-12 text-center">
+                <History className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+                <p className="text-xl text-gray-600">Belum ada riwayat pengerjaan</p>
+                <button
+                  onClick={() => setPage('paket-list')}
+                  className="mt-6 px-6 py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+                >
+                  Mulai Tes Sekarang
+                </button>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {userHistory.attempts.map((attempt, index) => (
+                  <div key={attempt.id} className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
+                    <div className="flex justify-between items-start">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-3 mb-2">
+                          <h3 className="text-2xl font-bold text-gray-800">{attempt.paket}</h3>
+                          <span className="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-sm font-semibold">
+                            Percobaan #{userHistory.attempts.length - index}
+                          </span>
+                        </div>
+                        <p className="text-sm text-gray-600 mb-4">
+                          {new Date(attempt.createdAt).toLocaleString('id-ID', {
+                            day: 'numeric',
+                            month: 'long',
+                            year: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                          })}
+                        </p>
+                        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                          <div>
+                            <p className="text-sm text-gray-600">Benar</p>
+                            <p className="text-xl font-bold text-green-600">{attempt.nilai.benar}</p>
+                          </div>
+                          <div>
+                            <p className="text-sm text-gray-600">Salah</p>
+                            <p className="text-xl font-bold text-red-600">{attempt.nilai.salah}</p>
+                          </div>
+                          <div>
+                            <p className="text-sm text-gray-600">Tidak Dijawab</p>
+                            <p className="text-xl font-bold text-gray-600">{attempt.nilai.tidak_terjawab}</p>
+                          </div>
+                          <div>
+                            <p className="text-sm text-gray-600">Waktu</p>
+                            <p className="text-xl font-bold text-blue-600">{formatTime(attempt.timeSpent)}</p>
+                          </div>
+                          <div>
+                            <p className="text-sm text-gray-600">Nilai</p>
+                            <p className="text-3xl font-bold text-indigo-600">{attempt.nilai.nilai.toFixed(2)}%</p>
+                          </div>
+                        </div>
                       </div>
-                      <p className="text-sm text-gray-600 mb-4">
-                        {new Date(attempt.createdAt).toLocaleString('id-ID', {
-                          day: 'numeric',
-                          month: 'long',
-                          year: 'numeric',
-                          hour: '2-digit',
-                          minute: '2-digit'
-                        })}
-                      </p>
-                      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-                        <div>
-                          <p className="text-sm text-gray-600">Benar</p>
-                          <p className="text-xl font-bold text-green-600">{attempt.nilai.benar}</p>
-                        </div>
-                        <div>
-                          <p className="text-sm text-gray-600">Salah</p>
-                          <p className="text-xl font-bold text-red-600">{attempt.nilai.salah}</p>
-                        </div>
-                        <div>
-                          <p className="text-sm text-gray-600">Tidak Dijawab</p>
-                          <p className="text-xl font-bold text-gray-600">{attempt.nilai.tidak_terjawab}</p>
-                        </div>
-                        <div>
-                          <p className="text-sm text-gray-600">Waktu</p>
-                          <p className="text-xl font-bold text-blue-600">{formatTime(attempt.timeSpent)}</p>
-                        </div>
-                        <div>
-                          <p className="text-sm text-gray-600">Nilai</p>
-                          <p className="text-3xl font-bold text-indigo-600">{attempt.nilai.nilai.toFixed(2)}%</p>
-                        </div>
-                      </div>
+                      <button
+                        onClick={() => handleViewHistoryResult(attempt)}
+                        className="ml-4 px-6 py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition-colors"
+                      >
+                        Lihat Detail
+                      </button>
                     </div>
-                    <button
-                      onClick={() => handleViewHistoryResult(attempt)}
-                      className="ml-4 px-6 py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition-colors"
-                    >
-                      Lihat Detail
-                    </button>
                   </div>
-                </div>
-              ))}
-            </div>
-          )}
+                ))}
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+        <CustomFooter />
+      </>
     );
   }
 
   // Start Test Page
   if (page === 'start-test') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-8">
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-8">
         <div className="bg-white rounded-lg shadow-2xl p-12 max-w-md w-full text-center">
           <h2 className="text-3xl font-bold text-gray-800 mb-4">{selectedPaket.paket}</h2>
           <p className="text-gray-600 mb-8">{selectedPaket.deskripsi}</p>
@@ -609,7 +621,7 @@ export default function TestSimulationApp() {
       <div className="min-h-screen bg-gray-50 flex">
         <div className="w-80 bg-white shadow-lg p-6 overflow-y-auto">
           <h3 className="text-xl font-bold text-gray-800 mb-4">Navigasi Soal</h3>
-          
+
           <div className="mb-4 p-3 bg-indigo-100 rounded-lg">
             <p className="text-sm text-gray-700">Sedang Mengerjakan:</p>
             <p className="text-lg font-bold text-indigo-700">{currentCategory}</p>
@@ -622,7 +634,7 @@ export default function TestSimulationApp() {
             const categoryQuestions = questions
               .map((q, idx) => ({ q, idx }))
               .filter(({ q }) => q.kategori === category);
-            
+
             return (
               <div key={category} className="mb-6">
                 <h4 className="text-sm font-semibold text-gray-700 mb-2 border-b pb-2">
@@ -633,15 +645,13 @@ export default function TestSimulationApp() {
                     <button
                       key={idx}
                       onClick={() => handleNavigateQuestion(idx)}
-                      className={`w-12 h-12 rounded-lg font-semibold text-sm transition-all ${
-                        currentQuestionIndex === idx
-                          ? 'ring-2 ring-indigo-600'
-                          : ''
-                      } ${
-                        getQuestionStatus(idx) === 'answered'
+                      className={`w-12 h-12 rounded-lg font-semibold text-sm transition-all ${currentQuestionIndex === idx
+                        ? 'ring-2 ring-indigo-600'
+                        : ''
+                        } ${getQuestionStatus(idx) === 'answered'
                           ? 'bg-green-500 text-white hover:bg-green-600'
                           : 'bg-gray-300 text-gray-700 hover:bg-gray-400'
-                      }`}
+                        }`}
                     >
                       {idx + 1}
                     </button>
@@ -675,21 +685,20 @@ export default function TestSimulationApp() {
             <div className="max-w-4xl mx-auto">
               <div className="bg-white rounded-lg shadow-md p-8 mb-6">
                 {currentQuestion?.soal && renderQuestionContent(currentQuestion.soal)}
-                
+
                 <div className="space-y-3 mt-6">
                   {currentQuestion?.pilihan.map((option, idx) => {
                     const optionLetter = String.fromCharCode(65 + idx);
                     const isSelected = answers[currentQuestionIndex] === option;
-                    
+
                     return (
                       <button
                         key={idx}
                         onClick={() => handleAnswerSelect(option)}
-                        className={`w-full text-left p-4 rounded-lg border-2 transition-all ${
-                          isSelected
-                            ? 'border-indigo-600 bg-indigo-50'
-                            : 'border-gray-300 hover:border-indigo-400 hover:bg-gray-50'
-                        }`}
+                        className={`w-full text-left p-4 rounded-lg border-2 transition-all ${isSelected
+                          ? 'border-indigo-600 bg-indigo-50'
+                          : 'border-gray-300 hover:border-indigo-400 hover:bg-gray-50'
+                          }`}
                       >
                         <span className="font-semibold text-indigo-600 mr-3">
                           {optionLetter}.
@@ -712,7 +721,7 @@ export default function TestSimulationApp() {
               >
                 Previous
               </button>
-              
+
               <button
                 onClick={() => setShowSubmitConfirm(true)}
                 className="px-8 py-3 bg-red-600 text-white rounded-lg font-bold hover:bg-red-700"
@@ -847,26 +856,24 @@ export default function TestSimulationApp() {
                 {result.details.map((question, index) => {
                   const isCorrect = question.userAnswer === question.jawaban;
                   const isUnanswered = !question.userAnswer;
-                  
+
                   return (
-                    <div key={index} className={`border-l-4 p-6 rounded-r-lg ${
-                      isCorrect ? 'border-green-500 bg-green-50' :
+                    <div key={index} className={`border-l-4 p-6 rounded-r-lg ${isCorrect ? 'border-green-500 bg-green-50' :
                       isUnanswered ? 'border-gray-400 bg-gray-50' :
-                      'border-red-500 bg-red-50'
-                    }`}>
+                        'border-red-500 bg-red-50'
+                      }`}>
                       <div className="flex justify-between items-start mb-4">
                         <h3 className="text-lg font-semibold text-gray-800">
                           Soal {index + 1} ({question.kategori})
                         </h3>
-                        <span className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                          isCorrect ? 'bg-green-500 text-white' :
+                        <span className={`px-3 py-1 rounded-full text-sm font-semibold ${isCorrect ? 'bg-green-500 text-white' :
                           isUnanswered ? 'bg-gray-400 text-white' :
-                          'bg-red-500 text-white'
-                        }`}>
+                            'bg-red-500 text-white'
+                          }`}>
                           {isCorrect ? 'Benar' : isUnanswered ? 'Tidak Dijawab' : 'Salah'}
                         </span>
                       </div>
-                      
+
                       <div className="mb-4">
                         {question.soal.map((item, idx) => {
                           if (item.type === 'TEXT') {
@@ -878,8 +885,8 @@ export default function TestSimulationApp() {
                           } else if (item.type === 'IMAGE') {
                             return (
                               <div key={idx} className="mb-2">
-                                <img 
-                                  src={item.value} 
+                                <img
+                                  src={item.value}
                                   alt={`Soal ${index + 1}`}
                                   className="max-w-md h-auto rounded-lg shadow-md"
                                 />
@@ -889,21 +896,20 @@ export default function TestSimulationApp() {
                           return null;
                         })}
                       </div>
-                      
+
                       <div className="space-y-2 mb-4">
                         {question.pilihan.map((option, idx) => {
                           const optionLetter = String.fromCharCode(65 + idx);
                           const isUserAnswer = question.userAnswer === option;
                           const isCorrectAnswer = question.jawaban === option;
-                          
+
                           return (
                             <div
                               key={idx}
-                              className={`p-3 rounded-lg ${
-                                isCorrectAnswer ? 'bg-green-200 border-2 border-green-500' :
+                              className={`p-3 rounded-lg ${isCorrectAnswer ? 'bg-green-200 border-2 border-green-500' :
                                 isUserAnswer && !isCorrect ? 'bg-red-200 border-2 border-red-500' :
-                                'bg-white border border-gray-300'
-                              }`}
+                                  'bg-white border border-gray-300'
+                                }`}
                             >
                               <span className="font-semibold mr-2">{optionLetter}.</span>
                               <span>{option}</span>

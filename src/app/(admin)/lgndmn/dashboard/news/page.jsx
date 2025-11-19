@@ -144,7 +144,7 @@ export default function News() {
         </div>
 
         {/* Stats Card */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+        {/* <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
             <div className="flex items-center justify-between">
               <div>
@@ -186,7 +186,7 @@ export default function News() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* News Grid */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">

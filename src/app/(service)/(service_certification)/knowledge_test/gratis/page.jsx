@@ -1,6 +1,8 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import { Clock, X, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
+import Navbar from "@/components/Navbar";
+import CustomFooter from "@/components/CustomFooter";
 
 // Mock questions untuk trial test dengan format soal baru (TEXT dan IMAGE)
 const MOCK_TRIAL_QUESTIONS = {
@@ -154,16 +156,16 @@ export default function TrialTestApp() {
   const handleStartTest = () => {
     const allQuestions = [];
     const categories = Object.keys(MOCK_TRIAL_QUESTIONS);
-    
+
     categories.forEach(category => {
       const categoryQuestions = shuffleArray(MOCK_TRIAL_QUESTIONS[category]).map(q => ({
         ...q,
         pilihan: shuffleArray(q.pilihan)
       }));
-      
+
       allQuestions.push(...categoryQuestions);
     });
-    
+
     setQuestions(allQuestions);
     setAnswers({});
     setCurrentQuestionIndex(0);
@@ -192,7 +194,7 @@ export default function TrialTestApp() {
 
     const endTime = Date.now();
     const timeSpent = Math.floor((endTime - startTime) / 1000);
-    
+
     let correct = 0;
     let incorrect = 0;
     let unanswered = 0;
@@ -258,8 +260,8 @@ export default function TrialTestApp() {
       } else if (item.type === 'IMAGE') {
         return (
           <div key={index} className="mb-4">
-            <img 
-              src={item.value} 
+            <img
+              src={item.value}
               alt={`Soal ${currentQuestionIndex + 1}`}
               className="max-w-full h-auto rounded-lg shadow-md"
             />
@@ -273,52 +275,56 @@ export default function TrialTestApp() {
   // Start Test Page
   if (page === 'start-test') {
     const totalQuestions = Object.values(MOCK_TRIAL_QUESTIONS).reduce((sum, arr) => sum + arr.length, 0);
-    
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 flex items-center justify-center p-8">
-        <div className="bg-white rounded-lg shadow-2xl p-12 max-w-md w-full text-center">
-          <div className="mb-6">
-            <span className="inline-block px-4 py-2 bg-green-500 text-white rounded-full font-bold text-sm">
-              UJI COBA GRATIS
-            </span>
-          </div>
-          <h2 className="text-3xl font-bold text-gray-800 mb-4">Trial Test</h2>
-          <p className="text-gray-600 mb-8">Tes percobaan untuk mengenal sistem dan format soal</p>
-          
-          <div className="bg-green-50 rounded-lg p-6 mb-8">
-            <p className="text-sm text-gray-700 mb-2">Informasi Tes:</p>
-            <p className="text-lg font-semibold text-gray-800">
-              {totalQuestions} Soal
-            </p>
-            <p className="text-lg font-semibold text-green-600">Waktu: Tidak Terbatas</p>
-            <div className="mt-4 text-left">
-              <p className="text-sm text-gray-700 mb-2">Kategori Soal:</p>
-              {Object.keys(MOCK_TRIAL_QUESTIONS).map(category => (
-                <p key={category} className="text-sm text-gray-600">
-                  • {category}: {MOCK_TRIAL_QUESTIONS[category].length} soal
-                </p>
-              ))}
-            </div>
-          </div>
 
-          <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-8 text-left">
-            <p className="text-sm text-gray-700">
-              <span className="font-semibold">Catatan:</span> Ini adalah tes percobaan gratis tanpa batasan waktu. 
-              Hasil tidak disimpan dan hanya untuk latihan.
+    return (
+      <>
+        <Navbar />
+        <div className="min-h-screen bg-gray-50 flex items-center justify-center p-8 pt-24">
+          <div className="bg-white rounded-lg shadow-2xl p-12 max-w-md w-full text-center">
+            <div className="mb-6">
+              <span className="inline-block px-4 py-2 bg-green-500 text-white rounded-full font-bold text-sm">
+                UJI COBA GRATIS
+              </span>
+            </div>
+            <h2 className="text-3xl font-bold text-gray-800 mb-4">Trial Test</h2>
+            <p className="text-gray-600 mb-8">Tes percobaan untuk mengenal sistem dan format soal</p>
+
+            <div className="bg-green-50 rounded-lg p-6 mb-8">
+              <p className="text-sm text-gray-700 mb-2">Informasi Tes:</p>
+              <p className="text-lg font-semibold text-gray-800">
+                {totalQuestions} Soal
+              </p>
+              <p className="text-lg font-semibold text-green-600">Waktu: Tidak Terbatas</p>
+              <div className="mt-4 text-left">
+                <p className="text-sm text-gray-700 mb-2">Kategori Soal:</p>
+                {Object.keys(MOCK_TRIAL_QUESTIONS).map(category => (
+                  <p key={category} className="text-sm text-gray-600">
+                    • {category}: {MOCK_TRIAL_QUESTIONS[category].length} soal
+                  </p>
+                ))}
+              </div>
+            </div>
+
+            <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-8 text-left">
+              <p className="text-sm text-gray-700">
+                <span className="font-semibold">Catatan:</span> Ini adalah tes percobaan gratis tanpa batasan waktu.
+                Hasil tidak disimpan dan hanya untuk latihan.
+              </p>
+            </div>
+
+            <p className="text-gray-600 mb-8">
+              Klik tombol "Start" untuk memulai tes
             </p>
+            <button
+              onClick={handleStartTest}
+              className="w-full bg-green-600 text-white py-4 rounded-lg font-bold text-lg hover:bg-green-700 transition-colors shadow-lg"
+            >
+              Start Test
+            </button>
           </div>
-          
-          <p className="text-gray-600 mb-8">
-            Klik tombol "Start" untuk memulai tes
-          </p>
-          <button
-            onClick={handleStartTest}
-            className="w-full bg-green-600 text-white py-4 rounded-lg font-bold text-lg hover:bg-green-700 transition-colors shadow-lg"
-          >
-            Start Test
-          </button>
         </div>
-      </div>
+        <CustomFooter />
+      </>
     );
   }
 
@@ -334,7 +340,7 @@ export default function TrialTestApp() {
             </span>
           </div>
           <h3 className="text-xl font-bold text-gray-800 mb-4">Navigasi Soal</h3>
-          
+
           {/* Category indicator */}
           <div className="mb-4 p-3 bg-green-100 rounded-lg">
             <p className="text-sm text-gray-700">Sedang Mengerjakan:</p>
@@ -349,7 +355,7 @@ export default function TrialTestApp() {
             const categoryQuestions = questions
               .map((q, idx) => ({ q, idx }))
               .filter(({ q }) => q.kategori === category);
-            
+
             return (
               <div key={category} className="mb-6">
                 <h4 className="text-sm font-semibold text-gray-700 mb-2 border-b pb-2">
@@ -360,15 +366,13 @@ export default function TrialTestApp() {
                     <button
                       key={idx}
                       onClick={() => handleNavigateQuestion(idx)}
-                      className={`w-12 h-12 rounded-lg font-semibold text-sm transition-all ${
-                        currentQuestionIndex === idx
+                      className={`w-12 h-12 rounded-lg font-semibold text-sm transition-all ${currentQuestionIndex === idx
                           ? 'ring-2 ring-green-600'
                           : ''
-                      } ${
-                        getQuestionStatus(idx) === 'answered'
+                        } ${getQuestionStatus(idx) === 'answered'
                           ? 'bg-green-500 text-white hover:bg-green-600'
                           : 'bg-gray-300 text-gray-700 hover:bg-gray-400'
-                      }`}
+                        }`}
                     >
                       {idx + 1}
                     </button>
@@ -406,22 +410,21 @@ export default function TrialTestApp() {
               <div className="bg-white rounded-lg shadow-md p-8 mb-6">
                 {/* Render question content (TEXT and/or IMAGE) */}
                 {currentQuestion?.soal && renderQuestionContent(currentQuestion.soal)}
-                
+
                 {/* Options */}
                 <div className="space-y-3 mt-6">
                   {currentQuestion?.pilihan.map((option, idx) => {
                     const optionLetter = String.fromCharCode(65 + idx);
                     const isSelected = answers[currentQuestionIndex] === option;
-                    
+
                     return (
                       <button
                         key={idx}
                         onClick={() => handleAnswerSelect(option)}
-                        className={`w-full text-left p-4 rounded-lg border-2 transition-all ${
-                          isSelected
+                        className={`w-full text-left p-4 rounded-lg border-2 transition-all ${isSelected
                             ? 'border-green-600 bg-green-50'
                             : 'border-gray-300 hover:border-green-400 hover:bg-gray-50'
-                        }`}
+                          }`}
                       >
                         <span className="font-semibold text-green-600 mr-3">
                           {optionLetter}.
@@ -445,7 +448,7 @@ export default function TrialTestApp() {
               >
                 Previous
               </button>
-              
+
               <button
                 onClick={() => setShowSubmitConfirm(true)}
                 className="px-8 py-3 bg-red-600 text-white rounded-lg font-bold hover:bg-red-700"
@@ -525,7 +528,7 @@ export default function TrialTestApp() {
           {/* Note */}
           <div className="bg-yellow-50 border-l-4 border-yellow-500 p-4 mb-6">
             <p className="text-sm text-gray-700">
-              <span className="font-semibold">Catatan:</span> Hasil trial test ini tidak disimpan. 
+              <span className="font-semibold">Catatan:</span> Hasil trial test ini tidak disimpan.
               Untuk mendapatkan hasil yang tersimpan dan akses ke soal lebih lengkap, gunakan paket premium.
             </p>
           </div>
@@ -583,26 +586,24 @@ export default function TrialTestApp() {
               {result.details.map((question, index) => {
                 const isCorrect = question.userAnswer === question.jawaban;
                 const isUnanswered = !question.userAnswer;
-                
+
                 return (
-                  <div key={index} className={`border-l-4 p-6 rounded-r-lg ${
-                    isCorrect ? 'border-green-500 bg-green-50' :
-                    isUnanswered ? 'border-gray-400 bg-gray-50' :
-                    'border-red-500 bg-red-50'
-                  }`}>
+                  <div key={index} className={`border-l-4 p-6 rounded-r-lg ${isCorrect ? 'border-green-500 bg-green-50' :
+                      isUnanswered ? 'border-gray-400 bg-gray-50' :
+                        'border-red-500 bg-red-50'
+                    }`}>
                     <div className="flex justify-between items-start mb-4">
                       <h3 className="text-lg font-semibold text-gray-800">
                         Soal {index + 1} ({question.kategori})
                       </h3>
-                      <span className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                        isCorrect ? 'bg-green-500 text-white' :
-                        isUnanswered ? 'bg-gray-400 text-white' :
-                        'bg-red-500 text-white'
-                      }`}>
+                      <span className={`px-3 py-1 rounded-full text-sm font-semibold ${isCorrect ? 'bg-green-500 text-white' :
+                          isUnanswered ? 'bg-gray-400 text-white' :
+                            'bg-red-500 text-white'
+                        }`}>
                         {isCorrect ? 'Benar' : isUnanswered ? 'Tidak Dijawab' : 'Salah'}
                       </span>
                     </div>
-                    
+
                     {/* Render question content */}
                     <div className="mb-4">
                       {question.soal.map((item, idx) => {
@@ -615,8 +616,8 @@ export default function TrialTestApp() {
                         } else if (item.type === 'IMAGE') {
                           return (
                             <div key={idx} className="mb-2">
-                              <img 
-                                src={item.value} 
+                              <img
+                                src={item.value}
                                 alt={`Soal ${index + 1}`}
                                 className="max-w-md h-auto rounded-lg shadow-md"
                               />
@@ -626,21 +627,20 @@ export default function TrialTestApp() {
                         return null;
                       })}
                     </div>
-                    
+
                     <div className="space-y-2">
                       {question.pilihan.map((option, idx) => {
                         const optionLetter = String.fromCharCode(65 + idx);
                         const isUserAnswer = question.userAnswer === option;
                         const isCorrectAnswer = question.jawaban === option;
-                        
+
                         return (
                           <div
                             key={idx}
-                            className={`p-3 rounded-lg ${
-                              isCorrectAnswer ? 'bg-green-200 border-2 border-green-500' :
-                              isUserAnswer && !isCorrect ? 'bg-red-200 border-2 border-red-500' :
-                              'bg-white border border-gray-300'
-                            }`}
+                            className={`p-3 rounded-lg ${isCorrectAnswer ? 'bg-green-200 border-2 border-green-500' :
+                                isUserAnswer && !isCorrect ? 'bg-red-200 border-2 border-red-500' :
+                                  'bg-white border border-gray-300'
+                              }`}
                           >
                             <span className="font-semibold mr-2">{optionLetter}.</span>
                             <span>{option}</span>

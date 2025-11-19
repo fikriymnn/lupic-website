@@ -104,12 +104,6 @@ export default function CaseStudy() {
     setCurrentPage(1);
   };
 
-  if (loading)
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        <p className="text-gray-600">Loading...</p>
-      </div>
-    );
 
   return (
     <>
@@ -161,13 +155,14 @@ export default function CaseStudy() {
                   className="bg-white rounded-lg shadow-lg p-6 hover:-translate-y-1 transition flex flex-col"
                 >
                   <div className="flex gap-2 mb-3">
-                    <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs">
-                      {useCase.jenjang}
-                    </span>
-                    <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs">
-                      {useCase.topikIPA}
-                    </span>
-                    <span className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs">
+                    <span className="px-3 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full">
+                        {useCase.jenjang}
+                      </span>
+
+                      <span className="px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full">
+                        {useCase.topikIPA}
+                      </span>
+                    <span className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full font-semibold text-xs">
                       {useCase.kompetensiGuru}
                     </span>
                   </div>

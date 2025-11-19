@@ -158,7 +158,7 @@ export default function VideoTrainingApp() {
           <p className="text-gray-700 mb-8 leading-relaxed">
             Fitur Video Pembelajaran merupakan bagian dari website layanan Inspira PPG yang berfungsi sebagai media latihan dan observasi pembelajaran bagi calon guru. Fitur ini menyediakan kumpulan video berbasis praktik mengajar yang disusun sesuai Kurikulum Merdeka untuk jenjang SD dan SMP pada bidang IPA.
           </p>
-
+          
           {/* Search & Filter */}
           <div className="flex flex-col md:flex-row gap-3 mb-8">
             <div className="w-full md:w-96 relative">
@@ -208,17 +208,14 @@ export default function VideoTrainingApp() {
                   <div className="p-5 flex flex-col h-full flex-1">
                     <div className="flex gap-2 mb-3">
                       <span
-                        className={`px-2 py-1 rounded-lg text-xs font-semibold ${video.jenjang === "SD"
-                          ? "bg-blue-100 text-blue-700"
-                          : "bg-purple-100 text-purple-700"
-                          }`}
+                        className={`px-2 py-1 rounded-xl text-xs font-semibold bg-blue-100 text-blue-700`}
                       >
                         {video.jenjang}
                       </span>
-                      <span className="px-2 py-1 rounded-lg text-xs font-semibold bg-gray-100 text-gray-700">
+                      <span className="px-2 py-1 rounded-xl text-xs font-semibold bg-gray-100 text-gray-700">
                         {video.topikIPA}
                       </span>
-                      <span className={`px-2 py-1 rounded-lg text-xs font-semibold bg-gray-100 text-gray-700 ${video.status === "GRATIS" ? "bg-green-500 text-white" : "bg-yellow-400 text-gray-900"
+                      <span className={`px-2 py-1 rounded-xl text-xs font-semibold bg-gray-100 text-gray-700 ${video.status === "GRATIS" ? "bg-green-500 text-white" : "bg-yellow-400 text-gray-900"
                         }`}>
                         {video.status}
                       </span>
