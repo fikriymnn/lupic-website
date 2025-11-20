@@ -27,8 +27,11 @@ const VidPage = () => {
   return (
     <>
       <Navbar />
-      <div className="container mx-auto p-6">
-        <h2 className="text-2xl font-bold mb-4 text-center">Our Videos</h2>
+      <div className="container mx-auto p-6 pt-16">
+        <div className="max-w-6xl px-4 md:px-8 text-center m-auto mb-8">
+                <h3 className="md:text-5xl text-3xl md:mt-8 mt-4 font-bold">Our Videos</h3>
+                <div className="h-1 w-36 bg-koreaRed md:mt-5 mt-3 m-auto"></div>
+            </div>
         <div className="w-[90%] m-auto grid grid-cols-1 md:grid-cols-2 gap-4">
           {videos.map((video, index) => (
             <div key={index} className="bg-gray-900 text-white p-4 rounded-lg shadow-lg">

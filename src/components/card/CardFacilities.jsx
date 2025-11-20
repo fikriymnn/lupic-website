@@ -20,9 +20,9 @@ export default function CardFacilities({ gambar, judul, deskripsi, id }) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="relative w-full max-w-[320px] bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden transform hover:-translate-y-2">
+      <div className="relative w-full max-w-[320px] bg-white rounded-lg shadow-sm hover:shadow-2xl transition-all duration-500 overflow-hidden transform hover:-translate-y-2 border border-gray-200">
         {/* Image Container with Overlay */}
-        <div className="relative w-full h-[280px] overflow-hidden rounded-t-2xl bg-gray-100">
+        <div className="relative w-full h-[280px] overflow-hidden rounded-t-lg bg-gray-100">
           {/* Loading Skeleton */}
           {!imageLoaded && (
             <div className="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-pulse" />
@@ -79,9 +79,6 @@ export default function CardFacilities({ gambar, judul, deskripsi, id }) {
             </span>
           </div>
         </div>
-
-        {/* Corner Accent */}
-        <div className="absolute top-0 right-0 w-20 h-20 bg-koreaRed/10 rounded-bl-full transform translate-x-10 -translate-y-10 group-hover:translate-x-8 group-hover:-translate-y-8 transition-transform duration-500" />
       </div>
     </a>
   );

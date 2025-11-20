@@ -8,7 +8,7 @@ const Navbar = () => {
   const [login, setLogin] = useState(true);
   const [activeSubDropdown, setActiveSubDropdown] = useState(null);
   const [activeDropdown, setActiveDropdown] = useState(null);
-  const [isMounted,setIsMounted] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
 
   // Suppress hydration warnings caused by browser extensions
   useEffect(() => {
@@ -128,6 +128,15 @@ const Navbar = () => {
     },
   ];
 
+  const personal = {
+    label: "Personal",
+    items: [
+      { href: "/personal", label: "Test schedule" },
+      { href: "/test_history_result", label: "Knowledge test result" },
+      { href: "/test_history", label: "Knowledge test acces history" },
+    ],
+  }
+
   return (
     <nav
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-koreaRed shadow-lg py-2"
@@ -189,8 +198,8 @@ const Navbar = () => {
                 {/* Dropdown Menu */}
                 <div
                   className={`absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl overflow-hidden transition-all duration-200 ${activeDropdown === dropdown.label
-                      ? "opacity-100 visible translate-y-0"
-                      : "opacity-0 invisible -translate-y-2"
+                    ? "opacity-100 visible translate-y-0"
+                    : "opacity-0 invisible -translate-y-2"
                     }`}
                 >
                   {dropdown.items.map((item, idx) =>
@@ -247,13 +256,93 @@ const Navbar = () => {
 
             {/* Auth Buttons */}
             <div className="flex items-center space-x-1 ml-2 border-l border-white/20 pl-2">
-              <Link
-                href={login ? "/personal" : "/login"}
+              {login ? <div
+                className="relative group"
+                onMouseEnter={() => setActiveDropdown(personal.label)}
+                onMouseLeave={() => setActiveDropdown(null)}
+              >
+                <button
+                  id={`nav-dropdown-${personal.label.toLowerCase().replace(/\s+/g, '-')}`}
+                  className="text-white px-3 py-2 rounded-md font-medium hover:bg-white/10 transition-colors duration-200 flex items-center gap-1 whitespace-nowrap"
+                  style={{ fontSize: '0.8125rem' }}
+                  type="button"
+                >
+                  {personal.label}
+                  <svg
+                    className={`w-3.5 h-3.5 transition-transform duration-200 ${activeDropdown === personal.label ? "rotate-180" : ""
+                      }`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+
+                {/* Dropdown Menu */}
+                <div
+                  className={`absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl overflow-hidden transition-all duration-200 ${activeDropdown === personal.label
+                    ? "opacity-100 visible translate-y-0"
+                    : "opacity-0 invisible -translate-y-2"
+                    }`}
+                >
+                  {personal.items.map((item, idx) =>
+                    item.subItems ? (
+                      <div key={item.label} className="relative group/sub">
+                        <button
+                          id={`nav-subitem-${item.label.toLowerCase().replace(/\s+/g, '-')}`}
+                          className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-koreaRed hover:text-white transition-colors duration-150 flex items-center justify-between border-t border-gray-100"
+                          type="button"
+                        >
+                          <p>{item.label}</p>
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                          </svg>
+                        </button>
+
+                        {/* Sub-dropdown */}
+                        <div className="mx-auto border border-gray-100 z-40 top-0 w-56 rounded-lg shadow-xl overflow-hidden opacity-0 group-hover/sub:opacity-100 group-hover/sub:block hidden transition-all duration-200">
+                          {item.subItems.map((sub, subIdx) => (
+                            <Link
+                              key={sub.href}
+                              href={sub.href}
+                              className={`block px-4 py-3 text-sm text-gray-700 hover:bg-koreaRed hover:text-white transition-colors duration-150 ${subIdx > 0 ? "border-t border-gray-100" : ""
+                                }`}
+                              onClick={closeMenu}
+                            >
+                              {sub.label}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    ) : (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        target={item.external ? "_blank" : "_self"}
+                        rel={item.external ? "noopener noreferrer" : ""}
+                        className={`block px-4 py-3 text-sm text-gray-700 hover:bg-koreaRed hover:text-white transition-colors duration-150 ${idx > 0 ? "border-t border-gray-100" : ""
+                          }`}
+                        onClick={closeMenu}
+                      >
+                        <p>{item.label}</p>
+                        {item.external && (
+                          <svg className="inline-block w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                          </svg>
+                        )}
+                      </Link>
+                    )
+                  )}
+                </div>
+              </div> : <Link
+                href={"/login"}
                 className="text-white px-3 py-2 rounded-md font-medium hover:bg-white/10 transition-colors duration-200 whitespace-nowrap"
                 style={{ fontSize: '0.8125rem' }}
               >
-                {login ? "Personal" : "Login"}
+                Login
               </Link>
+              }
               <div>
                 {login && (
                   <button

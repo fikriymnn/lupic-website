@@ -150,7 +150,7 @@ export default function Home() {
                 className="relative group"
               >
                 <div className="absolute -inset-1 bg-gradient-to-r from-koreaBlue via-purple-500 to-koreaRed rounded-3xl opacity-20 group-hover:opacity-30 blur transition-opacity" />
-                <div className="relative bg-white md:p-14  py-6 px-4 rounded-2xl">
+                <div className="relative bg-white md:p-14  py-6 px-4 rounded-lg">
                   <Image
                     src="/images/goals.png"
                     alt="LUPIC Goals"
