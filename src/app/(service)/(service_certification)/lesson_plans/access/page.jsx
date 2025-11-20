@@ -130,8 +130,6 @@ export default function FormBukaModul() {
   
   };
 
-
-
   return (
     <>
       <Navbar />

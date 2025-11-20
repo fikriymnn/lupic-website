@@ -8,6 +8,7 @@ import ResponsivePagination from "react-responsive-pagination";
 import "react-responsive-pagination/themes/classic.css";
 import axios from "axios";
 import { motion } from "framer-motion";
+import { formatTanggalIndonesia } from "@/utils/formatTanggal"
 
 export default function News() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -174,7 +175,7 @@ export default function News() {
                 {data3.judul}
               </h3>
               <p className="text-xs mb-2 text-koreaBlueMuda md:text-start">
-                {data3.tanggal}
+                {data3.tanggal?formatTanggalIndonesia(data3.tanggal):""}
               </p>
               <p className="text-justify md:text-lg text-sm line-clamp-6">
                 {data3.deskripsi}
