@@ -6,7 +6,7 @@ import {
   ChevronLeft,
   Upload,
 } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
 
 const modul = {
@@ -37,7 +37,10 @@ const SUMBER_INFORMASI_OPTIONS = [
 
 export default function FormBukaKnowledgeTest() {
   const router = useRouter()
-  const searchParams = useRouter()
+  const searchParams = useSearchParams()
+  const modulId = searchParams.get('modulId')
+  const userId = searchParams.get('userId')
+  const modulName = searchParams.get('modulName')
   const [isMounted, setIsMounted] = useState(false);
   const [formData, setFormData] = useState({
     nama: "",
@@ -113,7 +116,7 @@ export default function FormBukaKnowledgeTest() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/modul_ajar_access", {...formData, userId:searchParams.get('userId'),modulAjarId:searchParams.get('modulId')})
+      const res = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/modul_ajar_access", {...formData, userId:userId,modulAjarId:modulId})
       const waUrl = `https://wa.me/6281563862944?text=${encodeURIComponent(
         "Halo, saya ingin konfirmasi pembayaran modul atas nama " + formData.nama
       )}`;
@@ -148,7 +151,7 @@ export default function FormBukaKnowledgeTest() {
                 Formulir Akses Knowledge Test Exercise
               </h1>
               <p className="text-gray-600">
-                Modul: <span className="font-semibold">{searchParams.get("modulName")}</span>
+                Modul: <span className="font-semibold">{modulName}</span>
               </p>
               <p className="text-sm text-gray-500 mt-1">
                 Status:{" "}

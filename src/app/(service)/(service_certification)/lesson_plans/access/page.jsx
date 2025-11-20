@@ -6,7 +6,7 @@ import {
   ChevronLeft,
   Upload,
 } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
 
 const modul = {
@@ -37,7 +37,10 @@ const SUMBER_INFORMASI_OPTIONS = [
 
 export default function FormBukaModul() {
   const router = useRouter()
-  const searchParams = useRouter()
+  const searchParams = useSearchParams()
+  const userId = searchParams.get('userId')
+  const modulId = searchParams.get('modulId')
+  const modulName = searchParams.get('modulName')
   const [isMounted, setIsMounted] = useState(false);
   const [formData, setFormData] = useState({
     nama: "",
@@ -113,7 +116,7 @@ export default function FormBukaModul() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/modul_ajar_access", {...formData, userId:searchParams.get('userId'),modulAjarId:searchParams.get('modulId')})
+      const res = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/modul_ajar_access", {...formData, userId:userId,modulAjarId:modulId})
       const waUrl = `https://wa.me/6281563862944?text=${encodeURIComponent(
         "Halo, saya ingin konfirmasi pembayaran modul atas nama " + formData.nama
       )}`;
@@ -136,7 +139,7 @@ export default function FormBukaModul() {
       <div className="min-h-screen bg-gray-100 py-16">
         <div className="max-w-4xl mx-auto p-6 ">
           <button
-            onClick={() => { router.push("/lesson_plans/" + searchParams.get('modulId')) }}
+            onClick={() => { router.push("/lesson_plans/" + modulId) }}
             className="mb-6 px-4 py-2 bg-white rounded-lg shadow hover:shadow-md transition flex items-center gap-2"
           >
             <ChevronLeft size={20} />
@@ -148,7 +151,7 @@ export default function FormBukaModul() {
                 Formulir Akses Modul
               </h1>
               <p className="text-gray-600">
-                Modul: <span className="font-semibold">{searchParams.get("modulName")}</span>
+                Modul: <span className="font-semibold">{modulName}</span>
               </p>
               <p className="text-sm text-gray-500 mt-1">
                 Status:{" "}

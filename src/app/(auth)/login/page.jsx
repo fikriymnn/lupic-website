@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 
 export default function Login() {
     const searchQuery = useRouter()
+    const prev = searchQuery.get('prev')
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
@@ -21,14 +22,12 @@ export default function Login() {
             })
             if (Data.data == "success") {
                 alert("Login success")
-                if (searchQuery.get('prev')) {
-                    window.location.href = `/${searchQuery.get('prev')}`
+                if (prev) {
+                    window.location.href = `/${prev}`
                 } else {
                     window.location.href = "/"
                 }
 
-            } else {
-                alert("login failed")
             }
         } catch (err) {
             alert("login failed")
