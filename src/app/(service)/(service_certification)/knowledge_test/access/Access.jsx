@@ -38,9 +38,7 @@ const SUMBER_INFORMASI_OPTIONS = [
 export default function FormBukaKnowledgeTest() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const modulId = searchParams.get('modulId')
   const userId = searchParams.get('userId')
-  const modulName = searchParams.get('modulName')
   const [isMounted, setIsMounted] = useState(false);
   const [formData, setFormData] = useState({
     nama: "",
@@ -116,9 +114,9 @@ export default function FormBukaKnowledgeTest() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/modul_ajar_access", {...formData, userId:userId,modulAjarId:modulId})
+      const res = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/access", {...formData, userId:userId})
       const waUrl = `https://wa.me/6281563862944?text=${encodeURIComponent(
-        "Halo, saya ingin konfirmasi pembayaran modul atas nama " + formData.nama
+        "Halo, saya ingin konfirmasi pembayaran akses knowledge test atas nama " + formData.nama
       )}`;
       if (res.data) {
        alert("Permintaan berhasil dikirim, Konfirmasi permintaan anda lewat Whatsapp lalu tunggu akses dari admin!")
@@ -151,13 +149,7 @@ export default function FormBukaKnowledgeTest() {
                 Formulir Akses Knowledge Test Exercise
               </h1>
               <p className="text-gray-600">
-                Modul: <span className="font-semibold">{modulName}</span>
-              </p>
-              <p className="text-sm text-gray-500 mt-1">
-                Status:{" "}
-                <span className="font-semibold text-orange-600">
-                  {modul.status}
-                </span>
+                Akses knowledge test 30 hari
               </p>
             </div>
 

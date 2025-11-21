@@ -3,9 +3,10 @@ import React, { useState, useEffect } from 'react';
 import { Clock, X, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
 import Navbar from "@/components/Navbar";
 import CustomFooter from "@/components/CustomFooter";
+import axios from 'axios';
 
 // Mock questions untuk trial test dengan format soal baru (TEXT dan IMAGE)
-const MOCK_TRIAL_QUESTIONS = {
+const questions = {
   PCK: [
     {
       id: 'pck_1',
@@ -126,6 +127,21 @@ export default function TrialTestApp() {
   const [result, setResult] = useState(null);
   const [startTime, setStartTime] = useState(null);
 
+  const getData = async ()=>{
+    try{
+      const res = await axios.get(process.env.NEXT_PUBLIC_API_URL+"/api/soal/gratis")
+      if(res.data){
+        console.log(res.data)
+        setQuestions(res.data)
+      }
+    }catch(err){
+      console.log(err.message)
+    }
+  }
+  useEffect(()=>{
+    getData()
+  },[])
+
   // Timer count up (tidak terbatas)
   useEffect(() => {
     if (page === 'test') {
@@ -155,10 +171,10 @@ export default function TrialTestApp() {
 
   const handleStartTest = () => {
     const allQuestions = [];
-    const categories = Object.keys(MOCK_TRIAL_QUESTIONS);
+    const categories = Object.keys(questions);
 
     categories.forEach(category => {
-      const categoryQuestions = shuffleArray(MOCK_TRIAL_QUESTIONS[category]).map(q => ({
+      const categoryQuestions = shuffleArray(questions[category]).map(q => ({
         ...q,
         pilihan: shuffleArray(q.pilihan)
       }));
@@ -261,9 +277,9 @@ export default function TrialTestApp() {
         return (
           <div key={index} className="mb-4">
             <img
-              src={item.value}
+              src={`${process.env.NEXT_PUBLIC_API_FILE_URL}${item.value}`}
               alt={`Soal ${currentQuestionIndex + 1}`}
-              className="max-w-full h-auto rounded-lg shadow-md"
+              className="max-w-[50%] h-auto rounded-lg shadow-md"
             />
           </div>
         );
@@ -274,7 +290,7 @@ export default function TrialTestApp() {
 
   // Start Test Page
   if (page === 'start-test') {
-    const totalQuestions = Object.values(MOCK_TRIAL_QUESTIONS).reduce((sum, arr) => sum + arr.length, 0);
+    const totalQuestions = Object.values(questions).reduce((sum, arr) => sum + arr.length, 0);
 
     return (
       <>
@@ -289,7 +305,7 @@ export default function TrialTestApp() {
             <h2 className="text-3xl font-bold text-gray-800 mb-4">Trial Test</h2>
             <p className="text-gray-600 mb-8">Tes percobaan untuk mengenal sistem dan format soal</p>
 
-            <div className="bg-green-50 rounded-lg p-6 mb-8">
+            {/* <div className="bg-green-50 rounded-lg p-6 mb-8">
               <p className="text-sm text-gray-700 mb-2">Informasi Tes:</p>
               <p className="text-lg font-semibold text-gray-800">
                 {totalQuestions} Soal
@@ -297,13 +313,13 @@ export default function TrialTestApp() {
               <p className="text-lg font-semibold text-green-600">Waktu: Tidak Terbatas</p>
               <div className="mt-4 text-left">
                 <p className="text-sm text-gray-700 mb-2">Kategori Soal:</p>
-                {Object.keys(MOCK_TRIAL_QUESTIONS).map(category => (
+                {Object.keys(questions).map(category => (
                   <p key={category} className="text-sm text-gray-600">
-                    • {category}: {MOCK_TRIAL_QUESTIONS[category].length} soal
+                    • {category}: {questions[category].length} soal
                   </p>
                 ))}
               </div>
-            </div>
+            </div> */}
 
             <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-8 text-left">
               <p className="text-sm text-gray-700">
@@ -351,7 +367,7 @@ export default function TrialTestApp() {
           </div>
 
           {/* Question grid grouped by category */}
-          {Object.keys(MOCK_TRIAL_QUESTIONS).map((category) => {
+          {Object.keys(questions).map((category) => {
             const categoryQuestions = questions
               .map((q, idx) => ({ q, idx }))
               .filter(({ q }) => q.kategori === category);
@@ -617,7 +633,7 @@ export default function TrialTestApp() {
                           return (
                             <div key={idx} className="mb-2">
                               <img
-                                src={item.value}
+                                src={`${process.env.NEXT_PUBLIC_API_FILE_URL}${item.value}`}
                                 alt={`Soal ${index + 1}`}
                                 className="max-w-md h-auto rounded-lg shadow-md"
                               />

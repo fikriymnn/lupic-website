@@ -14,7 +14,7 @@ import { useParams } from 'next/navigation';
     });
   };
 
-export default function AdminDashboardLessonPlan() {
+export default function AdminDashboardVideoTraining() {
   const {id} = useParams()
   const [currentPage, setCurrentPage] = useState('list'); // 'list' atau 'detail'
   const [selectedUser, setSelectedUser] = useState(null);
@@ -27,7 +27,7 @@ export default function AdminDashboardLessonPlan() {
 
   const handleToggleStatus = async (userId,status) => {
     try {
-      const res = await axios.put(process.env.NEXT_PUBLIC_API_URL+"/api/modul_ajar_access/"+userId,{status:(status=="ACCESS"?"NO ACCESS":"ACCESS")})
+      const res = await axios.put(process.env.NEXT_PUBLIC_API_URL+"/api/video_pembelajaran_access/"+userId,{status:(status=="ACCESS"?"NO ACCESS":"ACCESS")})
       setUsers(users.map(user => {
         if (user._id === userId) {
           return {
@@ -58,9 +58,9 @@ export default function AdminDashboardLessonPlan() {
 
   async function getData() {
     try {
-      const res = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/modul_ajar_access/" + id)
+      const res = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/video_pembelajaran_access/" + id)
       if (res.data) {
-        console.log(res)
+        console.log(res.data)
         setUsers(res.data)
       }
     } catch (err) {
@@ -86,7 +86,7 @@ export default function AdminDashboardLessonPlan() {
                 {/* Header Section */}
                 <div className="mb-8">
                   <h1 className="text-3xl lg:text-4xl font-bold text-blue-600 mb-2">
-                    Teacher Study Case
+                    Video Training Access
                   </h1>
                 </div>
                 {/* Stats Cards */}
@@ -185,8 +185,8 @@ export default function AdminDashboardLessonPlan() {
                             </td>
                             <td className="px-6 py-4">
                               <a
-                                href={`${process.env.NEXT_PUBLIC_API_FILE_URL}${user.bukti_pembayaran}`}
-                                target="_blank"
+                                href={user.bukti_pembayaran}
+                                download
                                 className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 text-sm font-medium"
                               >
                                 <Download className="w-4 h-4" />

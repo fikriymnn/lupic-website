@@ -1,8 +1,9 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from "@/components/Navbar";
 import CustomFooter from "@/components/CustomFooter";
 import { useRouter } from 'next/navigation';
+import axios from 'axios';
 
 
 /**
@@ -23,8 +24,34 @@ import { useRouter } from 'next/navigation';
 
 export default function LatihanTesObjektifPage() {
     const router = useRouter()
-    const [user, setUser] = useState(true)
-    const [access, setAccess] = useState(true)
+    const [user, setUser] = useState(false)
+    const [access, setAccess] = useState(false)
+
+    async function getUserAndAccess() {
+        try {
+            const resUser = await axios.get(
+                process.env.NEXT_PUBLIC_API_URL + "/api/public/user",
+                { withCredentials: true }
+            );
+            console.log(resUser.data)
+            setUser(resUser.data)
+            if (resUser.data) {
+                const resAccess = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/access/id/" + resUser.data?._id)
+                if (resAccess.data) {
+                    if (resAccess.data.status == "ACCESS") {
+                        setAccess(true)
+                    }
+                }
+            }
+        } catch (err) {
+            setUser(false)
+        }
+    }
+
+    useEffect(() => {
+        getUserAndAccess()
+    }, [])
+
 
 
     // Handler functions (no external props)
@@ -118,7 +145,7 @@ export default function LatihanTesObjektifPage() {
 
                             <div>
                                 <button
-                                    onClick={()=>router.push("/knowledge_test/gratis")}
+                                    onClick={() => router.push("/knowledge_test/gratis")}
                                     className="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors"
                                 >
                                     Mulai Tes
@@ -147,12 +174,13 @@ export default function LatihanTesObjektifPage() {
                             </div>
 
                             <div>
-                                    
+
                                 {/* Access logic: show different CTA based on user state */}
                                 {user && access ? (
                                     <>
                                         <button
-                                            onClick={()=>{router.push("/knowledge_test/premium?userId="+user._id)}}
+                                            onClick={() => router.push("/knowledge_test/premium?userId=" + user._id)
+                                            }
                                             className="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors"
                                         >
                                             Mulai Simulasi
@@ -163,7 +191,7 @@ export default function LatihanTesObjektifPage() {
                                         <div className="mb-3 text-sm text-yellow-700 font-medium">Akses terbatas: Silakan masuk untuk melanjutkan</div>
                                         <button
                                             onClick={() => {
-                                               router.push("/login?prev=knowledge_test")
+                                                router.push("/login?prev=knowledge_test")
                                             }}
                                             className="w-full bg-yellow-400 text-yellow-900 py-3 rounded-lg font-semibold hover:bg-yellow-500 transition-colors"
                                         >
@@ -176,7 +204,7 @@ export default function LatihanTesObjektifPage() {
                                         <div className="mb-3 text-sm text-red-700 font-medium">Akses premium diperlukan</div>
                                         <button
                                             onClick={() => {
-                                                router.push("/knowledge_test/access?")
+                                                router.push("/knowledge_test/access?userId=" + user._id)
                                             }}
                                             className="w-full bg-red-600 text-white py-3 rounded-lg font-semibold hover:bg-red-700 transition-colors"
                                         >
@@ -185,7 +213,7 @@ export default function LatihanTesObjektifPage() {
                                     </>
                                 )}
 
-                         
+
                             </div>
                         </div>
                     </div>

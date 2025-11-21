@@ -185,8 +185,8 @@ export default function AdminDashboardLessonPlan() {
                             </td>
                             <td className="px-6 py-4">
                               <a
-                                href={`${process.env.NEXT_PUBLIC_API_FILE_URL}${user.bukti_pembayaran}`}
-                                target="_blank"
+                                href={user.bukti_pembayaran}
+                                download
                                 className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 text-sm font-medium"
                               >
                                 <Download className="w-4 h-4" />

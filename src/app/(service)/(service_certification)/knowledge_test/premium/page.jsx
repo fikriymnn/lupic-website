@@ -446,29 +446,14 @@ export default function TestSimulationApp() {
                     <div className="flex items-center justify-between mb-4">
                       <h3 className="text-2xl font-bold text-gray-800">{paket.paket}</h3>
                       <div className="flex flex-col gap-2">
-                        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${paket.status === 'PREMIUM' ? 'bg-yellow-400 text-yellow-900' : 'bg-green-400 text-green-900'
-                          }`}>
-                          {paket.status}
-                        </span>
-                        {hasAttempts && (
-                          <span className="px-3 py-1 rounded-full text-xs font-semibold bg-blue-500 text-white">
-                            {paketAttempts.length}x Dikerjakan
-                          </span>
-                        )}
                       </div>
                     </div>
                     <p className="text-gray-600 mb-4">{paket.deskripsi}</p>
-                    {hasAttempts && (
-                      <div className="mb-4 p-3 bg-green-50 rounded-lg">
-                        <p className="text-sm text-gray-600">Nilai Terbaik:</p>
-                        <p className="text-2xl font-bold text-green-600">{bestScore.toFixed(2)}%</p>
-                      </div>
-                    )}
                     <button
                       onClick={() => handleSelectPaket(paket)}
                       className="w-full py-3 rounded-lg font-semibold transition-colors bg-indigo-600 text-white hover:bg-indigo-700"
                     >
-                      {hasAttempts ? 'Kerjakan Lagi' : 'Mulai Paket'}
+                       Mulai Paket
                     </button>
                   </div>
                 );
