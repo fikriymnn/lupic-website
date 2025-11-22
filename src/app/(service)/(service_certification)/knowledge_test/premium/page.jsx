@@ -828,6 +828,7 @@ export default function TestSimulationApp() {
                 setPage('paket-list');
                 setResult(null);
                 setQuestions([]);
+                setSelectedPaket({})
                 setAnswers({});
               }}
               className="p-2 hover:bg-gray-200 rounded-full transition-colors"
