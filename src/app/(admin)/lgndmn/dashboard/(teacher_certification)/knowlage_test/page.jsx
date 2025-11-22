@@ -183,7 +183,7 @@ export default function AdminKnowledgeTest() {
 
     const updateAccess = async (access)=>{
         try{
-             const res = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/access/"+access._id,access)
+             const res = await axios.put(process.env.NEXT_PUBLIC_API_URL + "/api/access/"+access._id,access)
             if(res.data){
                 alert("Sukses mengupdate access!")
             }
@@ -239,9 +239,7 @@ export default function AdminKnowledgeTest() {
 
     useEffect(() => {
         getPaket()
-    }, [pakets])
-
-
+    }, [])
 
     const getSoal = async () => {
         try {

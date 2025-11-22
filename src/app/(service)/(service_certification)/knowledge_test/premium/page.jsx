@@ -3,16 +3,17 @@ import React, { useState, useEffect } from 'react';
 import { Clock, X, CheckCircle, XCircle, AlertCircle, History, ArrowLeft } from 'lucide-react';
 import Navbar from "@/components/Navbar";
 import CustomFooter from "@/components/CustomFooter";
+import axios from 'axios';
 
 // Mock Data
-const MOCK_PAKETS = [
+const paket = [
   { id: '1', paket: 'Paket 1', deskripsi: 'Simulasi Intensif Premium', status: 'PREMIUM' },
   { id: '2', paket: 'Paket 2', deskripsi: 'Simulasi Intensif Premium', status: 'PREMIUM' },
   { id: '3', paket: 'Paket 3', deskripsi: 'Simulasi Intensif Premium', status: 'PREMIUM' }
 ];
 
 // Mock questions dengan penjelasan
-const MOCK_QUESTIONS = {
+const questionsMock = {
   PCK: [
     {
       id: 'pck_1',
@@ -213,6 +214,8 @@ const MOCK_USER_HISTORY = {
   ]
 };
 
+
+
 // Shuffle function
 const shuffleArray = (array) => {
   const newArray = [...array];
@@ -226,7 +229,9 @@ const shuffleArray = (array) => {
 export default function TestSimulationApp() {
   const [page, setPage] = useState('paket-list'); // paket-list, start-test, test, result, history
   const [selectedPaket, setSelectedPaket] = useState(null);
-  const [questions, setQuestions] = useState([]);
+  const [paket, setPaket] = useState([]);
+  const [questions, setQuestions] = useState({});
+  const [questionsNavigation, setQuestionsNavigation] = useState({});
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [currentCategory, setCurrentCategory] = useState('');
   const [answers, setAnswers] = useState({});
@@ -235,6 +240,53 @@ export default function TestSimulationApp() {
   const [result, setResult] = useState(null);
   const [startTime, setStartTime] = useState(null);
   const [userHistory, setUserHistory] = useState(MOCK_USER_HISTORY);
+  const [user, setUser] = useState({})
+
+  const getPaket = async () => {
+    try {
+      const res = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/paket")
+      if (res.data) {
+        const premiumPaket = res.data.filter(value => value.status == "PREMIUM")
+        setPaket(premiumPaket)
+      }
+    } catch (err) {
+      console.log(err.message)
+    }
+  }
+
+  const getUser = async () => {
+    try {
+      const res = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/public/user", { withCredentials: true })
+      if (res.data) {
+        setUser(res.data)
+      }
+    } catch (err) {
+      console.log(err.message)
+    }
+  }
+
+  const getSoal = async () => {
+    try {
+      const res = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/soal/premium/" + selectedPaket?._id)
+      if (res.data) {
+        setQuestions
+        setQuestions(res.data)
+        setQuestionsNavigation(res.data)
+      }
+    } catch (err) {
+      console.log(err.message)
+    }
+  }
+
+  useEffect(() => {
+    getUser()
+    getPaket()
+  }, [])
+
+  useEffect(() => {
+    getSoal()
+    console.log(questionsMock)
+  }, [selectedPaket])
 
   // Timer countdown
   useEffect(() => {
@@ -276,10 +328,10 @@ export default function TestSimulationApp() {
 
   const handleStartTest = () => {
     const allQuestions = [];
-    const categories = Object.keys(MOCK_QUESTIONS);
+    const categories = Object.keys(questions);
 
     categories.forEach(category => {
-      const categoryQuestions = shuffleArray(MOCK_QUESTIONS[category]).map(q => ({
+      const categoryQuestions = shuffleArray(questions[category]).map(q => ({
         ...q,
         pilihan: shuffleArray(q.pilihan)
       }));
@@ -307,7 +359,7 @@ export default function TestSimulationApp() {
     setCurrentQuestionIndex(index);
   };
 
-  const handleSubmitTest = (autoSubmit = false) => {
+  const handleSubmitTest = async (autoSubmit = false) => {
     if (!autoSubmit) {
       setShowSubmitConfirm(true);
       return;
@@ -334,7 +386,6 @@ export default function TestSimulationApp() {
     const percentage = ((correct / questions.length) * 100).toFixed(2);
 
     const resultData = {
-      id: `attempt_${Date.now()}`,
       nilai: {
         benar: correct,
         salah: incorrect,
@@ -342,11 +393,12 @@ export default function TestSimulationApp() {
         nilai: parseFloat(percentage)
       },
       jumlah_soal: questions.length,
-      paketId: selectedPaket.id,
+      paketId: selectedPaket._id,
       paket: selectedPaket.paket,
-      nama: 'John Doe',
-      email: 'john@example.com',
-      no_whatsapp: '08123456789',
+      userId: user._id,
+      nama: user.nama,
+      email: user.email,
+      no_whatsapp: user.no_wa,
       timeSpent,
       details: questions.map((question, index) => ({
         ...question,
@@ -355,20 +407,28 @@ export default function TestSimulationApp() {
       createdAt: new Date().toISOString()
     };
 
-    setResult(resultData);
-    setShowSubmitConfirm(false);
-    setPage('result');
+    try {
+      const res = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/nilai",resultData)
+      if (res.data) {
+        setResult(resultData);
+        setShowSubmitConfirm(false);
+        setPage('result');
 
-    // Add to history
-    setUserHistory(prev => ({
-      ...prev,
-      attempts: [resultData, ...prev.attempts]
-    }));
+        // Add to history
+        setUserHistory(prev => ({
+          ...prev,
+          attempts: [resultData, ...prev.attempts]
+        }));
+      }
+    } catch (err) {
+      alert(err.message)
+      console.log(err.message)
+    }
   };
 
   const handleViewHistoryResult = (attempt) => {
     setResult(attempt);
-    setSelectedPaket(MOCK_PAKETS.find(p => p.id === attempt.paketId));
+    setSelectedPaket(paket.find(p => p._id === attempt.paketId));
     setPage('result');
   };
 
@@ -381,7 +441,7 @@ export default function TestSimulationApp() {
   const getQuestionNumberInCategory = () => {
     if (!currentQuestion) return 0;
     const categoryQuestions = questions.filter(q => q.kategori === currentQuestion.kategori);
-    const indexInCategory = categoryQuestions.findIndex(q => q.id === currentQuestion.id);
+    const indexInCategory = categoryQuestions.findIndex(q => q._id === currentQuestion._id);
     return indexInCategory + 1;
   };
 
@@ -402,7 +462,7 @@ export default function TestSimulationApp() {
         return (
           <div key={index} className="mb-4">
             <img
-              src={item.value}
+              src={`${process.env.NEXT_PUBLIC_API_FILE_URL}${item.value}`}
               alt={`Soal ${currentQuestionIndex + 1}`}
               className="max-w-full h-auto rounded-lg shadow-md"
             />
@@ -436,13 +496,13 @@ export default function TestSimulationApp() {
               </button>
             </div>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {MOCK_PAKETS.map(paket => {
-                const paketAttempts = userHistory.attempts.filter(a => a.paketId === paket.id);
+              {paket.map(paket => {
+                const paketAttempts = userHistory.attempts.filter(a => a.paketId === paket._id);
                 const hasAttempts = paketAttempts.length > 0;
                 const bestScore = hasAttempts ? Math.max(...paketAttempts.map(a => a.nilai.nilai)) : 0;
 
                 return (
-                  <div key={paket.id} className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
+                  <div key={paket._id} className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
                     <div className="flex items-center justify-between mb-4">
                       <h3 className="text-2xl font-bold text-gray-800">{paket.paket}</h3>
                       <div className="flex flex-col gap-2">
@@ -453,7 +513,7 @@ export default function TestSimulationApp() {
                       onClick={() => handleSelectPaket(paket)}
                       className="w-full py-3 rounded-lg font-semibold transition-colors bg-indigo-600 text-white hover:bg-indigo-700"
                     >
-                       Mulai Paket
+                      Mulai Paket
                     </button>
                   </div>
                 );
@@ -499,7 +559,7 @@ export default function TestSimulationApp() {
             ) : (
               <div className="space-y-4">
                 {userHistory.attempts.map((attempt, index) => (
-                  <div key={attempt.id} className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
+                  <div key={attempt._id} className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
                     <div className="flex justify-between items-start">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
@@ -568,14 +628,14 @@ export default function TestSimulationApp() {
           <div className="bg-blue-50 rounded-lg p-6 mb-8">
             <p className="text-sm text-gray-700 mb-2">Informasi Tes:</p>
             <p className="text-lg font-semibold text-gray-800">
-              {Object.values(MOCK_QUESTIONS).reduce((sum, arr) => sum + arr.length, 0)} Soal
+              {Object.values(questions).reduce((sum, arr) => sum + arr.length, 0)} Soal
             </p>
             <p className="text-lg font-semibold text-gray-800">Waktu: 120 Menit</p>
             <div className="mt-4 text-left">
               <p className="text-sm text-gray-700 mb-2">Kategori Soal:</p>
-              {Object.keys(MOCK_QUESTIONS).map(category => (
+              {Object.keys(questions).map(category => (
                 <p key={category} className="text-sm text-gray-600">
-                  • {category}: {MOCK_QUESTIONS[category].length} soal
+                  • {category}: {questions[category].length} soal
                 </p>
               ))}
             </div>
@@ -615,10 +675,11 @@ export default function TestSimulationApp() {
             </p>
           </div>
 
-          {Object.keys(MOCK_QUESTIONS).map((category) => {
+          {Object.keys(questionsNavigation).map((category) => {
             const categoryQuestions = questions
               .map((q, idx) => ({ q, idx }))
               .filter(({ q }) => q.kategori === category);
+            console.log(questions)
 
             return (
               <div key={category} className="mb-6">
@@ -871,7 +932,7 @@ export default function TestSimulationApp() {
                             return (
                               <div key={idx} className="mb-2">
                                 <img
-                                  src={item.value}
+                                  src={`${process.env.NEXT_PUBLIC_API_FILE_URL}${item.value}`}
                                   alt={`Soal ${index + 1}`}
                                   className="max-w-md h-auto rounded-lg shadow-md"
                                 />
