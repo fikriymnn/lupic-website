@@ -2,7 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import {
     Plus, Edit, Trash2, Eye, X, Save, ChevronLeft,
-    FileText, Users, Package, Check, Ban, Calendar, History
+    FileText, Users, Package, Check, Ban, Calendar, History,
+    Download
 } from 'lucide-react';
 import Sidebar from "@/components/Sidebar";
 import axios from 'axios';
@@ -142,13 +143,13 @@ const MOCK_NILAI = [
     }
 ];
 
-export default function AdminKnowledgeTestCertification() {
+export default function AdminKnowledgeTest() {
     const [page, setPage] = useState('pakets'); // pakets, access, paket-detail, access-detail
-    const [pakets, setPakets] = useState(MOCK_PAKETS);
+    const [pakets, setPakets] = useState([]);
     const [apiPaket, setApiPaket] = useState(false)
     const [questions, setQuestions] = useState([]);
-    const [accessList, setAccessList] = useState(MOCK_ACCESS);
-    const [nilaiList] = useState(MOCK_NILAI);
+    const [accessList, setAccessList] = useState([]);
+    const [nilaiList] = useState([]);
     const [selectedPaket, setSelectedPaket] = useState(null);
     const [selectedAccess, setSelectedAccess] = useState(null);
     const [isEditingPaket, setIsEditingPaket] = useState(false);
@@ -164,24 +165,41 @@ export default function AdminKnowledgeTestCertification() {
         penjelasan: ''
     });
 
-    const getAccess = async ()=>{
-        try{
+    function formatDateTime(dateString) {
+        const date = new Date(dateString);
+
+        return date.toLocaleString('id-ID', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    }
+
+    const getAccess = async () => {
+        try {
             const res = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/access")
-            if(res.data){
+            if (res.data) {
+                console.log(res.data)
                 setAccessList(res.data)
             }
-        }catch(err){
+        } catch (err) {
             console.log(err.message)
         }
     }
 
-    const updateAccess = async (access)=>{
-        try{
-             const res = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/access/"+access._id,access)
-            if(res.data){
+    useEffect(() => {
+        getAccess()
+    }, [])
+
+    const updateAccess = async (access) => {
+        try {
+            const res = await axios.put(process.env.NEXT_PUBLIC_API_URL + "/api/access/" + access._id, access)
+            if (res.data) {
                 alert("Sukses mengupdate access!")
             }
-        }catch(err){
+        } catch (err) {
             console.log(err.message)
         }
     }
@@ -233,13 +251,10 @@ export default function AdminKnowledgeTestCertification() {
 
     useEffect(() => {
         getPaket()
-        getAccess()
     }, [])
 
     const getSoal = async () => {
         try {
-            console.log('GET SOAL')
-            console.log(selectedPaket._id)
             const res = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/soal/paketid/" + selectedPaket._id)
             if (res.data) {
                 console.log(res.data)
@@ -287,16 +302,12 @@ export default function AdminKnowledgeTestCertification() {
         getSoal()
     }, [selectedPaket])
 
-    
-  
-
-
-    const formatTime = (seconds) => {
-        const hours = Math.floor(seconds / 3600);
-        const minutes = Math.floor((seconds % 3600) / 60);
-        const secs = seconds % 60;
-        return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-    };
+    // const formatTime = (seconds) => {
+    //     const hours = Math.floor(seconds / 3600);
+    //     const minutes = Math.floor((seconds % 3600) / 60);
+    //     const secs = seconds % 60;
+    //     return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    // };
 
     const handleAddPaket = () => {
         const newPaket = {
@@ -367,7 +378,7 @@ export default function AdminKnowledgeTestCertification() {
         const now = new Date();
         const endDate = new Date(now);
         endDate.setDate(endDate.getDate() + 30);
-        
+
         const updatedAccess = {
             ...access,
             status: access.status === 'ACCESS' ? 'NO ACCESS' : 'ACCESS',
@@ -376,7 +387,7 @@ export default function AdminKnowledgeTestCertification() {
         };
 
         setAccessList(accessList.map(a => a._id === access._id ? updatedAccess : a));
-        if(window.confirm('Apakah Anda yakin ingin membari akses permintaan ini?')){
+        if (window.confirm('Apakah Anda yakin ingin membari akses permintaan ini?')) {
             updateAccess(updatedAccess)
         }
     };
@@ -557,7 +568,12 @@ export default function AdminKnowledgeTestCertification() {
                 <div className='flex-1 p-6 lg:p-8'>
                     <div className=" mx-auto">
                         <div className="flex items-center gap-4 mb-8">
-                            <button onClick={() => setPage('pakets')} className="p-2 hover:bg-gray-200 rounded-full">
+                            <button onClick={() => {
+                                setSelectedPaket({})
+                                setSelectedAccess({})
+                                setQuestions({})
+                                setPage('pakets')
+                            }} className="p-2 hover:bg-gray-200 rounded-full">
                                 <ChevronLeft className="w-6 h-6" />
                             </button>
                             <h1 className="text-3xl font-bold text-gray-800">Access Test Management</h1>
@@ -568,9 +584,10 @@ export default function AdminKnowledgeTestCertification() {
                                 <table className="w-full">
                                     <thead className="bg-gray-100">
                                         <tr>
+                                            <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Tanggal</th>
                                             <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Nama</th>
                                             <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Email</th>
-                                            <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Paket</th>
+                                            <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Bukti Pembayaran</th>
                                             <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Status</th>
                                             <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Periode</th>
                                             <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Action</th>
@@ -579,9 +596,10 @@ export default function AdminKnowledgeTestCertification() {
                                     <tbody className="divide-y divide-gray-200">
                                         {accessList.map(access => (
                                             <tr key={access._id} className="hover:bg-gray-50">
+                                                <td className="px-6 py-4 text-xs text-gray-800">{formatDateTime(access.createdAt)}</td>
                                                 <td className="px-6 py-4 text-sm text-gray-800">{access.nama}</td>
                                                 <td className="px-6 py-4 text-sm text-gray-600">{access.email}</td>
-                                                <td className="px-6 py-4 text-sm text-gray-800">{access.paket}</td>
+                                                <td className="px-6 py-4 text-sm text-gray-800"><a className='text-koreaBlueMuda flex items-center' target='_blank' href={`${process.env.NEXT_PUBLIC_API_FILE_URL}${access.bukti_pembayaran}`}><Download size={14} /><p className='ml-1'>download</p></a></td>
                                                 <td className="px-6 py-4">
                                                     <span className={`px-3 py-1 rounded-full text-xs font-semibold ${access.status === 'ACCESS' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
                                                         }`}>
@@ -639,7 +657,11 @@ export default function AdminKnowledgeTestCertification() {
                 <div className='flex-1 p-6 lg:p-8'>
                     <div className=" mx-auto">
                         <div className="flex items-center gap-4 mb-8">
-                            <button onClick={() => setPage('pakets')} className="p-2 hover:bg-gray-200 rounded-full">
+                            <button onClick={() => {
+                                setSelectedPaket({})
+                                setQuestions([])
+                                setPage('pakets')
+                            }} className="p-2 hover:bg-gray-200 rounded-full">
                                 <ChevronLeft className="w-6 h-6" />
                             </button>
                             <h1 className="text-3xl font-bold text-gray-800">Detail Paket</h1>
@@ -932,7 +954,10 @@ export default function AdminKnowledgeTestCertification() {
                 <div className='flex-1 p-6 lg:p-8'>
                     <div className=" mx-auto">
                         <div className="flex items-center gap-4 mb-8">
-                            <button onClick={() => setPage('access')} className="p-2 hover:bg-gray-200 rounded-full">
+                            <button onClick={() => {
+                                setSelectedAccess({})
+                                setPage('access')
+                            }} className="p-2 hover:bg-gray-200 rounded-full">
                                 <ChevronLeft className="w-6 h-6" />
                             </button>
                             <h1 className="text-3xl font-bold text-gray-800">Detail Peserta</h1>
@@ -990,10 +1015,6 @@ export default function AdminKnowledgeTestCertification() {
                                 <h3 className="text-sm font-semibold text-gray-700 mb-4">Informasi Access</h3>
                                 <div className="grid grid-cols-4 gap-4">
                                     <div>
-                                        <span className="text-gray-600 text-sm">Paket:</span>
-                                        <p className="font-semibold text-gray-800">{selectedAccess.paket}</p>
-                                    </div>
-                                    <div>
                                         <span className="text-gray-600 text-sm">Status:</span>
                                         <div className="mt-1">
                                             <span className={`px-3 py-1 rounded-full text-xs font-semibold ${selectedAccess.status === 'ACCESS' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
@@ -1017,11 +1038,11 @@ export default function AdminKnowledgeTestCertification() {
                                     <div>
                                         <span className="text-gray-600 text-sm">Bukti Pembayaran:</span>
                                         <div className="mt-1">{
-                                            selectedAccess?.bukti_pembayaran?<a className={`px-3 py-1 rounded-full text-xs font-semibold`} href={`${process.env.NEXT_PUBLIC_API_FILE_URL}${selectedAccess?.bukti_pembayaran}`}>
+                                            selectedAccess?.bukti_pembayaran ? <a className={`px-3 py-1 rounded-full text-xs font-semibold`} href={`${process.env.NEXT_PUBLIC_API_FILE_URL}${selectedAccess?.bukti_pembayaran}`}>
                                                 download
-                                            </a>:""
-                                            }
-                                            
+                                            </a> : ""
+                                        }
+
                                         </div>
                                     </div>
                                 </div>

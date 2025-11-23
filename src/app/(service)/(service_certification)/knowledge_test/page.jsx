@@ -33,13 +33,18 @@ export default function LatihanTesObjektifPage() {
                 process.env.NEXT_PUBLIC_API_URL + "/api/public/user",
                 { withCredentials: true }
             );
-            console.log(resUser.data)
             setUser(resUser.data)
             if (resUser.data) {
                 const resAccess = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/access/id/" + resUser.data?._id)
                 if (resAccess.data) {
-                    if (resAccess.data.status == "ACCESS") {
+                    const endDate = new Date(resAccess.data.end_date);
+                    const now = new Date();
+                    if (resAccess.data.status == "ACCESS" && endDate>now) {
                         setAccess(true)
+                    }else{
+                        if(resAccess.data.end_date){
+                         await axios.put(process.env.NEXT_PUBLIC_API_URL + "/api/access/" + resAccess.data?._id,{status:"EXPIRED"})
+                        }
                     }
                 }
             }
@@ -51,7 +56,6 @@ export default function LatihanTesObjektifPage() {
     useEffect(() => {
         getUserAndAccess()
     }, [])
-
 
 
     // Handler functions (no external props)

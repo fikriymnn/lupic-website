@@ -113,6 +113,7 @@ export default function FormBukaKnowledgeTest() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(userId)
     try {
       const res = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/access", {...formData, userId:userId})
       const waUrl = `https://wa.me/6281563862944?text=${encodeURIComponent(

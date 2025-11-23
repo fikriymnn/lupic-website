@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import CustomFooter from "@/components/CustomFooter";
 import axios from 'axios';
 
+
 // Mock Data
 const paket = [
   { id: '1', paket: 'Paket 1', deskripsi: 'Simulasi Intensif Premium', status: 'PREMIUM' },
@@ -408,7 +409,7 @@ export default function TestSimulationApp() {
     };
 
     try {
-      const res = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/nilai",resultData)
+      const res = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/nilai", resultData)
       if (res.data) {
         setResult(resultData);
         setShowSubmitConfirm(false);
@@ -464,7 +465,7 @@ export default function TestSimulationApp() {
             <img
               src={`${process.env.NEXT_PUBLIC_API_FILE_URL}${item.value}`}
               alt={`Soal ${currentQuestionIndex + 1}`}
-              className="max-w-full h-auto rounded-lg shadow-md"
+              className="max-w-96 h-auto rounded-lg shadow-md"
             />
           </div>
         );
@@ -486,15 +487,7 @@ export default function TestSimulationApp() {
               </h1>
               <div className="h-1 w-36 bg-koreaRed md:mt-3 mt-2"></div>
             </div>
-            <div className="flex justify-between items-center mb-8">
-              <button
-                onClick={() => setPage('history')}
-                className="flex items-center gap-2 px-6 py-3 bg-white text-indigo-600 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all"
-              >
-                <History className="w-5 h-5" />
-                History Pengerjaan
-              </button>
-            </div>
+
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {paket.map(paket => {
                 const paketAttempts = userHistory.attempts.filter(a => a.paketId === paket._id);

@@ -132,8 +132,8 @@ const Navbar = () => {
     label: "Personal",
     items: [
       { href: "/personal", label: "Test schedule" },
-      { href: "/test_history_result", label: "Knowledge test result" },
-      { href: "/test_history", label: "Knowledge test acces history" },
+      { href: "/knowledge_test_result", label: "Knowledge test result" },
+      { href: "/knowledge_test_access", label: "Knowledge test access" },
     ],
   }
 
