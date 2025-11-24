@@ -1,5 +1,5 @@
 "use client";
-import Sidebar from "@/components/Sidebar";
+import Sidebar from "@/components/SidebarAdmin";
 import { useEffect, useState } from "react";
 import { ChevronLeft, Plus, Edit, Trash2, Eye, Search, Filter, X, Play } from "lucide-react";
 import { useRouter } from "next/navigation";

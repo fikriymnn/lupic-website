@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, use, useEffect } from "react";
-import Sidebar from "@/components/Sidebar";
+import Sidebar from "@/components/SidebarAdmin";
 import { ChevronLeft, Send } from 'lucide-react';
 import { useRouter } from "next/navigation";
 import axios from "axios";

@@ -2,10 +2,11 @@
 import { useState } from 'react';
 import { ChevronLeft, Trash2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import Sidebar from "@/components/Sidebar";
+import Sidebar from "@/components/SidebarAdmin";
 import axios from 'axios';
 
 export default function CreateUseCase() {
+  const router = useRouter()
   const [editingUseCase, setEditingUseCase] = useState(null);
   const [formData, setFormData] = useState({
     judulKasus: '',
@@ -37,13 +38,13 @@ export default function CreateUseCase() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-      alert('Kasus baru berhasil ditambahkan!');
       try{
         const res = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/study_case",formData,{
           withCredentials:true
         } )
         if(res){
           alert("Create studycase successfully!")
+          router.push("/admin/dashboard/studycase")
         }
       }catch(err){
         alert(err.message)
@@ -57,14 +58,10 @@ export default function CreateUseCase() {
   }
 
   return (
-    <div className="flex">
+    <div className="flex min-h-screen bg-gray-50">
       <Sidebar />
-      <div className="w-64 bg-gray-100"></div>
-      <div className="w-full">
-        <div className="m-auto w-full">
-          <div className="min-h-screen p-4 w-[90%] m-auto">
-            <div className="max-w-7xl">
-              <div className="max-w-7xl">
+      <div className="w-64 flex-shrink-0"></div>
+      <div className='flex-1 p-6 lg:p-8'>
                 <div className="mb-8">
                   <h1 className="text-3xl lg:text-4xl font-bold text-blue-600 mb-2">
                     Create Study Case
@@ -201,9 +198,5 @@ export default function CreateUseCase() {
                 </form>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
   );
 };

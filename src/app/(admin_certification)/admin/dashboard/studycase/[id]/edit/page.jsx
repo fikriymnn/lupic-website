@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { ChevronLeft, Trash2 } from 'lucide-react';
 import { useParams, useRouter } from 'next/navigation';
-import Sidebar from "@/components/Sidebar";
+import Sidebar from "@/components/SidebarAdmin";
 import axios from 'axios';
 
 const useCase = {
@@ -207,7 +207,7 @@ export default function EditUseCase() {
               type="submit"
               className="flex-1 px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition font-medium"
             >
-              {useCase ? 'Update Kasus' : 'Simpan Kasus'}
+              Update Kasus
             </button>
           </div>
         </form>

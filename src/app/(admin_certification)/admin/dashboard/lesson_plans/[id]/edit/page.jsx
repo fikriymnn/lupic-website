@@ -1,74 +1,10 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Download, BookOpen, Edit, Trash2, Plus, Users, CheckCircle, XCircle, Upload, Filter } from 'lucide-react';
-import Sidebar from "@/components/Sidebar";
+import Sidebar from "@/components/SidebarAdmin";
 import axios from 'axios';
 import { useParams } from 'next/navigation';
 
-const mockModulAjar = [
-  {
-    _id: '1',
-    judulModul: 'Hukum Newton dan Penerapannya',
-    deskripsi: 'Modul pembelajaran lengkap tentang Hukum Newton dengan pendekatan kontekstual',
-    jenjang: 'SMP',
-    topikIPA: 'Fisika',
-    tujuanPembelajaran: 'Siswa mampu memahami dan menerapkan konsep Hukum Newton dalam kehidupan sehari-hari',
-    status: 'BERBAYAR',
-    file: '/files/modul-newton.pdf'
-  },
-  {
-    _id: '2',
-    judulModul: 'Fotosintesis dan Respirasi Tumbuhan',
-    deskripsi: 'Modul pembelajaran interaktif tentang proses fotosintesis dan respirasi pada tumbuhan',
-    jenjang: 'SD',
-    topikIPA: 'Biologi',
-    tujuanPembelajaran: 'Siswa dapat menjelaskan proses fotosintesis dan respirasi tumbuhan',
-    status: 'GRATIS',
-    file: '/files/modul-fotosintesis.pdf'
-  },
-  {
-    _id: '3',
-    judulModul: 'Siklus Air dan Perubahan Wujud',
-    deskripsi: 'Modul IPA terpadu tentang siklus air dan perubahan wujud zat',
-    jenjang: 'SD',
-    topikIPA: 'IPA Terpadu',
-    tujuanPembelajaran: 'Siswa memahami siklus air dan berbagai perubahan wujud zat',
-    status: 'BERBAYAR',
-    file: '/files/modul-siklus-air.pdf'
-  }
-];
-
-const mockModulAccess = [
-  {
-    _id: '1',
-    modulAjar: '1',
-    nama: 'Ibu Sarah Wijaya',
-    email: 'sarah@email.com',
-    no_whatsapp: '081234567890',
-    provinsi: 'Jawa Timur',
-    jenjang_sekolah: 'SMP',
-    nama_instansi: 'SMP Negeri 1 Surabaya',
-    mata_pelajaran: 'IPA',
-    status_ppg: 'PPG Calon Guru/PPG luar jabatan (Prajabatan)',
-    sumber_informasi: 'Media Sosial (Instagram, Facebook, TikTok, X, dll.)',
-    status: 'NO ACCESS',
-    tanggal_pengisi: new Date('2024-11-01'),
-    bukti_pembayaran: '/uploads/bukti-sarah.jpg'
-  }
-];
-
-const SUMBER_INFORMASI_OPTIONS = [
-  'Media Sosial (Instagram, Facebook, TikTok, X, dll.)',
-  'Website Resmi Universitas / Kampus Penyelenggara',
-  'Teman / Rekan Guru / Komunitas Pendidik',
-  'Grup WhatsApp / Telegram / Komunitas Daring Guru',
-  'Dosen / Pembimbing Kampus / Alumni PPG',
-  'Seminar / Webinar Pendidikan / Workshop Daring',
-  'Poster / Brosur / Pamflet Digital',
-  'Iklan Internet (Google Ads / YouTube / Media Online)',
-  'Dinas Pendidikan / LPTK / Sekolah Asal',
-  'Lainnya'
-];
 
 export default function EditModulForm() {
   const {id} = useParams()

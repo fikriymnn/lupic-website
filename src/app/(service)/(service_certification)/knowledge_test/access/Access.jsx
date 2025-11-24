@@ -51,8 +51,24 @@ export default function FormBukaKnowledgeTest() {
     status_ppg: "",
     sumber_informasi: [],
     sumber_informasi_lainnya: "",
-    bukti_pembayaran: null
+    bukti_pembayaran: null,
+    jenis_pembayaran: ""
   });
+  const [noWa, setNoWa] = useState("")
+  const [jenisPembayaran, setJenisPembayaran] = useState([])
+
+  const getFormSetting = async () => {
+    try {
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/admin-setting`)
+      if (res.data) {
+        console.log(res.data)
+        setNoWa(res.data.data.no_whatsapp)
+        setJenisPembayaran(res.data.data.jenis_pembayaran)
+      }
+    } catch (err) {
+      console.log(err.message)
+    }
+  }
 
 
   const getUser = async () => {
@@ -70,6 +86,7 @@ export default function FormBukaKnowledgeTest() {
   }
 
   useEffect(() => {
+    getFormSetting()
     getUser()
     setIsMounted(true);
   }, []);
@@ -115,18 +132,18 @@ export default function FormBukaKnowledgeTest() {
     e.preventDefault();
     console.log(userId)
     try {
-      const res = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/access", {...formData, userId:userId})
+      const res = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/access", { ...formData, userId: userId })
       const waUrl = `https://wa.me/6281563862944?text=${encodeURIComponent(
         "Halo, saya ingin konfirmasi pembayaran akses knowledge test atas nama " + formData.nama
       )}`;
       if (res.data) {
-       alert("Permintaan berhasil dikirim, Konfirmasi permintaan anda lewat Whatsapp lalu tunggu akses dari admin!")
+        alert("Permintaan berhasil dikirim, Konfirmasi permintaan anda lewat Whatsapp lalu tunggu akses dari admin!")
         window.location.href = waUrl
       }
     } catch (err) {
       console.log(err.message)
     }
-  
+
   };
 
 
@@ -138,7 +155,7 @@ export default function FormBukaKnowledgeTest() {
       <div className="min-h-screen bg-gray-100 py-16">
         <div className="max-w-4xl mx-auto p-6 ">
           <button
-            onClick={() => { router.push("/knowledge_test")}}
+            onClick={() => { router.push("/knowledge_test") }}
             className="mb-6 px-4 py-2 bg-white rounded-lg shadow hover:shadow-md transition flex items-center gap-2"
           >
             <ChevronLeft size={20} />
@@ -237,41 +254,60 @@ export default function FormBukaKnowledgeTest() {
               </div>
 
 
-              {modul.status === "BERBAYAR" && (
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Bukti Pembayaran *
-                  </label>
-                  <label className="flex-1 cursor-pointer">
-                    <div className="w-full px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg hover:border-purple-500 transition flex items-center justify-center gap-2 text-gray-600">
-                      <Upload size={20} />
-                      <span>
-                        {formData.bukti_pembayaran
-                          ? formData.bukti_pembayaran.name
-                          : "Pilih file bukti pembayaran"}
-                      </span>
-                      {formData.bukti_pembayaran ? (
-                        <img
-                          src={`${process.env.NEXT_PUBLIC_API_FILE_URL}${formData.bukti_pembayaran}`}
-                          alt="Preview Cover"
-                          className="w-48 h-48 object-cover rounded-md"
-                        />
-                      ) : (
-                        <span>Pilih file cover (JPG, PNG, JPEG)</span>
-                      )}
-                    </div>
-                    <input
-                      type="file"
-                      onChange={handleFileChange}
-                      className="hidden"
-                      required
-                    />
-                  </label>
-                  <p className="text-sm text-gray-500 mt-2">
-                    Format: JPG, PNG, atau PDF (Max 5MB)
-                  </p>
-                </div>
-              )}
+              {/* Jenis pembayaran */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Jenis Pembayaran
+                </label>
+                <select
+                  value={formData.jenis_pembayaran}
+                  onChange={(e) => handleChange("jenis_pembayaran", e.target.value)}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                >
+                  {
+                    jenisPembayaran.map((v, i) => (
+                      <option key={i} value="PPG Calon Guru/PPG luar jabatan (Prajabatan)">
+                        {v}
+                      </option>
+                    ))
+                  }
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Bukti Pembayaran *
+                </label>
+                <label className="flex-1 cursor-pointer">
+                  <div className="w-full px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg hover:border-purple-500 transition flex items-center justify-center gap-2 text-gray-600">
+                    <Upload size={20} />
+                    <span>
+                      {formData.bukti_pembayaran
+                        ? formData.bukti_pembayaran.name
+                        : "Pilih file bukti pembayaran"}
+                    </span>
+                    {formData.bukti_pembayaran ? (
+                      <img
+                        src={`${process.env.NEXT_PUBLIC_API_FILE_URL}${formData.bukti_pembayaran}`}
+                        alt="Preview Cover"
+                        className="w-48 h-48 object-cover rounded-md"
+                      />
+                    ) : (
+                      <span>Pilih file cover (JPG, PNG, JPEG)</span>
+                    )}
+                  </div>
+                  <input
+                    type="file"
+                    onChange={handleFileChange}
+                    className="hidden"
+                    required
+                  />
+                </label>
+                <p className="text-sm text-gray-500 mt-2">
+                  Format: JPG, PNG, atau PDF (Max 5MB)
+                </p>
+              </div>
+
 
 
               <div className="flex gap-4 pt-4">

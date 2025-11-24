@@ -53,8 +53,24 @@ export default function FormBukaVideo() {
     status_ppg: "",
     sumber_informasi: [],
     sumber_informasi_lainnya: "",
-    bukti_pembayaran: null
+    bukti_pembayaran: null,
+    jenis_pembayaran: ""
   });
+  const [noWa, setNoWa] = useState("")
+  const [jenisPembayaran, setJenisPembayaran] = useState([])
+
+  const getFormSetting = async () => {
+    try {
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/admin-setting`)
+      if (res.data) {
+        console.log(res.data)
+        setNoWa(res.data.data.no_whatsapp)
+        setJenisPembayaran(res.data.data.jenis_pembayaran)
+      }
+    } catch (err) {
+      console.log(err.message)
+    }
+  }
 
 
   const getUser = async () => {
@@ -72,6 +88,7 @@ export default function FormBukaVideo() {
   }
 
   useEffect(() => {
+    getFormSetting()
     getUser()
     setIsMounted(true);
   }, []);
@@ -116,8 +133,8 @@ export default function FormBukaVideo() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/video_pembelajaran_access", { ...formData, userId:userId, videoId: videoId })
-      const waUrl = `https://wa.me/6281563862944?text=${encodeURIComponent(
+      const res = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/video_pembelajaran_access", { ...formData, userId: userId, videoId: videoId })
+      const waUrl = `https://wa.me/${noWa}?text=${encodeURIComponent(
         "Halo, saya ingin konfirmasi pembayaran video pembelajaran atas nama " + formData.nama
       )}`;
       if (res.data) {
@@ -127,10 +144,7 @@ export default function FormBukaVideo() {
     } catch (err) {
       console.log(err.message)
     }
-
   };
-
-
 
   return (
     <>
@@ -243,8 +257,26 @@ export default function FormBukaVideo() {
                 )}
               </div>
 
+              {/* Jenis pembayaran */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Jenis Pembayaran
+                </label>
+                <select
+                  value={formData.jenis_pembayaran}
+                  onChange={(e) => handleChange("jenis_pembayaran", e.target.value)}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                >
+                  {
+                    jenisPembayaran.map((v,i)=>(
+                      <option key={i} value="PPG Calon Guru/PPG luar jabatan (Prajabatan)">
+                    {v}
+                  </option>
+                    ))
+                  }
+                </select>
+              </div>
 
-              {modul.status === "BERBAYAR" && (
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
                     Bukti Pembayaran *
@@ -278,7 +310,7 @@ export default function FormBukaVideo() {
                     Format: JPG, PNG, atau PDF (Max 5MB)
                   </p>
                 </div>
-              )}
+              
 
 
               <div className="flex gap-4 pt-4">

@@ -1,7 +1,7 @@
 "use client"
 import { useEffect, useState } from 'react';
 import { Eye, Download, CheckCircle, XCircle } from 'lucide-react';
-import Sidebar from "@/components/Sidebar";
+import Sidebar from "@/components/SidebarAdmin";
 import axios from 'axios';
 import { useParams } from 'next/navigation';
 
@@ -60,7 +60,6 @@ export default function AdminDashboardLessonPlan() {
     try {
       const res = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/modul_ajar_access/" + id)
       if (res.data) {
-        console.log(res)
         setUsers(res.data)
       }
     } catch (err) {
@@ -89,46 +88,6 @@ export default function AdminDashboardLessonPlan() {
                     Teacher Study Case
                   </h1>
                 </div>
-                {/* Stats Cards */}
-                {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                  <div className="bg-white rounded-lg shadow-sm p-6">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-sm text-gray-600">Total Pendaftar</p>
-                        <p className="text-3xl font-bold text-gray-900 mt-1">{users.length}</p>
-                      </div>
-                      <div className="bg-blue-100 p-3 rounded-lg">
-                        <Eye className="w-6 h-6 text-blue-600" />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="bg-white rounded-lg shadow-sm p-6">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-sm text-gray-600">Access Granted</p>
-                        <p className="text-3xl font-bold text-green-600 mt-1">
-                          {users.filter(u => u.status === "ACCESS").length}
-                        </p>
-                      </div>
-                      <div className="bg-green-100 p-3 rounded-lg">
-                        <CheckCircle className="w-6 h-6 text-green-600" />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="bg-white rounded-lg shadow-sm p-6">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-sm text-gray-600">No Access</p>
-                        <p className="text-3xl font-bold text-red-600 mt-1">
-                          {users.filter(u => u.status === "NO ACCESS").length}
-                        </p>
-                      </div>
-                      <div className="bg-red-100 p-3 rounded-lg">
-                        <XCircle className="w-6 h-6 text-red-600" />
-                      </div>
-                    </div>
-                  </div>
-                </div> */}
 
                 {/* Table */}
                 <div className="bg-white rounded-lg shadow-sm overflow-hidden">
@@ -323,6 +282,22 @@ export default function AdminDashboardLessonPlan() {
                         : "bg-red-100 text-red-800"
                         }`}>
                         {selectedUser.status}
+                      </span>
+                    </div>
+                  </div>
+                   <div className="border-b border-gray-200 pb-4">
+                    <label className="text-sm font-semibold text-gray-600 uppercase tracking-wide"></label>
+                    <div className="mt-2">
+                      <span className={`inline-flex items-center px-4 py-2 rounded-lg text-sm font-semibold`}>
+                      
+                      </span>
+                    </div>
+                  </div>
+                   <div className="border-b border-gray-200 pb-4">
+                    <label className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Jenis Pembayaran</label>
+                    <div className="mt-2">
+                      <span className={`inline-flex items-center px-4 py-2 rounded-lg text-sm font-semibold`}>
+                        {selectedUser.jenis_pembayaran}
                       </span>
                     </div>
                   </div>

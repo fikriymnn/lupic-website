@@ -15,7 +15,7 @@ import {
   Filter,
   Search
 } from 'lucide-react';
-import Sidebar from "@/components/Sidebar";
+import Sidebar from "@/components/SidebarAdmin";
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import axios from 'axios';

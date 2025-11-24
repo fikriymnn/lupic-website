@@ -4,6 +4,7 @@ import { Clock, X, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
 import Navbar from "@/components/Navbar";
 import CustomFooter from "@/components/CustomFooter";
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 // Mock questions untuk trial test dengan format soal baru (TEXT dan IMAGE)
 const questions = {
@@ -117,8 +118,10 @@ const shuffleArray = (array) => {
 };
 
 export default function TrialTestApp() {
+  const router = useRouter()
   const [page, setPage] = useState('start-test');
   const [questions, setQuestions] = useState([]);
+  const [questionsNavigation, setQuestionsNavigation] = useState({});
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [currentCategory, setCurrentCategory] = useState('');
   const [answers, setAnswers] = useState({});
@@ -131,8 +134,8 @@ export default function TrialTestApp() {
     try{
       const res = await axios.get(process.env.NEXT_PUBLIC_API_URL+"/api/soal/gratis")
       if(res.data){
-        console.log(res.data)
         setQuestions(res.data)
+        setQuestionsNavigation(res.data)
       }
     }catch(err){
       console.log(err.message)
@@ -279,7 +282,7 @@ export default function TrialTestApp() {
             <img
               src={`${process.env.NEXT_PUBLIC_API_FILE_URL}${item.value}`}
               alt={`Soal ${currentQuestionIndex + 1}`}
-              className="max-w-[50%] h-auto rounded-lg shadow-md"
+              className="w-80 h-auto rounded-lg shadow-md"
             />
           </div>
         );
@@ -294,8 +297,7 @@ export default function TrialTestApp() {
 
     return (
       <>
-        <Navbar />
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center p-8 pt-24">
+        <div className="min-h-screen bg-gray-50 flex items-center justify-center p-8">
           <div className="bg-white rounded-lg shadow-2xl p-12 max-w-md w-full text-center">
             <div className="mb-6">
               <span className="inline-block px-4 py-2 bg-green-500 text-white rounded-full font-bold text-sm">
@@ -305,7 +307,7 @@ export default function TrialTestApp() {
             <h2 className="text-3xl font-bold text-gray-800 mb-4">Trial Test</h2>
             <p className="text-gray-600 mb-8">Tes percobaan untuk mengenal sistem dan format soal</p>
 
-            {/* <div className="bg-green-50 rounded-lg p-6 mb-8">
+            <div className="bg-green-50 rounded-lg p-6 mb-8">
               <p className="text-sm text-gray-700 mb-2">Informasi Tes:</p>
               <p className="text-lg font-semibold text-gray-800">
                 {totalQuestions} Soal
@@ -319,7 +321,7 @@ export default function TrialTestApp() {
                   </p>
                 ))}
               </div>
-            </div> */}
+            </div>
 
             <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-8 text-left">
               <p className="text-sm text-gray-700">
@@ -339,7 +341,6 @@ export default function TrialTestApp() {
             </button>
           </div>
         </div>
-        <CustomFooter />
       </>
     );
   }
@@ -367,7 +368,7 @@ export default function TrialTestApp() {
           </div>
 
           {/* Question grid grouped by category */}
-          {Object.keys(questions).map((category) => {
+          {Object.keys(questionsNavigation).map((category) => {
             const categoryQuestions = questions
               .map((q, idx) => ({ q, idx }))
               .filter(({ q }) => q.kategori === category);
@@ -529,11 +530,7 @@ export default function TrialTestApp() {
             </div>
             <button
               onClick={() => {
-                setPage('start-test');
-                setResult(null);
-                setQuestions([]);
-                setAnswers({});
-                setElapsedTime(0);
+                router.push("/knowledge_test")
               }}
               className="p-2 hover:bg-gray-200 rounded-full transition-colors"
             >
@@ -635,7 +632,7 @@ export default function TrialTestApp() {
                               <img
                                 src={`${process.env.NEXT_PUBLIC_API_FILE_URL}${item.value}`}
                                 alt={`Soal ${index + 1}`}
-                                className="max-w-md h-auto rounded-lg shadow-md"
+                                className="w-56 h-auto rounded-lg shadow-md"
                               />
                             </div>
                           );
@@ -680,11 +677,7 @@ export default function TrialTestApp() {
           <div className="mt-8 text-center">
             <button
               onClick={() => {
-                setPage('start-test');
-                setResult(null);
-                setQuestions([]);
-                setAnswers({});
-                setElapsedTime(0);
+                router.push("/knowledge_test")
               }}
               className="px-8 py-4 bg-green-600 text-white rounded-lg font-bold text-lg hover:bg-green-700 transition-colors shadow-lg"
             >

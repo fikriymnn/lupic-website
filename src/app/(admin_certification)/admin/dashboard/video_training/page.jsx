@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect, useState } from "react";
-import Sidebar from "@/components/Sidebar";
+import Sidebar from "@/components/SidebarAdmin";
 import ResponsivePagination from 'react-responsive-pagination';
 import 'react-responsive-pagination/themes/classic.css';
 import { Play, Edit, Trash2, Users, Search, Filter, X } from 'lucide-react';

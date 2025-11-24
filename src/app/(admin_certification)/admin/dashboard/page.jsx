@@ -3,145 +3,12 @@ import React, { useEffect, useState } from 'react';
 import {
     Plus, Edit, Trash2, Eye, X, Save, ChevronLeft,
     FileText, Users, Package, Check, Ban, Calendar, History,
-    Download
+    Download,
+    DownloadIcon
 } from 'lucide-react';
-import Sidebar from "@/components/Sidebar";
+import SidebarAdmin from "@/components/SidebarAdmin";
 import axios from 'axios';
 
-// Mock Data
-const MOCK_PAKETS = [
-    {
-        _id: '1',
-        paket: 'Paket 1',
-        deskripsi: 'Simulasi Intensif Premium - 65 Soal',
-        status: 'PREMIUM'
-    },
-    {
-        _id: '2',
-        paket: 'Paket 2',
-        deskripsi: 'Simulasi Intensif Premium - 65 Soal',
-        status: 'PREMIUM'
-    },
-    {
-        _id: '3',
-        paket: 'Trial Test',
-        deskripsi: 'Uji Coba Gratis - 20 Soal',
-        status: 'GRATIS'
-    },
-    {
-        _id: '4',
-        paket: 'Paket 4',
-        deskripsi: 'Paket dalam pengembangan',
-        status: 'HIDE'
-    }
-];
-
-const MOCK_QUESTIONS = [
-    {
-        _id: 'q1',
-        paketId: '1',
-        kategori: 'PCK',
-        soal: [
-            { type: 'TEXT', value: 'Apa yang dimaksud dengan pendekatan saintifik?' }
-        ],
-        pilihan: ['A', 'B', 'C', 'D', 'E'],
-        jawaban: 'B',
-        penjelasan: 'Penjelasan lengkap tentang pendekatan saintifik...'
-    },
-    {
-        _id: 'q2',
-        paketId: '1',
-        kategori: 'SJT',
-        soal: [
-            { type: 'TEXT', value: 'Jika siswa tertidur di kelas, apa yang Anda lakukan?' }
-        ],
-        pilihan: ['A', 'B', 'C', 'D', 'E'],
-        jawaban: 'C',
-        penjelasan: 'Pendekatan empatik adalah yang terbaik...'
-    }
-];
-
-const MOCK_ACCESS = [
-    {
-        _id: 'a1',
-        paket: 'Paket 1',
-        paketId: '1',
-        userId: 'u1',
-        nama: 'John Doe',
-        email: 'john@example.com',
-        no_whatsapp: '08123456789',
-        provinsi: 'DKI Jakarta',
-        jenjang_sekolah: 'SMA',
-        nama_instansi: 'SMAN 1 Jakarta',
-        mata_pelajaran: 'Matematika',
-        status_ppg: 'Belum PPG',
-        sumber_informasi: 'Instagram',
-        bukti_pembayaran: 'bukti1.jpg',
-        status: 'NO ACCESS',
-        start_date: null,
-        end_date: null,
-        createdAt: new Date('2024-11-15').toISOString()
-    },
-    {
-        _id: 'a2',
-        paket: 'Paket 1',
-        paketId: '1',
-        userId: 'u2',
-        nama: 'Jane Smith',
-        email: 'jane@example.com',
-        no_whatsapp: '08234567890',
-        provinsi: 'Jawa Barat',
-        jenjang_sekolah: 'SMP',
-        nama_instansi: 'SMPN 2 Bandung',
-        mata_pelajaran: 'Bahasa Inggris',
-        status_ppg: 'Sudah PPG',
-        sumber_informasi: 'WhatsApp',
-        bukti_pembayaran: 'bukti2.jpg',
-        status: 'ACCESS',
-        start_date: new Date('2024-11-10').toISOString(),
-        end_date: new Date('2024-12-10').toISOString(),
-        createdAt: new Date('2024-11-09').toISOString()
-    }
-];
-
-const MOCK_NILAI = [
-    {
-        _id: 'n1',
-        userId: 'u2',
-        paketId: '1',
-        paket: 'Paket 1',
-        nilai: {
-            benar: 50,
-            salah: 12,
-            tidak_terjawab: 3,
-            nilai: 76.92
-        },
-        timeSpent: 5400,
-        jumlah_soal: 65,
-        nama: 'Jane Smith',
-        email: 'jane@example.com',
-        no_whatsapp: '08234567890',
-        createdAt: new Date('2024-11-16').toISOString()
-    },
-    {
-        _id: 'n2',
-        userId: 'u2',
-        paketId: '1',
-        paket: 'Paket 1',
-        nilai: {
-            benar: 55,
-            salah: 8,
-            tidak_terjawab: 2,
-            nilai: 84.62
-        },
-        timeSpent: 4900,
-        jumlah_soal: 65,
-        nama: 'Jane Smith',
-        email: 'jane@example.com',
-        no_whatsapp: '08234567890',
-        createdAt: new Date('2024-11-18').toISOString()
-    }
-];
 
 export default function AdminKnowledgeTest() {
     const [page, setPage] = useState('pakets'); // pakets, access, paket-detail, access-detail
@@ -334,13 +201,13 @@ export default function AdminKnowledgeTest() {
 
     };
 
-    const handleAddQuestion = () => {
+    const handleAddQuestion = async () => {
         const newQuestion = {
             _id: Date.now().toString(),
             paketId: selectedPaket._id,
             ...questionForm
         };
-        createSoal()
+        await createSoal()
         setQuestions([...questions, newQuestion]);
         setShowQuestionModal(false);
         setEditingQuestion(null);
@@ -435,7 +302,7 @@ export default function AdminKnowledgeTest() {
     if (page === 'pakets') {
         return (
             <div className="flex min-h-screen bg-gray-50">
-                <Sidebar />
+                <SidebarAdmin />
                 <div className="w-64 flex-shrink-0"></div>
                 <div className='flex-1 p-6 lg:p-8'>
                     <div className=" mx-auto">
@@ -563,7 +430,7 @@ export default function AdminKnowledgeTest() {
     if (page === 'access') {
         return (
             <div className="flex min-h-screen bg-gray-50">
-                <Sidebar />
+                <SidebarAdmin />
                 <div className="w-64 flex-shrink-0"></div>
                 <div className='flex-1 p-6 lg:p-8'>
                     <div className=" mx-auto">
@@ -652,7 +519,7 @@ export default function AdminKnowledgeTest() {
     if (page === 'paket-detail' && selectedPaket) {
         return (
             <div className="flex min-h-screen bg-gray-50">
-                <Sidebar />
+                <SidebarAdmin />
                 <div className="w-64 flex-shrink-0"></div>
                 <div className='flex-1 p-6 lg:p-8'>
                     <div className=" mx-auto">
@@ -949,7 +816,7 @@ export default function AdminKnowledgeTest() {
 
         return (
             <div className="flex min-h-screen bg-gray-50">
-                <Sidebar />
+                <SidebarAdmin />
                 <div className="w-64 flex-shrink-0"></div>
                 <div className='flex-1 p-6 lg:p-8'>
                     <div className=" mx-auto">
@@ -1037,9 +904,12 @@ export default function AdminKnowledgeTest() {
                                     </div>
                                     <div>
                                         <span className="text-gray-600 text-sm">Bukti Pembayaran:</span>
+                                        <div className="mt-1">
+                                            {selectedAccess?.jenis_pembayaran}
+                                        </div>
                                         <div className="mt-1">{
-                                            selectedAccess?.bukti_pembayaran ? <a className={`px-3 py-1 rounded-full text-xs font-semibold`} href={`${process.env.NEXT_PUBLIC_API_FILE_URL}${selectedAccess?.bukti_pembayaran}`}>
-                                                download
+                                            selectedAccess?.bukti_pembayaran ? <a className={`px-3 py-1 rounded-full text-sm text-koreaBlueMuda font-semibold flex items-center`} href={`${process.env.NEXT_PUBLIC_API_FILE_URL}${selectedAccess?.bukti_pembayaran}`}>
+                                               <DownloadIcon size={14}/> <p className='ml-2'>download</p> 
                                             </a> : ""
                                         }
 

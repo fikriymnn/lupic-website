@@ -32,23 +32,15 @@ export default function UseCaseDetail({ params }) {
           process.env.NEXT_PUBLIC_API_URL + "/api/public/user",
           { withCredentials: true }
         );
-        console.log("fetch1")
 
         if (resUser.data) {
-          console.log("fetch2")
           const data = await axios.get(
             `${process.env.NEXT_PUBLIC_API_URL}/api/study_case/id/${id}?userId=${resUser.data._id}`)
           setUser(resUser.data)
           setUseCase(data.data);
-          console.log("fetch3")
           setAnswers(data.data?.answer?.answer)
           setForumMessages(data.data.forums)
-          if (data.data) {
-            console.log("fetch4")
-          }
-          console.log(data.data)
           if (data.data.answer?.answer) {
-
             setShowPembahasan(true)
           }
         }
@@ -65,7 +57,7 @@ export default function UseCaseDetail({ params }) {
 
   const onSubmitAnswer = async () => {
     try {
-      await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/study_case_answer", { studyCaseId: useCase._id, userId: user._id, answer: answers }, { withCredentials: true })
+      await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/study_case_answer", { studyCaseId: useCase._id, userId: user._id, answer: newAnswers }, { withCredentials: true })
     } catch (err) {
       console.log(err.message)
     }
