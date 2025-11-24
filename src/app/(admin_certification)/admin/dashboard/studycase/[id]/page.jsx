@@ -1,23 +1,18 @@
 "use client";
 
-import Navbar from "@/components/Navbar";
-import { useState, useEffect } from "react";
-import { ChevronLeft, Send } from "lucide-react";
+import { useState, use, useEffect } from "react";
+import Sidebar from "@/components/SidebarAdmin";
+import { ChevronLeft, Send } from 'lucide-react';
 import { useRouter } from "next/navigation";
-import CustomFooter from "@/components/CustomFooter";
-import { use } from "react";
 import axios from "axios";
 
-
-
-export default function UseCaseDetail({ params }) {
+export default function ModulAjarAccessAdmin({ params }) {
   const router = useRouter();
   const { id } = use(params);
 
   const [useCase, setUseCase] = useState(null);
   const [loading, setLoading] = useState(true);
   const [answers, setAnswers] = useState("");
-  const [newAnswers, setNewAnswers] = useState("");
   const [showPembahasan, setShowPembahasan] = useState(false);
   const [forumMessages, setForumMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
@@ -28,21 +23,29 @@ export default function UseCaseDetail({ params }) {
   useEffect(() => {
     async function fetchDetail() {
       try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/study_case/id/${id}`
+        );
         const resUser = await axios.get(
           process.env.NEXT_PUBLIC_API_URL + "/api/public/user",
           { withCredentials: true }
         );
 
+        if (!res.ok) throw new Error("Gagal mengambil data");
+        const data = await res.json();
+        setUseCase(data);
+        setAnswers(data.answer?.answer)
+        if (data.answer?.answer) {
+          console.log(data)
+          setShowPembahasan(true)
+        }
+        setForumMessages(data.forums)
+
+        // jika backend memiliki data forum
+        if (data.forums) setForumMessages(data.forums);
         if (resUser.data) {
-          const data = await axios.get(
-            `${process.env.NEXT_PUBLIC_API_URL}/api/study_case/id/${id}?userId=${resUser.data._id}`)
+          console.log(resUser)
           setUser(resUser.data)
-          setUseCase(data.data);
-          setAnswers(data.data?.answer?.answer)
-          setForumMessages(data.data.forums)
-          if (data.data.answer?.answer) {
-            setShowPembahasan(true)
-          }
         }
 
       } catch (err) {
@@ -55,20 +58,12 @@ export default function UseCaseDetail({ params }) {
     fetchDetail();
   }, [id]);
 
-  const onSubmitAnswer = async () => {
-    try {
-      await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/study_case_answer", { studyCaseId: useCase._id, userId: user._id, answer: newAnswers }, { withCredentials: true })
-    } catch (err) {
-      console.log(err.message)
-    }
-  }
-
   const onSubmitForum = async (e) => {
     e.preventDefault()
     try {
-      const res = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/study_case_forum", { studyCaseId: useCase._id, userId: user._id, message: newMessage, name: user.nama }, { withCredentials: true })
+      const res = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/study_case_forum", { studyCaseId: useCase._id, userId: user._id, message: newMessage, name: "admin" }, { withCredentials: true })
       if (res.data) {
-        window.location.href = "/study_case/" + id
+        window.location.href = "/admin/dashboard/studycase/" + id
       }
     } catch (err) {
       console.log(err.message)
@@ -76,26 +71,34 @@ export default function UseCaseDetail({ params }) {
   }
 
 
+  if (loading)
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <p className="text-gray-600">Loading...</p>
+      </div>
+    );
+
+  if (!useCase)
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <p className="text-red-600">Data tidak ditemukan</p>
+      </div>
+    );
+
 
   return (
-    <>
-
-      <Navbar />
-      {
-        loading ? (
-          <div className="flex justify-center items-center min-h-screen">
-            <p className="text-gray-600">Loading...</p>
+    <div className="flex min-h-screen bg-gray-50">
+      <Sidebar />
+      <div className="w-64 flex-shrink-0"></div>
+      <div className="flex-1 p-6 lg:p-8">
+        <div className="">
+          {/* Header Section */}
+          <div className="mb-8">
+            <h1 className="text-3xl lg:text-4xl font-bold text-blue-600 mb-2">
+              Teacher Study Case
+            </h1>
           </div>
-        ) : (<div className="min-h-screen bg-gray-100 pt-24 pb-16">
-          <div className="max-w-4xl mx-auto">
-            <button
-              className="mb-6 px-4 py-2 bg-white rounded-lg shadow hover:shadow-md transition flex items-center gap-2"
-              onClick={() => router.push("/study_case")}
-            >
-              <ChevronLeft size={20} />
-              Kembali
-            </button>
-
+          <div className="">
             <div className="bg-white rounded-xl shadow-lg p-8 mb-6">
               {/* TAGS */}
               <div className="flex flex-wrap gap-2 mb-4">
@@ -110,7 +113,7 @@ export default function UseCaseDetail({ params }) {
                 </span>
               </div>
 
-              <h1 className="text-3xl font-bold text-gray-800 mb-4">
+              <h1 className="text-2xl font-bold text-gray-800 mb-4">
                 {useCase.judulKasus}
               </h1>
 
@@ -126,47 +129,22 @@ export default function UseCaseDetail({ params }) {
               <div className="mb-6">
                 <h2 className="text-xl font-semibold text-gray-800 mb-4">Pertanyaan Analisis</h2>
 
-                <p className="text-gray-800 font-medium mb-2">
+                <p className="text-gray-800 mb-4">
                   {useCase.pertanyaanAnalisis}
                 </p>
-                <textarea
-                  value={answers ? answers : newAnswers}
-                  onChange={(e) => setNewAnswers(e.target.value)}
-                  placeholder="Tulis jawaban Anda di sini..."
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 resize-none"
-                  rows="4"
-                />
-                {
-                  !answers && <button
-                    onClick={() => {
-                      onSubmitAnswer()
-                      setShowPembahasan(true)
-                    }}
-                    className="mt-3 px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition font-medium"
-                  >
-                    Submit Jawaban
-                  </button>
-                }
-
-
-
-              </div>
-
-              {/* PEMBAHASAN */}
-              {showPembahasan && (
                 <div className="bg-green-50 border-l-4 border-green-500 p-6 mb-6 rounded">
-                  <h2 className="text-xl font-semibold text-green-800 mb-3">
-                    Pembahasan
-                  </h2>
+                  <h2 className="text-xl font-semibold text-green-800 mb-3">Pembahasan</h2>
                   <p className="text-gray-700 leading-relaxed whitespace-pre-line">
                     {useCase.pembahasan}
                   </p>
                 </div>
-              )}
+              </div>
+
             </div>
 
+
             {/* FORUM */}
-            {showPembahasan && (
+        
               <div className="bg-white rounded-xl shadow-lg p-8">
                 <h2 className="text-2xl font-bold text-gray-800 mb-6">Forum Diskusi</h2>
 
@@ -205,11 +183,10 @@ export default function UseCaseDetail({ params }) {
                   </button>
                 </div>
               </div>
-            )}
           </div>
-        </div>)
-      }
-      <CustomFooter />
-    </>
+        </div>
+      </div>
+    </div>
+
   );
 }

@@ -3,9 +3,11 @@ import React, { useState, useEffect } from 'react';
 import { Clock, X, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
 import Navbar from "@/components/Navbar";
 import CustomFooter from "@/components/CustomFooter";
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 // Mock questions untuk trial test dengan format soal baru (TEXT dan IMAGE)
-const MOCK_TRIAL_QUESTIONS = {
+const questions = {
   PCK: [
     {
       id: 'pck_1',
@@ -116,8 +118,10 @@ const shuffleArray = (array) => {
 };
 
 export default function TrialTestApp() {
+  const router = useRouter()
   const [page, setPage] = useState('start-test');
   const [questions, setQuestions] = useState([]);
+  const [questionsNavigation, setQuestionsNavigation] = useState({});
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [currentCategory, setCurrentCategory] = useState('');
   const [answers, setAnswers] = useState({});
@@ -125,6 +129,21 @@ export default function TrialTestApp() {
   const [showSubmitConfirm, setShowSubmitConfirm] = useState(false);
   const [result, setResult] = useState(null);
   const [startTime, setStartTime] = useState(null);
+
+  const getData = async ()=>{
+    try{
+      const res = await axios.get(process.env.NEXT_PUBLIC_API_URL+"/api/soal/gratis")
+      if(res.data){
+        setQuestions(res.data)
+        setQuestionsNavigation(res.data)
+      }
+    }catch(err){
+      console.log(err.message)
+    }
+  }
+  useEffect(()=>{
+    getData()
+  },[])
 
   // Timer count up (tidak terbatas)
   useEffect(() => {
@@ -155,10 +174,10 @@ export default function TrialTestApp() {
 
   const handleStartTest = () => {
     const allQuestions = [];
-    const categories = Object.keys(MOCK_TRIAL_QUESTIONS);
+    const categories = Object.keys(questions);
 
     categories.forEach(category => {
-      const categoryQuestions = shuffleArray(MOCK_TRIAL_QUESTIONS[category]).map(q => ({
+      const categoryQuestions = shuffleArray(questions[category]).map(q => ({
         ...q,
         pilihan: shuffleArray(q.pilihan)
       }));
@@ -261,9 +280,9 @@ export default function TrialTestApp() {
         return (
           <div key={index} className="mb-4">
             <img
-              src={item.value}
+              src={`${process.env.NEXT_PUBLIC_API_FILE_URL}${item.value}`}
               alt={`Soal ${currentQuestionIndex + 1}`}
-              className="max-w-full h-auto rounded-lg shadow-md"
+              className="w-80 h-auto rounded-lg shadow-md"
             />
           </div>
         );
@@ -274,12 +293,11 @@ export default function TrialTestApp() {
 
   // Start Test Page
   if (page === 'start-test') {
-    const totalQuestions = Object.values(MOCK_TRIAL_QUESTIONS).reduce((sum, arr) => sum + arr.length, 0);
+    const totalQuestions = Object.values(questions).reduce((sum, arr) => sum + arr.length, 0);
 
     return (
       <>
-        <Navbar />
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center p-8 pt-24">
+        <div className="min-h-screen bg-gray-50 flex items-center justify-center p-8">
           <div className="bg-white rounded-lg shadow-2xl p-12 max-w-md w-full text-center">
             <div className="mb-6">
               <span className="inline-block px-4 py-2 bg-green-500 text-white rounded-full font-bold text-sm">
@@ -297,9 +315,9 @@ export default function TrialTestApp() {
               <p className="text-lg font-semibold text-green-600">Waktu: Tidak Terbatas</p>
               <div className="mt-4 text-left">
                 <p className="text-sm text-gray-700 mb-2">Kategori Soal:</p>
-                {Object.keys(MOCK_TRIAL_QUESTIONS).map(category => (
+                {Object.keys(questions).map(category => (
                   <p key={category} className="text-sm text-gray-600">
-                    • {category}: {MOCK_TRIAL_QUESTIONS[category].length} soal
+                    • {category}: {questions[category].length} soal
                   </p>
                 ))}
               </div>
@@ -323,7 +341,6 @@ export default function TrialTestApp() {
             </button>
           </div>
         </div>
-        <CustomFooter />
       </>
     );
   }
@@ -351,7 +368,7 @@ export default function TrialTestApp() {
           </div>
 
           {/* Question grid grouped by category */}
-          {Object.keys(MOCK_TRIAL_QUESTIONS).map((category) => {
+          {Object.keys(questionsNavigation).map((category) => {
             const categoryQuestions = questions
               .map((q, idx) => ({ q, idx }))
               .filter(({ q }) => q.kategori === category);
@@ -513,11 +530,7 @@ export default function TrialTestApp() {
             </div>
             <button
               onClick={() => {
-                setPage('start-test');
-                setResult(null);
-                setQuestions([]);
-                setAnswers({});
-                setElapsedTime(0);
+                router.push("/knowledge_test")
               }}
               className="p-2 hover:bg-gray-200 rounded-full transition-colors"
             >
@@ -617,9 +630,9 @@ export default function TrialTestApp() {
                           return (
                             <div key={idx} className="mb-2">
                               <img
-                                src={item.value}
+                                src={`${process.env.NEXT_PUBLIC_API_FILE_URL}${item.value}`}
                                 alt={`Soal ${index + 1}`}
-                                className="max-w-md h-auto rounded-lg shadow-md"
+                                className="w-56 h-auto rounded-lg shadow-md"
                               />
                             </div>
                           );
@@ -664,11 +677,7 @@ export default function TrialTestApp() {
           <div className="mt-8 text-center">
             <button
               onClick={() => {
-                setPage('start-test');
-                setResult(null);
-                setQuestions([]);
-                setAnswers({});
-                setElapsedTime(0);
+                router.push("/knowledge_test")
               }}
               className="px-8 py-4 bg-green-600 text-white rounded-lg font-bold text-lg hover:bg-green-700 transition-colors shadow-lg"
             >

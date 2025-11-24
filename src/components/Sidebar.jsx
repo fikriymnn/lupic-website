@@ -156,7 +156,7 @@ const Sidebar = () => {
           </li>
 
           {/* Teacher Certification Dropdown */}
-          <li>
+          {/* <li>
             <button
               onClick={() =>
                 setIsTeacherDropdownOpen(!isTeacherDropdownOpen)
@@ -222,7 +222,7 @@ const Sidebar = () => {
                 </li>
               </ul>
             )}
-          </li>
+          </li> */}
 
           <li>
             <a

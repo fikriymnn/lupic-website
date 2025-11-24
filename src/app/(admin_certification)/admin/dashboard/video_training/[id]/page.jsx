@@ -1,21 +1,21 @@
 "use client"
 import { useEffect, useState } from 'react';
 import { Eye, Download, CheckCircle, XCircle } from 'lucide-react';
-import Sidebar from "@/components/Sidebar";
+import Sidebar from "@/components/SidebarAdmin";
 import axios from 'axios';
 import { useParams } from 'next/navigation';
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('id-ID', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-  };
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  return date.toLocaleDateString('id-ID', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+};
 
-export default function AdminDashboardLessonPlan() {
-  const {id} = useParams()
+export default function AdminDashboardVideoTraining() {
+  const { id } = useParams()
   const [currentPage, setCurrentPage] = useState('list'); // 'list' atau 'detail'
   const [selectedUser, setSelectedUser] = useState(null);
   const [users, setUsers] = useState([]);
@@ -25,9 +25,9 @@ export default function AdminDashboardLessonPlan() {
     setCurrentPage('detail');
   };
 
-  const handleToggleStatus = async (userId,status) => {
+  const handleToggleStatus = async (userId, status) => {
     try {
-      const res = await axios.put(process.env.NEXT_PUBLIC_API_URL+"/api/modul_ajar_access/"+userId,{status:(status=="ACCESS"?"NO ACCESS":"ACCESS")})
+      const res = await axios.put(process.env.NEXT_PUBLIC_API_URL + "/api/video_pembelajaran_access/" + userId, { status: (status == "ACCESS" ? "NO ACCESS" : "ACCESS") })
       setUsers(users.map(user => {
         if (user._id === userId) {
           return {
@@ -58,9 +58,9 @@ export default function AdminDashboardLessonPlan() {
 
   async function getData() {
     try {
-      const res = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/modul_ajar_access/" + id)
+      const res = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/video_pembelajaran_access/" + id)
       if (res.data) {
-        console.log(res)
+        console.log(res.data)
         setUsers(res.data)
       }
     } catch (err) {
@@ -86,7 +86,7 @@ export default function AdminDashboardLessonPlan() {
                 {/* Header Section */}
                 <div className="mb-8">
                   <h1 className="text-3xl lg:text-4xl font-bold text-blue-600 mb-2">
-                    Teacher Study Case
+                    Video Training Access
                   </h1>
                 </div>
                 {/* Stats Cards */}
@@ -160,7 +160,7 @@ export default function AdminDashboardLessonPlan() {
                         </tr>
                       </thead>
                       <tbody className="bg-white divide-y divide-gray-200">
-                        {users.map((user,i) => (
+                        {users.map((user, i) => (
                           <tr key={i} className="hover:bg-gray-50 transition-colors">
                             <td className="px-6 py-4">
                               <div className="font-medium text-gray-900">{user.nama}</div>
@@ -185,8 +185,8 @@ export default function AdminDashboardLessonPlan() {
                             </td>
                             <td className="px-6 py-4">
                               <a
-                                href={`${process.env.NEXT_PUBLIC_API_FILE_URL}${user.bukti_pembayaran}`}
-                                target="_blank"
+                                href={user.bukti_pembayaran}
+                                download
                                 className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 text-sm font-medium"
                               >
                                 <Download className="w-4 h-4" />
@@ -203,7 +203,7 @@ export default function AdminDashboardLessonPlan() {
                                   Detail
                                 </button>
                                 <button
-                                  onClick={() => handleToggleStatus(user._id,user.status)}
+                                  onClick={() => handleToggleStatus(user._id, user.status)}
                                   className={`px-3 py-2 text-sm font-medium rounded-lg transition-colors ${user.status === "ACCESS"
                                     ? "bg-red-600 hover:bg-red-700 text-white"
                                     : "bg-green-600 hover:bg-green-700 text-white"
@@ -323,6 +323,23 @@ export default function AdminDashboardLessonPlan() {
                         : "bg-red-100 text-red-800"
                         }`}>
                         {selectedUser.status}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="border-b border-gray-200 pb-4">
+                    <label className="text-sm font-semibold text-gray-600 uppercase tracking-wide"></label>
+                    <div className="mt-2">
+                      <span className={`inline-flex items-center px-4 py-2 rounded-lg text-sm font-semibold`}>
+
+                      </span>
+                    </div>
+                  </div>
+                  <div className="border-b border-gray-200 pb-4">
+                    <label className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Jenis Pembayaran</label>
+                    <div className="mt-2">
+                      <span className={`inline-flex items-center px-4 py-2 rounded-lg text-sm font-semibold`}>
+                        {selectedUser.jenis_pembayaran}
                       </span>
                     </div>
                   </div>
