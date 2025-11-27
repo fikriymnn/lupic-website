@@ -24,7 +24,7 @@ export default function ModulAjarDetail() {
   const [access, setAccess] = useState(false)
 
   const [downloading, setDownloading] = useState(false);
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState(false)
 
   const handleDownload = () => {
     setDownloading(true);
@@ -49,15 +49,6 @@ export default function ModulAjarDetail() {
     return jenjang === 'SD' ? 'bg-blue-100 text-blue-700' : 'bg-purple-100 text-purple-700';
   };
 
-  const getTopikColor = (topik) => {
-    const colors = {
-      'Fisika': 'bg-orange-100 text-orange-700',
-      'Biologi': 'bg-green-100 text-green-700',
-      'IPA Terpadu': 'bg-teal-100 text-teal-700'
-    };
-    return colors[topik] || 'bg-gray-100 text-gray-700';
-  };
-
   const getData = async () => {
     try {
       const resUser = await axios.get(
@@ -67,7 +58,7 @@ export default function ModulAjarDetail() {
       if (resUser.data) {
         const res = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/modul_ajar/id/" + id)
         const resAccess = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/modul_ajar_access/" + id + "?userId=" + resUser.data._id)
-        if (resAccess) {
+        if (resAccess.data) {
           setUser(resUser.data)
           setModul(res.data)
           setAccess(resAccess.data[0]?.status)
@@ -120,7 +111,13 @@ export default function ModulAjarDetail() {
                 {/* Download Section */}
                 <div className="p-6">
                   {
-                    access=="NO ACCESS"&&modul.status=="BERBAYAR"?<button
+                    access=="ACCESS"&&modul.status=="BERBAYAR"?<button
+                      onClick={() => window.location.href = `${process.env.NEXT_PUBLIC_API_FILE_URL}${modul.file}`}
+                      className="w-full px-4 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition font-medium flex items-center justify-center gap-2"
+                    >
+                      <Download size={18} />
+                      Unduh PDF
+                    </button>:<button
                     onClick={() => {
                       if (access == "ACCESS") {
                         window.location.href = `${process.env.NEXT_PUBLIC_API_FILE_URL}${modul.file}`
@@ -132,13 +129,7 @@ export default function ModulAjarDetail() {
                   >
                     <BookOpen size={18} />
                     Buka Modul
-                  </button>:<button
-                      onClick={() => window.location.href = `${process.env.NEXT_PUBLIC_API_FILE_URL}${modul.file}`}
-                      className="w-full px-4 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition font-medium flex items-center justify-center gap-2"
-                    >
-                      <Download size={18} />
-                      Unduh PDF
-                    </button> 
+                  </button>
                   }
                   
                   <div className="mt-6 space-y-3">

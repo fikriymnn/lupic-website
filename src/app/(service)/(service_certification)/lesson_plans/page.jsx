@@ -137,63 +137,74 @@ export default function ModulAjarList() {
 
           {/* Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-8">
-            {moduls.map((modul) => (
-              <div
-                key={modul._id}
-                className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition transform hover:-translate-y-1"
-              >
-
-                <div className="h-full flex flex-col">
-                  <div className="relative h-48 w-full overflow-hidden">
-                    <Image
-                      src={`${process.env.NEXT_PUBLIC_API_FILE_URL}${modul?.cover}`}
-                      alt={"image"}
-                      fill
-                      className="object-cover opacity-80"
-                    />
-                  </div>
-                  <div className="p-6 flex flex-col">
-                    <div className="flex flex-wrap gap-2 mb-3">
-                      <span className="px-3 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full">
-                        {modul.jenjang}
-                      </span>
-
-                      <span className="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-semibold rounded-full">
-                        {modul.topikIPA}
-                      </span>
-                      <span className={`px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full ${modul.status === "GRATIS"
-                        ? "bg-green-500 text-white"
-                        : "bg-yellow-400 text-gray-900"
-                        }`}>
-                        {modul.status}
-                      </span>
+            {moduls.map((modul) => {
+              console.log(modul.harga)
+              return (
+                <div
+                  key={modul._id}
+                  className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition transform hover:-translate-y-1"
+                >
+                  <div className="h-full flex flex-col">
+                    <div className="relative h-48 w-full overflow-hidden">
+                      <Image
+                        src={`${process.env.NEXT_PUBLIC_API_FILE_URL}${modul?.cover}`}
+                        alt={"image"}
+                        fill
+                        className="object-cover opacity-80"
+                      />
                     </div>
-                    <h3 className="text-xl font-bold text-gray-800 mb-3 line-clamp-2">
-                      {modul.judulModul}
-                    </h3>
-                    <p className="text-gray-600 mb-4 line-clamp-2">
-                      {modul.deskripsi}
-                    </p>
-                    <div className="flex items-end justify-end flex-1 ">
-                      <button className="px-4 py-2 bg-koreaBlueMuda text-white rounded-lg transition-colors text-sm font-semibold flex items-center gap-1"
-                        onClick={() => {
-                          if (!user) {
-                            router.push("/login?prev=lesson_plans")
-                          } else {
-                            router.push("/lesson_plans/" + modul._id)
-                          }
-                        }}
-                      >
-                        Detail
-                        <ChevronRight className="w-4 h-4" />
-                      </button>
+                    <div className="p-6 flex flex-col">
+                      <div className="flex flex-wrap gap-2 mb-3">
+                        <span className="px-3 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full">
+                          {modul.jenjang}
+                        </span>
+
+                        <span className="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-semibold rounded-full">
+                          {modul.topikIPA}
+                        </span>
+                        <span className={`px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full ${modul.status === "GRATIS"
+                          ? "bg-green-500 text-white"
+                          : "bg-yellow-400 text-gray-900"
+                          }`}>
+                          {modul.status}
+                        </span>
+                      </div>
+                      <h3 className="text-xl font-bold text-gray-800 mb-3 line-clamp-2">
+                        {modul.judulModul}
+                      </h3>
+                      <p className="text-gray-600 mb-4 line-clamp-2">
+                        {modul.deskripsi}
+                      </p>
+
+                     
+
+                      <div className="flex items-end justify-between flex-1 ">
+                         {/* Bagian Harga */}
+                      {modul.status === "BERBAYAR" ? (
+                        <div className="">
+                          <p className="text-lg font-bold text-gray-900">
+                            Rp {modul.harga?.toLocaleString('id-ID') || '0'}
+                          </p>
+                        </div>
+                      ):<div></div>}
+                        <button className="px-4 py-2 bg-koreaBlueMuda text-white rounded-lg transition-colors text-sm font-semibold flex items-center gap-1"
+                          onClick={() => {
+                            if (!user) {
+                              router.push("/login?prev=lesson_plans")
+                            } else {
+                              router.push("/lesson_plans/" + modul._id)
+                            }
+                          }}
+                        >
+                          Detail
+                          <ChevronRight className="w-4 h-4" />
+                        </button>
+                      </div>
                     </div>
                   </div>
-
                 </div>
-
-              </div>
-            ))}
+              )
+            })}
           </div>
 
           {/* Pagination */}
@@ -247,7 +258,7 @@ export default function ModulAjarList() {
             {/* Topik IPA */}
             <div className="mb-6">
               <label className="block text-sm font-semibold text-gray-700 mb-3">
-                Topik IPA
+                Topik
               </label>
               <div className="grid grid-cols-2 gap-2">
                 {topikIPAOptions.map((topik) => (

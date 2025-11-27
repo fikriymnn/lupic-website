@@ -477,13 +477,79 @@ const Navbar = () => {
 
             {/* Mobile Auth */}
             <div className="border-t border-white/20 pt-2 mt-2 space-y-1">
-              <Link
-                href={login ? "/personal" : "/login"}
-                className="block text-white px-4 py-3 rounded-md text-sm font-medium hover:bg-white/10 transition-colors duration-200"
-                onClick={closeMenu}
-              >
-                {login ? "Personal" : "Login"}
-              </Link>
+              {login && <div className="space-y-1">
+                <button
+                  id={`nav-mobile-dropdown-${personal.label.toLowerCase().replace(/\s+/g, '-')}`}
+                  onClick={() => toggleDropdown(personal.label)}
+                  className="w-full flex justify-between items-center text-white px-4 py-3 rounded-md text-sm font-medium hover:bg-white/10 transition-colors duration-200"
+                  type="button"
+                >
+                  <p>{personal.label}</p>
+                  <svg
+                    className={`w-4 h-4 transition-transform duration-200 ${activeDropdown === personal.label ? "rotate-180" : ""
+                      }`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+
+                {activeDropdown === personal.label && (
+                  <div className="ml-4 space-y-1 bg-white/5 rounded-md p-2">
+                    {personal.items.map((item) => {
+                      return item.subItems ? (
+                        <div key={item.label} className="space-y-1">
+                          <button
+                            id={`nav-mobile-subitem-${item.label.toLowerCase().replace(/\s+/g, '-')}`}
+                            onClick={() => toggleSubDropdown(item.label)}
+                            className="w-full flex justify-between items-center text-white px-3 py-2 text-sm font-medium hover:bg-white/10 transition-colors duration-200 rounded"
+                            type="button"
+                          >
+                            <p>{item.label}</p>
+                            <svg
+                              className={`w-4 h-4 transition-transform duration-200 ${activeSubDropdown === item.label ? "rotate-180" : ""
+                                }`}
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                            </svg>
+                          </button>
+                          {activeSubDropdown === item.label && (
+                            <div className="ml-3 space-y-1 bg-white/5 rounded p-2">
+                              {item.subItems.map((sub) => (
+                                <Link
+                                  key={sub.href}
+                                  href={sub.href}
+                                  className="block text-white/80 px-3 py-2 rounded text-sm hover:bg-white/10 transition-colors duration-200"
+                                  onClick={closeMenu}
+                                >
+                                  {sub.label}
+                                </Link>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      ) : (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          target={item.external ? "_blank" : "_self"}
+                          rel={item.external ? "noopener noreferrer" : ""}
+                          className="block text-white/80 px-3 py-2 rounded text-sm hover:bg-white/10 transition-colors duration-200"
+                          onClick={closeMenu}
+                        >
+                          {item.label}
+                        </Link>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            }
               {login && (
                 <button
                   id="nav-mobile-logout-btn"

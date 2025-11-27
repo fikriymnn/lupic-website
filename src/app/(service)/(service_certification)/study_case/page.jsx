@@ -155,16 +155,20 @@ export default function CaseStudy() {
                   className="bg-white rounded-lg shadow-lg p-6 hover:-translate-y-1 transition flex flex-col"
                 >
                   <div className="flex gap-2 mb-3">
-                    <span className="px-3 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full">
-                        {useCase.jenjang}
-                      </span>
+                    <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full flex items-center">
+                      {useCase.jenjang}
+                    </span>
 
-                      <span className="px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full">
-                        {useCase.topikIPA}
-                      </span>
-                    <span className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full font-semibold text-xs">
+                    <span className="px-2 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full flex items-center">
+                      {useCase.topikIPA}
+                    </span>
+                    <span className="px-2 py-1 bg-purple-100 text-purple-700 rounded-full font-semibold text-xs flex items-center">
                       {useCase.kompetensiGuru}
                     </span>
+                    <span className={`px-2 py-1 rounded-xl text-xs font-semibold bg-gray-100 text-gray-700 flex items-center ${useCase.status === "GRATIS" ? "bg-green-500 text-white" : "bg-yellow-400 text-gray-900"
+                        }`}>
+                        {useCase.status}
+                      </span>
                   </div>
 
                   <h3 className="text-lg font-bold mb-2 line-clamp-2">
@@ -175,8 +179,16 @@ export default function CaseStudy() {
                     {useCase.deskripsi}
                   </p>
 
-                  <button
-                    className="w-full py-2 bg-indigo-600 text-white rounded-lg"
+                  <div className="flex items-end justify-between flex-1 mt-4">
+                    {useCase.status === "BERBAYAR" ? (
+                      <div className="">
+                        <p className="text-lg font-bold text-gray-900">
+                          Rp {useCase.harga?.toLocaleString('id-ID') || '0'}
+                        </p>
+                      </div>
+                    ) : <div></div>}
+                    <button
+                    className="px-4 py-2 bg-indigo-600 text-white rounded-lg"
                     onClick={() => {
                       if (!user) {
                         router.push("/login?prev=study_case")
@@ -188,6 +200,8 @@ export default function CaseStudy() {
                   >
                     Pelajari Kasus
                   </button>
+                  </div>
+                  
                 </div>
               ))
             )}

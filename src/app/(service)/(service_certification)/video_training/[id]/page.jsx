@@ -82,7 +82,7 @@ export default function DetailVideoTraining() {
             <div className="relative pb-[56.25%] bg-gray-900">
               <div className="absolute inset-0 flex items-center justify-center">
                 {
-                  access?.status == "ACCESS" && videoData?.status == "BERBAYAR" ? <ReactPlayer url={videoData?.linkVideo} controls width="100%" height="100%" /> : videoData?.linkVideo ? <div>
+                  access?.status == "ACCESS" && videoData?.status == "BERBAYAR" ? <ReactPlayer url={videoData?.linkVideo} controls width="100%" height="100%" /> : <div>
                     <img
                       src={`https://img.youtube.com/vi/${getYouTubeVideoId(videoData?.linkVideo)}/maxresdefault.jpg`}
                       alt={videoData?.judul}
@@ -97,7 +97,7 @@ export default function DetailVideoTraining() {
                       </div>
                       <p className="text-white text-lg font-semibold">Video belum dapat diputar</p>
                     </div>
-                  </div> : ""
+                  </div> 
                 }
               </div>
             </div>

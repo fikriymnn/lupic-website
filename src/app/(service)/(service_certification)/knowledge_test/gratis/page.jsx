@@ -130,20 +130,20 @@ export default function TrialTestApp() {
   const [result, setResult] = useState(null);
   const [startTime, setStartTime] = useState(null);
 
-  const getData = async ()=>{
-    try{
-      const res = await axios.get(process.env.NEXT_PUBLIC_API_URL+"/api/soal/gratis")
-      if(res.data){
+  const getData = async () => {
+    try {
+      const res = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/soal/gratis")
+      if (res.data) {
         setQuestions(res.data)
         setQuestionsNavigation(res.data)
       }
-    }catch(err){
+    } catch (err) {
       console.log(err.message)
     }
   }
-  useEffect(()=>{
+  useEffect(() => {
     getData()
-  },[])
+  }, [])
 
   // Timer count up (tidak terbatas)
   useEffect(() => {
@@ -384,8 +384,8 @@ export default function TrialTestApp() {
                       key={idx}
                       onClick={() => handleNavigateQuestion(idx)}
                       className={`w-12 h-12 rounded-lg font-semibold text-sm transition-all ${currentQuestionIndex === idx
-                          ? 'ring-2 ring-green-600'
-                          : ''
+                        ? 'ring-2 ring-green-600'
+                        : ''
                         } ${getQuestionStatus(idx) === 'answered'
                           ? 'bg-green-500 text-white hover:bg-green-600'
                           : 'bg-gray-300 text-gray-700 hover:bg-gray-400'
@@ -439,8 +439,8 @@ export default function TrialTestApp() {
                         key={idx}
                         onClick={() => handleAnswerSelect(option)}
                         className={`w-full text-left p-4 rounded-lg border-2 transition-all ${isSelected
-                            ? 'border-green-600 bg-green-50'
-                            : 'border-gray-300 hover:border-green-400 hover:bg-gray-50'
+                          ? 'border-green-600 bg-green-50'
+                          : 'border-gray-300 hover:border-green-400 hover:bg-gray-50'
                           }`}
                       >
                         <span className="font-semibold text-green-600 mr-3">
@@ -602,16 +602,16 @@ export default function TrialTestApp() {
 
                 return (
                   <div key={index} className={`border-l-4 p-6 rounded-r-lg ${isCorrect ? 'border-green-500 bg-green-50' :
-                      isUnanswered ? 'border-gray-400 bg-gray-50' :
-                        'border-red-500 bg-red-50'
+                    isUnanswered ? 'border-gray-400 bg-gray-50' :
+                      'border-red-500 bg-red-50'
                     }`}>
                     <div className="flex justify-between items-start mb-4">
                       <h3 className="text-lg font-semibold text-gray-800">
                         Soal {index + 1} ({question.kategori})
                       </h3>
                       <span className={`px-3 py-1 rounded-full text-sm font-semibold ${isCorrect ? 'bg-green-500 text-white' :
-                          isUnanswered ? 'bg-gray-400 text-white' :
-                            'bg-red-500 text-white'
+                        isUnanswered ? 'bg-gray-400 text-white' :
+                          'bg-red-500 text-white'
                         }`}>
                         {isCorrect ? 'Benar' : isUnanswered ? 'Tidak Dijawab' : 'Salah'}
                       </span>
@@ -651,8 +651,8 @@ export default function TrialTestApp() {
                           <div
                             key={idx}
                             className={`p-3 rounded-lg ${isCorrectAnswer ? 'bg-green-200 border-2 border-green-500' :
-                                isUserAnswer && !isCorrect ? 'bg-red-200 border-2 border-red-500' :
-                                  'bg-white border border-gray-300'
+                              isUserAnswer && !isCorrect ? 'bg-red-200 border-2 border-red-500' :
+                                'bg-white border border-gray-300'
                               }`}
                           >
                             <span className="font-semibold mr-2">{optionLetter}.</span>
@@ -667,9 +667,18 @@ export default function TrialTestApp() {
                         );
                       })}
                     </div>
+                    {/* Penjelasan */}
+                    {question.penjelasan && (
+                      <div className="mt-4 p-4 bg-blue-50 border-l-4 border-blue-500 rounded">
+                        <p className="font-semibold text-blue-900 mb-2">📚 Penjelasan:</p>
+                        <p className="text-gray-700 leading-relaxed">{question.penjelasan}</p>
+                      </div>
+                    )}
                   </div>
                 );
+
               })}
+
             </div>
           </div>
 

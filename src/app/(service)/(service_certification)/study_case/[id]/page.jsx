@@ -27,22 +27,31 @@ export default function UseCaseDetail({ params }) {
   // 🔥 FETCH DATA DETAIL STUDY CASE
   useEffect(() => {
     async function fetchDetail() {
+      setLoading(true);
       try {
         const resUser = await axios.get(
           process.env.NEXT_PUBLIC_API_URL + "/api/public/user",
           { withCredentials: true }
         );
 
+
         if (resUser.data) {
           const data = await axios.get(
             `${process.env.NEXT_PUBLIC_API_URL}/api/study_case/id/${id}?userId=${resUser.data._id}`)
+          const resAccess = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/study_case_access/` + id + "?userId=" + resUser.data._id)
+
+          if (resAccess.data?.length < 1 && resAccess.data[0]?.status !== "ACCESS" && data.data?.status == "BERBAYAR") {
+            router.push("/study_case/access?studyCaseId=" + data.data._id + "&userId=" + resUser.data._id + "&harga=" + data.data.harga + "&judul=" + data.data.judulKasus)
+          }
+
+          if (data.data.answer?.answer) {
+            setShowPembahasan(true)
+          }
+
           setUser(resUser.data)
           setUseCase(data.data);
           setAnswers(data.data?.answer?.answer)
           setForumMessages(data.data.forums)
-          if (data.data.answer?.answer) {
-            setShowPembahasan(true)
-          }
         }
 
       } catch (err) {
@@ -75,7 +84,9 @@ export default function UseCaseDetail({ params }) {
     }
   }
 
-
+  if (loading == true) {
+    return null
+  }
 
   return (
     <>

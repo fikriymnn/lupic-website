@@ -57,7 +57,7 @@ function formatDate(dateString) {
                         </h1>
                     </div>
 
-                    {userHistory.length === 0 ? (
+                    {userHistory && userHistory.length === 0 ? (
                         <div className="bg-white rounded-lg shadow-lg p-12 text-center">
                             <History className="w-16 h-16 text-gray-400 mx-auto mb-4" />
                             <p className="text-xl text-gray-600">Belum ada riwayat pengerjaan</p>

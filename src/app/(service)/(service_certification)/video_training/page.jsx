@@ -228,7 +228,14 @@ export default function VideoTrainingApp() {
                       {video.deskripsi}
                     </p>
 
-                    <div className="flex items-end justify-end flex-1">
+                    <div className="flex items-end justify-between flex-1">
+                             {video.status === "BERBAYAR" ? (
+                        <div className="">
+                          <p className="text-lg font-bold text-gray-900">
+                            Rp {video.harga?.toLocaleString('id-ID') || '0'}
+                          </p>
+                        </div>
+                      ):<div></div>}
                       <button className="px-4 py-2 bg-koreaBlueMuda text-white rounded-lg transition-colors text-sm font-semibold flex items-center gap-1"
                         onClick={() => {
                           if (!user) {
