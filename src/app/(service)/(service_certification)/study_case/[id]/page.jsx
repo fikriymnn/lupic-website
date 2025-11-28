@@ -40,7 +40,8 @@ export default function UseCaseDetail({ params }) {
             `${process.env.NEXT_PUBLIC_API_URL}/api/study_case/id/${id}?userId=${resUser.data._id}`)
           const resAccess = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/study_case_access/` + id + "?userId=" + resUser.data._id)
 
-          if (resAccess.data?.length < 1 && resAccess.data[0]?.status !== "ACCESS" && data.data?.status == "BERBAYAR") {
+          console.log(resAccess.data[0]?.status !== "ACCESS")
+          if (resAccess.data?.length < 1 || resAccess.data[0]?.status !== "ACCESS" && data.data?.status == "BERBAYAR") {
             router.push("/study_case/access?studyCaseId=" + data.data._id + "&userId=" + resUser.data._id + "&harga=" + data.data.harga + "&judul=" + data.data.judulKasus)
           }
 

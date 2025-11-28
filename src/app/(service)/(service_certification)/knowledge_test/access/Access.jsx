@@ -39,6 +39,7 @@ export default function FormBukaKnowledgeTest() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const userId = searchParams.get('userId')
+  const harga = searchParams.get('harga')
   const [isMounted, setIsMounted] = useState(false);
   const [formData, setFormData] = useState({
     nama: "",
@@ -52,7 +53,8 @@ export default function FormBukaKnowledgeTest() {
     sumber_informasi: [],
     sumber_informasi_lainnya: "",
     bukti_pembayaran: null,
-    jenis_pembayaran: ""
+    jenis_pembayaran: "",
+    harga: harga
   });
   const [noWa, setNoWa] = useState("")
   const [jenisPembayaran, setJenisPembayaran] = useState([])
@@ -146,7 +148,9 @@ export default function FormBukaKnowledgeTest() {
 
   };
 
-
+function formatNumberID(num) {
+  return num.toLocaleString("id-ID");
+}
 
   return (
     <>
@@ -168,6 +172,12 @@ export default function FormBukaKnowledgeTest() {
               </h1>
               <p className="text-gray-600">
                 Akses knowledge test 30 hari
+              </p>
+              <p className="text-sm text-gray-500 mt-1">
+                Harga:{" "}
+                <span className="font-semibold">
+                  Rp{formatNumberID(parseInt(harga))}
+                </span>
               </p>
             </div>
 
@@ -266,7 +276,7 @@ export default function FormBukaKnowledgeTest() {
                 >
                   {
                     jenisPembayaran.map((v, i) => (
-                      <option key={i} value="PPG Calon Guru/PPG luar jabatan (Prajabatan)">
+                      <option key={i} value={v}>
                         {v}
                       </option>
                     ))

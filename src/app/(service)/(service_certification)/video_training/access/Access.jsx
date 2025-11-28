@@ -39,6 +39,7 @@ export default function FormBukaVideo() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const userId = searchParams.get('userId')
+  const harga = searchParams.get('harga')
   const videoId = searchParams.get('videoId')
   const judul = searchParams.get('judul')
   const [isMounted, setIsMounted] = useState(false);
@@ -54,7 +55,8 @@ export default function FormBukaVideo() {
     sumber_informasi: [],
     sumber_informasi_lainnya: "",
     bukti_pembayaran: null,
-    jenis_pembayaran: ""
+    jenis_pembayaran: "",
+    harga: harga
   });
   const [noWa, setNoWa] = useState("")
   const [jenisPembayaran, setJenisPembayaran] = useState([])
@@ -146,6 +148,10 @@ export default function FormBukaVideo() {
     }
   };
 
+  function formatNumberID(num) {
+  return num.toLocaleString("id-ID");
+}
+
   return (
     <>
       <Navbar />
@@ -168,9 +174,9 @@ export default function FormBukaVideo() {
                 Video Pembelajaran: <span className="font-semibold">{judul}</span>
               </p>
               <p className="text-sm text-gray-500 mt-1">
-                Status:{" "}
-                <span className="font-semibold text-orange-600">
-                  {modul.status}
+                Harga:{" "}
+                <span className="font-semibold">
+                  Rp{formatNumberID(parseInt(harga))}
                 </span>
               </p>
             </div>
@@ -269,7 +275,7 @@ export default function FormBukaVideo() {
                 >
                   {
                     jenisPembayaran.map((v,i)=>(
-                      <option key={i} value="PPG Calon Guru/PPG luar jabatan (Prajabatan)">
+                      <option key={i} value={v}>
                     {v}
                   </option>
                     ))

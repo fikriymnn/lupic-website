@@ -15,6 +15,7 @@ export default function CreateVideoModul() {
     jenjang: "SD",
     topikIPA: "Fisika",
     status: "GRATIS",
+    harga: 0,
   });
 
   const handleChange = (field, value) => {
@@ -112,7 +113,7 @@ export default function CreateVideoModul() {
                     {/* Topik */}
                     <div>
                       <label className="block text-sm font-semibold text-gray-700 mb-2">
-                        Topik IPA *
+                        Topik *
                       </label>
                       <select
                         required
@@ -145,6 +146,19 @@ export default function CreateVideoModul() {
                         <option value="BERBAYAR">BERBAYAR</option>
                       </select>
                     </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                     Harga *
+                    </label>
+                    <input
+                      type="number"
+                      required
+                      value={formData.harga}
+                      onChange={(e) => handleChange('harga', e.target.value)}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    />
                   </div>
 
                   {/* Tujuan Pembelajaran */}

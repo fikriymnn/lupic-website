@@ -119,7 +119,6 @@ export default function VideoTrainingAdmin() {
   };
 
 
-
   return (
     <div className="flex min-h-screen bg-gray-50">
       <Sidebar />

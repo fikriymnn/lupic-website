@@ -41,6 +41,7 @@ export default function FormBukaModul() {
   const userId = searchParams.get('userId')
   const modulId = searchParams.get('modulId')
   const modulName = searchParams.get('modulName')
+  const harga = searchParams.get('harga')
   const [isMounted, setIsMounted] = useState(false);
   const [formData, setFormData] = useState({
     nama: "",
@@ -54,7 +55,8 @@ export default function FormBukaModul() {
     sumber_informasi: [],
     sumber_informasi_lainnya: "",
     bukti_pembayaran: null,
-    jenis_pembayaran: ""
+    jenis_pembayaran: "",
+    harga: harga
   });
   const [noWa, setNoWa] = useState("")
   const [jenisPembayaran, setJenisPembayaran] = useState([])
@@ -146,6 +148,10 @@ export default function FormBukaModul() {
 
   };
 
+  function formatNumberID(num) {
+  return num.toLocaleString("id-ID");
+}
+
   return (
     <>
       <Navbar />
@@ -169,8 +175,14 @@ export default function FormBukaModul() {
               </p>
               <p className="text-sm text-gray-500 mt-1">
                 Status:{" "}
-                <span className="font-semibold text-orange-600">
+                <span className="font-semibold">
                   {modul.status}
+                </span>
+              </p>
+              <p className="text-sm text-gray-500 mt-1">
+                Harga:{" "}
+                <span className="font-semibold">
+                  Rp{formatNumberID(parseInt(harga))}
                 </span>
               </p>
             </div>
@@ -269,7 +281,7 @@ export default function FormBukaModul() {
                 >
                   {
                     jenisPembayaran.map((v, i) => (
-                      <option key={i} value="PPG Calon Guru/PPG luar jabatan (Prajabatan)">
+                      <option key={i} value={v}>
                         {v}
                       </option>
                     ))

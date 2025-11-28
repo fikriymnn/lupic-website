@@ -5,17 +5,17 @@ import Sidebar from "@/components/SidebarAdmin";
 import axios from 'axios';
 import { useParams } from 'next/navigation';
 
-const formatDate = (dateString) => {
-  const date = new Date(dateString);
-  return date.toLocaleDateString('id-ID', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  });
-};
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('id-ID', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
 
-export default function AdminDashboardVideoTraining() {
-  const { id } = useParams()
+export default function AdminDashboardStudycase() {
+  const {id} = useParams()
   const [currentPage, setCurrentPage] = useState('list'); // 'list' atau 'detail'
   const [selectedUser, setSelectedUser] = useState(null);
   const [users, setUsers] = useState([]);
@@ -25,9 +25,9 @@ export default function AdminDashboardVideoTraining() {
     setCurrentPage('detail');
   };
 
-  const handleToggleStatus = async (userId, status) => {
+  const handleToggleStatus = async (userId,status) => {
     try {
-      const res = await axios.put(process.env.NEXT_PUBLIC_API_URL + "/api/video_pembelajaran_access/" + userId, { status: (status == "ACCESS" ? "NO ACCESS" : "ACCESS") })
+      const res = await axios.put(process.env.NEXT_PUBLIC_API_URL+"/api/study_case_access/"+userId,{status:(status=="ACCESS"?"NO ACCESS":"ACCESS")})
       setUsers(users.map(user => {
         if (user._id === userId) {
           return {
@@ -58,9 +58,8 @@ export default function AdminDashboardVideoTraining() {
 
   async function getData() {
     try {
-      const res = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/video_pembelajaran_access/" + id)
+      const res = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/study_case_access/" + id)
       if (res.data) {
-        console.log(res.data)
         setUsers(res.data)
       }
     } catch (err) {
@@ -72,7 +71,7 @@ export default function AdminDashboardVideoTraining() {
     getData()
   }, [])
 
-  function formatNumberID(num) {
+function formatNumberID(num) {
   return num?.toLocaleString("id-ID");
 }
 
@@ -90,49 +89,9 @@ export default function AdminDashboardVideoTraining() {
                 {/* Header Section */}
                 <div className="mb-8">
                   <h1 className="text-3xl lg:text-4xl font-bold text-blue-600 mb-2">
-                    Video Training Access
+                    Teacher Study Case
                   </h1>
                 </div>
-                {/* Stats Cards */}
-                {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                  <div className="bg-white rounded-lg shadow-sm p-6">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-sm text-gray-600">Total Pendaftar</p>
-                        <p className="text-3xl font-bold text-gray-900 mt-1">{users.length}</p>
-                      </div>
-                      <div className="bg-blue-100 p-3 rounded-lg">
-                        <Eye className="w-6 h-6 text-blue-600" />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="bg-white rounded-lg shadow-sm p-6">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-sm text-gray-600">Access Granted</p>
-                        <p className="text-3xl font-bold text-green-600 mt-1">
-                          {users.filter(u => u.status === "ACCESS").length}
-                        </p>
-                      </div>
-                      <div className="bg-green-100 p-3 rounded-lg">
-                        <CheckCircle className="w-6 h-6 text-green-600" />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="bg-white rounded-lg shadow-sm p-6">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-sm text-gray-600">No Access</p>
-                        <p className="text-3xl font-bold text-red-600 mt-1">
-                          {users.filter(u => u.status === "NO ACCESS").length}
-                        </p>
-                      </div>
-                      <div className="bg-red-100 p-3 rounded-lg">
-                        <XCircle className="w-6 h-6 text-red-600" />
-                      </div>
-                    </div>
-                  </div>
-                </div> */}
 
                 {/* Table */}
                 <div className="bg-white rounded-lg shadow-sm overflow-hidden">
@@ -164,7 +123,7 @@ export default function AdminDashboardVideoTraining() {
                         </tr>
                       </thead>
                       <tbody className="bg-white divide-y divide-gray-200">
-                        {users.map((user, i) => (
+                        {users.map((user,i) => (
                           <tr key={i} className="hover:bg-gray-50 transition-colors">
                             <td className="px-6 py-4">
                               <div className="font-medium text-gray-900">{user.nama}</div>
@@ -189,8 +148,8 @@ export default function AdminDashboardVideoTraining() {
                             </td>
                             <td className="px-6 py-4">
                               <a
-                                href={user.bukti_pembayaran}
-                                download
+                                href={`${process.env.NEXT_PUBLIC_API_FILE_URL}${user.bukti_pembayaran}`}
+                                target="_blank"
                                 className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 text-sm font-medium"
                               >
                                 <Download className="w-4 h-4" />
@@ -207,7 +166,7 @@ export default function AdminDashboardVideoTraining() {
                                   Detail
                                 </button>
                                 <button
-                                  onClick={() => handleToggleStatus(user._id, user.status)}
+                                  onClick={() => handleToggleStatus(user._id,user.status)}
                                   className={`px-3 py-2 text-sm font-medium rounded-lg transition-colors ${user.status === "ACCESS"
                                     ? "bg-red-600 hover:bg-red-700 text-white"
                                     : "bg-green-600 hover:bg-green-700 text-white"
@@ -291,7 +250,7 @@ export default function AdminDashboardVideoTraining() {
                   {/* Jenjang */}
                   <div className="border-b border-gray-200 pb-4">
                     <label className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Jenjang</label>
-                    <p className="text-lg text-gray-900 mt-1">{selectedUser.jenjang}</p>
+                    <p className="text-lg text-gray-900 mt-1">{selectedUser.jenjang_sekolah}</p>
                   </div>
 
                   {/* Instansi */}
@@ -330,24 +289,15 @@ export default function AdminDashboardVideoTraining() {
                       </span>
                     </div>
                   </div>
-
-                  <div className="border-b border-gray-200 pb-4">
-                    <label className="text-sm font-semibold text-gray-600 uppercase tracking-wide"></label>
-                    <div className="mt-2">
-                      <span className={`inline-flex items-center px-4 py-2 rounded-lg text-sm font-semibold`}>
-
-                      </span>
-                    </div>
-                  </div>
-                  <div className="border-b border-gray-200 pb-4">
+                   <div className="border-b border-gray-200 pb-4">
                     <label className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Harga</label>
                     <div className="mt-2">
                       <span className={`inline-flex items-center px-4 py-2 rounded-lg text-sm font-semibold`}>
-                        {formatNumberID(selectedUser.harga)}
+                       {formatNumberID(selectedUser.harga)}
                       </span>
                     </div>
                   </div>
-                  <div className="border-b border-gray-200 pb-4">
+                   <div className="border-b border-gray-200 pb-4">
                     <label className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Jenis Pembayaran</label>
                     <div className="mt-2">
                       <span className={`inline-flex items-center px-4 py-2 rounded-lg text-sm font-semibold`}>
@@ -362,7 +312,7 @@ export default function AdminDashboardVideoTraining() {
                     <div className="mt-2">
                       <a
                         href={`${process.env.NEXT_PUBLIC_API_FILE_URL}${selectedUser.bukti_pembayaran}`}
-                        download
+                        target="_blank"
                         className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
                       >
                         <Download className="w-4 h-4" />
@@ -370,25 +320,6 @@ export default function AdminDashboardVideoTraining() {
                       </a>
                     </div>
                   </div>
-                </div>
-
-                {/* Action Buttons */}
-                <div className="mt-8 pt-6 border-t border-gray-200 flex gap-4">
-                  <button
-                    onClick={() => handleToggleStatus(selectedUser.id)}
-                    className={`flex-1 py-3 px-6 rounded-lg font-semibold transition-colors ${selectedUser.status === "ACCESS"
-                      ? "bg-red-600 hover:bg-red-700 text-white"
-                      : "bg-green-600 hover:bg-green-700 text-white"
-                      }`}
-                  >
-                    {selectedUser.status === "ACCESS" ? "Ubah ke NO ACCESS" : "Ubah ke ACCESS"}
-                  </button>
-                  <button
-                    onClick={handleBackToList}
-                    className="px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg font-semibold transition-colors"
-                  >
-                    Kembali
-                  </button>
                 </div>
               </div>
             </div>

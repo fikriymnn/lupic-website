@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import SidebarAdmin from "@/components/SidebarAdmin";
 import axios from 'axios';
+import { BiMoney } from 'react-icons/bi';
 
 
 export default function AdminKnowledgeTest() {
@@ -298,6 +299,10 @@ export default function AdminKnowledgeTest() {
         setQuestionForm({ ...questionForm, soal: newSoal });
     };
 
+    function formatNumberID(num) {
+  return num?.toLocaleString("id-ID");
+}
+
     // Pakets Page
     if (page === 'pakets') {
         return (
@@ -315,6 +320,13 @@ export default function AdminKnowledgeTest() {
                         <div className="flex justify-between items-center mb-8">
 
                             <div className="flex gap-3">
+                                <button
+                                    onClick={() => setPage('harga')}
+                                    className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                                >
+                                    <BiMoney className="w-5 h-5" />
+                                    Harga Access
+                                </button>
                                 <button
                                     onClick={() => setPage('access')}
                                     className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
@@ -874,6 +886,10 @@ export default function AdminKnowledgeTest() {
                                             <span className="text-gray-600">Status PPG:</span>
                                             <span className="ml-2 font-semibold text-gray-800">{selectedAccess.status_ppg}</span>
                                         </div>
+                                         <div>
+                                            <span className="text-gray-600">Status PPG:</span>
+                                            <span className="ml-2 font-semibold text-gray-800">{formatNumberID(selectedAccess.harga)}</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -908,7 +924,7 @@ export default function AdminKnowledgeTest() {
                                             {selectedAccess?.jenis_pembayaran}
                                         </div>
                                         <div className="mt-1">{
-                                            selectedAccess?.bukti_pembayaran ? <a className={`px-3 py-1 rounded-full text-sm text-koreaBlueMuda font-semibold flex items-center`} href={`${process.env.NEXT_PUBLIC_API_FILE_URL}${selectedAccess?.bukti_pembayaran}`}>
+                                            selectedAccess?.bukti_pembayaran ? <a className={`px-3 py-1 rounded-full text-sm text-koreaBlueMuda font-semibold flex items-center`} target="_blank" href={`${process.env.NEXT_PUBLIC_API_FILE_URL}${selectedAccess?.bukti_pembayaran}`}>
                                                <DownloadIcon size={14}/> <p className='ml-2'>download</p> 
                                             </a> : ""
                                         }

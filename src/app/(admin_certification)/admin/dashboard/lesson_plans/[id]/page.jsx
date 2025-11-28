@@ -71,6 +71,10 @@ export default function AdminDashboardLessonPlan() {
     getData()
   }, [])
 
+  function formatNumberID(num) {
+  return num?.toLocaleString("id-ID");
+}
+
   // LIST PAGE
   if (currentPage === 'list') {
     return (
@@ -199,7 +203,7 @@ export default function AdminDashboardLessonPlan() {
               {/* Header Section */}
               <div className="mb-8">
                 <h1 className="text-3xl lg:text-4xl font-bold text-blue-600 mb-2">
-                  Teacher Study Case
+                  Teacher Lesson Plans
                 </h1>
               </div>
               {/* Header */}
@@ -293,6 +297,16 @@ export default function AdminDashboardLessonPlan() {
                       </span>
                     </div>
                   </div>
+
+                  <div className="border-b border-gray-200 pb-4">
+                    <label className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Harga</label>
+                    <div className="mt-2">
+                      <span className={`inline-flex items-center px-4 py-2 rounded-lg text-sm font-semibold`}>
+                        {formatNumberID(selectedUser.harga)}
+                      </span>
+                    </div>
+                  </div>
+
                    <div className="border-b border-gray-200 pb-4">
                     <label className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Jenis Pembayaran</label>
                     <div className="mt-2">
@@ -307,8 +321,8 @@ export default function AdminDashboardLessonPlan() {
                     <label className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Bukti Pembayaran</label>
                     <div className="mt-2">
                       <a
-                        href={selectedUser.bukti_pembayaran}
-                        download
+                        href={`${process.env.NEXT_PUBLIC_API_FILE_URL}${selectedUser.bukti_pembayaran}`}
+                        target="_blank"
                         className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
                       >
                         <Download className="w-4 h-4" />

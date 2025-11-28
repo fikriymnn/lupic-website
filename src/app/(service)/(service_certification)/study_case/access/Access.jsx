@@ -55,7 +55,8 @@ export default function FormBukaStudyCase() {
     sumber_informasi: [],
     sumber_informasi_lainnya: "",
     bukti_pembayaran: null,
-    jenis_pembayaran: ""
+    jenis_pembayaran: "",
+    harga: harga,
   });
   const [noWa, setNoWa] = useState("")
   const [jenisPembayaran, setJenisPembayaran] = useState([])
@@ -280,7 +281,7 @@ export default function FormBukaStudyCase() {
                 >
                   {
                     jenisPembayaran.map((v, i) => (
-                      <option key={i} value="PPG Calon Guru/PPG luar jabatan (Prajabatan)">
+                      <option key={i} value={v}>
                         {v}
                       </option>
                     ))

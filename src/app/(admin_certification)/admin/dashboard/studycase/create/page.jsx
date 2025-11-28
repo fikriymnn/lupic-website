@@ -16,7 +16,9 @@ export default function CreateUseCase() {
     kompetensiGuru: 'Pedagogik',
     narasiLengkap: '',
     pertanyaanAnalisis: '',
-    pembahasan: ''
+    pembahasan: '',
+    status:'BERBAYAR',
+    harga: 0,
   });
 
 
@@ -69,6 +71,35 @@ export default function CreateUseCase() {
                 </div>
 
                 <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-lg p-8 space-y-6">
+                  {/* Status */}
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Status *
+                    </label>
+                    <select
+                      required
+                      value={formData.status}
+                      onChange={(e) =>
+                        handleChange("status", e.target.value)
+                      }
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    >
+                      <option value="GRATIS">GRATIS</option>
+                      <option value="BERBAYAR">BERBAYAR</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                     Harga *
+                    </label>
+                    <input
+                      type="number"
+                      required
+                      value={formData.harga}
+                      onChange={(e) => handleChange('harga', e.target.value)}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    />
+                  </div>
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
                       Judul Kasus *
