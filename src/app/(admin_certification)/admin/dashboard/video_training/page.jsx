@@ -237,7 +237,7 @@ export default function VideoTrainingAdmin() {
                     {
                       video.status === 'BERBAYAR' && (  
                       <h3 className="font-bold text-lg mb-2 line-clamp-2">
-                      Rp{video.harga}
+                      Rp{video.harga?.toLocaleString('id-ID') || '0'}
                     </h3>
                       )
                     }

@@ -135,7 +135,7 @@ export default function FormBukaStudyCase() {
     e.preventDefault();
     try {
       const res = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/study_case_access", { ...formData, userId: userId, studyCaseId: studyCaseId })
-      const waUrl = `https://wa.me/6281563862944?text=${encodeURIComponent(
+      const waUrl = `https://wa.me/${noWa}?text=${encodeURIComponent(
         "Halo, saya ingin konfirmasi pembayaran modul atas nama " + formData.nama
       )}`;
       if (res.data) {
@@ -279,6 +279,7 @@ export default function FormBukaStudyCase() {
                   onChange={(e) => handleChange("jenis_pembayaran", e.target.value)}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 >
+                  <option value="">Pilih Jenis Pembayaran</option>
                   {
                     jenisPembayaran.map((v, i) => (
                       <option key={i} value={v}>

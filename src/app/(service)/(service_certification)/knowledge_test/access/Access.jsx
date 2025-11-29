@@ -39,7 +39,6 @@ export default function FormBukaKnowledgeTest() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const userId = searchParams.get('userId')
-  const harga = searchParams.get('harga')
   const [isMounted, setIsMounted] = useState(false);
   const [formData, setFormData] = useState({
     nama: "",
@@ -54,7 +53,7 @@ export default function FormBukaKnowledgeTest() {
     sumber_informasi_lainnya: "",
     bukti_pembayaran: null,
     jenis_pembayaran: "",
-    harga: harga
+    harga: 0
   });
   const [noWa, setNoWa] = useState("")
   const [jenisPembayaran, setJenisPembayaran] = useState([])
@@ -87,7 +86,19 @@ export default function FormBukaKnowledgeTest() {
     }
   }
 
+  const getHarga = async () => {
+    try {
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/harga`)
+      if (res.data) {
+        setFormData(prev => ({...prev,harga:res.data.harga}))
+      }
+    } catch (err) { 
+      console.log(err.message)
+    } 
+  }
+
   useEffect(() => {
+    getHarga()
     getFormSetting()
     getUser()
     setIsMounted(true);
@@ -135,7 +146,7 @@ export default function FormBukaKnowledgeTest() {
     console.log(userId)
     try {
       const res = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/access", { ...formData, userId: userId })
-      const waUrl = `https://wa.me/6281563862944?text=${encodeURIComponent(
+      const waUrl = `https://wa.me/${noWa}?text=${encodeURIComponent(
         "Halo, saya ingin konfirmasi pembayaran akses knowledge test atas nama " + formData.nama
       )}`;
       if (res.data) {
@@ -176,7 +187,7 @@ function formatNumberID(num) {
               <p className="text-sm text-gray-500 mt-1">
                 Harga:{" "}
                 <span className="font-semibold">
-                  Rp{formatNumberID(parseInt(harga))}
+                  Rp{formatNumberID(formData.harga)}
                 </span>
               </p>
             </div>
@@ -274,6 +285,7 @@ function formatNumberID(num) {
                   onChange={(e) => handleChange("jenis_pembayaran", e.target.value)}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 >
+                   <option value="">Pilih Jenis Pembayaran</option>
                   {
                     jenisPembayaran.map((v, i) => (
                       <option key={i} value={v}>

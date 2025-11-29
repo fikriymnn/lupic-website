@@ -245,7 +245,7 @@ export default function AdminModulPanel() {
                     {
                       modul.status === 'BERBAYAR' && (
                         <h3 className="text-lg font-bold text-gray-800 mb-4 line-clamp-2">
-                          Rp{modul.harga}
+                          Rp{modul.harga?.toLocaleString('id-ID') || '0'}
                         </h3>
                       )
                     }

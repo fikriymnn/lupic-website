@@ -4,7 +4,7 @@ import {
     Plus, Edit, Trash2, Eye, X, Save, ChevronLeft,
     FileText, Users, Package, Check, Ban, Calendar, History,
     Download,
-    DownloadIcon,DollarSign, Loader2, CheckCircle, AlertCircle
+    DownloadIcon, DollarSign, Loader2, CheckCircle, AlertCircle
 } from 'lucide-react';
 import SidebarAdmin from "@/components/SidebarAdmin";
 import axios from 'axios';
@@ -314,10 +314,7 @@ export default function AdminKnowledgeTest() {
     const [saving, setSaving] = useState(false);
     const [message, setMessage] = useState({ type: '', text: '' });
 
-    // Fetch harga data on component mount
-    useEffect(() => {
-        fetchHarga();
-    }, []);
+
 
     const fetchHarga = async () => {
         try {
@@ -332,7 +329,7 @@ export default function AdminKnowledgeTest() {
 
             if (data && data.harga !== undefined) {
                 setHarga(data.harga.toString());
-                setHargaId(data.id);
+                setHargaId(data._id);
             }
         } catch (error) {
             setMessage({
@@ -401,112 +398,109 @@ export default function AdminKnowledgeTest() {
         }
     };
 
+    // Fetch harga data on component mount
+    useEffect(() => {
+        fetchHarga();
+    }, []);
+
     // Pakets Page
     if (page === 'harga') {
         return (
             <div className="flex min-h-screen bg-gray-50">
                 <SidebarAdmin />
                 <div className="w-64 flex-shrink-0"></div>
-                <div>
-                    {/* Header */}
-                    <div className="bg-white rounded-t-2xl shadow-lg p-6 border-b-4 border-blue-500">
-                        <div className="flex items-center gap-3">
-                            <div className="bg-blue-500 p-3 rounded-xl">
-                                <DollarSign className="w-8 h-8 text-white" />
-                            </div>
-                            <div>
-                                <h1 className="text-3xl font-bold text-gray-800">
-                                    Knowledge Test Management
-                                </h1>
-                                <p className="text-gray-600 mt-1">
-                                    Kelola paket dan soal knowledge test
-                                </p>
-                            </div>
+                <div className='flex-1 p-6 lg:p-8'>
+                    <div className=" mx-auto">
+                        <div>
+                            <h1 className="text-3xl lg:text-4xl font-bold text-blue-600 mb-1">
+                                Harga Access Knowledge Test
+                            </h1>
+                            <p className="text-gray-600 mb-6">Kelola paket dan soal knowledge test</p>
                         </div>
-                    </div>
 
-                    {/* Main Content */}
-                    <div className="bg-white rounded-b-2xl shadow-lg p-8">
-                        {loading ? (
-                            <div className="flex flex-col items-center justify-center py-12">
-                                <Loader2 className="w-12 h-12 text-blue-500 animate-spin mb-4" />
-                                <p className="text-gray-600">Memuat data...</p>
-                            </div>
-                        ) : (
-                            <div className="space-y-6">
-                                {/* Harga Input */}
-                                <div>
-                                    <label
-                                        htmlFor="harga"
-                                        className="block text-sm font-semibold text-gray-700 mb-2"
-                                    >
-                                        Harga Access Test
-                                    </label>
-                                    <div className="relative">
-                                        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-lg font-semibold">
-                                            Rp
-                                        </span>
-                                        <input
-                                            type="text"
-                                            id="harga"
-                                            value={harga}
-                                            onChange={handleHargaChange}
-                                            className="w-full pl-14 pr-4 py-4 text-lg border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-                                            placeholder="0"
-                                            disabled={saving}
-                                        />
-                                    </div>
-                                    <p className="mt-2 text-sm text-gray-500">
-                                        Masukkan harga dalam format angka (contoh: 50000)
-                                    </p>
+                        {/* Main Content */}
+                        <div className="bg-white rounded-b-2xl shadow-lg p-8">
+                            {loading ? (
+                                <div className="flex flex-col items-center justify-center py-12">
+                                    <Loader2 className="w-12 h-12 text-blue-500 animate-spin mb-4" />
+                                    <p className="text-gray-600">Memuat data...</p>
                                 </div>
-
-                                {/* Message Alert */}
-                                {message.text && (
-                                    <div
-                                        className={`flex items-center gap-3 p-4 rounded-xl ${message.type === 'success'
-                                            ? 'bg-green-50 text-green-800 border border-green-200'
-                                            : 'bg-red-50 text-red-800 border border-red-200'
-                                            }`}
-                                    >
-                                        {message.type === 'success' ? (
-                                            <CheckCircle className="w-5 h-5 flex-shrink-0" />
-                                        ) : (
-                                            <AlertCircle className="w-5 h-5 flex-shrink-0" />
-                                        )}
-                                        <span className="text-sm font-medium">{message.text}</span>
+                            ) : (
+                                <div className="space-y-6">
+                                    {/* Harga Input */}
+                                    <div>
+                                        <label
+                                            htmlFor="harga"
+                                            className="block text-sm font-semibold text-gray-700 mb-2"
+                                        >
+                                            Harga Access Test
+                                        </label>
+                                        <div className="relative">
+                                            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-lg font-semibold">
+                                                Rp
+                                            </span>
+                                            <input
+                                                type="text"
+                                                id="harga"
+                                                value={harga}
+                                                onChange={handleHargaChange}
+                                                className="w-full pl-14 pr-4 py-4 text-lg border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                                placeholder="0"
+                                                disabled={saving}
+                                            />
+                                        </div>
+                                        <p className="mt-2 text-sm text-gray-500">
+                                            Masukkan harga dalam format angka (contoh: 50000)
+                                        </p>
                                     </div>
-                                )}
 
-                                {/* Submit Button */}
-                                <button
-                                    onClick={handleUpdateHarga}
-                                    disabled={saving || !harga}
-                                    className="w-full bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-semibold py-4 px-6 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
-                                >
-                                    {saving ? (
-                                        <>
-                                            <Loader2 className="w-5 h-5 animate-spin" />
-                                            Menyimpan...
-                                        </>
-                                    ) : (
-                                        <>
-                                            <Save className="w-5 h-5" />
-                                            Update Harga
-                                        </>
+                                    {/* Message Alert */}
+                                    {message.text && (
+                                        <div
+                                            className={`flex items-center gap-3 p-4 rounded-xl ${message.type === 'success'
+                                                ? 'bg-green-50 text-green-800 border border-green-200'
+                                                : 'bg-red-50 text-red-800 border border-red-200'
+                                                }`}
+                                        >
+                                            {message.type === 'success' ? (
+                                                <CheckCircle className="w-5 h-5 flex-shrink-0" />
+                                            ) : (
+                                                <AlertCircle className="w-5 h-5 flex-shrink-0" />
+                                            )}
+                                            <span className="text-sm font-medium">{message.text}</span>
+                                        </div>
                                     )}
-                                </button>
-                            </div>
-                        )}
 
-                        {/* Info Box */}
-                        <div className="mt-8 bg-blue-50 border border-blue-200 rounded-xl p-4">
-                            <h3 className="font-semibold text-blue-900 mb-2">Informasi:</h3>
-                            <ul className="text-sm text-blue-800 space-y-1">
-                                <li>• Harga akan diterapkan untuk semua access test</li>
-                                <li>• Gunakan format angka tanpa titik atau koma sebagai pemisah</li>
-                                <li>• Perubahan akan tersimpan secara otomatis</li>
-                            </ul>
+                                    {/* Submit Button */}
+                                    <button
+                                        onClick={handleUpdateHarga}
+                                        disabled={saving || !harga}
+                                        className="w-full bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-semibold py-4 px-6 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
+                                    >
+                                        {saving ? (
+                                            <>
+                                                <Loader2 className="w-5 h-5 animate-spin" />
+                                                Menyimpan...
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Save className="w-5 h-5" />
+                                                Update Harga
+                                            </>
+                                        )}
+                                    </button>
+                                </div>
+                            )}
+
+                            {/* Info Box */}
+                            <div className="mt-8 bg-blue-50 border border-blue-200 rounded-xl p-4">
+                                <h3 className="font-semibold text-blue-900 mb-2">Informasi:</h3>
+                                <ul className="text-sm text-blue-800 space-y-1">
+                                    <li>• Harga akan diterapkan untuk semua access test</li>
+                                    <li>• Gunakan format angka tanpa titik atau koma sebagai pemisah</li>
+                                    <li>• Perubahan akan tersimpan secara otomatis</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -533,7 +527,7 @@ export default function AdminKnowledgeTest() {
                             <div className="flex gap-3">
                                 <button
                                     onClick={() => setPage('harga')}
-                                    className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                                    className="flex items-center gap-2 px-6 py-3 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700"
                                 >
                                     <BiMoney className="w-5 h-5" />
                                     Harga Access

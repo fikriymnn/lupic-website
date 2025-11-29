@@ -104,6 +104,9 @@ export default function CaseStudy() {
     setCurrentPage(1);
   };
 
+function formatNumberID(num) {
+  return num.toLocaleString("id-ID");
+}
 
   return (
     <>
@@ -182,7 +185,7 @@ export default function CaseStudy() {
                   <div className="flex items-end justify-between flex-1 mt-4">
                     {useCase.status === "BERBAYAR" ? (
                       <div className="">
-                        <p className="text-lg font-bold text-gray-900">
+                        <p className="text-base font-bold text-gray-900">
                           Rp {useCase.harga?.toLocaleString('id-ID') || '0'}
                         </p>
                       </div>

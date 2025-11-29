@@ -204,7 +204,7 @@ export default function Studycase() {
                           </button>
                           <button
                             onClick={() => router.push("/admin/dashboard/studycase/" + useCase._id+"/access")}
-                            className="inline-flex items-center gap-1 px-3 py-2 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors"
+                            className="inline-flex items-center gap-1 px-3 py-2 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-700 transition-colors"
                           >
                             <Users className="w-4 h-4" />
                           </button>

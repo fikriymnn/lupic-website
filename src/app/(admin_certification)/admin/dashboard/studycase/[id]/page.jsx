@@ -123,7 +123,7 @@ export default function ModulAjarAccessAdmin({ params }) {
               {
                 useCase.status === "BERBAYAR" && (
                   <h1 className="text-lg font-semibold text-gray-800 mb-4">
-                    Rp{useCase.harga}
+                    Rp{useCase.harga?.toLocaleString('id-ID') || '0'}
                   </h1>)
               }
               {/* NARASI */}

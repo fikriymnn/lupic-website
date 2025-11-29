@@ -40,10 +40,12 @@ export default function UseCaseDetail({ params }) {
             `${process.env.NEXT_PUBLIC_API_URL}/api/study_case/id/${id}?userId=${resUser.data._id}`)
           const resAccess = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/study_case_access/` + id + "?userId=" + resUser.data._id)
 
-          console.log(resAccess.data[0]?.status !== "ACCESS")
-          if (resAccess.data?.length < 1 || resAccess.data[0]?.status !== "ACCESS" && data.data?.status == "BERBAYAR") {
-            router.push("/study_case/access?studyCaseId=" + data.data._id + "&userId=" + resUser.data._id + "&harga=" + data.data.harga + "&judul=" + data.data.judulKasus)
+          if (data.data?.status == "BERBAYAR") {
+            if (resAccess.data?.length < 1 || resAccess.data[0]?.status !== "ACCESS") {
+              router.push("/study_case/access?studyCaseId=" + data.data._id + "&userId=" + resUser.data._id + "&harga=" + data.data.harga + "&judul=" + data.data.judulKasus)
+            }
           }
+
 
           if (data.data.answer?.answer) {
             setShowPembahasan(true)
@@ -119,6 +121,10 @@ export default function UseCaseDetail({ params }) {
                 </span>
                 <span className="px-3 py-1 bg-purple-100 text-purple-800 text-sm font-semibold rounded-full">
                   {useCase.kompetensiGuru}
+                </span>
+                <span className={`px-2 py-1 rounded-xl text-xs font-semibold bg-gray-100 text-gray-700 flex items-center ${useCase.status === "GRATIS" ? "bg-green-500 text-white" : "bg-yellow-400 text-gray-900"
+                  }`}>
+                  {useCase.status}
                 </span>
               </div>
 

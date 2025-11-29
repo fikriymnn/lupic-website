@@ -172,9 +172,9 @@ export default function ModulAjarDetail() {
                 {/* Deskripsi */}
                 <div className="mb-6">
                   <h2 className="text-xl font-semibold text-gray-900 mb-3">Deskripsi Modul</h2>
-                  <p className="text-gray-700 leading-relaxed">
+                  <pre style={{ whiteSpace: "pre-wrap", fontFamily: "inherit" }} className="text-gray-700 leading-relaxed">
                     {modul?.deskripsi}
-                  </p>
+                  </pre>
                 </div>
               </div>
 

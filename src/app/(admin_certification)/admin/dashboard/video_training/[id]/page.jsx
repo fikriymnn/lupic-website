@@ -343,7 +343,7 @@ export default function AdminDashboardVideoTraining() {
                     <label className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Harga</label>
                     <div className="mt-2">
                       <span className={`inline-flex items-center px-4 py-2 rounded-lg text-sm font-semibold`}>
-                        {formatNumberID(selectedUser.harga)}
+                        {selectedUser.harga?.toLocaleString('id-ID') || '0'}
                       </span>
                     </div>
                   </div>
