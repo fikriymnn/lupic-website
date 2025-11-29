@@ -16,6 +16,7 @@ export default function AddModulForm() {
     status: 'GRATIS',
     file: "",
     cover: "",
+    harga: 0,
   });
 
   const handleChange = (field, value) => {
@@ -134,7 +135,7 @@ export default function AddModulForm() {
 
                       <div>
                         <label className="block text-sm font-semibold text-gray-700 mb-2">
-                          Topik IPA *
+                          Topik *
                         </label>
                         <select
                           required
@@ -163,7 +164,22 @@ export default function AddModulForm() {
                         </select>
                       </div>
                     </div>
-
+{
+                      formData.status === 'BERBAYAR' && (
+                        <div>
+                          <label className="block text-sm font-semibold text-gray-700 mb-2">
+                            Harga *
+                          </label>
+                          <input
+                            type="number"
+                            required
+                            value={formData.harga}
+                            onChange={(e) => handleChange('harga', e.target.value)}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                          />
+                        </div>
+                      )
+                    }
                     <div>
                       <label className="block text-sm font-semibold text-gray-700 mb-2">
                         Tujuan Pembelajaran *

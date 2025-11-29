@@ -89,7 +89,7 @@ export default function AdminDashboardLessonPlan() {
                 {/* Header Section */}
                 <div className="mb-8">
                   <h1 className="text-3xl lg:text-4xl font-bold text-blue-600 mb-2">
-                    Teacher Study Case
+                    Lesson Plans Access
                   </h1>
                 </div>
 

@@ -226,14 +226,21 @@ export default function VideoTrainingAdmin() {
                       </span>
                     </div>
 
-                    <h3 className="font-bold text-lg text-blue-600 mb-2 line-clamp-2 min-h-[3.5rem]">
+                    <h3 className="font-bold text-lg mb-2 line-clamp-2 min-h-[3.5rem]">
                       {video.judul}
                     </h3>
 
+                
                     <p className="text-gray-700 text-sm leading-relaxed line-clamp-2 min-h-[2.5rem] mb-4">
                       {video.deskripsi}
                     </p>
-
+                    {
+                      video.status === 'BERBAYAR' && (  
+                      <h3 className="font-bold text-lg mb-2 line-clamp-2">
+                      Rp{video.harga}
+                    </h3>
+                      )
+                    }
                     {/* Action Buttons */}
                     <div className="flex gap-2 pt-4 border-t border-gray-100">
                       <button

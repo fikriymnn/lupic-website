@@ -241,6 +241,15 @@ export default function AdminModulPanel() {
                       {modul.deskripsi}
                     </p>
 
+                        {/* Harga */}
+                    {
+                      modul.status === 'BERBAYAR' && (
+                        <h3 className="text-lg font-bold text-gray-800 mb-4 line-clamp-2">
+                          Rp{modul.harga}
+                        </h3>
+                      )
+                    }
+
                     {/* Download */}
                     <button
                       onClick={() => window.location.href = `${process.env.NEXT_PUBLIC_API_FILE_URL}${modul.file}`}

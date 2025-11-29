@@ -103,8 +103,10 @@ export default function EditUseCase() {
                       <option value="BERBAYAR">BERBAYAR</option>
                     </select>
                   </div>
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  {
+                    formData.status === 'BERBAYAR' && (
+                      <div>
+                        <label className="block text-sm font-semibold text-gray-700 mb-2">
                      Harga *
                     </label>
                     <input
@@ -114,7 +116,10 @@ export default function EditUseCase() {
                       onChange={(e) => handleChange('harga', e.target.value)}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                     />
-                  </div>
+                      </div>
+                    )
+                    }
+                  
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
                       Judul Kasus *

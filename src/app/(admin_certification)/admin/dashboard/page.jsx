@@ -4,14 +4,17 @@ import {
     Plus, Edit, Trash2, Eye, X, Save, ChevronLeft,
     FileText, Users, Package, Check, Ban, Calendar, History,
     Download,
-    DownloadIcon
+    DownloadIcon,DollarSign, Loader2, CheckCircle, AlertCircle
 } from 'lucide-react';
 import SidebarAdmin from "@/components/SidebarAdmin";
 import axios from 'axios';
 import { BiMoney } from 'react-icons/bi';
+import { useRouter } from 'next/navigation';
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 
 export default function AdminKnowledgeTest() {
+    const router = useRouter();
     const [page, setPage] = useState('pakets'); // pakets, access, paket-detail, access-detail
     const [pakets, setPakets] = useState([]);
     const [apiPaket, setApiPaket] = useState(false)
@@ -300,8 +303,216 @@ export default function AdminKnowledgeTest() {
     };
 
     function formatNumberID(num) {
-  return num?.toLocaleString("id-ID");
-}
+        return num?.toLocaleString("id-ID");
+    }
+
+
+
+    const [harga, setHarga] = useState('');
+    const [hargaId, setHargaId] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [saving, setSaving] = useState(false);
+    const [message, setMessage] = useState({ type: '', text: '' });
+
+    // Fetch harga data on component mount
+    useEffect(() => {
+        fetchHarga();
+    }, []);
+
+    const fetchHarga = async () => {
+        try {
+            setLoading(true);
+            const response = await fetch(`${API_URL}/api/harga`);
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch harga');
+            }
+
+            const data = await response.json();
+
+            if (data && data.harga !== undefined) {
+                setHarga(data.harga.toString());
+                setHargaId(data.id);
+            }
+        } catch (error) {
+            setMessage({
+                type: 'error',
+                text: 'Gagal memuat data harga: ' + error.message
+            });
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleUpdateHarga = async () => {
+        if (!harga || harga.trim() === '') {
+            setMessage({ type: 'error', text: 'Harga tidak boleh kosong' });
+            return;
+        }
+
+        if (!hargaId) {
+            setMessage({ type: 'error', text: 'ID harga tidak ditemukan' });
+            return;
+        }
+
+        try {
+            setSaving(true);
+            setMessage({ type: '', text: '' });
+
+            const response = await fetch(`${API_URL}/api/harga/${hargaId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ harga: parseFloat(harga) }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to update harga');
+            }
+
+            const data = await response.json();
+
+            setMessage({
+                type: 'success',
+                text: 'Harga berhasil diperbarui!'
+            });
+
+            // Refresh data after update
+            setTimeout(() => {
+                fetchHarga();
+            }, 1000);
+
+        } catch (error) {
+            setMessage({
+                type: 'error',
+                text: 'Gagal memperbarui harga: ' + error.message
+            });
+        } finally {
+            setSaving(false);
+        }
+    };
+
+    const handleHargaChange = (e) => {
+        const value = e.target.value;
+        // Only allow numbers and decimal point
+        if (value === '' || /^\d*\.?\d*$/.test(value)) {
+            setHarga(value);
+        }
+    };
+
+    // Pakets Page
+    if (page === 'harga') {
+        return (
+            <div className="flex min-h-screen bg-gray-50">
+                <SidebarAdmin />
+                <div className="w-64 flex-shrink-0"></div>
+                <div>
+                    {/* Header */}
+                    <div className="bg-white rounded-t-2xl shadow-lg p-6 border-b-4 border-blue-500">
+                        <div className="flex items-center gap-3">
+                            <div className="bg-blue-500 p-3 rounded-xl">
+                                <DollarSign className="w-8 h-8 text-white" />
+                            </div>
+                            <div>
+                                <h1 className="text-3xl font-bold text-gray-800">
+                                    Knowledge Test Management
+                                </h1>
+                                <p className="text-gray-600 mt-1">
+                                    Kelola paket dan soal knowledge test
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Main Content */}
+                    <div className="bg-white rounded-b-2xl shadow-lg p-8">
+                        {loading ? (
+                            <div className="flex flex-col items-center justify-center py-12">
+                                <Loader2 className="w-12 h-12 text-blue-500 animate-spin mb-4" />
+                                <p className="text-gray-600">Memuat data...</p>
+                            </div>
+                        ) : (
+                            <div className="space-y-6">
+                                {/* Harga Input */}
+                                <div>
+                                    <label
+                                        htmlFor="harga"
+                                        className="block text-sm font-semibold text-gray-700 mb-2"
+                                    >
+                                        Harga Access Test
+                                    </label>
+                                    <div className="relative">
+                                        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-lg font-semibold">
+                                            Rp
+                                        </span>
+                                        <input
+                                            type="text"
+                                            id="harga"
+                                            value={harga}
+                                            onChange={handleHargaChange}
+                                            className="w-full pl-14 pr-4 py-4 text-lg border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                            placeholder="0"
+                                            disabled={saving}
+                                        />
+                                    </div>
+                                    <p className="mt-2 text-sm text-gray-500">
+                                        Masukkan harga dalam format angka (contoh: 50000)
+                                    </p>
+                                </div>
+
+                                {/* Message Alert */}
+                                {message.text && (
+                                    <div
+                                        className={`flex items-center gap-3 p-4 rounded-xl ${message.type === 'success'
+                                            ? 'bg-green-50 text-green-800 border border-green-200'
+                                            : 'bg-red-50 text-red-800 border border-red-200'
+                                            }`}
+                                    >
+                                        {message.type === 'success' ? (
+                                            <CheckCircle className="w-5 h-5 flex-shrink-0" />
+                                        ) : (
+                                            <AlertCircle className="w-5 h-5 flex-shrink-0" />
+                                        )}
+                                        <span className="text-sm font-medium">{message.text}</span>
+                                    </div>
+                                )}
+
+                                {/* Submit Button */}
+                                <button
+                                    onClick={handleUpdateHarga}
+                                    disabled={saving || !harga}
+                                    className="w-full bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-semibold py-4 px-6 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
+                                >
+                                    {saving ? (
+                                        <>
+                                            <Loader2 className="w-5 h-5 animate-spin" />
+                                            Menyimpan...
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Save className="w-5 h-5" />
+                                            Update Harga
+                                        </>
+                                    )}
+                                </button>
+                            </div>
+                        )}
+
+                        {/* Info Box */}
+                        <div className="mt-8 bg-blue-50 border border-blue-200 rounded-xl p-4">
+                            <h3 className="font-semibold text-blue-900 mb-2">Informasi:</h3>
+                            <ul className="text-sm text-blue-800 space-y-1">
+                                <li>• Harga akan diterapkan untuk semua access test</li>
+                                <li>• Gunakan format angka tanpa titik atau koma sebagai pemisah</li>
+                                <li>• Perubahan akan tersimpan secara otomatis</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     // Pakets Page
     if (page === 'pakets') {
@@ -886,7 +1097,7 @@ export default function AdminKnowledgeTest() {
                                             <span className="text-gray-600">Status PPG:</span>
                                             <span className="ml-2 font-semibold text-gray-800">{selectedAccess.status_ppg}</span>
                                         </div>
-                                         <div>
+                                        <div>
                                             <span className="text-gray-600">Status PPG:</span>
                                             <span className="ml-2 font-semibold text-gray-800">{formatNumberID(selectedAccess.harga)}</span>
                                         </div>
@@ -925,7 +1136,7 @@ export default function AdminKnowledgeTest() {
                                         </div>
                                         <div className="mt-1">{
                                             selectedAccess?.bukti_pembayaran ? <a className={`px-3 py-1 rounded-full text-sm text-koreaBlueMuda font-semibold flex items-center`} target="_blank" href={`${process.env.NEXT_PUBLIC_API_FILE_URL}${selectedAccess?.bukti_pembayaran}`}>
-                                               <DownloadIcon size={14}/> <p className='ml-2'>download</p> 
+                                                <DownloadIcon size={14} /> <p className='ml-2'>download</p>
                                             </a> : ""
                                         }
 

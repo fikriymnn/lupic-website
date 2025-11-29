@@ -148,7 +148,9 @@ export default function CreateVideoModul() {
                     </div>
                   </div>
 
-                  <div>
+                  {
+                    formData.status === "BERBAYAR" && ( 
+                      <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
                      Harga *
                     </label>
@@ -160,6 +162,9 @@ export default function CreateVideoModul() {
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                     />
                   </div>
+                    )
+                  }
+                  
 
                   {/* Tujuan Pembelajaran */}
                   <div>
