@@ -291,7 +291,7 @@ export default function AdminDashboardVideoTraining() {
                   {/* Jenjang */}
                   <div className="border-b border-gray-200 pb-4">
                     <label className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Jenjang</label>
-                    <p className="text-lg text-gray-900 mt-1">{selectedUser.jenjang}</p>
+                    <p className="text-lg text-gray-900 mt-1">{selectedUser.jenjang_sekolah}</p>
                   </div>
 
                   {/* Instansi */}

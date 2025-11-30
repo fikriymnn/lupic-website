@@ -61,12 +61,7 @@ function formatDate(dateString) {
                         <div className="bg-white rounded-lg shadow-lg p-12 text-center">
                             <History className="w-16 h-16 text-gray-400 mx-auto mb-4" />
                             <p className="text-xl text-gray-600">Belum ada riwayat pengerjaan</p>
-                            <button
-                                onClick={() => {}}
-                                className="mt-6 px-6 py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
-                            >
-                                Mulai Tes Sekarang
-                            </button>
+                  
                         </div>
                     ) : (
                         <div className="space-y-4">

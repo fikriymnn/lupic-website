@@ -94,7 +94,7 @@ const Navbar = () => {
         { href: "/service_product", label: "Our Products" },
         { href: "/service_workshop", label: "Workshop" },
         { href: "/service_teacher", label: "Pre-Service Teacher Evaluation" },
-        { href: "/", label: "In Service Teacher Training" },
+        { href: "https://reader.edus.news", label: "In Service Teacher Training"},
         {
           label: "Teacher Certification Training",
           subItems: [
@@ -123,7 +123,6 @@ const Navbar = () => {
         { href: "https://ejournal.upi.edu/index.php/JPI", label: "ejournal.upi.edu/JPI", external: true },
         { href: "https://ejournal.upi.edu/index.php/JRPPK", label: "ejournal.upi.edu/JRPPK", external: true },
         { href: "https://phet.colorado.edu/en/simulations/filter?type=html", label: "phet.colorado.edu", external: true },
-        { href: "https://reader.edus.news", label: "reader.edus.news", external: true },
       ],
     },
   ];
@@ -134,6 +133,9 @@ const Navbar = () => {
       { href: "/personal", label: "Test schedule" },
       { href: "/knowledge_test_result", label: "Knowledge test result" },
       { href: "/knowledge_test_access", label: "Knowledge test access" },
+      { href: "/study_case_access", label: "Study case access" },
+      { href: "/lesson_plans_access", label: "Modul ajar access" },
+      { href: "/video_training_access", label: "Video training access" },
     ],
   }
 
@@ -217,7 +219,7 @@ const Navbar = () => {
                         </button>
 
                         {/* Sub-dropdown */}
-                        <div className="mx-auto border border-gray-100 z-40 top-0 w-56 rounded-lg shadow-xl overflow-hidden opacity-0 group-hover/sub:opacity-100 group-hover/sub:block hidden transition-all duration-200">
+                        <div className="mx-auto border border-gray-100 z-40 top-0 w-56 rounded-lg shadow-xl overflow-hidden opacity-0 group-hover/sub:opacity-100 group-hover/sub:block hidden transition-all duration-200 mb-4">
                           {item.subItems.map((sub, subIdx) => (
                             <Link
                               key={sub.href}
@@ -550,7 +552,7 @@ const Navbar = () => {
                 )}
               </div>
             }
-              {login && (
+              {login ? (
                 <button
                   id="nav-mobile-logout-btn"
                   onClick={onLogout}
@@ -558,7 +560,14 @@ const Navbar = () => {
                   type="button"
                 >
                   Logout
-                </button>
+                </button>):( <a
+                href="/login"
+                  id="nav-mobile-logout-btn"
+                  className="w-full text-left text-white px-4 py-3 rounded-md text-sm font-medium hover:bg-white/10 transition-colors duration-200"
+                
+                >
+                  Login
+                </a>
               )}
             </div>
           </div>

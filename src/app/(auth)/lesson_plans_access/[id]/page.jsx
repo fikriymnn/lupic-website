@@ -6,7 +6,7 @@ import { Download, BookOpen, ChevronLeft, Sparkles, Clock, CheckCircle } from 'l
 import { useParams, useRouter } from 'next/navigation';
 import axios from 'axios';
 
-export default function ModulAjarDetail() {
+export default function ModulAjarAccessDetail() {
   const router = useRouter()
   const { id } = useParams()
   // Data contoh - nanti diganti dengan data dari API
@@ -45,10 +45,6 @@ export default function ModulAjarDetail() {
     });
   };
 
-  const getJenjangColor = (jenjang) => {
-    return jenjang === 'SD' ? 'bg-blue-100 text-blue-700' : 'bg-purple-100 text-purple-700';
-  };
-
   const getData = async () => {
     try {
       const resUser = await axios.get(
@@ -62,8 +58,6 @@ export default function ModulAjarDetail() {
           setUser(resUser.data)
           setModul(res.data)
           setAccess(resAccess.data[0]?.status)
-          console.log(resAccess.data[0]?.status)
-          console.log(res.data)
         }
       }
     } catch (err) {
@@ -82,7 +76,6 @@ export default function ModulAjarDetail() {
 
   useEffect(() => {
     getData()
-
   }, [])
 
   return (
@@ -91,7 +84,7 @@ export default function ModulAjarDetail() {
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 py-16">
         <div className="max-w-6xl mx-auto px-4 py-8">
           <button
-            onClick={() => { router.push("/lesson_plans") }}
+            onClick={() => { router.push("/lesson_plans_access") }}
             className="mb-6 px-4 py-2 bg-white rounded-lg shadow hover:shadow-md transition flex items-center gap-2"
           >
             <ChevronLeft size={20} />
@@ -164,7 +157,7 @@ export default function ModulAjarDetail() {
                   {modul.judulModul}
                 </h1>
                 { modul.status == "BERBAYAR" && (
-                    <h1 className="text-xl font-medium text-gray-900 mb-4">
+                    <h1 className="text-xl font-bold text-gray-900 mb-4">
                  Rp{modul?.harga?.toLocaleString('id-ID')}
                 </h1>)
                 }

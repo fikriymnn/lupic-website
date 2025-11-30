@@ -451,13 +451,25 @@ export default function TestSimulationApp() {
     return questions.filter(q => q.kategori === currentQuestion.kategori).length;
   };
 
+  function formatMultilineString(str) {
+    if (!str) return "";
+
+    return str
+      .replace(/\\n/g, "\n")   // ubah "\n" literal menjadi newline asli
+      .replace(/\\t/g, "    ") // ubah "\t" literal menjadi 4 spasi
+      .trim();
+  }
+
   const renderQuestionContent = (soalArray) => {
     return soalArray.map((item, index) => {
       if (item.type === 'TEXT') {
         return (
-          <p key={index} className="text-lg text-gray-800 mb-4 leading-relaxed">
-            {item.value}
-          </p>
+          <pre key={idx}
+            style={{ whiteSpace: "pre-wrap", fontFamily: "inherit" }}
+            className="text-lg text-gray-800 mb-4 leading-relaxed"
+          >
+            {formatMultilineString(item?.value)}
+          </pre>
         );
       } else if (item.type === 'IMAGE') {
         return (
@@ -918,9 +930,12 @@ export default function TestSimulationApp() {
                         {question.soal.map((item, idx) => {
                           if (item.type === 'TEXT') {
                             return (
-                              <p key={idx} className="text-gray-700 mb-2">
-                                {item.value}
-                              </p>
+                              <pre key={idx}
+                                style={{ whiteSpace: "pre-wrap", fontFamily: "inherit" }}
+                                className="text-gray-700 mb-2"
+                              >
+                                {formatMultilineString(item?.value)}
+                              </pre>
                             );
                           } else if (item.type === 'IMAGE') {
                             return (

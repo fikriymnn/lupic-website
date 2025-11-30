@@ -130,6 +130,15 @@ export default function TrialTestApp() {
   const [result, setResult] = useState(null);
   const [startTime, setStartTime] = useState(null);
 
+   function formatMultilineString(str) {
+    if (!str) return "";
+
+    return str
+      .replace(/\\n/g, "\n")   // ubah "\n" literal menjadi newline asli
+      .replace(/\\t/g, "    ") // ubah "\t" literal menjadi 4 spasi
+      .trim();
+  }
+
   const getData = async () => {
     try {
       const res = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/soal/gratis")
@@ -272,9 +281,12 @@ export default function TrialTestApp() {
     return soalArray.map((item, index) => {
       if (item.type === 'TEXT') {
         return (
-          <p key={index} className="text-lg text-gray-800 mb-4 leading-relaxed">
-            {item.value}
-          </p>
+          <pre key={idx}
+            style={{ whiteSpace: "pre-wrap", fontFamily: "inherit" }}
+            className="text-lg text-gray-800 mb-4 leading-relaxed"
+          >
+            {formatMultilineString(item?.value)}
+          </pre>
         );
       } else if (item.type === 'IMAGE') {
         return (
@@ -290,6 +302,8 @@ export default function TrialTestApp() {
       return null;
     });
   };
+
+  
 
   // Start Test Page
   if (page === 'start-test') {
@@ -622,9 +636,12 @@ export default function TrialTestApp() {
                       {question.soal.map((item, idx) => {
                         if (item.type === 'TEXT') {
                           return (
-                            <p key={idx} className="text-gray-700 mb-2">
-                              {item.value}
-                            </p>
+                            <pre key={idx}
+                                style={{ whiteSpace: "pre-wrap", fontFamily: "inherit" }}
+                                className="text-gray-700 mb-2"
+                              >
+                                {formatMultilineString(item?.value)}
+                              </pre>
                           );
                         } else if (item.type === 'IMAGE') {
                           return (

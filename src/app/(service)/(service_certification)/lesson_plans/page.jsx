@@ -138,7 +138,6 @@ export default function ModulAjarList() {
           {/* Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-8">
             {moduls.map((modul) => {
-              console.log(modul.harga)
               return (
                 <div
                   key={modul._id}
@@ -182,7 +181,7 @@ export default function ModulAjarList() {
                          {/* Bagian Harga */}
                       {modul.status === "BERBAYAR" ? (
                         <div className="">
-                          <p className="text-lg font-bold text-gray-900">
+                          <p className="text-base font-medium text-gray-900">
                             Rp {modul.harga?.toLocaleString('id-ID') || '0'}
                           </p>
                         </div>

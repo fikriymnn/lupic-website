@@ -231,8 +231,8 @@ export default function VideoTrainingApp() {
                     <div className="flex items-end justify-between flex-1">
                              {video.status === "BERBAYAR" ? (
                         <div className="">
-                          <p className="text-lg font-bold text-gray-900">
-                            Rp {video.harga?.toLocaleString('id-ID') || '0'}
+                          <p className="text-base font-medium text-gray-900">
+                            Rp{video.harga?.toLocaleString('id-ID') || '0'}
                           </p>
                         </div>
                       ):<div></div>}

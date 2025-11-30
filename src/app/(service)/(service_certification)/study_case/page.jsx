@@ -185,8 +185,8 @@ function formatNumberID(num) {
                   <div className="flex items-end justify-between flex-1 mt-4">
                     {useCase.status === "BERBAYAR" ? (
                       <div className="">
-                        <p className="text-base font-bold text-gray-900">
-                          Rp {useCase.harga?.toLocaleString('id-ID') || '0'}
+                        <p className="text-base font-medium text-gray-900">
+                          Rp{useCase.harga?.toLocaleString('id-ID') || '0'}
                         </p>
                       </div>
                     ) : <div></div>}

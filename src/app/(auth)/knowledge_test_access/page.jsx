@@ -15,10 +15,8 @@ const OrderAccessList = () => {
         try {
             const resUser = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/public/user", { withCredentials: true })
             if (resUser.data) {
-                console.log(resUser.data)
                 const res = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/access/all/id/" + resUser.data?._id)
                 if (res.data) {
-                    console.log(res.data)
                     setOrders(res.data)
                 }
             }
@@ -100,6 +98,9 @@ const OrderAccessList = () => {
                                 <thead className="bg-gray-50 border-b border-gray-200">
                                     <tr>
                                         <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                            Tanggal
+                                        </th>
+                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                                             Periode
                                         </th>
                                         <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
@@ -116,6 +117,9 @@ const OrderAccessList = () => {
                                 <tbody className="divide-y divide-gray-200">
                                     {orders.map((order) => (
                                         <tr key={order._id} className="hover:bg-gray-50 transition-colors">
+                                            <td className="px-6 py-4">
+                                                {(order.createdAt) ? formatDate(order.createdAt) : '-'}
+                                            </td>
                                             <td className="px-6 py-4">
                                                 <div className="flex items-center gap-2 text-sm text-gray-600">
                                                     <Calendar className="w-4 h-4 text-gray-400" />
