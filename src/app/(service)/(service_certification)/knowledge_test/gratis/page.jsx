@@ -281,7 +281,7 @@ export default function TrialTestApp() {
     return soalArray.map((item, index) => {
       if (item.type === 'TEXT') {
         return (
-          <pre key={idx}
+          <pre key={index}
             style={{ whiteSpace: "pre-wrap", fontFamily: "inherit" }}
             className="text-lg text-gray-800 mb-4 leading-relaxed"
           >
@@ -444,7 +444,9 @@ export default function TrialTestApp() {
 
                 {/* Options */}
                 <div className="space-y-3 mt-6">
-                  {currentQuestion?.pilihan.map((option, idx) => {
+                  {currentQuestion?.pilihan.filter(item => item !== "").map((option, idx) => {
+                    if (!option.trim()) return null; // skip kalau kosong
+
                     const optionLetter = String.fromCharCode(65 + idx);
                     const isSelected = answers[currentQuestionIndex] === option;
 
@@ -659,7 +661,9 @@ export default function TrialTestApp() {
                     </div>
 
                     <div className="space-y-2">
-                      {question.pilihan.map((option, idx) => {
+                      {question.pilihan.filter(item => item !== "").map((option, idx) => {
+                       
+
                         const optionLetter = String.fromCharCode(65 + idx);
                         const isUserAnswer = question.userAnswer === option;
                         const isCorrectAnswer = question.jawaban === option;

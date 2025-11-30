@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { Eye, FileText, Calendar, DollarSign, CheckCircle, XCircle, ArrowLeft } from 'lucide-react';
+import { Eye, FileText, Calendar, DollarSign, CheckCircle, XCircle, ArrowLeft, ChevronRight } from 'lucide-react';
 import Navbar from "@/components/Navbar";
 import CustomFooter from "@/components/CustomFooter";
 import { useRouter } from 'next/navigation';
@@ -83,265 +83,270 @@ export default function StudyCaseList() {
     if (view === 'detail' && selectedAccess) {
         return (
             <>
-            <Navbar />
-           
-            <div className="min-h-screen bg-gray-50 py-24 px-4">
-                <div className="max-w-4xl mx-auto">
-                    <button
-                        onClick={handleBack}
-                        className="mb-6 flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium"
-                    >
-                        <ArrowLeft size={20} />
-                        Kembali ke List
-                    </button>
+                <Navbar />
 
-                    <div className="bg-white rounded-lg shadow-md overflow-hidden">
-                        <div className="bg-gradient-to-r from-blue-600 to-blue-700 p-6 text-white">
-                            <h1 className="text-2xl font-bold mb-2">Detail Akses Study Case</h1>
-                            <p className="opacity-90">{selectedAccess.studyCaseId?.judulKasus || 'Judul tidak tersedia'}</p>
-                        </div>
+                <div className="min-h-screen bg-gray-50 py-24 px-4">
+                    <div className="max-w-4xl mx-auto">
+                        <button
+                            onClick={handleBack}
+                            className="mb-6 flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium"
+                        >
+                            <ArrowLeft size={20} />
+                            Kembali ke List
+                        </button>
 
-                        <div className="p-6">
-                            {/* Status */}
-                            <div className="mb-6 flex items-center gap-2">
-                                {selectedAccess.status === 'ACTIVE' ? (
-                                    <span className="flex items-center gap-2 bg-green-100 text-green-800 px-4 py-2 rounded-full font-semibold">
-                                        <CheckCircle size={20} />
-                                        Akses Aktif
-                                    </span>
-                                ) : (
-                                    <span className="flex items-center gap-2 bg-red-100 text-red-800 px-4 py-2 rounded-full font-semibold">
-                                        <XCircle size={20} />
-                                        {selectedAccess.status}
-                                    </span>
-                                )}
+                        <div className="bg-white rounded-lg shadow-md overflow-hidden">
+                            <div className="bg-gradient-to-r from-blue-600 to-blue-700 p-6 text-white">
+                                <h1 className="text-2xl font-bold mb-2">Detail Akses Study Case</h1>
+                                <p className="opacity-90">{selectedAccess.studyCaseId?.judulKasus || 'Judul tidak tersedia'}</p>
                             </div>
 
-                            {/* Informasi Study Case */}
-                            <div className="mb-6">
-                                <h2 className="text-lg font-bold text-gray-800 mb-4 border-b pb-2">Informasi Study Case</h2>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div>
-                                        <p className="text-sm text-gray-600">Jenjang</p>
-                                        <p className="font-semibold text-gray-800">{selectedAccess.studyCaseId?.jenjang || '-'}</p>
-                                    </div>
-                                    <div>
-                                        <p className="text-sm text-gray-600">Topik IPA</p>
-                                        <p className="font-semibold text-gray-800">{selectedAccess.studyCaseId?.topikIPA || '-'}</p>
-                                    </div>
-                                    <div>
-                                        <p className="text-sm text-gray-600">Kompetensi Guru</p>
-                                        <p className="font-semibold text-gray-800">{selectedAccess.studyCaseId?.kompetensiGuru || '-'}</p>
-                                    </div>
-                                    <div>
-                                        <p className="text-sm text-gray-600">Status</p>
-                                        <p className="font-semibold text-gray-800">{selectedAccess.studyCaseId?.status || '-'}</p>
-                                    </div>
+                            <div className="p-6">
+                                {/* Status */}
+                                <div className="mb-6 flex items-center gap-2">
+                                    {selectedAccess.status === 'ACTIVE' ? (
+                                        <span className="flex items-center gap-2 bg-green-100 text-green-800 px-4 py-2 rounded-full font-semibold">
+                                            <CheckCircle size={20} />
+                                            Akses Aktif
+                                        </span>
+                                    ) : (
+                                        <span className="flex items-center gap-2 bg-red-100 text-red-800 px-4 py-2 rounded-full font-semibold">
+                                            <XCircle size={20} />
+                                            {selectedAccess.status}
+                                        </span>
+                                    )}
                                 </div>
-                            </div>
 
-                            {/* Data Pembeli */}
-                            <div className="mb-6">
-                                <h2 className="text-lg font-bold text-gray-800 mb-4 border-b pb-2">Data Pembeli</h2>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div>
-                                        <p className="text-sm text-gray-600">Nama</p>
-                                        <p className="font-semibold text-gray-800">{selectedAccess.nama || '-'}</p>
-                                    </div>
-                                    <div>
-                                        <p className="text-sm text-gray-600">Email</p>
-                                        <p className="font-semibold text-gray-800">{selectedAccess.email || '-'}</p>
-                                    </div>
-                                    <div>
-                                        <p className="text-sm text-gray-600">No. WhatsApp</p>
-                                        <p className="font-semibold text-gray-800">{selectedAccess.no_whatsapp || '-'}</p>
-                                    </div>
-                                    <div>
-                                        <p className="text-sm text-gray-600">Provinsi</p>
-                                        <p className="font-semibold text-gray-800">{selectedAccess.provinsi || '-'}</p>
-                                    </div>
-                                    <div>
-                                        <p className="text-sm text-gray-600">Jenjang Sekolah</p>
-                                        <p className="font-semibold text-gray-800">{selectedAccess.jenjang_sekolah || '-'}</p>
-                                    </div>
-                                    <div>
-                                        <p className="text-sm text-gray-600">Nama Instansi</p>
-                                        <p className="font-semibold text-gray-800">{selectedAccess.nama_instansi || '-'}</p>
-                                    </div>
-                                    <div>
-                                        <p className="text-sm text-gray-600">Mata Pelajaran</p>
-                                        <p className="font-semibold text-gray-800">{selectedAccess.mata_pelajaran || '-'}</p>
-                                    </div>
-                                    <div>
-                                        <p className="text-sm text-gray-600">Status PPG</p>
-                                        <p className="font-semibold text-gray-800">{selectedAccess.status_ppg || '-'}</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Sumber Informasi */}
-                            {selectedAccess.sumber_informasi && selectedAccess.sumber_informasi.length > 0 && (
+                                {/* Informasi Study Case */}
                                 <div className="mb-6">
-                                    <h2 className="text-lg font-bold text-gray-800 mb-4 border-b pb-2">Sumber Informasi</h2>
-                                    <div className="flex flex-wrap gap-2">
-                                        {selectedAccess.sumber_informasi.map((sumber, index) => (
-                                            <span key={index} className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">
-                                                {sumber}
-                                            </span>
-                                        ))}
-                                    </div>
-                                    {selectedAccess.sumber_informasi_lainnya && (
-                                        <p className="mt-2 text-sm text-gray-600">
-                                            Lainnya: {selectedAccess.sumber_informasi_lainnya}
-                                        </p>
-                                    )}
-                                </div>
-                            )}
-
-                            {/* Informasi Pembayaran */}
-                            <div className="mb-6">
-                                <h2 className="text-lg font-bold text-gray-800 mb-4 border-b pb-2">Informasi Pembayaran</h2>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div>
-                                        <p className="text-sm text-gray-600">Jenis Pembayaran</p>
-                                        <p className="font-semibold text-gray-800">{selectedAccess.jenis_pembayaran || '-'}</p>
-                                    </div>
-                                    <div>
-                                        <p className="text-sm text-gray-600">Harga</p>
-                                        <p className="font-semibold text-gray-800 text-green-600">
-                                            {selectedAccess.harga ? formatCurrency(selectedAccess.harga) : '-'}
-                                        </p>
-                                    </div>
-                                    <div>
-                                        <p className="text-sm text-gray-600">Tanggal Pengisian</p>
-                                        <p className="font-semibold text-gray-800">
-                                            {selectedAccess.tanggal_pengisi ? formatDate(selectedAccess.tanggal_pengisi) : '-'}
-                                        </p>
-                                    </div>
-                                    {selectedAccess.bukti_pembayaran && (
+                                    <h2 className="text-lg font-bold text-gray-800 mb-4 border-b pb-2">Informasi Study Case</h2>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <div>
-                                            <p className="text-sm text-gray-600">Bukti Pembayaran</p>
-                                            <a
-                                                href={`${process.env.NEXT_PUBLIC_API_FILE_URL}${selectedAccess.bukti_pembayaran}`}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="text-blue-600 hover:underline font-semibold"
-                                            >
-                                                Lihat Bukti
-                                            </a>
+                                            <p className="text-sm text-gray-600">Jenjang</p>
+                                            <p className="font-semibold text-gray-800">{selectedAccess.studyCaseId?.jenjang || '-'}</p>
                                         </div>
-                                    )}
+                                        <div>
+                                            <p className="text-sm text-gray-600">Topik IPA</p>
+                                            <p className="font-semibold text-gray-800">{selectedAccess.studyCaseId?.topikIPA || '-'}</p>
+                                        </div>
+                                        <div>
+                                            <p className="text-sm text-gray-600">Kompetensi Guru</p>
+                                            <p className="font-semibold text-gray-800">{selectedAccess.studyCaseId?.kompetensiGuru || '-'}</p>
+                                        </div>
+                                        <div>
+                                            <p className="text-sm text-gray-600">Status</p>
+                                            <p className="font-semibold text-gray-800">{selectedAccess.studyCaseId?.status || '-'}</p>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
 
-                            {/* Timestamps */}
-                            <div className="text-sm text-gray-500 pt-4 border-t">
-                                <p>Dibuat: {selectedAccess.createdAt ? formatDate(selectedAccess.createdAt) : '-'}</p>
-                                <p>Diperbarui: {selectedAccess.updatedAt ? formatDate(selectedAccess.updatedAt) : '-'}</p>
+                                {/* Data Pembeli */}
+                                <div className="mb-6">
+                                    <h2 className="text-lg font-bold text-gray-800 mb-4 border-b pb-2">Data Pembeli</h2>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div>
+                                            <p className="text-sm text-gray-600">Nama</p>
+                                            <p className="font-semibold text-gray-800">{selectedAccess.nama || '-'}</p>
+                                        </div>
+                                        <div>
+                                            <p className="text-sm text-gray-600">Email</p>
+                                            <p className="font-semibold text-gray-800">{selectedAccess.email || '-'}</p>
+                                        </div>
+                                        <div>
+                                            <p className="text-sm text-gray-600">No. WhatsApp</p>
+                                            <p className="font-semibold text-gray-800">{selectedAccess.no_whatsapp || '-'}</p>
+                                        </div>
+                                        <div>
+                                            <p className="text-sm text-gray-600">Provinsi</p>
+                                            <p className="font-semibold text-gray-800">{selectedAccess.provinsi || '-'}</p>
+                                        </div>
+                                        <div>
+                                            <p className="text-sm text-gray-600">Jenjang Sekolah</p>
+                                            <p className="font-semibold text-gray-800">{selectedAccess.jenjang_sekolah || '-'}</p>
+                                        </div>
+                                        <div>
+                                            <p className="text-sm text-gray-600">Nama Instansi</p>
+                                            <p className="font-semibold text-gray-800">{selectedAccess.nama_instansi || '-'}</p>
+                                        </div>
+                                        <div>
+                                            <p className="text-sm text-gray-600">Mata Pelajaran</p>
+                                            <p className="font-semibold text-gray-800">{selectedAccess.mata_pelajaran || '-'}</p>
+                                        </div>
+                                        <div>
+                                            <p className="text-sm text-gray-600">Status PPG</p>
+                                            <p className="font-semibold text-gray-800">{selectedAccess.status_ppg || '-'}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Sumber Informasi */}
+                                {selectedAccess.sumber_informasi && selectedAccess.sumber_informasi.length > 0 && (
+                                    <div className="mb-6">
+                                        <h2 className="text-lg font-bold text-gray-800 mb-4 border-b pb-2">Sumber Informasi</h2>
+                                        <div className="flex flex-wrap gap-2">
+                                            {selectedAccess.sumber_informasi.map((sumber, index) => (
+                                                <span key={index} className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">
+                                                    {sumber}
+                                                </span>
+                                            ))}
+                                        </div>
+                                        {selectedAccess.sumber_informasi_lainnya && (
+                                            <p className="mt-2 text-sm text-gray-600">
+                                                Lainnya: {selectedAccess.sumber_informasi_lainnya}
+                                            </p>
+                                        )}
+                                    </div>
+                                )}
+
+                                {/* Informasi Pembayaran */}
+                                <div className="mb-6">
+                                    <h2 className="text-lg font-bold text-gray-800 mb-4 border-b pb-2">Informasi Pembayaran</h2>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div>
+                                            <p className="text-sm text-gray-600">Jenis Pembayaran</p>
+                                            <p className="font-semibold text-gray-800">{selectedAccess.jenis_pembayaran || '-'}</p>
+                                        </div>
+                                        <div>
+                                            <p className="text-sm text-gray-600">Harga</p>
+                                            <p className="font-semibold text-gray-800 text-green-600">
+                                                {selectedAccess.harga ? formatCurrency(selectedAccess.harga) : '-'}
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p className="text-sm text-gray-600">Tanggal Pengisian</p>
+                                            <p className="font-semibold text-gray-800">
+                                                {selectedAccess.tanggal_pengisi ? formatDate(selectedAccess.tanggal_pengisi) : '-'}
+                                            </p>
+                                        </div>
+                                        {selectedAccess.bukti_pembayaran && (
+                                            <div>
+                                                <p className="text-sm text-gray-600">Bukti Pembayaran</p>
+                                                <a
+                                                    href={`${process.env.NEXT_PUBLIC_API_FILE_URL}${selectedAccess.bukti_pembayaran}`}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="text-blue-600 hover:underline font-semibold"
+                                                >
+                                                    Lihat Bukti
+                                                </a>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+
+                                {/* Timestamps */}
+                                <div className="text-sm text-gray-500 pt-4 border-t">
+                                    <p>Dibuat: {selectedAccess.createdAt ? formatDate(selectedAccess.createdAt) : '-'}</p>
+                                    <p>Diperbarui: {selectedAccess.updatedAt ? formatDate(selectedAccess.updatedAt) : '-'}</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <CustomFooter />
-             </>
+                <CustomFooter />
+            </>
         );
     }
 
     return (
         <>
-        <Navbar />
+            <Navbar />
 
-        <div className="min-h-screen bg-gray-50 py-24 px-4">
-            <div className="max-w-6xl mx-auto">
-                <div className="mb-8">
-                    <h1 className="text-3xl font-bold text-gray-800 mb-2">Study Case Saya</h1>
-                    <p className="text-gray-600">Daftar study case yang telah Anda beli</p>
+            <div className="min-h-screen bg-gray-50 py-24 px-4">
+                <div className="max-w-6xl mx-auto">
+                    <div className="mb-8">
+                        <h1 className="text-3xl font-bold text-gray-800 mb-2">Study Case Saya</h1>
+                        <p className="text-gray-600">Daftar study case yang telah Anda beli</p>
+                    </div>
+
+                    {studyCaseAccess.length === 0 ? (
+                        <div className="bg-white rounded-lg shadow-md p-12 text-center">
+                            <FileText size={64} className="mx-auto text-gray-300 mb-4" />
+                            <h2 className="text-xl font-semibold text-gray-800 mb-2">Belum ada study case</h2>
+                            <p className="text-gray-600">Anda belum membeli study case apapun</p>
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {studyCaseAccess.map((access) => (
+                                <div key={access._id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                                    <div className="bg-gradient-to-r pt-4 px-4 text-white">
+
+                                        <div className="flex gap-2 text-sm">
+                                            <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full flex items-center">
+                                                {access.studyCaseId?.jenjang}
+                                            </span>
+
+                                            <span className="px-2 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full flex items-center">
+                                                {access.studyCaseId?.topikIPA}
+                                            </span>
+                                            <span className="px-2 py-1 bg-purple-100 text-purple-700 rounded-full font-semibold text-xs flex items-center">
+                                                {access.studyCaseId?.kompetensiGuru}
+                                            </span>
+                                            {access.status === 'NO ACCESS' && (
+                                                <div className="absolute top-3 right-3">
+                                                    <span
+                                                        className={`px-3 py-1 rounded-full text-xs font-semibold bg-yellow-400 text-gray-900`}
+                                                    >
+                                                        Menunggu Verifikasi
+                                                    </span>
+                                                </div>
+                                            )}
+                                        </div>
+                                        <h3 className="font-bold text-black text-lg mb-1 line-clamp-2 mt-2">
+                                            {access.studyCaseId?.judulKasus || 'Judul tidak tersedia'}
+                                        </h3>
+
+                                    </div>
+
+                                    <div className="p-4">
+                                        <p className="text-sm text-gray-600 mb-3 line-clamp-3">
+                                            {access.studyCaseId?.deskripsi || 'Tidak ada deskripsi'}
+                                        </p>
+
+                                        <div className="space-y-2 mb-4">
+                                            <div className="flex items-center gap-2 text-sm">
+                                                <Calendar size={16} className="text-gray-400" />
+                                                <span className="text-gray-600">
+                                                    {access.tanggal_pengisi ? formatDate(access.tanggal_pengisi) : '-'}
+                                                </span>
+                                            </div>
+                                            <div className="flex items-center gap-2 text-sm">
+                                                <DollarSign size={16} className="text-gray-400" />
+                                                <span className="font-semibold text-gray-500">
+                                                    {access.harga ? formatCurrency(access.harga) : '-'}
+                                                </span>
+                                            </div>
+
+
+                                        </div>
+                                        <div className="flex gap-2 mt-auto">
+                                            <button
+                                                onClick={() => handleDetailAccess(access)}
+                                                className="flex-1 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm font-semibold"
+                                            >
+                                                Detail Access
+                                            </button>
+
+                                            {access.status === 'ACCESS' && (
+                                                <button
+                                                    onClick={() => router.push(`/study_case_access/${access.studyCaseId?._id}`)}
+                                                    className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-semibold flex items-center justify-center gap-1"
+                                                >
+                                                    Lihat
+                                                    <ChevronRight className="w-4 h-4" />
+                                                </button>
+                                            )}
+                                        </div>
+
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
-
-                {studyCaseAccess.length === 0 ? (
-                    <div className="bg-white rounded-lg shadow-md p-12 text-center">
-                        <FileText size={64} className="mx-auto text-gray-300 mb-4" />
-                        <h2 className="text-xl font-semibold text-gray-800 mb-2">Belum ada study case</h2>
-                        <p className="text-gray-600">Anda belum membeli study case apapun</p>
-                    </div>
-                ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {studyCaseAccess.map((access) => (
-                            <div key={access._id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-                                <div className="bg-gradient-to-r pt-4 px-4 text-white">
-
-                                    <div className="flex gap-2 text-sm">
-                                        <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full flex items-center">
-                                            {access.studyCaseId?.jenjang}
-                                        </span>
-
-                                        <span className="px-2 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full flex items-center">
-                                            {access.studyCaseId?.topikIPA}
-                                        </span>
-                                        <span className="px-2 py-1 bg-purple-100 text-purple-700 rounded-full font-semibold text-xs flex items-center">
-                                            {access.studyCaseId?.kompetensiGuru}
-                                        </span>
-                                
-                                    </div>
-                                    <h3 className="font-bold text-black text-lg mb-1 line-clamp-2 mt-2">
-                                        {access.studyCaseId?.judulKasus || 'Judul tidak tersedia'}
-                                    </h3>
-
-                                </div>
-
-                                <div className="p-4">
-                                    <p className="text-sm text-gray-600 mb-3 line-clamp-3">
-                                        {access.studyCaseId?.deskripsi || 'Tidak ada deskripsi'}
-                                    </p>
-
-                                    <div className="space-y-2 mb-4">
-                                        <div className="flex items-center gap-2 text-sm">
-                                            <Calendar size={16} className="text-gray-400" />
-                                            <span className="text-gray-600">
-                                                {access.tanggal_pengisi ? formatDate(access.tanggal_pengisi) : '-'}
-                                            </span>
-                                        </div>
-                                        <div className="flex items-center gap-2 text-sm">
-                                            <DollarSign size={16} className="text-gray-400" />
-                                            <span className="font-semibold text-gray-500">
-                                                {access.harga ? formatCurrency(access.harga) : '-'}
-                                            </span>
-                                        </div>
-                                        
-                         
-                                    </div>
-
-                                    <div className="flex gap-2">
-                                        <button
-                                            onClick={() => handleDetailAccess(access)}
-                                            className="flex-1 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-medium transition-colors"
-                                        >
-                                            <Eye size={18} />
-                                            Detail Akses
-                                        </button>
-                                        {
-                                            access?.status === "ACCESS" && (
-                                        <a
-                                            onClick={()=>router.push(`/study_case_access/${access.studyCaseId?._id}`)}
-                                            className="flex-1 flex items-center justify-center gap-2 bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded-lg font-medium transition-colors cursor-pointer"
-                                        >
-                                            <FileText size={18} />
-                                            Study Case
-                                        </a>
-                                            )
-                                        }
-
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                )}
             </div>
-        </div>
-        
-        <CustomFooter />
+
+            <CustomFooter />
         </>
     );
 }
