@@ -85,17 +85,18 @@ const OrderAccessList = () => {
         <>
             <Navbar />
             <div className="min-h-screen bg-gray-50 p-6 pt-24">
-                <div className="max-w-7xl mx-auto">
+                <div className="max-w-6xl mx-auto">
                     {/* Header */}
-                    <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-                        <h1 className="text-3xl font-bold text-gray-900 mb-2">Knowledge Test Access History</h1>
+                    <div className="mb-8">
+                        <h1 className="text-4xl font-bold text-gray-800 mb-2">Knowledge Test Access</h1>
+                        <p className="text-gray-600">Riwayat access knowledge test yang telah Anda beli</p>
                     </div>
 
                     {/* Order List */}
-                    <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+                    <div className="rounded-lg shadow-sm overflow-hidden bg-white">
                         <div className="overflow-x-auto">
-                            <table className="w-full">
-                                <thead className="bg-gray-50 border-b border-gray-200">
+                            <table className="w-full bg-white">
+                                <thead className="bg-white border-b border-gray-200">
                                     <tr>
                                         <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                                             Tanggal

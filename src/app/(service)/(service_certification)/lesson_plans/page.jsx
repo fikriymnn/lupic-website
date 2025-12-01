@@ -16,8 +16,13 @@ import "react-responsive-pagination/themes/classic.css";
 import { useRouter } from "next/navigation";
 
 // === Options untuk filter ===
-const jenjangOptions = ["Semua", "SD", "SMP"];
-const topikIPAOptions = ["Semua", "Fisika", "Biologi", "IPA Terpadu"];
+const jenjangOptions = ["Semua", "SD", "SMP", "SMA", "SMK"];
+const topikIPAOptions = ["Semua", "Kimia",
+  "Fisika",
+  "Biologi",
+  "IPA",
+  "IPAS",
+  "Matematika"];
 
 export default function ModulAjarList() {
   const router = useRouter()
@@ -123,7 +128,7 @@ export default function ModulAjarList() {
                 placeholder="Cari modul ajar..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
             <button
@@ -175,17 +180,17 @@ export default function ModulAjarList() {
                         {modul.deskripsi}
                       </p>
 
-                     
+
 
                       <div className="flex items-end justify-between flex-1 ">
-                         {/* Bagian Harga */}
-                      {modul.status === "BERBAYAR" ? (
-                        <div className="">
-                          <p className="text-base font-medium text-gray-900">
-                            Rp {modul.harga?.toLocaleString('id-ID') || '0'}
-                          </p>
-                        </div>
-                      ):<div></div>}
+                        {/* Bagian Harga */}
+                        {modul.status === "BERBAYAR" ? (
+                          <div className="">
+                            <p className="text-base font-medium text-gray-900">
+                              Rp {modul.harga?.toLocaleString('id-ID') || '0'}
+                            </p>
+                          </div>
+                        ) : <div></div>}
                         <button className="px-4 py-2 bg-koreaBlueMuda text-white rounded-lg transition-colors text-sm font-semibold flex items-center gap-1"
                           onClick={() => {
                             if (!user) {
@@ -244,7 +249,7 @@ export default function ModulAjarList() {
                     key={jenjang}
                     onClick={() => setFilterJenjang(jenjang)}
                     className={`py-2 rounded-lg font-semibold transition-colors ${filterJenjang === jenjang
-                      ? "bg-purple-600 text-white"
+                      ? "bg-blue-600 text-white"
                       : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                       }`}
                   >
@@ -254,7 +259,7 @@ export default function ModulAjarList() {
               </div>
             </div>
 
-            {/* Topik IPA */}
+            {/* Topik */}
             <div className="mb-6">
               <label className="block text-sm font-semibold text-gray-700 mb-3">
                 Topik
@@ -265,7 +270,7 @@ export default function ModulAjarList() {
                     key={topik}
                     onClick={() => setFilterTopikIPA(topik)}
                     className={`py-2 rounded-lg font-semibold transition-colors ${filterTopikIPA === topik
-                      ? "bg-purple-600 text-white"
+                      ? "bg-blue-600 text-white"
                       : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                       }`}
                   >
@@ -285,7 +290,7 @@ export default function ModulAjarList() {
               </button>
               <button
                 onClick={() => setShowFilterModal(false)}
-                className="flex-1 py-3 bg-purple-600 text-white rounded-xl hover:bg-purple-700 font-semibold"
+                className="flex-1 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 font-semibold"
               >
                 Terapkan
               </button>

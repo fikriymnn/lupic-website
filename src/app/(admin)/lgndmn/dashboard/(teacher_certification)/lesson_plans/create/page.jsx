@@ -134,7 +134,7 @@ export default function AddModulForm() {
 
                       <div>
                         <label className="block text-sm font-semibold text-gray-700 mb-2">
-                          Topik IPA *
+                          Topik *
                         </label>
                         <select
                           required
@@ -142,9 +142,12 @@ export default function AddModulForm() {
                           onChange={(e) => handleChange('topikIPA', e.target.value)}
                           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                         >
-                          <option value="Fisika">Fisika</option>
-                          <option value="Biologi">Biologi</option>
-                          <option value="IPA Terpadu">IPA Terpadu</option>
+                           <option value="Fisika">Fisika</option>
+ <option value="Biologi">Biologi</option>
+ <option value="IPA">IPA</option>
+ <option value="IPAS">IPAS</option>
+ <option value="Kimia">Kimia</option>
+ <option value="Matematika">Matematika</option>
                         </select>
                       </div>
 

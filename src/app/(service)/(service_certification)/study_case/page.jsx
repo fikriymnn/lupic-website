@@ -15,8 +15,8 @@ const ResponsivePagination = dynamic(
 );
 
 import "react-responsive-pagination/themes/classic.css";
-const topikOptions = ["Semua", "Energi", "Listrik", "Ekosistem", "Perubahan Zat"];
-const jenjangOptions = ["Semua", "SD", "SMP"];
+const topikOptions = ["Semua", "Fisika", "Biologi", "IPA","IPAS","Kimia","Matematika"];
+const jenjangOptions = ["Semua", "SD", "SMP", "SMA", "SMK"];
 const kompetensiOptions = ["Semua", "Pedagogik", "Profesional"];
 
 export default function CaseStudy() {

@@ -71,7 +71,7 @@ const ModulAjarAccessList = () => {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center">
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
                 <div className="text-center">
                     <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto mb-4"></div>
                     <p className="text-gray-600">Memuat data akses modul ajar...</p>
@@ -126,7 +126,7 @@ const ModulAjarAccessList = () => {
                                             <p className="font-semibold text-gray-800">{selectedAccess.modulAjarId?.jenjang || '-'}</p>
                                         </div>
                                         <div>
-                                            <p className="text-sm text-gray-600">Topik IPA</p>
+                                            <p className="text-sm text-gray-600">Topik</p>
                                             <p className="font-semibold text-gray-800">{selectedAccess.modulAjarId?.topikIPA || '-'}</p>
                                         </div>
                                         <div>
@@ -261,7 +261,7 @@ const ModulAjarAccessList = () => {
     return (
         <>
             <Navbar />
-            <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 py-24 px-4">
+            <div className="min-h-screen bg-gray-50 py-24 px-4">
                 <div className="max-w-6xl mx-auto">
                     {/* Header */}
                     <div className="mb-8">
@@ -330,14 +330,11 @@ const ModulAjarAccessList = () => {
                                                     {access.modulAjarId.deskripsi}
                                                 </p>
 
-                                                <div className="text-sm text-gray-600 mb-4 space-y-1">
-                                                    <div className="flex items-center gap-2">
-                                                        <Calendar className="w-4 h-4" />
-                                                        <span>Dibeli: {formatDate(access.tanggal_pengisi)}</span>
-                                                    </div>
-                                                    <div className="flex items-center gap-2">
-                                                        <DollarSign className="w-4 h-4" />
-                                                        <span>Rp{access.harga?.toLocaleString('id-ID') || '0'}</span>
+                                                <div className="text-sm text-gray-600 mb-6 space-y-1">
+                                                    <div className="">
+                                                        <p className="text-base font-medium text-gray-900">
+                                                            Rp{access.harga?.toLocaleString('id-ID') || '0'}
+                                                        </p>
                                                     </div>
                                                 </div>
 

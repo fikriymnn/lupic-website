@@ -71,8 +71,8 @@ const SUMBER_INFORMASI_OPTIONS = [
 ];
 
 export default function EditModulForm() {
-  const {id} = useParams()
-  const [loading,setLoading] = useState(false)
+  const { id } = useParams()
+  const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState({
     judulModul: '',
     deskripsi: '',
@@ -84,7 +84,7 @@ export default function EditModulForm() {
     cover: "",
   });
 
-    // 🔥 Fetch ke Backend
+  // 🔥 Fetch ke Backend
   const fetchModulAjar = async () => {
     try {
       setLoading(true);
@@ -92,7 +92,7 @@ export default function EditModulForm() {
       const res = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/api/modul_ajar/id/${id}`
       );
-      if(res.data){
+      if (res.data) {
         console.log(res.data)
         setFormData(res.data)
       }
@@ -103,9 +103,9 @@ export default function EditModulForm() {
     }
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchModulAjar()
-  },[])
+  }, [])
 
   const handleChange = (field, value) => {
     setFormData({ ...formData, [field]: value });
@@ -123,7 +123,7 @@ export default function EditModulForm() {
         },
       })
       if (getData.data) {
-        setFormData((e)=>({ ...e, file: getData.data }));
+        setFormData((e) => ({ ...e, file: getData.data }));
       }
     } catch (err) {
       console.log(err)
@@ -131,7 +131,7 @@ export default function EditModulForm() {
   };
 
   const handleFileCoverChange = async (e) => {
-     e.preventDefault()
+    e.preventDefault()
     const file = e.target.files[0];
     const formData = new FormData();
     try {
@@ -142,7 +142,7 @@ export default function EditModulForm() {
         },
       })
       if (getData.data) {
-        setFormData((e)=>({ ...e, cover: getData.data }));
+        setFormData((e) => ({ ...e, cover: getData.data }));
       }
     } catch (err) {
       console.log(err)
@@ -153,7 +153,7 @@ export default function EditModulForm() {
     e.preventDefault();
     console.log(formData)
     try {
-      const res = await axios.put(process.env.NEXT_PUBLIC_API_URL + "/api/modul_ajar/"+id, formData, { withCredentials: true })
+      const res = await axios.put(process.env.NEXT_PUBLIC_API_URL + "/api/modul_ajar/" + id, formData, { withCredentials: true })
       if (res) {
         alert("Update modul success")
         window.location.href = "/lgndmn/dashboard/lesson_plans"
@@ -224,7 +224,7 @@ export default function EditModulForm() {
 
                       <div>
                         <label className="block text-sm font-semibold text-gray-700 mb-2">
-                          Topik IPA *
+                          Topik *
                         </label>
                         <select
                           required
@@ -234,7 +234,10 @@ export default function EditModulForm() {
                         >
                           <option value="Fisika">Fisika</option>
                           <option value="Biologi">Biologi</option>
-                          <option value="IPA Terpadu">IPA Terpadu</option>
+                          <option value="IPA">IPA</option>
+                          <option value="IPAS">IPAS</option>
+                          <option value="Kimia">Kimia</option>
+                          <option value="Matematika">Matematika</option>
                         </select>
                       </div>
 

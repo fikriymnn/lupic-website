@@ -302,7 +302,7 @@ export default function AdminDashboardLessonPlan() {
                     <label className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Harga</label>
                     <div className="mt-2">
                       <span className={`inline-flex items-center px-4 py-2 rounded-lg text-sm font-semibold`}>
-                        {formatNumberID(selectedUser.harga)}
+                        Rp{formatNumberID(selectedUser.harga)}
                       </span>
                     </div>
                   </div>
@@ -332,24 +332,6 @@ export default function AdminDashboardLessonPlan() {
                   </div>
                 </div>
 
-                {/* Action Buttons */}
-                <div className="mt-8 pt-6 border-t border-gray-200 flex gap-4">
-                  <button
-                    onClick={() => handleToggleStatus(selectedUser.id)}
-                    className={`flex-1 py-3 px-6 rounded-lg font-semibold transition-colors ${selectedUser.status === "ACCESS"
-                      ? "bg-red-600 hover:bg-red-700 text-white"
-                      : "bg-green-600 hover:bg-green-700 text-white"
-                      }`}
-                  >
-                    {selectedUser.status === "ACCESS" ? "Ubah ke NO ACCESS" : "Ubah ke ACCESS"}
-                  </button>
-                  <button
-                    onClick={handleBackToList}
-                    className="px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg font-semibold transition-colors"
-                  >
-                    Kembali
-                  </button>
-                </div>
               </div>
             </div>
           </div>

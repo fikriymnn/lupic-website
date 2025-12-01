@@ -21,8 +21,8 @@ import Image from 'next/image';
 import axios from 'axios';
 
 // === Options untuk filter ===
-const jenjangOptions = ["Semua", "SD", "SMP"];
-const topikIPAOptions = ["Semua", "Fisika", "Biologi", "IPA Terpadu"];
+const jenjangOptions = ["Semua", "SD", "SMP", "SMA", "SMK"];
+const topikIPAOptions = ["Semua", "Fisika", "Biologi", "IPA","IPAS","Kimia","Matematika"];
 export default function AdminModulPanel() {
   const router = useRouter()
   const [moduls, setModuls] = useState([]);

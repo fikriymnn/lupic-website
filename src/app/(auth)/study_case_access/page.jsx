@@ -32,6 +32,7 @@ export default function StudyCaseList() {
 
                 const data = await res.json();
                 console.log(data)
+                
                 setStudyCaseAccess(data);
 
             }
@@ -126,7 +127,7 @@ export default function StudyCaseList() {
                                             <p className="font-semibold text-gray-800">{selectedAccess.studyCaseId?.jenjang || '-'}</p>
                                         </div>
                                         <div>
-                                            <p className="text-sm text-gray-600">Topik IPA</p>
+                                            <p className="text-sm text-gray-600">Topik</p>
                                             <p className="font-semibold text-gray-800">{selectedAccess.studyCaseId?.topikIPA || '-'}</p>
                                         </div>
                                         <div>
@@ -255,7 +256,7 @@ export default function StudyCaseList() {
             <div className="min-h-screen bg-gray-50 py-24 px-4">
                 <div className="max-w-6xl mx-auto">
                     <div className="mb-8">
-                        <h1 className="text-3xl font-bold text-gray-800 mb-2">Study Case Saya</h1>
+                        <h1 className="text-4xl font-bold text-gray-800 mb-2">Study Case Saya</h1>
                         <p className="text-gray-600">Daftar study case yang telah Anda beli</p>
                     </div>
 
@@ -276,20 +277,20 @@ export default function StudyCaseList() {
                                                 {access.studyCaseId?.jenjang}
                                             </span>
 
-                                            <span className="px-2 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full flex items-center">
+                                            <span className="px-2 py-1 bg-gray-100 text-green-800 text-xs font-semibold rounded-full flex items-center">
                                                 {access.studyCaseId?.topikIPA}
                                             </span>
                                             <span className="px-2 py-1 bg-purple-100 text-purple-700 rounded-full font-semibold text-xs flex items-center">
                                                 {access.studyCaseId?.kompetensiGuru}
                                             </span>
-                                            {access.status === 'NO ACCESS' && (
-                                                <div className="absolute top-3 right-3">
+                                            {access?.status === 'NO ACCESS' && (
+     
                                                     <span
                                                         className={`px-3 py-1 rounded-full text-xs font-semibold bg-yellow-400 text-gray-900`}
                                                     >
                                                         Menunggu Verifikasi
                                                     </span>
-                                                </div>
+               
                                             )}
                                         </div>
                                         <h3 className="font-bold text-black text-lg mb-1 line-clamp-2 mt-2">
@@ -304,20 +305,13 @@ export default function StudyCaseList() {
                                         </p>
 
                                         <div className="space-y-2 mb-4">
-                                            <div className="flex items-center gap-2 text-sm">
-                                                <Calendar size={16} className="text-gray-400" />
-                                                <span className="text-gray-600">
-                                                    {access.tanggal_pengisi ? formatDate(access.tanggal_pengisi) : '-'}
-                                                </span>
-                                            </div>
-                                            <div className="flex items-center gap-2 text-sm">
-                                                <DollarSign size={16} className="text-gray-400" />
-                                                <span className="font-semibold text-gray-500">
-                                                    {access.harga ? formatCurrency(access.harga) : '-'}
-                                                </span>
-                                            </div>
-
-
+                                            <div className="text-sm text-gray-600 mb-4 space-y-1">
+                                                    <div className="">
+                                                        <p className="text-base font-medium text-gray-900">
+                                                            Rp{access.harga?.toLocaleString('id-ID') || '0'}
+                                                        </p>
+                                                    </div>
+                                                </div>
                                         </div>
                                         <div className="flex gap-2 mt-auto">
                                             <button

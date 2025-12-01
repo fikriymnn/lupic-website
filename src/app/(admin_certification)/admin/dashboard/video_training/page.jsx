@@ -37,11 +37,7 @@ function getYouTubeVideoId(url) {
 
 const topikIPAOptions = [
   "Semua",
-  "Energi",
-  "Listrik",
-  "Gaya",
-  "Ekosistem",
-  "Perubahan Zat",
+  "Fisika", "Biologi", "IPA","IPAS","Kimia","Matematika"
 ];
 
 export default function VideoTrainingAdmin() {
@@ -301,7 +297,7 @@ export default function VideoTrainingAdmin() {
             <div className="mb-6">
               <label className="block text-sm font-semibold text-gray-700 mb-3">Jenjang</label>
               <div className="grid grid-cols-3 gap-2">
-                {["Semua", "SD", "SMP"].map((jenjang) => (
+                {["Semua", "SD", "SMP", "SMA", "SMK"].map((jenjang) => (
                   <button
                     key={jenjang}
                     onClick={() => setFilterJenjang(jenjang)}

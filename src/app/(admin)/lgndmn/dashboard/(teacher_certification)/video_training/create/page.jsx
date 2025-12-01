@@ -112,7 +112,7 @@ export default function CreateVideoModul() {
                     {/* Topik */}
                     <div>
                       <label className="block text-sm font-semibold text-gray-700 mb-2">
-                        Topik IPA *
+                        Topik *
                       </label>
                       <select
                         required

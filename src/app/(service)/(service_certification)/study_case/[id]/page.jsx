@@ -50,11 +50,13 @@ export default function UseCaseDetail({ params }) {
           if (data.data.answer?.answer) {
             setShowPembahasan(true)
           }
+          console.log(data.data)
+            setUser(resUser.data)
+            setUseCase(data.data);
+            setAnswers(data.data?.answer?.answer)
+            setForumMessages(data.data.forums)
 
-          setUser(resUser.data)
-          setUseCase(data.data);
-          setAnswers(data.data?.answer?.answer)
-          setForumMessages(data.data.forums)
+
         }
 
       } catch (err) {

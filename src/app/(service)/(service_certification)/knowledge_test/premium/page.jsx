@@ -491,8 +491,8 @@ export default function TestSimulationApp() {
     return (
       <>
         <Navbar />
-        <div className="min-h-screen bg-gray-50 p-8 pt-24">
-          <div className="max-w-4xl mx-auto">
+        <div className="min-h-screen bg-gray-50 p-8 pt-24 pb-16">
+          <div className="max-w-6xl mx-auto px-8">
             <div className="max-w-6xl mx-auto md:block grid grid-cols-1 justify-items-center md:justify-items-start mb-8">
               <h1 className="md:text-4xl text-4xl font-bold">
                 Latihan Tes Objektif
@@ -956,8 +956,7 @@ export default function TestSimulationApp() {
 
                       <div className="space-y-2 mb-4">
                         {question.pilihan?.filter(item => item !== "").map((option, idx) => {
-             
-
+            
                           const optionLetter = String.fromCharCode(65 + idx);
                           const isUserAnswer = question.userAnswer === option;
                           const isCorrectAnswer = question.jawaban === option;
