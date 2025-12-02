@@ -117,12 +117,12 @@ const Navbar = () => {
     {
       label: "Link",
       items: [
-        { href: "https://chemprolab.id", label: "chemprolab.id", external: true },
-        { href: "https://www.tokopedia.com/fablabedu", label: "tokopedia.com/fablabedu", external: true },
-        { href: "https://sciencelove.com/", label: "sciencelove.com", external: true },
-        { href: "https://ejournal.upi.edu/index.php/JPI", label: "ejournal.upi.edu/JPI", external: true },
-        { href: "https://ejournal.upi.edu/index.php/JRPPK", label: "ejournal.upi.edu/JRPPK", external: true },
-        { href: "https://phet.colorado.edu/en/simulations/filter?type=html", label: "phet.colorado.edu", external: true },
+        { href: "https://chemprolab.id", label: "chemprolab.id" },
+        { href: "https://www.tokopedia.com/fablabedu", label: "tokopedia.com/fablabedu" },
+        { href: "https://sciencelove.com/", label: "sciencelove.com" },
+        { href: "https://ejournal.upi.edu/index.php/JPI", label: "ejournal.upi.edu/JPI" },
+        { href: "https://ejournal.upi.edu/index.php/JRPPK", label: "ejournal.upi.edu/JRPPK" },
+        { href: "https://phet.colorado.edu/en/simulations/filter?type=html", label: "phet.colorado.edu" },
       ],
     },
   ];
@@ -130,7 +130,7 @@ const Navbar = () => {
   const personal = {
     label: "Personal",
     items: [
-      { href: "/personal", label: "Test schedule" },
+      // { href: "/personal", label: "Test schedule" },
       { href: "/knowledge_test_result", label: "Knowledge test result" },
       { href: "/knowledge_test_access", label: "Knowledge test access" },
       { href: "/study_case_access", label: "Study case access" },

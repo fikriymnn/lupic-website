@@ -526,32 +526,37 @@ export default function AdminKnowledgeTest() {
 
                             <div className="flex gap-3">
                                 <button
-                                    onClick={() => setPage('harga')}
-                                    className="flex items-center gap-2 px-6 py-3 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700"
-                                >
-                                    <BiMoney className="w-5 h-5" />
-                                    Harga Access
-                                </button>
-                                <button
-                                    onClick={() => setPage('access')}
-                                    className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-                                >
-                                    <Users className="w-5 h-5" />
-                                    Access Test
-                                </button>
-                                <button
                                     onClick={() => setShowAddPaketModal(true)}
-                                    className="flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                                    className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
                                 >
                                     <Plus className="w-5 h-5" />
                                     Add Paket
                                 </button>
+                                
+                                <button
+                                    onClick={() => setPage('access')}
+                                    className="flex items-center gap-2 px-6 py-3 
+                                    bg-green-600 text-white rounded-lg hover:bg-green-700
+                                    "
+                                >
+                                    <Users className="w-5 h-5" />
+                                    Access Test
+                                </button>
+
+                                <button
+                                    onClick={() => setPage('harga')}
+                                    className="flex items-center gap-2 px-6 py-3 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600"
+                                >
+                                    <BiMoney className="w-5 h-5" />
+                                    Harga Access
+                                </button>
                             </div>
                         </div>
 
+                        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 mb-6">
                         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                             {pakets.map(paket => (
-                                <div key={paket._id} className="bg-white rounded-lg shadow-lg p-6">
+                                <div key={paket._id} className="bg-white rounded-md shadow-md p-6 border border-gray-100">
                                     <div className="flex justify-between items-start mb-4">
                                         <h3 className="text-xl font-bold text-gray-800">{paket.paket}</h3>
                                         <span className={`px-3 py-1 rounded-full text-xs font-semibold ${paket.status === 'PREMIUM' ? 'bg-yellow-400 text-yellow-900' :
@@ -582,6 +587,7 @@ export default function AdminKnowledgeTest() {
                                     </div>
                                 </div>
                             ))}
+                        </div>
                         </div>
                     </div>
 

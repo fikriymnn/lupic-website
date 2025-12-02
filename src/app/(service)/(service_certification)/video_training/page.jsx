@@ -142,11 +142,11 @@ export default function VideoTrainingApp() {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-gray-100 mt-8 pb-16">
-        <div className="max-w-6xl mx-auto px-4 md:px-8 py-8">
+      <div className="min-h-screen bg-gray-50 py-24">
+        <div className="max-w-6xl mx-auto px-4 md:px-8">
           {/* Title */}
           <div className="max-w-6xl mx-auto grid grid-cols-1 justify-items-center md:justify-items-start mb-8">
-            <h1 className="md:text-4xl text-4xl md:mt-10 font-bold">
+            <h1 className="md:text-4xl text-4xl font-bold">
               Video Pembelajaran
             </h1>
             <div className="h-1 w-36 bg-koreaRed md:mt-3 mt-2"></div>
@@ -164,7 +164,7 @@ export default function VideoTrainingApp() {
                 placeholder="Cari video pembelajaran..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
             <button
@@ -196,7 +196,7 @@ export default function VideoTrainingApp() {
                     />
                     <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
                       <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center">
-                        <Play className="w-8 h-8 text-purple-600 ml-1" />
+                        <Play className="w-8 h-8 text-blue-600 ml-1" />
                       </div>
                     </div>
                   </div>
@@ -342,7 +342,7 @@ export default function VideoTrainingApp() {
                 </button>
                 <button
                   onClick={() => setShowFilterModal(false)}
-                  className="flex-1 py-3 bg-koreaBlueMuda text-white rounded-xl hover:bg-purple-700 transition-colors font-semibold"
+                  className="flex-1 py-3 bg-koreaBlueMuda text-white rounded-xl hover:bg-blue-700 transition-colors font-semibold"
                 >
                   Terapkan
                 </button>

@@ -87,7 +87,7 @@ export default function StudyCaseList() {
                 <Navbar />
 
                 <div className="min-h-screen bg-gray-50 py-24 px-4">
-                    <div className="max-w-4xl mx-auto">
+                    <div className="max-w-6xl mx-auto md:px-8 px-4">
                         <button
                             onClick={handleBack}
                             className="mb-6 flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium"
@@ -254,7 +254,7 @@ export default function StudyCaseList() {
             <Navbar />
 
             <div className="min-h-screen bg-gray-50 py-24 px-4">
-                <div className="max-w-6xl mx-auto">
+                <div className="max-w-6xl mx-auto md:px-8 px-4">
                     <div className="mb-8">
                         <h1 className="text-4xl font-bold text-gray-800 mb-2">Study Case Saya</h1>
                         <p className="text-gray-600">Daftar study case yang telah Anda beli</p>

@@ -86,7 +86,7 @@ const ModulAjarAccessList = () => {
             <>
                 <Navbar />
                 <div className="min-h-screen bg-gray-50 py-24 px-4">
-                    <div className="max-w-6xl mx-auto">
+                    <div className="max-w-6xl mx-auto md:px-8 px-4">
                         <button
                             onClick={handleBack}
                             className="mb-6 flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium"
@@ -262,7 +262,7 @@ const ModulAjarAccessList = () => {
         <>
             <Navbar />
             <div className="min-h-screen bg-gray-50 py-24 px-4">
-                <div className="max-w-6xl mx-auto">
+                <div className="max-w-6xl mx-auto md:px-8 px-4">
                     {/* Header */}
                     <div className="mb-8">
                         <h1 className="text-4xl font-bold text-gray-900 mb-2">

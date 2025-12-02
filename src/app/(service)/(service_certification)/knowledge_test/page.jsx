@@ -106,8 +106,8 @@ export default function LatihanTesObjektifPage() {
     return (
         <>
             <Navbar />
-            <div className="min-h-screen bg-gray-50 to-indigo-100 p-8 pt-24">
-                <div className="max-w-5xl mx-auto">
+            <div className="min-h-screen bg-gray-50 to-indigo-100 pb-16 pt-24">
+                <div className="max-w-6xl mx-auto md:px-8 px-4">
                     {/* Title */}
                     <div className="max-w-6xl mx-auto md:block grid grid-cols-1 justify-items-center md:justify-items-start mb-8">
                         <h1 className="md:text-4xl text-4xl font-bold">

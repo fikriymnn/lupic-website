@@ -199,10 +199,10 @@ export default function AdminModulPanel() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {moduls.map((modul) => (
-                <div key={modul._id} className="bg-white rounded-xl shadow-lg flex flex-col">
+                <div key={modul._id} className="bg-white rounded-md border border-gray-100 shadow-sm flex flex-col">
 
                   {/* Cover */}
-                  <div className="relative h-48 w-full overflow-hidden rounded-t-xl">
+                  <div className="relative h-48 w-full overflow-hidden rounded-t-md">
                     <Image
                       src={`${process.env.NEXT_PUBLIC_API_FILE_URL}${modul.cover}`}
                       alt={modul.judulModul}

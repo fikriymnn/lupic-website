@@ -88,7 +88,7 @@ export default function ModulAjarDetail() {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 py-16">
+      <div className="min-h-screen bg-gray-50 py-16">
         <div className="max-w-6xl mx-auto px-4 py-8">
           <button
             onClick={() => { router.push("/lesson_plans") }}

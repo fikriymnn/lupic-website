@@ -33,7 +33,7 @@ export default function CarouselHome() {
     },[])
 
     return (
-        <div className='md:w-[80%] w-[90%] m-auto m-auto py-8 rounded-t-xl rounded-bl-xl rounded-br-[100px] '>
+        <div className='md:w-full w-full m-auto m-auto py-8 rounded-lg bg-gray-100'>
             <div className='grid md:grid-cols-1 grid-cols-1 justify-items-center items-start w-full m-auto '>
                 <div className='m-auto w-full'>
                     <Slider {...settings}>
@@ -41,7 +41,7 @@ export default function CarouselHome() {
                             gambar && gambar.map((v, i) => {
                                 return (
                                     <div key={i}>
-                                        <img className='rounded-lg w-full' src={process.env.NEXT_PUBLIC_API_FILE_URL+v} alt="image" />
+                                        <img className='rounded-lg w-full object-cover' src={process.env.NEXT_PUBLIC_API_FILE_URL+v} alt="image" />
                                     </div>
                                 )
                             })

@@ -111,10 +111,10 @@ function formatNumberID(num) {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-gray-100 p-6 md:pt-16 pt-20 pb-16">
+      <div className="min-h-screen bg-gray-50 py-24">
         <div className="max-w-6xl mx-auto px-4 md:px-8">
           <div className="max-w-6xl mx-auto md:block grid grid-cols-1 justify-items-center md:justify-items-start mb-8">
-            <h1 className="md:text-4xl text-4xl md:mt-10 font-bold">
+            <h1 className="md:text-4xl text-4xl font-bold">
               Study Case
             </h1>
             <div className="h-1 w-36 bg-koreaRed md:mt-3 mt-2"></div>
@@ -133,7 +133,7 @@ function formatNumberID(num) {
                 placeholder="Cari study case..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500"
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500"
               />
             </div>
 

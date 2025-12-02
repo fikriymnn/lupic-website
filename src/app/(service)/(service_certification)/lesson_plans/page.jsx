@@ -105,11 +105,11 @@ export default function ModulAjarList() {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-gray-100 px-8 md:py-16 py-24">
+      <div className="min-h-screen bg-gray-50 py-24">
         <div className="max-w-6xl px-4 md:px-8 mx-auto">
           {/* Title */}
           <div className="max-w-6xl mx-auto md:block grid grid-cols-1 justify-items-center md:justify-items-start mb-8">
-            <h1 className="md:text-4xl text-4xl md:mt-10 font-bold">
+            <h1 className="md:text-4xl text-4xl font-bold">
               Modul Ajar
             </h1>
             <div className="h-1 w-36 bg-koreaRed md:mt-3 mt-2"></div>

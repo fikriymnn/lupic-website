@@ -50,7 +50,7 @@ function formatDate(dateString) {
         <>
             <Navbar />
             <div className="min-h-screen bg-gray-50 pt-24 pb-16">
-                <div className="max-w-6xl mx-auto">
+                <div className="max-w-6xl mx-auto md:px-8 px-4">
                     <div className="flex items-center gap-4 mb-8">
                         <h1 className="text-4xl font-bold text-gray-800">
                             History Pengerjaan Tes

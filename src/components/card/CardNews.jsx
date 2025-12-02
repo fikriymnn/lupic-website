@@ -4,20 +4,12 @@ import { motion } from "framer-motion";
 import { formatTanggalIndonesia } from "@/utils/formatTanggal"
 
 export default function CardNews({ gambar, judul, deskripsi, tanggal, id }) {
-  const truncateText = (text, maxWords) => {
-    const words = text.split(" ");
-    if (words.length > maxWords) {
-      return words.slice(0, maxWords).join(" ") + " ...";
-    }
-    return text;
-  };
 
   return (
     <motion.a
       href={`/news/${id}`}
-      whileHover={{ scale: 1.03, y: -5 }}
       transition={{ duration: 0.3, ease: "easeOut" }}
-      className="block bg-white rounded-lg shadow-sm hover:shadow-xl overflow-hidden transition-all duration-300 w-full max-w-[350px] pb-2 border border-gray-200"
+      className="block bg-gray-50 p-2 rounded-md overflow-hidden w-full max-w-[350px] "
     >
       <div className="relative w-full h-[200px]">
         <Image
@@ -25,11 +17,11 @@ export default function CardNews({ gambar, judul, deskripsi, tanggal, id }) {
           alt={judul}
           fill
           priority
-          className="object-cover rounded-t-xl"
+          className="object-cover rounded-t-md"
         />
       </div>
 
-      <div className="p-4 h-[150px]">
+      <div className="py-4 h-[120px]">
         <h3 className="font-bold text-base text-koreaBlue line-clamp-2 mb-1">
           {judul}
         </h3>

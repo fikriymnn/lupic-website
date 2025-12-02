@@ -87,7 +87,7 @@ export default function CreateVideoModul() {
                       required
                       value={formData.judul}
                       onChange={(e) => handleChange("judul", e.target.value)}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
 
@@ -101,7 +101,7 @@ export default function CreateVideoModul() {
                       value={formData.deskripsi}
                       onChange={(e) => handleChange("deskripsi", e.target.value)}
                       rows="3"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
                     />
                   </div>
 
@@ -118,7 +118,7 @@ export default function CreateVideoModul() {
                         onChange={(e) =>
                           handleChange("jenjang", e.target.value)
                         }
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       >
                         <option value="SD">SD</option>
                         <option value="SMP">SMP</option>
@@ -136,7 +136,7 @@ export default function CreateVideoModul() {
                         onChange={(e) =>
                           handleChange("topikIPA", e.target.value)
                         }
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       >
                         <option value="Fisika">Fisika</option>
                         <option value="Biologi">Biologi</option>
@@ -155,7 +155,7 @@ export default function CreateVideoModul() {
                         onChange={(e) =>
                           handleChange("status", e.target.value)
                         }
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       >
                         <option value="GRATIS">GRATIS</option>
                         <option value="BERBAYAR">BERBAYAR</option>
@@ -175,7 +175,7 @@ export default function CreateVideoModul() {
                         handleChange("tujuanPembelajaran", e.target.value)
                       }
                       rows="3"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
                     />
                   </div>
 
@@ -190,7 +190,7 @@ export default function CreateVideoModul() {
                       value={formData.linkVideo}
                       onChange={(e) => handleChange("linkVideo", e.target.value)}
                       placeholder="https://youtube.com/..."
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
 

@@ -166,7 +166,7 @@ export default function News() {
               <img
                 src={process.env.NEXT_PUBLIC_API_FILE_URL + data3.gambar}
                 alt=""
-                className="md:w-[500px] md:h-[300px] w-full h-[220px] rounded-lg"
+                className="md:w-[500px] md:h-[300px] w-full h-[220px] rounded-lg object-cover"
               />
             </div>
 
@@ -188,11 +188,11 @@ export default function News() {
       <div className="m-auto md:mt-8 mt-1">
         <div className="md:block md:justify-items-start grid grid-cols-1 justify-items-center">
           <h1 className="md:text-5xl text-2xl mt-10 font-bold ">
-            Another News
+            All News
           </h1>
           <div className="h-1 w-36 bg-koreaRed md:mt-3 mt-2"></div>
         </div>
-        <div className="grid md:grid-cols-3 justify-items-center grid-cols-1 md:mt-8 mt-4 gap-8">
+        <div className="grid md:grid-cols-3 justify-items-center grid-cols-1 md:mt-8 mt-4 gap-6">
           {data &&
             data.map((v, i) => {
 

@@ -85,10 +85,12 @@ const OrderAccessList = () => {
         <>
             <Navbar />
             <div className="min-h-screen bg-gray-50 p-6 pt-24">
-                <div className="max-w-6xl mx-auto">
+                <div className="max-w-6xl mx-auto md:px-8 px-4">
                     {/* Header */}
-                    <div className="mb-8">
-                        <h1 className="text-4xl font-bold text-gray-800 mb-2">Knowledge Test Access</h1>
+                    <div className="max-w-6xl mx-auto md:block grid grid-cols-1 justify-items-center md:justify-items-start mb-8">
+                        <h1 className="md:text-4xl text-4xl font-bold">
+                            Knowledge Test Access
+                        </h1>
                         <p className="text-gray-600">Riwayat access knowledge test yang telah Anda beli</p>
                     </div>
 
