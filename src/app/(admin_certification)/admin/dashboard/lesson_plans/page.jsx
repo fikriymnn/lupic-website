@@ -216,19 +216,18 @@ export default function AdminModulPanel() {
 
                     {/* Tags */}
                     <div className="flex flex-wrap gap-2 mb-3">
-                      <span className="px-3 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">
+                      <span className="px-3 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full">
                         {modul.jenjang}
                       </span>
-                      <span className="px-3 py-1 bg-green-100 text-green-800 text-xs rounded-full">
+                      <span className="px-3 py-1 rounded-xl text-xs font-semibold bg-gray-100 text-gray-700">
                         {modul.topikIPA}
                       </span>
-                      <span className={`px-3 py-1 text-xs rounded-full 
-                      ${modul.status === "GRATIS"
-                          ? "bg-emerald-100 text-emerald-800"
-                          : "bg-orange-100 text-orange-800"
-                        }`}>
-                        {modul.status}
-                      </span>
+                      <span className={`px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full ${modul.status === "GRATIS"
+                          ? "bg-green-500 text-white"
+                          : "bg-yellow-400 text-black"
+                          }`}>
+                          {modul.status}
+                        </span>
                     </div>
 
                     {/* Title */}

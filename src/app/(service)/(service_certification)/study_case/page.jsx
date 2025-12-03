@@ -162,7 +162,7 @@ function formatNumberID(num) {
                       {useCase.jenjang}
                     </span>
 
-                    <span className="px-2 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full flex items-center">
+                    <span className="px-2 py-1 rounded-xl text-xs font-semibold bg-gray-100 text-gray-700">
                       {useCase.topikIPA}
                     </span>
                     <span className="px-2 py-1 bg-purple-100 text-purple-700 rounded-full font-semibold text-xs flex items-center">

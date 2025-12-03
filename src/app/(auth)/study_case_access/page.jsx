@@ -105,7 +105,7 @@ export default function StudyCaseList() {
                             <div className="p-6">
                                 {/* Status */}
                                 <div className="mb-6 flex items-center gap-2">
-                                    {selectedAccess.status === 'ACTIVE' ? (
+                                    {selectedAccess.status === 'ACCESS' ? (
                                         <span className="flex items-center gap-2 bg-green-100 text-green-800 px-4 py-2 rounded-full font-semibold">
                                             <CheckCircle size={20} />
                                             Akses Aktif
