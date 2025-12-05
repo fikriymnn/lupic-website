@@ -163,7 +163,7 @@ export default function Home() {
               className="relative group"
             >
               <div className="absolute -inset-1 rounded-md opacity-20 group-hover:opacity-30 blur transition-opacity" />
-              <div className="relative py-6 px-4 md:p-14 rounded-lg">
+              <div className="relative py-6 px-4 md:p-14 rounded-lg bg-white shadow-md border border-gray-100">
                 <Image
                   src="/images/goals.png"
                   alt="LUPIC Goals"
