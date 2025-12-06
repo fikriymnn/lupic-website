@@ -8,7 +8,7 @@ import { motion } from "framer-motion"
 import { useInView } from "react-intersection-observer"
 
 export default function Aboutus() {
-    const [activePartners, setActivePartners] = useState<Record<string, boolean>>({})
+    const [activePartners, setActivePartners] = useState({})
     const [data, setData] = useState({
         gambar: "",
         pesan: "",
@@ -36,15 +36,15 @@ export default function Aboutus() {
                         collaboration: response.data.collaboration || []
                     })
                 }
-            } catch (err: unknown) {
+            } catch (err) {
                 console.error("Error fetching data:", err)
             }
         }
         getData()
     }, [])
 
-    const togglePartner = (partnerId: string) => {
-        setActivePartners((prev: any) => ({
+    const togglePartner = (partnerId) => {
+        setActivePartners((prev) => ({
             ...prev,
             [partnerId]: !prev[partnerId]
         }))
@@ -210,7 +210,7 @@ export default function Aboutus() {
                     {/* Partners List */}
                     <div className="mt-10">
                         {data.partner && data.partner.length > 0 ? (
-                            data.partner.map((partner: any, index: number) => (
+                            data.partner.map((partner, index) => (
                                 <div key={partner._id || index} className="mt-10">
                                     <div
                                         className="flex justify-between items-center w-full h-20 m-auto bg-koreaBlue rounded-[50px] hover:cursor-pointer transition-all hover:shadow-lg"
@@ -258,7 +258,7 @@ export default function Aboutus() {
                                     >
                                         {partner.deskripsi && (
                                             <div className="text-justify md:text-xl text-base mt-5">
-                                                {partner.deskripsi.split('\n').map((line: string, lineIndex: number) => (
+                                                {partner.deskripsi.split('\n').map((line, lineIndex) => (
                                                     <p key={lineIndex} className={lineIndex > 0 ? "mt-3" : ""}>
                                                         {line}
                                                     </p>
@@ -280,7 +280,7 @@ export default function Aboutus() {
                     </div>
                     <div className="m-auto flex justify-center items-center mt-10 mb-28 flex-wrap gap-5">
                         {data.collaboration && data.collaboration.length > 0 ? (
-                            data.collaboration.map((collab: any, index: number) => (
+                            data.collaboration.map((collab, index) => (
                                 <div key={collab._id || index} className="transition-transform hover:scale-105">
                                     {collab.gambar && (
                                         <Image
