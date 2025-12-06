@@ -21,8 +21,8 @@ import Image from 'next/image';
 import axios from 'axios';
 
 // === Options untuk filter ===
-const jenjangOptions = ["Semua", "SD", "SMP"];
-const topikIPAOptions = ["Semua", "Fisika", "Biologi", "IPA Terpadu"];
+const jenjangOptions = ["Semua", "SD", "SMP", "SMA", "SMK"];
+const topikIPAOptions = ["Semua", "Fisika", "Biologi", "IPA","IPAS","Kimia","Matematika"];
 export default function AdminModulPanel() {
   const router = useRouter()
   const [moduls, setModuls] = useState([]);
@@ -199,10 +199,10 @@ export default function AdminModulPanel() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {moduls.map((modul) => (
-                <div key={modul._id} className="bg-white rounded-xl shadow-lg flex flex-col">
+                <div key={modul._id} className="bg-white rounded-md border border-gray-100 shadow-sm flex flex-col">
 
                   {/* Cover */}
-                  <div className="relative h-48 w-full overflow-hidden rounded-t-xl">
+                  <div className="relative h-48 w-full overflow-hidden rounded-t-md">
                     <Image
                       src={`${process.env.NEXT_PUBLIC_API_FILE_URL}${modul.cover}`}
                       alt={modul.judulModul}
@@ -216,19 +216,18 @@ export default function AdminModulPanel() {
 
                     {/* Tags */}
                     <div className="flex flex-wrap gap-2 mb-3">
-                      <span className="px-3 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">
+                      <span className="px-3 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full">
                         {modul.jenjang}
                       </span>
-                      <span className="px-3 py-1 bg-green-100 text-green-800 text-xs rounded-full">
+                      <span className="px-3 py-1 rounded-xl text-xs font-semibold bg-gray-100 text-gray-700">
                         {modul.topikIPA}
                       </span>
-                      <span className={`px-3 py-1 text-xs rounded-full 
-                      ${modul.status === "GRATIS"
-                          ? "bg-emerald-100 text-emerald-800"
-                          : "bg-orange-100 text-orange-800"
-                        }`}>
-                        {modul.status}
-                      </span>
+                      <span className={`px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full ${modul.status === "GRATIS"
+                          ? "bg-green-500 text-white"
+                          : "bg-yellow-400 text-black"
+                          }`}>
+                          {modul.status}
+                        </span>
                     </div>
 
                     {/* Title */}
@@ -240,6 +239,15 @@ export default function AdminModulPanel() {
                     <p className="text-gray-600 text-sm mb-4 line-clamp-2 flex-1">
                       {modul.deskripsi}
                     </p>
+
+                        {/* Harga */}
+                    {
+                      modul.status === 'BERBAYAR' && (
+                        <h3 className="text-lg font-bold text-gray-800 mb-4 line-clamp-2">
+                          Rp{modul.harga?.toLocaleString('id-ID') || '0'}
+                        </h3>
+                      )
+                    }
 
                     {/* Download */}
                     <button

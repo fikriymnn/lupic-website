@@ -37,11 +37,7 @@ function getYouTubeVideoId(url) {
 
 const topikIPAOptions = [
   "Semua",
-  "Energi",
-  "Listrik",
-  "Gaya",
-  "Ekosistem",
-  "Perubahan Zat",
+  "Fisika", "Biologi", "IPA","IPAS","Kimia","Matematika"
 ];
 
 export default function VideoTrainingAdmin() {
@@ -117,7 +113,6 @@ export default function VideoTrainingAdmin() {
     setSearchQuery("");
     setCurrentPage(1);
   };
-
 
 
   return (
@@ -227,14 +222,21 @@ export default function VideoTrainingAdmin() {
                       </span>
                     </div>
 
-                    <h3 className="font-bold text-lg text-blue-600 mb-2 line-clamp-2 min-h-[3.5rem]">
+                    <h3 className="font-bold text-lg mb-2 line-clamp-2 min-h-[3.5rem]">
                       {video.judul}
                     </h3>
 
+                
                     <p className="text-gray-700 text-sm leading-relaxed line-clamp-2 min-h-[2.5rem] mb-4">
                       {video.deskripsi}
                     </p>
-
+                    {
+                      video.status === 'BERBAYAR' && (  
+                      <h3 className="font-bold text-lg mb-2 line-clamp-2">
+                      Rp{video.harga?.toLocaleString('id-ID') || '0'}
+                    </h3>
+                      )
+                    }
                     {/* Action Buttons */}
                     <div className="flex gap-2 pt-4 border-t border-gray-100">
                       <button
@@ -295,7 +297,7 @@ export default function VideoTrainingAdmin() {
             <div className="mb-6">
               <label className="block text-sm font-semibold text-gray-700 mb-3">Jenjang</label>
               <div className="grid grid-cols-3 gap-2">
-                {["Semua", "SD", "SMP"].map((jenjang) => (
+                {["Semua", "SD", "SMP", "SMA", "SMK"].map((jenjang) => (
                   <button
                     key={jenjang}
                     onClick={() => setFilterJenjang(jenjang)}

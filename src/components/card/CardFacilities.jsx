@@ -61,7 +61,7 @@ export default function CardFacilities({ gambar, judul, deskripsi, id }) {
 
           {/* Read More Link */}
           <div className="pt-2 flex justify-center">
-            <span className="text-koreaBlue text-xs font-semibold flex items-center gap-1 group-hover:gap-2 transition-all duration-300">
+            <span className="text-koreaBlue text-xs font-semibold flex items-center gap-1 group-hover:gap-2">
               Learn More
               <svg
                 className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
@@ -98,7 +98,7 @@ export function CardFacilitiesCompact({ gambar, judul, deskripsi, id }) {
 
   return (
     <a href={"/facilities/" + id} className="group block">
-      <div className="relative w-full max-w-[300px] bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
+      <div className="relative w-full max-w-[300px] bg-white rounded-md shadow-md hover:shadow-lg overflow-hidden">
         {/* Image */}
         <div className="relative w-full h-[220px] overflow-hidden bg-gray-100">
           {!imageLoaded && (
@@ -109,7 +109,7 @@ export function CardFacilitiesCompact({ gambar, judul, deskripsi, id }) {
             alt={judul}
             className={`w-full h-full object-cover transition-all duration-500 ${
               imageLoaded ? "opacity-100" : "opacity-0"
-            } group-hover:scale-105`}
+            }`}
             onLoad={() => setImageLoaded(true)}
           />
           

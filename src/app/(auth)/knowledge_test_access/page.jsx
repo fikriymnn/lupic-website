@@ -15,10 +15,8 @@ const OrderAccessList = () => {
         try {
             const resUser = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/public/user", { withCredentials: true })
             if (resUser.data) {
-                console.log(resUser.data)
                 const res = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/access/all/id/" + resUser.data?._id)
                 if (res.data) {
-                    console.log(res.data)
                     setOrders(res.data)
                 }
             }
@@ -87,18 +85,24 @@ const OrderAccessList = () => {
         <>
             <Navbar />
             <div className="min-h-screen bg-gray-50 p-6 pt-24">
-                <div className="max-w-7xl mx-auto">
+                <div className="max-w-6xl mx-auto md:px-8 px-4">
                     {/* Header */}
-                    <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-                        <h1 className="text-3xl font-bold text-gray-900 mb-2">Knowledge Test Access History</h1>
+                    <div className="max-w-6xl mx-auto md:block grid grid-cols-1 justify-items-center md:justify-items-start mb-8">
+                        <h1 className="md:text-4xl text-4xl font-bold">
+                            Knowledge Test Access
+                        </h1>
+                        <p className="text-gray-600">Riwayat access knowledge test yang telah Anda beli</p>
                     </div>
 
                     {/* Order List */}
-                    <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+                    <div className="rounded-lg shadow-sm overflow-hidden bg-white">
                         <div className="overflow-x-auto">
-                            <table className="w-full">
-                                <thead className="bg-gray-50 border-b border-gray-200">
+                            <table className="w-full bg-white">
+                                <thead className="bg-white border-b border-gray-200">
                                     <tr>
+                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                            Tanggal
+                                        </th>
                                         <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                                             Periode
                                         </th>
@@ -116,6 +120,9 @@ const OrderAccessList = () => {
                                 <tbody className="divide-y divide-gray-200">
                                     {orders.map((order) => (
                                         <tr key={order._id} className="hover:bg-gray-50 transition-colors">
+                                            <td className="px-6 py-4">
+                                                {(order.createdAt) ? formatDate(order.createdAt) : '-'}
+                                            </td>
                                             <td className="px-6 py-4">
                                                 <div className="flex items-center gap-2 text-sm text-gray-600">
                                                     <Calendar className="w-4 h-4 text-gray-400" />

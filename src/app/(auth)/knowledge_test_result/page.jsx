@@ -50,23 +50,18 @@ function formatDate(dateString) {
         <>
             <Navbar />
             <div className="min-h-screen bg-gray-50 pt-24 pb-16">
-                <div className="max-w-6xl mx-auto">
+                <div className="max-w-6xl mx-auto md:px-8 px-4">
                     <div className="flex items-center gap-4 mb-8">
                         <h1 className="text-4xl font-bold text-gray-800">
                             History Pengerjaan Tes
                         </h1>
                     </div>
 
-                    {userHistory.length === 0 ? (
+                    {userHistory && userHistory.length === 0 ? (
                         <div className="bg-white rounded-lg shadow-lg p-12 text-center">
                             <History className="w-16 h-16 text-gray-400 mx-auto mb-4" />
                             <p className="text-xl text-gray-600">Belum ada riwayat pengerjaan</p>
-                            <button
-                                onClick={() => {}}
-                                className="mt-6 px-6 py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
-                            >
-                                Mulai Tes Sekarang
-                            </button>
+                  
                         </div>
                     ) : (
                         <div className="space-y-4">

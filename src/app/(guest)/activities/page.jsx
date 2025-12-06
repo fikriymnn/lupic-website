@@ -27,7 +27,7 @@ export default function Activities() {
                 const Data = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/activity_goals")
                 if (Data.data) {
                     setData(Data.data)
-    
+
                 }
             } catch (err) {
                 console.log(err.message)
@@ -35,17 +35,20 @@ export default function Activities() {
         }
         getData()
     }, [])
-    
+
     return (
         <>
             <Navbar />
-            <div className="max-w-6xl mx-auto px-4 md:px-8 flex justify-center pt-16 mt-14">
+            <div className="md:block grid grid-cols-1 justify-items-center md:justify-items-start max-w-6xl md:px-8 px-4 mx-auto mb-8 pt-16">
+                <h1 className="md:text-5xl text-2xl md:mt-10 font-bold">
+                    Our Goals
+                </h1>
+                <div className="h-1 w-36 bg-koreaRed md:mt-3 mt-2"></div>
+            </div>
+            <div className="max-w-6xl mx-auto px-4 md:px-8 flex justify-center">
                 <CarouselActivities />
             </div>
-            <div className="max-w-6xl px-4 md:px-8 text-center m-auto mb-4">
-                <h3 className="md:text-5xl text-3xl md:mt-8 mt-4 font-bold">Our Goals</h3>
-                <div className="h-1 w-36 bg-koreaRed md:mt-5 mt-3 m-auto"></div>
-            </div>
+            
             <div className="max-w-6xl mx-auto px-4 md:px-8">
                 <div className="mt-5 m-auto pb-16">
                     <div className="md:mt-10 mt-7">
@@ -61,25 +64,25 @@ export default function Activities() {
                         <div className="my-10">
                             <InformationDropdown4 />
                         </div>
-    
+
                     </div>
                 </div>
                 <div className="mb-20 w-full">
                     <div className="m-auto">
                         <div className="w-full">
                             <h3 className="md:mt-7 mt-2 text-koreaRed text-xl font-bold">First year</h3>
-                            <div className="flex justify-between cursor-pointer" onClick={(e) => { e.preventDefault();setActive(!active) }}>
+                            <div className="flex justify-between cursor-pointer" onClick={(e) => { e.preventDefault(); setActive(!active) }}>
                                 <h1 className="md:text-3xl text-2xl mt-2 font-bold">Activities</h1>
                                 <button className="" onClick={(e) => { e.preventDefault(); setActive(!active) }}>
                                     <Image className={active ? "" : "rotate-180"} src={"/images/logoAbout/up.svg"} width={30} height={30} alt="foto" />
                                 </button>
                             </div>
                             <div className="h-1 w-full mt-3 bg-koreaRed mb-2">
-    
+
                             </div>
                             <div className={`${active ? "hidden" : "block"} w-full`}>
                                 <table className="w-full b0 text-center align-center mt-5 md:block hidden">
-    
+
                                     <thead className="">
                                         <tr className="text-lg bg-koreaBlueMuda  ">
                                             <th className="py-4 w-[30rem]">NO</th>
@@ -93,14 +96,14 @@ export default function Activities() {
                                         {
                                             data && data.map((v, i) => {
                                                 if (v.year_1?.upi || v.year_1?.unnes || v.year_1?.undiksha) {
-    
+
                                                     return (
                                                         <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_1?.upi || ""} unnes={v.year_1?.unnes} undiksha={v.year_1?.undiksha} />
                                                     )
                                                 }
                                             })
                                         }
-    
+
                                     </tbody>
                                 </table>
                                 <div className="md:w-[80%] w-full overflow-x-auto md:hidden block ">
@@ -129,17 +132,17 @@ export default function Activities() {
                                 </div>
                             </div>
                         </div>
-    
+
                         <div>
                             <h3 className="md:mt-7 mt-2 text-koreaRed text-xl font-bold">Second year</h3>
                             <div className="flex justify-between cursor-pointer" onClick={(e) => { e.preventDefault(); setActive2(!active2) }}>
                                 <h1 className="md:text-3xl text-2xl mt-2 font-bold">Activities</h1>
-                                <button className="" onClick={(e) => {e.preventDefault(); setActive2(!active2) }}>
+                                <button className="" onClick={(e) => { e.preventDefault(); setActive2(!active2) }}>
                                     <Image className={active2 ? "" : "rotate-180"} src={"/images/logoAbout/up.svg"} width={30} height={30} alt="foto" />
                                 </button>
                             </div>
                             <div className="h-1 w-full mt-3 bg-koreaRed mb-2">
-    
+
                             </div>
                             <div className={active2 ? "hidden" : "block"}>
                                 <table className="w-full text-center align-center mt-5 md:block hidden">
@@ -162,7 +165,7 @@ export default function Activities() {
                                                 }
                                             })
                                         }
-    
+
                                     </tbody>
                                 </table>
                                 <div className="md:w-[80%] w-full overflow-x-auto md:hidden block rounded-xl">
@@ -186,23 +189,23 @@ export default function Activities() {
                                                     }
                                                 })
                                             }
-    
+
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
-    
+
                         <div>
                             <h3 className="md:mt-7 mt-2 text-koreaRed text-xl font-bold">Third year</h3>
-                            <div className="flex justify-between cursor-pointer" onClick={(e) => {e.preventDefault(); setActive3(!active3) }}>
+                            <div className="flex justify-between cursor-pointer" onClick={(e) => { e.preventDefault(); setActive3(!active3) }}>
                                 <h1 className="md:text-3xl text-2xl mt-2 font-bold">Activities</h1>
-                                <button className="" onClick={(e) => {e.preventDefault(); setActive3(!active3) }}>
+                                <button className="" onClick={(e) => { e.preventDefault(); setActive3(!active3) }}>
                                     <Image className={active3 ? "" : "rotate-180"} src={"/images/logoAbout/up.svg"} width={30} height={30} alt="foto" />
                                 </button>
                             </div>
                             <div className="h-1 w-full mt-3 bg-koreaRed mb-2">
-    
+
                             </div>
                             <div className={active3 ? "hidden" : "block"}>
                                 <table className="w-full text-center align-center mt-5 md:block hidden">
@@ -225,7 +228,7 @@ export default function Activities() {
                                                 }
                                             })
                                         }
-    
+
                                     </tbody>
                                 </table>
                                 <div className="md:w-[80%] w-full overflow-x-auto md:hidden block rounded-xl">
@@ -249,23 +252,23 @@ export default function Activities() {
                                                     }
                                                 })
                                             }
-    
+
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
-    
+
                         <div>
                             <h3 className="md:mt-7 mt-2 text-koreaRed text-xl font-bold">Fourth year</h3>
-                            <div className="flex justify-between cursor-pointer" onClick={(e) => {e.preventDefault(); setActive4(!active4) }}>
+                            <div className="flex justify-between cursor-pointer" onClick={(e) => { e.preventDefault(); setActive4(!active4) }}>
                                 <h1 className="md:text-3xl text-2xl mt-2 font-bold">Activities</h1>
-                                <button className="" onClick={(e) => { e.preventDefault();setActive4(!active4) }}>
+                                <button className="" onClick={(e) => { e.preventDefault(); setActive4(!active4) }}>
                                     <Image className={active4 ? "" : "rotate-180"} src={"/images/logoAbout/up.svg"} width={30} height={30} alt="foto" />
                                 </button>
                             </div>
                             <div className="h-1 w-full mt-3 bg-koreaRed mb-2">
-    
+
                             </div>
                             <div className={active4 ? "hidden" : "block"}>
                                 <table className="w-full text-center align-center mt-5 md:block hidden">
@@ -288,7 +291,7 @@ export default function Activities() {
                                                 }
                                             })
                                         }
-    
+
                                     </tbody>
                                 </table>
                                 <div className="md:w-[80%] w-full overflow-x-auto md:hidden block rounded-xl">
@@ -312,23 +315,23 @@ export default function Activities() {
                                                     }
                                                 })
                                             }
-    
+
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
-    
+
                         <div>
                             <h3 className="md:mt-7 mt-2 text-koreaRed text-xl font-bold">Fifth year</h3>
-                            <div className="flex justify-between cursor-pointer" onClick={(e) => {e.preventDefault(); setActive5(!active5) }}>
+                            <div className="flex justify-between cursor-pointer" onClick={(e) => { e.preventDefault(); setActive5(!active5) }}>
                                 <h1 className="md:text-3xl text-2xl mt-2 font-bold">Activities</h1>
-                                <button className="" onClick={(e) => {e.preventDefault(); setActive5(!active5) }}>
+                                <button className="" onClick={(e) => { e.preventDefault(); setActive5(!active5) }}>
                                     <Image className={active5 ? "" : "rotate-180"} src={"/images/logoAbout/up.svg"} width={30} height={30} alt="foto" />
                                 </button>
                             </div>
                             <div className="h-1 w-full mt-3 bg-koreaRed mb-2">
-    
+
                             </div>
                             <div className={active5 ? "hidden" : "block"}>
                                 <table className="w-full text-center align-center mt-5 md:block hidden">
@@ -351,7 +354,7 @@ export default function Activities() {
                                                 }
                                             })
                                         }
-    
+
                                     </tbody>
                                 </table>
                                 <div className="md:w-[80%] w-full overflow-x-auto md:hidden block rounded-xl">
@@ -375,23 +378,23 @@ export default function Activities() {
                                                     }
                                                 })
                                             }
-    
+
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
-    
+
                         <div>
                             <h3 className="md:mt-7 mt-2 text-koreaRed text-xl font-bold">Sixth  year</h3>
-                            <div className="flex justify-between cursor-pointer" onClick={(e) => {e.preventDefault(); setActive6(!active6) }}>
+                            <div className="flex justify-between cursor-pointer" onClick={(e) => { e.preventDefault(); setActive6(!active6) }}>
                                 <h1 className="md:text-3xl text-2xl mt-2 font-bold">Activities</h1>
-                                <button className="" onClick={(e) => {e.preventDefault(); setActive6(!active6) }}>
+                                <button className="" onClick={(e) => { e.preventDefault(); setActive6(!active6) }}>
                                     <Image className={active6 ? "" : "rotate-180"} src={"/images/logoAbout/up.svg"} width={30} height={30} alt="foto" />
                                 </button>
                             </div>
                             <div className="h-1 w-full mt-3 bg-koreaRed mb-2">
-    
+
                             </div>
                             <div className={active6 ? "hidden" : "block"}>
                                 <table className="w-full text-center align-center mt-5 md:block hidden">
@@ -414,7 +417,7 @@ export default function Activities() {
                                                 }
                                             })
                                         }
-    
+
                                     </tbody>
                                 </table>
                                 <div className="md:w-[80%] w-full overflow-x-auto md:hidden block rounded-xl">
@@ -438,7 +441,7 @@ export default function Activities() {
                                                     }
                                                 })
                                             }
-    
+
                                         </tbody>
                                     </table>
                                 </div>

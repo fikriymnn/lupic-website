@@ -35,12 +35,12 @@ const SUMBER_INFORMASI_OPTIONS = [
   "Lainnya",
 ];
 
-export default function FormBukaModul() {
+export default function FormBukaStudyCase() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const userId = searchParams.get('userId')
-  const modulId = searchParams.get('modulId')
-  const modulName = searchParams.get('modulName')
+  const studyCaseId = searchParams.get('studyCaseId')
+  const judul = searchParams.get('judul')
   const harga = searchParams.get('harga')
   const [isMounted, setIsMounted] = useState(false);
   const [formData, setFormData] = useState({
@@ -56,7 +56,7 @@ export default function FormBukaModul() {
     sumber_informasi_lainnya: "",
     bukti_pembayaran: null,
     jenis_pembayaran: "",
-    harga: harga
+    harga: harga,
   });
   const [noWa, setNoWa] = useState("")
   const [jenisPembayaran, setJenisPembayaran] = useState([])
@@ -134,7 +134,7 @@ export default function FormBukaModul() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/modul_ajar_access", { ...formData, userId: userId, modulAjarId: modulId })
+      const res = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/study_case_access", { ...formData, userId: userId, studyCaseId: studyCaseId })
       const waUrl = `https://wa.me/${noWa}?text=${encodeURIComponent(
         "Halo, saya ingin konfirmasi pembayaran modul atas nama " + formData.nama
       )}`;
@@ -159,7 +159,7 @@ export default function FormBukaModul() {
       <div className="min-h-screen bg-gray-100 py-16">
         <div className="max-w-4xl mx-auto p-6 ">
           <button
-            onClick={() => { router.push("/lesson_plans/" + modulId) }}
+            onClick={() => { router.push("/study_case") }}
             className="mb-6 px-4 py-2 bg-white rounded-lg shadow hover:shadow-md transition flex items-center gap-2"
           >
             <ChevronLeft size={20} />
@@ -168,10 +168,10 @@ export default function FormBukaModul() {
           <div className="bg-white rounded-xl shadow-lg p-8">
             <div className="mb-6">
               <h1 className="text-3xl font-bold text-gray-800 mb-2">
-                Formulir Akses Modul
+                Formulir Akses Study Case
               </h1>
               <p className="text-gray-600">
-                Modul: <span className="font-semibold">{modulName}</span>
+                Study Case: <span className="font-semibold">{judul}</span>
               </p>
               <p className="text-sm text-gray-500 mt-1">
                 Status:{" "}
@@ -279,7 +279,7 @@ export default function FormBukaModul() {
                   onChange={(e) => handleChange("jenis_pembayaran", e.target.value)}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 >
-                   <option value="">Pilih Jenis Pembayaran</option>
+                  <option value="">Pilih Jenis Pembayaran</option>
                   {
                     jenisPembayaran.map((v, i) => (
                       <option key={i} value={v}>

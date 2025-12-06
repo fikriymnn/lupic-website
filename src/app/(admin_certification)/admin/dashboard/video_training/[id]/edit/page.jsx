@@ -16,6 +16,7 @@ export default function CreateVideoModul() {
     jenjang: "SD",
     topikIPA: "Fisika",
     status: "GRATIS",
+    harga: 0,
   });
 
   const handleChange = (field, value) => {
@@ -40,7 +41,7 @@ export default function CreateVideoModul() {
   const getData = async () => {
     try {
       const res = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/video_pembelajaran/" + id)
-      if(res.data){
+      if (res.data) {
         console.log(res.data)
         setFormData(res.data)
       }
@@ -87,7 +88,7 @@ export default function CreateVideoModul() {
                       required
                       value={formData.judul}
                       onChange={(e) => handleChange("judul", e.target.value)}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
 
@@ -101,7 +102,7 @@ export default function CreateVideoModul() {
                       value={formData.deskripsi}
                       onChange={(e) => handleChange("deskripsi", e.target.value)}
                       rows="3"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
                     />
                   </div>
 
@@ -118,7 +119,7 @@ export default function CreateVideoModul() {
                         onChange={(e) =>
                           handleChange("jenjang", e.target.value)
                         }
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       >
                         <option value="SD">SD</option>
                         <option value="SMP">SMP</option>
@@ -128,7 +129,7 @@ export default function CreateVideoModul() {
                     {/* Topik */}
                     <div>
                       <label className="block text-sm font-semibold text-gray-700 mb-2">
-                        Topik IPA *
+                        Topik *
                       </label>
                       <select
                         required
@@ -136,7 +137,7 @@ export default function CreateVideoModul() {
                         onChange={(e) =>
                           handleChange("topikIPA", e.target.value)
                         }
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       >
                         <option value="Fisika">Fisika</option>
                         <option value="Biologi">Biologi</option>
@@ -155,12 +156,29 @@ export default function CreateVideoModul() {
                         onChange={(e) =>
                           handleChange("status", e.target.value)
                         }
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       >
                         <option value="GRATIS">GRATIS</option>
                         <option value="BERBAYAR">BERBAYAR</option>
                       </select>
                     </div>
+
+                    {
+                      formData.status === 'BERBAYAR' && (
+                        <div>
+                          <label className="block text-sm font-semibold text-gray-700 mb-2">
+                            Harga *
+                          </label>
+                          <input
+                            type="number"
+                            required
+                            value={formData.harga}
+                            onChange={(e) => handleChange('harga', e.target.value)}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                          />
+                        </div>
+                      )
+                    }
                   </div>
 
                   {/* Tujuan Pembelajaran */}
@@ -175,7 +193,7 @@ export default function CreateVideoModul() {
                         handleChange("tujuanPembelajaran", e.target.value)
                       }
                       rows="3"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
                     />
                   </div>
 
@@ -190,7 +208,7 @@ export default function CreateVideoModul() {
                       value={formData.linkVideo}
                       onChange={(e) => handleChange("linkVideo", e.target.value)}
                       placeholder="https://youtube.com/..."
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
 

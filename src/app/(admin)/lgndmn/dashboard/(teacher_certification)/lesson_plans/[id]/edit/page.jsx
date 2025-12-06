@@ -71,8 +71,8 @@ const SUMBER_INFORMASI_OPTIONS = [
 ];
 
 export default function EditModulForm() {
-  const {id} = useParams()
-  const [loading,setLoading] = useState(false)
+  const { id } = useParams()
+  const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState({
     judulModul: '',
     deskripsi: '',
@@ -84,7 +84,7 @@ export default function EditModulForm() {
     cover: "",
   });
 
-    // 🔥 Fetch ke Backend
+  // 🔥 Fetch ke Backend
   const fetchModulAjar = async () => {
     try {
       setLoading(true);
@@ -92,7 +92,7 @@ export default function EditModulForm() {
       const res = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/api/modul_ajar/id/${id}`
       );
-      if(res.data){
+      if (res.data) {
         console.log(res.data)
         setFormData(res.data)
       }
@@ -103,9 +103,9 @@ export default function EditModulForm() {
     }
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchModulAjar()
-  },[])
+  }, [])
 
   const handleChange = (field, value) => {
     setFormData({ ...formData, [field]: value });
@@ -123,7 +123,7 @@ export default function EditModulForm() {
         },
       })
       if (getData.data) {
-        setFormData((e)=>({ ...e, file: getData.data }));
+        setFormData((e) => ({ ...e, file: getData.data }));
       }
     } catch (err) {
       console.log(err)
@@ -131,7 +131,7 @@ export default function EditModulForm() {
   };
 
   const handleFileCoverChange = async (e) => {
-     e.preventDefault()
+    e.preventDefault()
     const file = e.target.files[0];
     const formData = new FormData();
     try {
@@ -142,7 +142,7 @@ export default function EditModulForm() {
         },
       })
       if (getData.data) {
-        setFormData((e)=>({ ...e, cover: getData.data }));
+        setFormData((e) => ({ ...e, cover: getData.data }));
       }
     } catch (err) {
       console.log(err)
@@ -153,7 +153,7 @@ export default function EditModulForm() {
     e.preventDefault();
     console.log(formData)
     try {
-      const res = await axios.put(process.env.NEXT_PUBLIC_API_URL + "/api/modul_ajar/"+id, formData, { withCredentials: true })
+      const res = await axios.put(process.env.NEXT_PUBLIC_API_URL + "/api/modul_ajar/" + id, formData, { withCredentials: true })
       if (res) {
         alert("Update modul success")
         window.location.href = "/lgndmn/dashboard/lesson_plans"
@@ -189,7 +189,7 @@ export default function EditModulForm() {
                         required
                         value={formData.judulModul}
                         onChange={(e) => handleChange('judulModul', e.target.value)}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       />
                     </div>
 
@@ -202,7 +202,7 @@ export default function EditModulForm() {
                         value={formData.deskripsi}
                         onChange={(e) => handleChange('deskripsi', e.target.value)}
                         rows="3"
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
                       />
                     </div>
 
@@ -215,7 +215,7 @@ export default function EditModulForm() {
                           required
                           value={formData.jenjang}
                           onChange={(e) => handleChange('jenjang', e.target.value)}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         >
                           <option value="SD">SD</option>
                           <option value="SMP">SMP</option>
@@ -224,17 +224,20 @@ export default function EditModulForm() {
 
                       <div>
                         <label className="block text-sm font-semibold text-gray-700 mb-2">
-                          Topik IPA *
+                          Topik *
                         </label>
                         <select
                           required
                           value={formData.topikIPA}
                           onChange={(e) => handleChange('topikIPA', e.target.value)}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         >
                           <option value="Fisika">Fisika</option>
                           <option value="Biologi">Biologi</option>
-                          <option value="IPA Terpadu">IPA Terpadu</option>
+                          <option value="IPA">IPA</option>
+                          <option value="IPAS">IPAS</option>
+                          <option value="Kimia">Kimia</option>
+                          <option value="Matematika">Matematika</option>
                         </select>
                       </div>
 
@@ -246,7 +249,7 @@ export default function EditModulForm() {
                           required
                           value={formData.status}
                           onChange={(e) => handleChange('status', e.target.value)}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         >
                           <option value="GRATIS">GRATIS</option>
                           <option value="BERBAYAR">BERBAYAR</option>
@@ -263,7 +266,7 @@ export default function EditModulForm() {
                         value={formData.tujuanPembelajaran}
                         onChange={(e) => handleChange('tujuanPembelajaran', e.target.value)}
                         rows="3"
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
                       />
                     </div>
                     <div>
@@ -272,7 +275,7 @@ export default function EditModulForm() {
                       </label>
                       <div className="flex items-center gap-4">
                         <label className="flex-1 cursor-pointer">
-                          <div className="w-full px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg hover:border-purple-500 transition flex flex-col items-center justify-center gap-2 text-gray-600">
+                          <div className="w-full px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-500 transition flex flex-col items-center justify-center gap-2 text-gray-600">
 
                             <Upload size={20} />
 
@@ -303,7 +306,7 @@ export default function EditModulForm() {
                       </label>
                       <div className="flex items-center gap-4">
                         <label className="flex-1 cursor-pointer">
-                          <div className="w-full px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg hover:border-purple-500 transition flex items-center justify-center gap-2 text-gray-600">
+                          <div className="w-full px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-500 transition flex items-center justify-center gap-2 text-gray-600">
                             <Upload size={20} />
                             <span>
                               {formData.file ? 'Modul sudah terpilih' : 'Pilih file modul (PDF)'}

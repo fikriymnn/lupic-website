@@ -72,6 +72,10 @@ export default function AdminDashboardVideoTraining() {
     getData()
   }, [])
 
+  function formatNumberID(num) {
+  return num?.toLocaleString("id-ID");
+}
+
   // LIST PAGE
   if (currentPage === 'list') {
     return (
@@ -287,7 +291,7 @@ export default function AdminDashboardVideoTraining() {
                   {/* Jenjang */}
                   <div className="border-b border-gray-200 pb-4">
                     <label className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Jenjang</label>
-                    <p className="text-lg text-gray-900 mt-1">{selectedUser.jenjang}</p>
+                    <p className="text-lg text-gray-900 mt-1">{selectedUser.jenjang_sekolah}</p>
                   </div>
 
                   {/* Instansi */}
@@ -336,6 +340,14 @@ export default function AdminDashboardVideoTraining() {
                     </div>
                   </div>
                   <div className="border-b border-gray-200 pb-4">
+                    <label className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Harga</label>
+                    <div className="mt-2">
+                      <span className={`inline-flex items-center px-4 py-2 rounded-lg text-sm font-semibold`}>
+                        {selectedUser.harga?.toLocaleString('id-ID') || '0'}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="border-b border-gray-200 pb-4">
                     <label className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Jenis Pembayaran</label>
                     <div className="mt-2">
                       <span className={`inline-flex items-center px-4 py-2 rounded-lg text-sm font-semibold`}>
@@ -349,7 +361,7 @@ export default function AdminDashboardVideoTraining() {
                     <label className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Bukti Pembayaran</label>
                     <div className="mt-2">
                       <a
-                        href={selectedUser.bukti_pembayaran}
+                        href={`${process.env.NEXT_PUBLIC_API_FILE_URL}${selectedUser.bukti_pembayaran}`}
                         download
                         className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
                       >

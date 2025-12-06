@@ -53,11 +53,7 @@ function getYouTubeVideoId(url) {
 
 const topikOptions = [
   "Semua",
-  "Energi",
-  "Listrik",
-  "Gaya",
-  "Ekosistem",
-  "Perubahan Zat",
+  "Fisika", "Biologi", "IPA","IPAS","Kimia","Matematika"
 ];
 
 // ====== Main Component ======
@@ -146,11 +142,11 @@ export default function VideoTrainingApp() {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-gray-100 mt-8 pb-16">
-        <div className="max-w-6xl mx-auto px-4 md:px-8 py-8">
+      <div className="min-h-screen bg-gray-50 py-24">
+        <div className="max-w-6xl mx-auto px-4 md:px-8">
           {/* Title */}
           <div className="max-w-6xl mx-auto grid grid-cols-1 justify-items-center md:justify-items-start mb-8">
-            <h1 className="md:text-4xl text-4xl md:mt-10 font-bold">
+            <h1 className="md:text-4xl text-4xl font-bold">
               Video Pembelajaran
             </h1>
             <div className="h-1 w-36 bg-koreaRed md:mt-3 mt-2"></div>
@@ -168,7 +164,7 @@ export default function VideoTrainingApp() {
                 placeholder="Cari video pembelajaran..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
             <button
@@ -200,7 +196,7 @@ export default function VideoTrainingApp() {
                     />
                     <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
                       <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center">
-                        <Play className="w-8 h-8 text-purple-600 ml-1" />
+                        <Play className="w-8 h-8 text-blue-600 ml-1" />
                       </div>
                     </div>
                   </div>
@@ -228,7 +224,14 @@ export default function VideoTrainingApp() {
                       {video.deskripsi}
                     </p>
 
-                    <div className="flex items-end justify-end flex-1">
+                    <div className="flex items-end justify-between flex-1">
+                             {video.status === "BERBAYAR" ? (
+                        <div className="">
+                          <p className="text-base font-medium text-gray-900">
+                            Rp{video.harga?.toLocaleString('id-ID') || '0'}
+                          </p>
+                        </div>
+                      ):<div></div>}
                       <button className="px-4 py-2 bg-koreaBlueMuda text-white rounded-lg transition-colors text-sm font-semibold flex items-center gap-1"
                         onClick={() => {
                           if (!user) {
@@ -293,7 +296,7 @@ export default function VideoTrainingApp() {
                   Jenjang
                 </label>
                 <div className="grid grid-cols-3 gap-2">
-                  {["Semua", "SD", "SMP"].map((jenjang) => (
+                  {["Semua", "SD", "SMP", "SMA", "SMK"].map((jenjang) => (
                     <button
                       key={jenjang}
                       onClick={() => setFilterJenjang(jenjang)}
@@ -311,7 +314,7 @@ export default function VideoTrainingApp() {
               {/* Topik Filter */}
               <div className="mb-6">
                 <label className="block text-sm font-semibold text-gray-700 mb-3">
-                  Topik IPA
+                  Topik
                 </label>
                 <div className="grid grid-cols-2 gap-2">
                   {topikOptions.map((topik) => (
@@ -339,7 +342,7 @@ export default function VideoTrainingApp() {
                 </button>
                 <button
                   onClick={() => setShowFilterModal(false)}
-                  className="flex-1 py-3 bg-koreaBlueMuda text-white rounded-xl hover:bg-purple-700 transition-colors font-semibold"
+                  className="flex-1 py-3 bg-koreaBlueMuda text-white rounded-xl hover:bg-blue-700 transition-colors font-semibold"
                 >
                   Terapkan
                 </button>

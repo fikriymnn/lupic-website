@@ -52,7 +52,8 @@ export default function FormBukaKnowledgeTest() {
     sumber_informasi: [],
     sumber_informasi_lainnya: "",
     bukti_pembayaran: null,
-    jenis_pembayaran: ""
+    jenis_pembayaran: "",
+    harga: 0
   });
   const [noWa, setNoWa] = useState("")
   const [jenisPembayaran, setJenisPembayaran] = useState([])
@@ -85,7 +86,19 @@ export default function FormBukaKnowledgeTest() {
     }
   }
 
+  const getHarga = async () => {
+    try {
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/harga`)
+      if (res.data) {
+        setFormData(prev => ({...prev,harga:res.data.harga}))
+      }
+    } catch (err) { 
+      console.log(err.message)
+    } 
+  }
+
   useEffect(() => {
+    getHarga()
     getFormSetting()
     getUser()
     setIsMounted(true);
@@ -133,7 +146,7 @@ export default function FormBukaKnowledgeTest() {
     console.log(userId)
     try {
       const res = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/access", { ...formData, userId: userId })
-      const waUrl = `https://wa.me/6281563862944?text=${encodeURIComponent(
+      const waUrl = `https://wa.me/${noWa}?text=${encodeURIComponent(
         "Halo, saya ingin konfirmasi pembayaran akses knowledge test atas nama " + formData.nama
       )}`;
       if (res.data) {
@@ -146,7 +159,9 @@ export default function FormBukaKnowledgeTest() {
 
   };
 
-
+function formatNumberID(num) {
+  return num.toLocaleString("id-ID");
+}
 
   return (
     <>
@@ -168,6 +183,12 @@ export default function FormBukaKnowledgeTest() {
               </h1>
               <p className="text-gray-600">
                 Akses knowledge test 30 hari
+              </p>
+              <p className="text-sm text-gray-500 mt-1">
+                Harga:{" "}
+                <span className="font-semibold">
+                  Rp{formatNumberID(formData.harga)}
+                </span>
               </p>
             </div>
 
@@ -193,7 +214,7 @@ export default function FormBukaKnowledgeTest() {
                       required
                       value={(formData)[field]}
                       onChange={(e) => handleChange(field, e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
                 ))}
@@ -205,7 +226,7 @@ export default function FormBukaKnowledgeTest() {
                   <select
                     value={formData.status_ppg}
                     onChange={(e) => handleChange("status_ppg", e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   >
                     <option value="">Pilih Status PPG</option>
                     <option value="PPG Calon Guru/PPG luar jabatan (Prajabatan)">
@@ -233,7 +254,7 @@ export default function FormBukaKnowledgeTest() {
                         type="checkbox"
                         checked={formData.sumber_informasi.includes(option)}
                         onChange={() => handleSumberInfoChange(option)}
-                        className="mt-1 w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500"
+                        className="mt-1 w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-blue-500"
                       />
                       <span className="text-gray-700">{option}</span>
                     </label>
@@ -248,7 +269,7 @@ export default function FormBukaKnowledgeTest() {
                     onChange={(e) =>
                       handleChange("sumber_informasi_lainnya", e.target.value)
                     }
-                    className="w-full mt-3 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    className="w-full mt-3 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
                 )}
               </div>
@@ -262,11 +283,12 @@ export default function FormBukaKnowledgeTest() {
                 <select
                   value={formData.jenis_pembayaran}
                   onChange={(e) => handleChange("jenis_pembayaran", e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 >
+                   <option value="">Pilih Jenis Pembayaran</option>
                   {
                     jenisPembayaran.map((v, i) => (
-                      <option key={i} value="PPG Calon Guru/PPG luar jabatan (Prajabatan)">
+                      <option key={i} value={v}>
                         {v}
                       </option>
                     ))

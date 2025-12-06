@@ -15,8 +15,8 @@ const ResponsivePagination = dynamic(
 );
 
 import "react-responsive-pagination/themes/classic.css";
-const topikOptions = ["Semua", "Energi", "Listrik", "Ekosistem", "Perubahan Zat"];
-const jenjangOptions = ["Semua", "SD", "SMP"];
+const topikOptions = ["Semua", "Fisika", "Biologi", "IPA","IPAS","Kimia","Matematika"];
+const jenjangOptions = ["Semua", "SD", "SMP", "SMA", "SMK"];
 const kompetensiOptions = ["Semua", "Pedagogik", "Profesional"];
 
 export default function CaseStudy() {
@@ -104,14 +104,17 @@ export default function CaseStudy() {
     setCurrentPage(1);
   };
 
+function formatNumberID(num) {
+  return num.toLocaleString("id-ID");
+}
 
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-gray-100 p-6 md:pt-16 pt-20 pb-16">
+      <div className="min-h-screen bg-gray-50 py-24">
         <div className="max-w-6xl mx-auto px-4 md:px-8">
           <div className="max-w-6xl mx-auto md:block grid grid-cols-1 justify-items-center md:justify-items-start mb-8">
-            <h1 className="md:text-4xl text-4xl md:mt-10 font-bold">
+            <h1 className="md:text-4xl text-4xl font-bold">
               Study Case
             </h1>
             <div className="h-1 w-36 bg-koreaRed md:mt-3 mt-2"></div>
@@ -130,7 +133,7 @@ export default function CaseStudy() {
                 placeholder="Cari study case..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500"
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
@@ -155,16 +158,20 @@ export default function CaseStudy() {
                   className="bg-white rounded-lg shadow-lg p-6 hover:-translate-y-1 transition flex flex-col"
                 >
                   <div className="flex gap-2 mb-3">
-                    <span className="px-3 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full">
-                        {useCase.jenjang}
-                      </span>
+                    <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full flex items-center">
+                      {useCase.jenjang}
+                    </span>
 
-                      <span className="px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full">
-                        {useCase.topikIPA}
-                      </span>
-                    <span className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full font-semibold text-xs">
+                    <span className="px-2 py-1 rounded-xl text-xs font-semibold bg-gray-100 text-gray-700">
+                      {useCase.topikIPA}
+                    </span>
+                    <span className="px-2 py-1 bg-purple-100 text-purple-700 rounded-full font-semibold text-xs flex items-center">
                       {useCase.kompetensiGuru}
                     </span>
+                    <span className={`px-2 py-1 rounded-xl text-xs font-semibold bg-gray-100 text-gray-700 flex items-center ${useCase.status === "GRATIS" ? "bg-green-500 text-white" : "bg-yellow-400 text-gray-900"
+                        }`}>
+                        {useCase.status}
+                      </span>
                   </div>
 
                   <h3 className="text-lg font-bold mb-2 line-clamp-2">
@@ -175,8 +182,16 @@ export default function CaseStudy() {
                     {useCase.deskripsi}
                   </p>
 
-                  <button
-                    className="w-full py-2 bg-indigo-600 text-white rounded-lg"
+                  <div className="flex items-end justify-between flex-1 mt-4">
+                    {useCase.status === "BERBAYAR" ? (
+                      <div className="">
+                        <p className="text-base font-medium text-gray-900">
+                          Rp{useCase.harga?.toLocaleString('id-ID') || '0'}
+                        </p>
+                      </div>
+                    ) : <div></div>}
+                    <button
+                    className="px-4 py-2 bg-indigo-600 text-white rounded-lg"
                     onClick={() => {
                       if (!user) {
                         router.push("/login?prev=study_case")
@@ -188,6 +203,8 @@ export default function CaseStudy() {
                   >
                     Pelajari Kasus
                   </button>
+                  </div>
+                  
                 </div>
               ))
             )}

@@ -39,6 +39,7 @@ export default function FormBukaVideo() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const userId = searchParams.get('userId')
+  const harga = searchParams.get('harga')
   const videoId = searchParams.get('videoId')
   const judul = searchParams.get('judul')
   const [isMounted, setIsMounted] = useState(false);
@@ -54,7 +55,8 @@ export default function FormBukaVideo() {
     sumber_informasi: [],
     sumber_informasi_lainnya: "",
     bukti_pembayaran: null,
-    jenis_pembayaran: ""
+    jenis_pembayaran: "",
+    harga: harga
   });
   const [noWa, setNoWa] = useState("")
   const [jenisPembayaran, setJenisPembayaran] = useState([])
@@ -146,6 +148,10 @@ export default function FormBukaVideo() {
     }
   };
 
+  function formatNumberID(num) {
+  return num.toLocaleString("id-ID");
+}
+
   return (
     <>
       <Navbar />
@@ -168,9 +174,9 @@ export default function FormBukaVideo() {
                 Video Pembelajaran: <span className="font-semibold">{judul}</span>
               </p>
               <p className="text-sm text-gray-500 mt-1">
-                Status:{" "}
-                <span className="font-semibold text-orange-600">
-                  {modul.status}
+                Harga:{" "}
+                <span className="font-semibold">
+                  Rp{formatNumberID(parseInt(harga))}
                 </span>
               </p>
             </div>
@@ -197,7 +203,7 @@ export default function FormBukaVideo() {
                       required
                       value={(formData)[field]}
                       onChange={(e) => handleChange(field, e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
                 ))}
@@ -209,7 +215,7 @@ export default function FormBukaVideo() {
                   <select
                     value={formData.status_ppg}
                     onChange={(e) => handleChange("status_ppg", e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   >
                     <option value="">Pilih Status PPG</option>
                     <option value="PPG Calon Guru/PPG luar jabatan (Prajabatan)">
@@ -237,7 +243,7 @@ export default function FormBukaVideo() {
                         type="checkbox"
                         checked={formData.sumber_informasi.includes(option)}
                         onChange={() => handleSumberInfoChange(option)}
-                        className="mt-1 w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500"
+                        className="mt-1 w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-blue-500"
                       />
                       <span className="text-gray-700">{option}</span>
                     </label>
@@ -252,7 +258,7 @@ export default function FormBukaVideo() {
                     onChange={(e) =>
                       handleChange("sumber_informasi_lainnya", e.target.value)
                     }
-                    className="w-full mt-3 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    className="w-full mt-3 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
                 )}
               </div>
@@ -265,11 +271,12 @@ export default function FormBukaVideo() {
                 <select
                   value={formData.jenis_pembayaran}
                   onChange={(e) => handleChange("jenis_pembayaran", e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 >
+                  <option value="">Pilih Jenis Pembayaran</option>
                   {
                     jenisPembayaran.map((v,i)=>(
-                      <option key={i} value="PPG Calon Guru/PPG luar jabatan (Prajabatan)">
+                      <option key={i} value={v}>
                     {v}
                   </option>
                     ))

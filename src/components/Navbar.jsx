@@ -5,7 +5,7 @@ import axios from "axios";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [login, setLogin] = useState(true);
+  const [login, setLogin] = useState(false);
   const [activeSubDropdown, setActiveSubDropdown] = useState(null);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [isMounted, setIsMounted] = useState(false)
@@ -94,7 +94,7 @@ const Navbar = () => {
         { href: "/service_product", label: "Our Products" },
         { href: "/service_workshop", label: "Workshop" },
         { href: "/service_teacher", label: "Pre-Service Teacher Evaluation" },
-        { href: "/", label: "In Service Teacher Training" },
+        { href: "https://reader.edus.news", label: "In Service Teacher Training"},
         {
           label: "Teacher Certification Training",
           subItems: [
@@ -117,13 +117,12 @@ const Navbar = () => {
     {
       label: "Link",
       items: [
-        { href: "https://chemprolab.id", label: "chemprolab.id", external: true },
-        { href: "https://www.tokopedia.com/fablabedu", label: "tokopedia.com/fablabedu", external: true },
-        { href: "https://sciencelove.com/", label: "sciencelove.com", external: true },
-        { href: "https://ejournal.upi.edu/index.php/JPI", label: "ejournal.upi.edu/JPI", external: true },
-        { href: "https://ejournal.upi.edu/index.php/JRPPK", label: "ejournal.upi.edu/JRPPK", external: true },
-        { href: "https://phet.colorado.edu/en/simulations/filter?type=html", label: "phet.colorado.edu", external: true },
-        { href: "https://reader.edus.news", label: "reader.edus.news", external: true },
+        { href: "https://chemprolab.id", label: "chemprolab.id" },
+        { href: "https://www.tokopedia.com/fablabedu", label: "tokopedia.com/fablabedu" },
+        { href: "https://sciencelove.com/", label: "sciencelove.com" },
+        { href: "https://ejournal.upi.edu/index.php/JPI", label: "ejournal.upi.edu/JPI" },
+        { href: "https://ejournal.upi.edu/index.php/JRPPK", label: "ejournal.upi.edu/JRPPK" },
+        { href: "https://phet.colorado.edu/en/simulations/filter?type=html", label: "phet.colorado.edu" },
       ],
     },
   ];
@@ -131,9 +130,12 @@ const Navbar = () => {
   const personal = {
     label: "Personal",
     items: [
-      { href: "/personal", label: "Test schedule" },
+      // { href: "/personal", label: "Test schedule" },
       { href: "/knowledge_test_result", label: "Knowledge test result" },
       { href: "/knowledge_test_access", label: "Knowledge test access" },
+      { href: "/study_case_access", label: "Study case access" },
+      { href: "/lesson_plans_access", label: "Modul ajar access" },
+      { href: "/video_training_access", label: "Video training access" },
     ],
   }
 
@@ -217,7 +219,7 @@ const Navbar = () => {
                         </button>
 
                         {/* Sub-dropdown */}
-                        <div className="mx-auto border border-gray-100 z-40 top-0 w-56 rounded-lg shadow-xl overflow-hidden opacity-0 group-hover/sub:opacity-100 group-hover/sub:block hidden transition-all duration-200">
+                        <div className="mx-auto border border-gray-100 z-40 top-0 w-56 rounded-lg shadow-xl overflow-hidden opacity-0 group-hover/sub:opacity-100 group-hover/sub:block hidden transition-all duration-200 mb-4">
                           {item.subItems.map((sub, subIdx) => (
                             <Link
                               key={sub.href}
@@ -477,14 +479,80 @@ const Navbar = () => {
 
             {/* Mobile Auth */}
             <div className="border-t border-white/20 pt-2 mt-2 space-y-1">
-              <Link
-                href={login ? "/personal" : "/login"}
-                className="block text-white px-4 py-3 rounded-md text-sm font-medium hover:bg-white/10 transition-colors duration-200"
-                onClick={closeMenu}
-              >
-                {login ? "Personal" : "Login"}
-              </Link>
-              {login && (
+              {login && <div className="space-y-1">
+                <button
+                  id={`nav-mobile-dropdown-${personal.label.toLowerCase().replace(/\s+/g, '-')}`}
+                  onClick={() => toggleDropdown(personal.label)}
+                  className="w-full flex justify-between items-center text-white px-4 py-3 rounded-md text-sm font-medium hover:bg-white/10 transition-colors duration-200"
+                  type="button"
+                >
+                  <p>{personal.label}</p>
+                  <svg
+                    className={`w-4 h-4 transition-transform duration-200 ${activeDropdown === personal.label ? "rotate-180" : ""
+                      }`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+
+                {activeDropdown === personal.label && (
+                  <div className="ml-4 space-y-1 bg-white/5 rounded-md p-2">
+                    {personal.items.map((item) => {
+                      return item.subItems ? (
+                        <div key={item.label} className="space-y-1">
+                          <button
+                            id={`nav-mobile-subitem-${item.label.toLowerCase().replace(/\s+/g, '-')}`}
+                            onClick={() => toggleSubDropdown(item.label)}
+                            className="w-full flex justify-between items-center text-white px-3 py-2 text-sm font-medium hover:bg-white/10 transition-colors duration-200 rounded"
+                            type="button"
+                          >
+                            <p>{item.label}</p>
+                            <svg
+                              className={`w-4 h-4 transition-transform duration-200 ${activeSubDropdown === item.label ? "rotate-180" : ""
+                                }`}
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                            </svg>
+                          </button>
+                          {activeSubDropdown === item.label && (
+                            <div className="ml-3 space-y-1 bg-white/5 rounded p-2">
+                              {item.subItems.map((sub) => (
+                                <Link
+                                  key={sub.href}
+                                  href={sub.href}
+                                  className="block text-white/80 px-3 py-2 rounded text-sm hover:bg-white/10 transition-colors duration-200"
+                                  onClick={closeMenu}
+                                >
+                                  {sub.label}
+                                </Link>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      ) : (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          target={item.external ? "_blank" : "_self"}
+                          rel={item.external ? "noopener noreferrer" : ""}
+                          className="block text-white/80 px-3 py-2 rounded text-sm hover:bg-white/10 transition-colors duration-200"
+                          onClick={closeMenu}
+                        >
+                          {item.label}
+                        </Link>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            }
+              {login ? (
                 <button
                   id="nav-mobile-logout-btn"
                   onClick={onLogout}
@@ -492,7 +560,14 @@ const Navbar = () => {
                   type="button"
                 >
                   Logout
-                </button>
+                </button>):( <a
+                href="/login"
+                  id="nav-mobile-logout-btn"
+                  className="w-full text-left text-white px-4 py-3 rounded-md text-sm font-medium hover:bg-white/10 transition-colors duration-200"
+                
+                >
+                  Login
+                </a>
               )}
             </div>
           </div>

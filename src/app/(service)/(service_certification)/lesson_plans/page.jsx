@@ -16,8 +16,13 @@ import "react-responsive-pagination/themes/classic.css";
 import { useRouter } from "next/navigation";
 
 // === Options untuk filter ===
-const jenjangOptions = ["Semua", "SD", "SMP"];
-const topikIPAOptions = ["Semua", "Fisika", "Biologi", "IPA Terpadu"];
+const jenjangOptions = ["Semua", "SD", "SMP", "SMA", "SMK"];
+const topikIPAOptions = ["Semua", "Kimia",
+  "Fisika",
+  "Biologi",
+  "IPA",
+  "IPAS",
+  "Matematika"];
 
 export default function ModulAjarList() {
   const router = useRouter()
@@ -100,11 +105,11 @@ export default function ModulAjarList() {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-gray-100 px-8 md:py-16 py-24">
+      <div className="min-h-screen bg-gray-50 py-24">
         <div className="max-w-6xl px-4 md:px-8 mx-auto">
           {/* Title */}
           <div className="max-w-6xl mx-auto md:block grid grid-cols-1 justify-items-center md:justify-items-start mb-8">
-            <h1 className="md:text-4xl text-4xl md:mt-10 font-bold">
+            <h1 className="md:text-4xl text-4xl font-bold">
               Modul Ajar
             </h1>
             <div className="h-1 w-36 bg-koreaRed md:mt-3 mt-2"></div>
@@ -123,7 +128,7 @@ export default function ModulAjarList() {
                 placeholder="Cari modul ajar..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
             <button
@@ -137,63 +142,73 @@ export default function ModulAjarList() {
 
           {/* Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-8">
-            {moduls.map((modul) => (
-              <div
-                key={modul._id}
-                className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition transform hover:-translate-y-1"
-              >
-
-                <div className="h-full flex flex-col">
-                  <div className="relative h-48 w-full overflow-hidden">
-                    <Image
-                      src={`${process.env.NEXT_PUBLIC_API_FILE_URL}${modul?.cover}`}
-                      alt={"image"}
-                      fill
-                      className="object-cover opacity-80"
-                    />
-                  </div>
-                  <div className="p-6 flex flex-col">
-                    <div className="flex flex-wrap gap-2 mb-3">
-                      <span className="px-3 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full">
-                        {modul.jenjang}
-                      </span>
-
-                      <span className="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-semibold rounded-full">
-                        {modul.topikIPA}
-                      </span>
-                      <span className={`px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full ${modul.status === "GRATIS"
-                        ? "bg-green-500 text-white"
-                        : "bg-yellow-400 text-gray-900"
-                        }`}>
-                        {modul.status}
-                      </span>
+            {moduls.map((modul) => {
+              return (
+                <div
+                  key={modul._id}
+                  className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition transform hover:-translate-y-1"
+                >
+                  <div className="h-full flex flex-col">
+                    <div className="relative h-48 w-full overflow-hidden">
+                      <Image
+                        src={`${process.env.NEXT_PUBLIC_API_FILE_URL}${modul?.cover}`}
+                        alt={"image"}
+                        fill
+                        className="object-cover opacity-80"
+                      />
                     </div>
-                    <h3 className="text-xl font-bold text-gray-800 mb-3 line-clamp-2">
-                      {modul.judulModul}
-                    </h3>
-                    <p className="text-gray-600 mb-4 line-clamp-2">
-                      {modul.deskripsi}
-                    </p>
-                    <div className="flex items-end justify-end flex-1 ">
-                      <button className="px-4 py-2 bg-koreaBlueMuda text-white rounded-lg transition-colors text-sm font-semibold flex items-center gap-1"
-                        onClick={() => {
-                          if (!user) {
-                            router.push("/login?prev=lesson_plans")
-                          } else {
-                            router.push("/lesson_plans/" + modul._id)
-                          }
-                        }}
-                      >
-                        Detail
-                        <ChevronRight className="w-4 h-4" />
-                      </button>
+                    <div className="p-6 flex flex-col">
+                      <div className="flex flex-wrap gap-2 mb-3">
+                        <span className="px-3 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full">
+                          {modul.jenjang}
+                        </span>
+
+                        <span className="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-semibold rounded-full">
+                          {modul.topikIPA}
+                        </span>
+                        <span className={`px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full ${modul.status === "GRATIS"
+                          ? "bg-green-500 text-white"
+                          : "bg-yellow-400 text-gray-900"
+                          }`}>
+                          {modul.status}
+                        </span>
+                      </div>
+                      <h3 className="text-xl font-bold text-gray-800 mb-3 line-clamp-2">
+                        {modul.judulModul}
+                      </h3>
+                      <p className="text-gray-600 mb-4 line-clamp-2">
+                        {modul.deskripsi}
+                      </p>
+
+
+
+                      <div className="flex items-end justify-between flex-1 ">
+                        {/* Bagian Harga */}
+                        {modul.status === "BERBAYAR" ? (
+                          <div className="">
+                            <p className="text-base font-medium text-gray-900">
+                              Rp {modul.harga?.toLocaleString('id-ID') || '0'}
+                            </p>
+                          </div>
+                        ) : <div></div>}
+                        <button className="px-4 py-2 bg-koreaBlueMuda text-white rounded-lg transition-colors text-sm font-semibold flex items-center gap-1"
+                          onClick={() => {
+                            if (!user) {
+                              router.push("/login?prev=lesson_plans")
+                            } else {
+                              router.push("/lesson_plans/" + modul._id)
+                            }
+                          }}
+                        >
+                          Detail
+                          <ChevronRight className="w-4 h-4" />
+                        </button>
+                      </div>
                     </div>
                   </div>
-
                 </div>
-
-              </div>
-            ))}
+              )
+            })}
           </div>
 
           {/* Pagination */}
@@ -234,7 +249,7 @@ export default function ModulAjarList() {
                     key={jenjang}
                     onClick={() => setFilterJenjang(jenjang)}
                     className={`py-2 rounded-lg font-semibold transition-colors ${filterJenjang === jenjang
-                      ? "bg-purple-600 text-white"
+                      ? "bg-blue-600 text-white"
                       : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                       }`}
                   >
@@ -244,10 +259,10 @@ export default function ModulAjarList() {
               </div>
             </div>
 
-            {/* Topik IPA */}
+            {/* Topik */}
             <div className="mb-6">
               <label className="block text-sm font-semibold text-gray-700 mb-3">
-                Topik IPA
+                Topik
               </label>
               <div className="grid grid-cols-2 gap-2">
                 {topikIPAOptions.map((topik) => (
@@ -255,7 +270,7 @@ export default function ModulAjarList() {
                     key={topik}
                     onClick={() => setFilterTopikIPA(topik)}
                     className={`py-2 rounded-lg font-semibold transition-colors ${filterTopikIPA === topik
-                      ? "bg-purple-600 text-white"
+                      ? "bg-blue-600 text-white"
                       : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                       }`}
                   >
@@ -275,7 +290,7 @@ export default function ModulAjarList() {
               </button>
               <button
                 onClick={() => setShowFilterModal(false)}
-                className="flex-1 py-3 bg-purple-600 text-white rounded-xl hover:bg-purple-700 font-semibold"
+                className="flex-1 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 font-semibold"
               >
                 Terapkan
               </button>

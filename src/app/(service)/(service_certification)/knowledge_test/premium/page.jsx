@@ -451,13 +451,25 @@ export default function TestSimulationApp() {
     return questions.filter(q => q.kategori === currentQuestion.kategori).length;
   };
 
+  function formatMultilineString(str) {
+    if (!str) return "";
+
+    return str
+      .replace(/\\n/g, "\n")   // ubah "\n" literal menjadi newline asli
+      .replace(/\\t/g, "    ") // ubah "\t" literal menjadi 4 spasi
+      .trim();
+  }
+
   const renderQuestionContent = (soalArray) => {
     return soalArray.map((item, index) => {
       if (item.type === 'TEXT') {
         return (
-          <p key={index} className="text-lg text-gray-800 mb-4 leading-relaxed">
-            {item.value}
-          </p>
+          <pre key={index}
+            style={{ whiteSpace: "pre-wrap", fontFamily: "inherit" }}
+            className="text-lg text-gray-800 mb-4 leading-relaxed"
+          >
+            {formatMultilineString(item?.value)}
+          </pre>
         );
       } else if (item.type === 'IMAGE') {
         return (
@@ -479,8 +491,8 @@ export default function TestSimulationApp() {
     return (
       <>
         <Navbar />
-        <div className="min-h-screen bg-gray-50 p-8 pt-24">
-          <div className="max-w-4xl mx-auto">
+        <div className="min-h-screen bg-gray-50 p-8 pt-24 pb-16">
+          <div className="max-w-6xl mx-auto px-8">
             <div className="max-w-6xl mx-auto md:block grid grid-cols-1 justify-items-center md:justify-items-start mb-8">
               <h1 className="md:text-4xl text-4xl font-bold">
                 Latihan Tes Objektif
@@ -726,7 +738,9 @@ export default function TestSimulationApp() {
                 {currentQuestion?.soal && renderQuestionContent(currentQuestion.soal)}
 
                 <div className="space-y-3 mt-6">
-                  {currentQuestion?.pilihan.map((option, idx) => {
+                  {currentQuestion?.pilihan.filter(item => item !== "").map((option, idx) => {
+                     
+
                     const optionLetter = String.fromCharCode(65 + idx);
                     const isSelected = answers[currentQuestionIndex] === option;
 
@@ -918,9 +932,12 @@ export default function TestSimulationApp() {
                         {question.soal.map((item, idx) => {
                           if (item.type === 'TEXT') {
                             return (
-                              <p key={idx} className="text-gray-700 mb-2">
-                                {item.value}
-                              </p>
+                              <pre key={idx}
+                                style={{ whiteSpace: "pre-wrap", fontFamily: "inherit" }}
+                                className="text-gray-700 mb-2"
+                              >
+                                {formatMultilineString(item?.value)}
+                              </pre>
                             );
                           } else if (item.type === 'IMAGE') {
                             return (
@@ -938,7 +955,8 @@ export default function TestSimulationApp() {
                       </div>
 
                       <div className="space-y-2 mb-4">
-                        {question.pilihan.map((option, idx) => {
+                        {question.pilihan?.filter(item => item !== "").map((option, idx) => {
+            
                           const optionLetter = String.fromCharCode(65 + idx);
                           const isUserAnswer = question.userAnswer === option;
                           const isCorrectAnswer = question.jawaban === option;

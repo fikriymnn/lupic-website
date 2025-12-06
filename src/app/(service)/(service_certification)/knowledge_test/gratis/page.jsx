@@ -130,20 +130,29 @@ export default function TrialTestApp() {
   const [result, setResult] = useState(null);
   const [startTime, setStartTime] = useState(null);
 
-  const getData = async ()=>{
-    try{
-      const res = await axios.get(process.env.NEXT_PUBLIC_API_URL+"/api/soal/gratis")
-      if(res.data){
+   function formatMultilineString(str) {
+    if (!str) return "";
+
+    return str
+      .replace(/\\n/g, "\n")   // ubah "\n" literal menjadi newline asli
+      .replace(/\\t/g, "    ") // ubah "\t" literal menjadi 4 spasi
+      .trim();
+  }
+
+  const getData = async () => {
+    try {
+      const res = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/soal/gratis")
+      if (res.data) {
         setQuestions(res.data)
         setQuestionsNavigation(res.data)
       }
-    }catch(err){
+    } catch (err) {
       console.log(err.message)
     }
   }
-  useEffect(()=>{
+  useEffect(() => {
     getData()
-  },[])
+  }, [])
 
   // Timer count up (tidak terbatas)
   useEffect(() => {
@@ -272,9 +281,12 @@ export default function TrialTestApp() {
     return soalArray.map((item, index) => {
       if (item.type === 'TEXT') {
         return (
-          <p key={index} className="text-lg text-gray-800 mb-4 leading-relaxed">
-            {item.value}
-          </p>
+          <pre key={index}
+            style={{ whiteSpace: "pre-wrap", fontFamily: "inherit" }}
+            className="text-lg text-gray-800 mb-4 leading-relaxed"
+          >
+            {formatMultilineString(item?.value)}
+          </pre>
         );
       } else if (item.type === 'IMAGE') {
         return (
@@ -290,6 +302,8 @@ export default function TrialTestApp() {
       return null;
     });
   };
+
+  
 
   // Start Test Page
   if (page === 'start-test') {
@@ -384,8 +398,8 @@ export default function TrialTestApp() {
                       key={idx}
                       onClick={() => handleNavigateQuestion(idx)}
                       className={`w-12 h-12 rounded-lg font-semibold text-sm transition-all ${currentQuestionIndex === idx
-                          ? 'ring-2 ring-green-600'
-                          : ''
+                        ? 'ring-2 ring-green-600'
+                        : ''
                         } ${getQuestionStatus(idx) === 'answered'
                           ? 'bg-green-500 text-white hover:bg-green-600'
                           : 'bg-gray-300 text-gray-700 hover:bg-gray-400'
@@ -430,7 +444,9 @@ export default function TrialTestApp() {
 
                 {/* Options */}
                 <div className="space-y-3 mt-6">
-                  {currentQuestion?.pilihan.map((option, idx) => {
+                  {currentQuestion?.pilihan.filter(item => item !== "").map((option, idx) => {
+                    if (!option.trim()) return null; // skip kalau kosong
+
                     const optionLetter = String.fromCharCode(65 + idx);
                     const isSelected = answers[currentQuestionIndex] === option;
 
@@ -439,8 +455,8 @@ export default function TrialTestApp() {
                         key={idx}
                         onClick={() => handleAnswerSelect(option)}
                         className={`w-full text-left p-4 rounded-lg border-2 transition-all ${isSelected
-                            ? 'border-green-600 bg-green-50'
-                            : 'border-gray-300 hover:border-green-400 hover:bg-gray-50'
+                          ? 'border-green-600 bg-green-50'
+                          : 'border-gray-300 hover:border-green-400 hover:bg-gray-50'
                           }`}
                       >
                         <span className="font-semibold text-green-600 mr-3">
@@ -602,16 +618,16 @@ export default function TrialTestApp() {
 
                 return (
                   <div key={index} className={`border-l-4 p-6 rounded-r-lg ${isCorrect ? 'border-green-500 bg-green-50' :
-                      isUnanswered ? 'border-gray-400 bg-gray-50' :
-                        'border-red-500 bg-red-50'
+                    isUnanswered ? 'border-gray-400 bg-gray-50' :
+                      'border-red-500 bg-red-50'
                     }`}>
                     <div className="flex justify-between items-start mb-4">
                       <h3 className="text-lg font-semibold text-gray-800">
                         Soal {index + 1} ({question.kategori})
                       </h3>
                       <span className={`px-3 py-1 rounded-full text-sm font-semibold ${isCorrect ? 'bg-green-500 text-white' :
-                          isUnanswered ? 'bg-gray-400 text-white' :
-                            'bg-red-500 text-white'
+                        isUnanswered ? 'bg-gray-400 text-white' :
+                          'bg-red-500 text-white'
                         }`}>
                         {isCorrect ? 'Benar' : isUnanswered ? 'Tidak Dijawab' : 'Salah'}
                       </span>
@@ -622,9 +638,12 @@ export default function TrialTestApp() {
                       {question.soal.map((item, idx) => {
                         if (item.type === 'TEXT') {
                           return (
-                            <p key={idx} className="text-gray-700 mb-2">
-                              {item.value}
-                            </p>
+                            <pre key={idx}
+                                style={{ whiteSpace: "pre-wrap", fontFamily: "inherit" }}
+                                className="text-gray-700 mb-2"
+                              >
+                                {formatMultilineString(item?.value)}
+                              </pre>
                           );
                         } else if (item.type === 'IMAGE') {
                           return (
@@ -642,7 +661,9 @@ export default function TrialTestApp() {
                     </div>
 
                     <div className="space-y-2">
-                      {question.pilihan.map((option, idx) => {
+                      {question.pilihan.filter(item => item !== "").map((option, idx) => {
+                       
+
                         const optionLetter = String.fromCharCode(65 + idx);
                         const isUserAnswer = question.userAnswer === option;
                         const isCorrectAnswer = question.jawaban === option;
@@ -651,8 +672,8 @@ export default function TrialTestApp() {
                           <div
                             key={idx}
                             className={`p-3 rounded-lg ${isCorrectAnswer ? 'bg-green-200 border-2 border-green-500' :
-                                isUserAnswer && !isCorrect ? 'bg-red-200 border-2 border-red-500' :
-                                  'bg-white border border-gray-300'
+                              isUserAnswer && !isCorrect ? 'bg-red-200 border-2 border-red-500' :
+                                'bg-white border border-gray-300'
                               }`}
                           >
                             <span className="font-semibold mr-2">{optionLetter}.</span>
@@ -667,9 +688,18 @@ export default function TrialTestApp() {
                         );
                       })}
                     </div>
+                    {/* Penjelasan */}
+                    {question.penjelasan && (
+                      <div className="mt-4 p-4 bg-blue-50 border-l-4 border-blue-500 rounded">
+                        <p className="font-semibold text-blue-900 mb-2">📚 Penjelasan:</p>
+                        <p className="text-gray-700 leading-relaxed">{question.penjelasan}</p>
+                      </div>
+                    )}
                   </div>
                 );
+
               })}
+
             </div>
           </div>
 

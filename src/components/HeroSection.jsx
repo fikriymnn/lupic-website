@@ -45,7 +45,7 @@ export default function HeroSection() {
           />
         </div>
 
-        <h1 className="text-2xl md:text-5xl lg:text-6xl font-bold text-center font-extrabold mb-4">
+        <h1 className="text-2xl md:text-5xl lg:text-6xl font-bold text-center font-extrabold mb-4 max-w-4xl">
           Leading University Project for
           International Cooperation
         </h1>

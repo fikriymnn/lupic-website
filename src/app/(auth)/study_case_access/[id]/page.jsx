@@ -50,13 +50,11 @@ export default function UseCaseDetail({ params }) {
           if (data.data.answer?.answer) {
             setShowPembahasan(true)
           }
-          console.log(data.data)
-            setUser(resUser.data)
-            setUseCase(data.data);
-            setAnswers(data.data?.answer?.answer)
-            setForumMessages(data.data.forums)
 
-
+          setUser(resUser.data)
+          setUseCase(data.data);
+          setAnswers(data.data?.answer?.answer)
+          setForumMessages(data.data.forums)
         }
 
       } catch (err) {
@@ -82,7 +80,7 @@ export default function UseCaseDetail({ params }) {
     try {
       const res = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/study_case_forum", { studyCaseId: useCase._id, userId: user._id, message: newMessage, name: user.nama }, { withCredentials: true })
       if (res.data) {
-        window.location.href = "/study_case/" + id
+        window.location.href = "/study_case_access/" + id
       }
     } catch (err) {
       console.log(err.message)
@@ -115,7 +113,7 @@ export default function UseCaseDetail({ params }) {
           <div className="max-w-4xl mx-auto">
             <button
               className="mb-6 px-4 py-2 bg-white rounded-lg shadow hover:shadow-md transition flex items-center gap-2"
-              onClick={() => router.push("/study_case")}
+              onClick={() => router.push("/study_case_access")}
             >
               <ChevronLeft size={20} />
               Kembali

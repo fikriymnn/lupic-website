@@ -1,18 +1,15 @@
 "use client";
 import Sidebar from "@/components/SidebarAdmin";
 import { useEffect, useState } from "react";
-import { ChevronLeft, Plus, Edit, Trash2, Eye, Search, Filter, X, Play } from "lucide-react";
+import { Users, Plus, Edit, Trash2, Eye, Search, Filter, X, Play } from "lucide-react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 
 const topikIPAOptions = [
   "Semua",
-  "Energi",
-  "Listrik",
-  "Gaya",
-  "Ekosistem",
-  "Perubahan Zat",
+  "Fisika", "Biologi", "IPA","IPAS","Kimia","Matematika"
 ];
+const jenjangOptions = ["Semua", "SD", "SMP", "SMA", "SMK"];
 
 export default function Studycase() {
   const router = useRouter()
@@ -160,6 +157,7 @@ export default function Studycase() {
                 <thead className="bg-gray-50">
                   <tr>
                     <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Judul Kasus</th>
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Status</th>
                     <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Jenjang</th>
                     <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Topik</th>
                     <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Kompetensi</th>
@@ -176,7 +174,14 @@ export default function Studycase() {
                         </span>
                       </td>
                       <td className="px-6 py-4">
-                        <span className="px-3 py-1 bg-green-100 text-green-800 text-[12px] text-center font-semibold rounded-full">
+                        <span className={`px-2 py-1 rounded-xl text-xs font-semibold bg-gray-100 text-gray-700 ${
+                        useCase.status === "GRATIS" ? "bg-green-500 text-white" : "bg-yellow-400 text-gray-900"
+                      }`}>
+                          {useCase.status}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className="px-2 py-1 rounded-xl text-xs font-semibold bg-gray-100 text-gray-700">
                           {useCase.topikIPA}
                         </span>
                       </td>
@@ -194,6 +199,13 @@ export default function Studycase() {
                           >
                             <Eye className="w-4 h-4" />
                           </button>
+                          <button
+                            onClick={() => router.push("/admin/dashboard/studycase/" + useCase._id+"/access")}
+                            className="inline-flex items-center gap-1 px-3 py-2 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-700 transition-colors"
+                          >
+                            <Users className="w-4 h-4" />
+                          </button>
+
                           <button
                             onClick={() => router.push("/admin/dashboard/studycase/" + useCase._id + "/edit")}
                             className="p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
@@ -242,7 +254,7 @@ export default function Studycase() {
             <div className="mb-6">
               <label className="block text-sm font-semibold text-gray-700 mb-3">Jenjang</label>
               <div className="grid grid-cols-3 gap-2">
-                {["Semua", "SD", "SMP"].map((jenjang) => (
+                {["Semua",  "SD", "SMP", "SMA", "SMK"].map((jenjang) => (
                   <button
                     key={jenjang}
                     onClick={() => setFilterJenjang(jenjang)}

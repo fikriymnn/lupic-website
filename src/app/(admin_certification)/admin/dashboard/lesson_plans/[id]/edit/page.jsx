@@ -18,6 +18,7 @@ export default function EditModulForm() {
     status: 'GRATIS',
     file: "",
     cover: "",
+    harga: 0,
   });
 
     // 🔥 Fetch ke Backend
@@ -125,7 +126,7 @@ export default function EditModulForm() {
                         required
                         value={formData.judulModul}
                         onChange={(e) => handleChange('judulModul', e.target.value)}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       />
                     </div>
 
@@ -138,7 +139,7 @@ export default function EditModulForm() {
                         value={formData.deskripsi}
                         onChange={(e) => handleChange('deskripsi', e.target.value)}
                         rows="3"
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
                       />
                     </div>
 
@@ -151,7 +152,7 @@ export default function EditModulForm() {
                           required
                           value={formData.jenjang}
                           onChange={(e) => handleChange('jenjang', e.target.value)}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         >
                           <option value="SD">SD</option>
                           <option value="SMP">SMP</option>
@@ -160,17 +161,20 @@ export default function EditModulForm() {
 
                       <div>
                         <label className="block text-sm font-semibold text-gray-700 mb-2">
-                          Topik IPA *
+                          Topik *
                         </label>
                         <select
                           required
                           value={formData.topikIPA}
                           onChange={(e) => handleChange('topikIPA', e.target.value)}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         >
-                          <option value="Fisika">Fisika</option>
-                          <option value="Biologi">Biologi</option>
-                          <option value="IPA Terpadu">IPA Terpadu</option>
+                           <option value="Fisika">Fisika</option>
+ <option value="Biologi">Biologi</option>
+ <option value="IPA">IPA</option>
+ <option value="IPAS">IPAS</option>
+ <option value="Kimia">Kimia</option>
+ <option value="Matematika">Matematika</option>
                         </select>
                       </div>
 
@@ -182,14 +186,29 @@ export default function EditModulForm() {
                           required
                           value={formData.status}
                           onChange={(e) => handleChange('status', e.target.value)}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         >
                           <option value="GRATIS">GRATIS</option>
                           <option value="BERBAYAR">BERBAYAR</option>
                         </select>
                       </div>
                     </div>
-
+{
+                      formData.status === 'BERBAYAR' && (
+                        <div>
+                          <label className="block text-sm font-semibold text-gray-700 mb-2">
+                            Harga *
+                          </label>
+                          <input
+                            type="number"
+                            required
+                            value={formData.harga}
+                            onChange={(e) => handleChange('harga', e.target.value)}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                          />
+                        </div>
+                      )
+                    }
                     <div>
                       <label className="block text-sm font-semibold text-gray-700 mb-2">
                         Tujuan Pembelajaran *
@@ -199,7 +218,7 @@ export default function EditModulForm() {
                         value={formData.tujuanPembelajaran}
                         onChange={(e) => handleChange('tujuanPembelajaran', e.target.value)}
                         rows="3"
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
                       />
                     </div>
                     <div>
@@ -208,7 +227,7 @@ export default function EditModulForm() {
                       </label>
                       <div className="flex items-center gap-4">
                         <label className="flex-1 cursor-pointer">
-                          <div className="w-full px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg hover:border-purple-500 transition flex flex-col items-center justify-center gap-2 text-gray-600">
+                          <div className="w-full px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-500 transition flex flex-col items-center justify-center gap-2 text-gray-600">
 
                             <Upload size={20} />
 
@@ -239,7 +258,7 @@ export default function EditModulForm() {
                       </label>
                       <div className="flex items-center gap-4">
                         <label className="flex-1 cursor-pointer">
-                          <div className="w-full px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg hover:border-purple-500 transition flex items-center justify-center gap-2 text-gray-600">
+                          <div className="w-full px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-500 transition flex items-center justify-center gap-2 text-gray-600">
                             <Upload size={20} />
                             <span>
                               {formData.file ? 'Modul sudah terpilih' : 'Pilih file modul (PDF)'}
