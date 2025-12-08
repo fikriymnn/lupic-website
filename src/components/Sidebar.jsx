@@ -15,6 +15,7 @@ import {
 } from "react-icons/fa";
 import { usePathname } from "next/navigation";
 import { FaCalendarDays, FaScrewdriverWrench } from "react-icons/fa6";
+import { Calendar, NotebookPen, Paperclip, TestTube } from "lucide-react";
 
 const Sidebar = () => {
   const path = usePathname();
@@ -145,6 +146,18 @@ const Sidebar = () => {
 
           <li>
             <a
+              href="/lgndmn/dashboard/preservice_teacher"
+              className={`flex items-center space-x-3 p-3 rounded-lg transition-colors duration-200 hover:bg-blue-500 ${
+                adminPath[3] === "preservice_teacher" ? "bg-blue-500" : ""
+              }`}
+            >
+              <NotebookPen className="text-lg" />
+              <span className="text-sm font-medium">Pre-Service Teacher</span>
+            </a>
+          </li>
+
+          <li>
+            <a
               href="/lgndmn/dashboard/teaching_material"
               className={`flex items-center space-x-3 p-3 rounded-lg transition-colors duration-200 hover:bg-blue-500 ${
                 adminPath[3] === "teaching_material" ? "bg-blue-500" : ""
@@ -231,7 +244,7 @@ const Sidebar = () => {
                 adminPath[3] === "event" ? "bg-blue-500" : ""
               }`}
             >
-              <FaCalendarDays className="text-lg" />
+              <Calendar className="text-lg" />
               <span className="text-sm font-medium">Event</span>
             </a>
           </li>
