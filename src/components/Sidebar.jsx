@@ -63,9 +63,8 @@ const Sidebar = () => {
           <li>
             <a
               href="/lgndmn/dashboard"
-              className={`flex items-center space-x-3 p-3 rounded-lg transition-colors duration-200 hover:bg-blue-500 ${
-                !adminPath[3] ? "bg-blue-500" : ""
-              }`}
+              className={`flex items-center space-x-3 p-3 rounded-lg transition-colors duration-200 hover:bg-blue-500 ${!adminPath[3] ? "bg-blue-500" : ""
+                }`}
             >
               <FaHome className="text-lg" />
               <span className="text-sm font-medium">Home</span>
@@ -75,9 +74,8 @@ const Sidebar = () => {
           <li>
             <a
               href="/lgndmn/dashboard/aboutus"
-              className={`flex items-center space-x-3 p-3 rounded-lg transition-colors duration-200 hover:bg-blue-500 ${
-                adminPath[3] === "aboutus" ? "bg-blue-500" : ""
-              }`}
+              className={`flex items-center space-x-3 p-3 rounded-lg transition-colors duration-200 hover:bg-blue-500 ${adminPath[3] === "aboutus" ? "bg-blue-500" : ""
+                }`}
             >
               <FaAddressCard className="text-lg" />
               <span className="text-sm font-medium">About Us</span>
@@ -87,9 +85,8 @@ const Sidebar = () => {
           <li>
             <a
               href="/lgndmn/dashboard/activities"
-              className={`flex items-center space-x-3 p-3 rounded-lg transition-colors duration-200 hover:bg-blue-500 ${
-                adminPath[3] === "activities" ? "bg-blue-500" : ""
-              }`}
+              className={`flex items-center space-x-3 p-3 rounded-lg transition-colors duration-200 hover:bg-blue-500 ${adminPath[3] === "activities" ? "bg-blue-500" : ""
+                }`}
             >
               <FaUser className="text-lg" />
               <span className="text-sm font-medium">Activities</span>
@@ -99,9 +96,8 @@ const Sidebar = () => {
           <li>
             <a
               href="/lgndmn/dashboard/facilities"
-              className={`flex items-center space-x-3 p-3 rounded-lg transition-colors duration-200 hover:bg-blue-500 ${
-                adminPath[3] === "facilities" ? "bg-blue-500" : ""
-              }`}
+              className={`flex items-center space-x-3 p-3 rounded-lg transition-colors duration-200 hover:bg-blue-500 ${adminPath[3] === "facilities" ? "bg-blue-500" : ""
+                }`}
             >
               <FaScrewdriverWrench className="text-lg" />
               <span className="text-sm font-medium">Facilities</span>
@@ -111,9 +107,8 @@ const Sidebar = () => {
           <li>
             <a
               href="/lgndmn/dashboard/news"
-              className={`flex items-center space-x-3 p-3 rounded-lg transition-colors duration-200 hover:bg-blue-500 ${
-                adminPath[3] === "news" ? "bg-blue-500" : ""
-              }`}
+              className={`flex items-center space-x-3 p-3 rounded-lg transition-colors duration-200 hover:bg-blue-500 ${adminPath[3] === "news" ? "bg-blue-500" : ""
+                }`}
             >
               <FaNewspaper className="text-lg" />
               <span className="text-sm font-medium">News</span>
@@ -123,9 +118,8 @@ const Sidebar = () => {
           <li>
             <a
               href="/lgndmn/dashboard/gallery"
-              className={`flex items-center space-x-3 p-3 rounded-lg transition-colors duration-200 hover:bg-blue-500 ${
-                adminPath[3] === "gallery" ? "bg-blue-500" : ""
-              }`}
+              className={`flex items-center space-x-3 p-3 rounded-lg transition-colors duration-200 hover:bg-blue-500 ${adminPath[3] === "gallery" ? "bg-blue-500" : ""
+                }`}
             >
               <FaCamera className="text-lg" />
               <span className="text-sm font-medium">Gallery</span>
@@ -135,9 +129,8 @@ const Sidebar = () => {
           <li>
             <a
               href="/lgndmn/dashboard/services"
-              className={`flex items-center space-x-3 p-3 rounded-lg transition-colors duration-200 hover:bg-blue-500 ${
-                adminPath[3] === "services" ? "bg-blue-500" : ""
-              }`}
+              className={`flex items-center space-x-3 p-3 rounded-lg transition-colors duration-200 hover:bg-blue-500 ${adminPath[3] === "services" ? "bg-blue-500" : ""
+                }`}
             >
               <FaStore className="text-lg" />
               <span className="text-sm font-medium">Service Toko</span>
@@ -147,9 +140,8 @@ const Sidebar = () => {
           <li>
             <a
               href="/lgndmn/dashboard/preservice_teacher"
-              className={`flex items-center space-x-3 p-3 rounded-lg transition-colors duration-200 hover:bg-blue-500 ${
-                adminPath[3] === "preservice_teacher" ? "bg-blue-500" : ""
-              }`}
+              className={`flex items-center space-x-3 p-3 rounded-lg transition-colors duration-200 hover:bg-blue-500 ${adminPath[3] === "preservice_teacher" ? "bg-blue-500" : ""
+                }`}
             >
               <NotebookPen className="text-lg" />
               <span className="text-sm font-medium">Pre-Service Teacher</span>
@@ -159,9 +151,8 @@ const Sidebar = () => {
           <li>
             <a
               href="/lgndmn/dashboard/teaching_material"
-              className={`flex items-center space-x-3 p-3 rounded-lg transition-colors duration-200 hover:bg-blue-500 ${
-                adminPath[3] === "teaching_material" ? "bg-blue-500" : ""
-              }`}
+              className={`flex items-center space-x-3 p-3 rounded-lg transition-colors duration-200 hover:bg-blue-500 ${adminPath[3] === "teaching_material" ? "bg-blue-500" : ""
+                }`}
             >
               <FaBook className="text-lg" />
               <span className="text-sm font-medium">Teaching Material</span>
@@ -169,19 +160,18 @@ const Sidebar = () => {
           </li>
 
           {/* Teacher Certification Dropdown */}
-          {/* <li>
+          <li>
             <button
               onClick={() =>
                 setIsTeacherDropdownOpen(!isTeacherDropdownOpen)
               }
-              className={`w-full flex items-center justify-between p-3 rounded-lg transition-colors duration-200 hover:bg-blue-500 ${
-                isTeacherRouteActive ? "bg-blue-500" : ""
-              }`}
+              className={`w-full flex items-center justify-between p-3 rounded-lg transition-colors duration-200 hover:bg-blue-500 ${isTeacherRouteActive ? "bg-blue-500" : ""
+                }`}
             >
               <div className="flex items-center space-x-3">
                 <FaChalkboardTeacher className="text-lg" />
                 <span className="text-sm font-medium">
-                  Teacher Certification
+                  Teaching Materials
                 </span>
               </div>
               {isTeacherDropdownOpen ? (
@@ -193,56 +183,24 @@ const Sidebar = () => {
 
             {isTeacherDropdownOpen && (
               <ul className="mt-1 ml-4 space-y-1 border-l-2 border-blue-400 pl-3">
-                                <li>
-                  <a
-                    href="/lgndmn/dashboard/knowlage_test"
-                    className={`flex items-center space-x-2 p-2 rounded-lg text-sm transition-colors duration-200 hover:bg-blue-500 ${
-                      adminPath[3] === "knowlage_test" ? "bg-blue-500" : ""
-                    }`}
-                  >
-                    <span>Knowlage Test</span>
-                  </a>
-                </li>
                 <li>
                   <a
-                    href="/lgndmn/dashboard/studycase"
-                    className={`flex items-center space-x-2 p-2 rounded-lg text-sm transition-colors duration-200 hover:bg-blue-500 ${
-                      adminPath[3] === "studycase" ? "bg-blue-500" : ""
-                    }`}
+                    href="/lgndmn/dashboard/conference_paper"
+                    className={`flex items-center space-x-2 p-2 rounded-lg text-sm transition-colors duration-200 hover:bg-blue-500 ${adminPath[3] === "conference_paper" ? "bg-blue-500" : ""
+                      }`}
                   >
-                    <span>Study Case</span>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/lgndmn/dashboard/lesson_plans"
-                    className={`flex items-center space-x-2 p-2 rounded-lg text-sm transition-colors duration-200 hover:bg-blue-500 ${
-                      adminPath[3] === "lesson_plans" ? "bg-blue-500" : ""
-                    }`}
-                  >
-                    <span>Lesson Plans</span>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/lgndmn/dashboard/video_training"
-                    className={`flex items-center space-x-2 p-2 rounded-lg text-sm transition-colors duration-200 hover:bg-blue-500 ${
-                      adminPath[3] === "video_training" ? "bg-blue-500" : ""
-                    }`}
-                  >
-                    <span>Video Training</span>
+                    <span>Conference Paper</span>
                   </a>
                 </li>
               </ul>
             )}
-          </li> */}
+          </li>
 
           <li>
             <a
               href="/lgndmn/dashboard/event"
-              className={`flex items-center space-x-3 p-3 rounded-lg transition-colors duration-200 hover:bg-blue-500 ${
-                adminPath[3] === "event" ? "bg-blue-500" : ""
-              }`}
+              className={`flex items-center space-x-3 p-3 rounded-lg transition-colors duration-200 hover:bg-blue-500 ${adminPath[3] === "event" ? "bg-blue-500" : ""
+                }`}
             >
               <Calendar className="text-lg" />
               <span className="text-sm font-medium">Event</span>
@@ -252,9 +210,8 @@ const Sidebar = () => {
           <li>
             <a
               href="/lgndmn/dashboard/pendaftaran"
-              className={`flex items-center space-x-3 p-3 rounded-lg transition-colors duration-200 hover:bg-blue-500 ${
-                adminPath[3] === "pendaftaran" ? "bg-blue-500" : ""
-              }`}
+              className={`flex items-center space-x-3 p-3 rounded-lg transition-colors duration-200 hover:bg-blue-500 ${adminPath[3] === "pendaftaran" ? "bg-blue-500" : ""
+                }`}
             >
               <FaCalendarDays className="text-lg" />
               <span className="text-sm font-medium">Jadwal</span>

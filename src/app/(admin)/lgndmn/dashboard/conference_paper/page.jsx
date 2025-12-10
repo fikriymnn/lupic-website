@@ -5,7 +5,7 @@ import {
     FileText, Package, Loader2, CheckCircle, AlertCircle,
     Image, Upload
 } from 'lucide-react';
-import SidebarAdmin from "@/components/SidebarAdmin";
+import SidebarAdmin from "@/components/Sidebar";
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
@@ -286,7 +286,7 @@ export default function AdminConferencePapper() {
                         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
                             <div className="bg-white rounded-lg p-8 max-w-md w-full">
                                 <div className="flex justify-between items-center mb-6">
-                                    <h2 className="text-2xl font-bold text-gray-800">Tambah Conference Papper</h2>
+                                    <h2 className="text-2xl font-bold text-gray-800">Tambah Folder Kegiatan</h2>
                                     <button onClick={() => setShowAddConferenceModal(false)}>
                                         <X className="w-6 h-6 text-gray-600" />
                                     </button>
@@ -299,7 +299,7 @@ export default function AdminConferencePapper() {
                                             value={conferenceForm.title}
                                             onChange={(e) => setConferenceForm({ ...conferenceForm, title: e.target.value })}
                                             className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500"
-                                            placeholder="Conference Title"
+                                            placeholder="Judul Kegiatan"
                                         />
                                     </div>
                                     <div>
@@ -335,7 +335,7 @@ export default function AdminConferencePapper() {
                                     onClick={createConferencePapper}
                                     className="w-full mt-6 px-6 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700"
                                 >
-                                    Simpan Conference Papper
+                                    Simpan Kegiatan
                                 </button>
                             </div>
                         </div>
