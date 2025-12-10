@@ -3,147 +3,18 @@ import React, { useEffect, useState } from 'react';
 import {
     Plus, Edit, Trash2, Eye, X, Save, ChevronLeft,
     FileText, Users, Package, Check, Ban, Calendar, History,
-    Download
+    Download,
+    DownloadIcon, DollarSign, Loader2, CheckCircle, AlertCircle
 } from 'lucide-react';
-import Sidebar from "@/components/Sidebar";
+import SidebarAdmin from "@/components/Sidebar";
 import axios from 'axios';
+import { BiMoney } from 'react-icons/bi';
+import { useRouter } from 'next/navigation';
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-// Mock Data
-const MOCK_PAKETS = [
-    {
-        _id: '1',
-        paket: 'Paket 1',
-        deskripsi: 'Simulasi Intensif Premium - 65 Soal',
-        status: 'PREMIUM'
-    },
-    {
-        _id: '2',
-        paket: 'Paket 2',
-        deskripsi: 'Simulasi Intensif Premium - 65 Soal',
-        status: 'PREMIUM'
-    },
-    {
-        _id: '3',
-        paket: 'Trial Test',
-        deskripsi: 'Uji Coba Gratis - 20 Soal',
-        status: 'GRATIS'
-    },
-    {
-        _id: '4',
-        paket: 'Paket 4',
-        deskripsi: 'Paket dalam pengembangan',
-        status: 'HIDE'
-    }
-];
 
-const MOCK_QUESTIONS = [
-    {
-        _id: 'q1',
-        paketId: '1',
-        kategori: 'PCK',
-        soal: [
-            { type: 'TEXT', value: 'Apa yang dimaksud dengan pendekatan saintifik?' }
-        ],
-        pilihan: ['A', 'B', 'C', 'D', 'E'],
-        jawaban: 'B',
-        penjelasan: 'Penjelasan lengkap tentang pendekatan saintifik...'
-    },
-    {
-        _id: 'q2',
-        paketId: '1',
-        kategori: 'SJT',
-        soal: [
-            { type: 'TEXT', value: 'Jika siswa tertidur di kelas, apa yang Anda lakukan?' }
-        ],
-        pilihan: ['A', 'B', 'C', 'D', 'E'],
-        jawaban: 'C',
-        penjelasan: 'Pendekatan empatik adalah yang terbaik...'
-    }
-];
-
-const MOCK_ACCESS = [
-    {
-        _id: 'a1',
-        paket: 'Paket 1',
-        paketId: '1',
-        userId: 'u1',
-        nama: 'John Doe',
-        email: 'john@example.com',
-        no_whatsapp: '08123456789',
-        provinsi: 'DKI Jakarta',
-        jenjang_sekolah: 'SMA',
-        nama_instansi: 'SMAN 1 Jakarta',
-        mata_pelajaran: 'Matematika',
-        status_ppg: 'Belum PPG',
-        sumber_informasi: 'Instagram',
-        bukti_pembayaran: 'bukti1.jpg',
-        status: 'NO ACCESS',
-        start_date: null,
-        end_date: null,
-        createdAt: new Date('2024-11-15').toISOString()
-    },
-    {
-        _id: 'a2',
-        paket: 'Paket 1',
-        paketId: '1',
-        userId: 'u2',
-        nama: 'Jane Smith',
-        email: 'jane@example.com',
-        no_whatsapp: '08234567890',
-        provinsi: 'Jawa Barat',
-        jenjang_sekolah: 'SMP',
-        nama_instansi: 'SMPN 2 Bandung',
-        mata_pelajaran: 'Bahasa Inggris',
-        status_ppg: 'Sudah PPG',
-        sumber_informasi: 'WhatsApp',
-        bukti_pembayaran: 'bukti2.jpg',
-        status: 'ACCESS',
-        start_date: new Date('2024-11-10').toISOString(),
-        end_date: new Date('2024-12-10').toISOString(),
-        createdAt: new Date('2024-11-09').toISOString()
-    }
-];
-
-const MOCK_NILAI = [
-    {
-        _id: 'n1',
-        userId: 'u2',
-        paketId: '1',
-        paket: 'Paket 1',
-        nilai: {
-            benar: 50,
-            salah: 12,
-            tidak_terjawab: 3,
-            nilai: 76.92
-        },
-        timeSpent: 5400,
-        jumlah_soal: 65,
-        nama: 'Jane Smith',
-        email: 'jane@example.com',
-        no_whatsapp: '08234567890',
-        createdAt: new Date('2024-11-16').toISOString()
-    },
-    {
-        _id: 'n2',
-        userId: 'u2',
-        paketId: '1',
-        paket: 'Paket 1',
-        nilai: {
-            benar: 55,
-            salah: 8,
-            tidak_terjawab: 2,
-            nilai: 84.62
-        },
-        timeSpent: 4900,
-        jumlah_soal: 65,
-        nama: 'Jane Smith',
-        email: 'jane@example.com',
-        no_whatsapp: '08234567890',
-        createdAt: new Date('2024-11-18').toISOString()
-    }
-];
-
-export default function AdminKnowledgeTest() {
+export default function AdminPreServiceTeacherTest() {
+    const router = useRouter();
     const [page, setPage] = useState('pakets'); // pakets, access, paket-detail, access-detail
     const [pakets, setPakets] = useState([]);
     const [apiPaket, setApiPaket] = useState(false)
@@ -158,7 +29,7 @@ export default function AdminKnowledgeTest() {
     const [editingQuestion, setEditingQuestion] = useState(null);
     const [paketForm, setPaketForm] = useState({ paket: '', deskripsi: '', status: 'PREMIUM' });
     const [questionForm, setQuestionForm] = useState({
-        kategori: 'PCK',
+        kategori: 'Pedagogik',
         soal: [{ type: 'TEXT', value: '' }],
         pilihan: ['', '', '', '', ''],
         jawaban: '',
@@ -177,37 +48,10 @@ export default function AdminKnowledgeTest() {
         });
     }
 
-    const getAccess = async () => {
-        try {
-            const res = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/access")
-            if (res.data) {
-                console.log(res.data)
-                setAccessList(res.data)
-            }
-        } catch (err) {
-            console.log(err.message)
-        }
-    }
-
-    useEffect(() => {
-        getAccess()
-    }, [])
-
-    const updateAccess = async (access) => {
-        try {
-            const res = await axios.put(process.env.NEXT_PUBLIC_API_URL + "/api/access/" + access._id, access)
-            if (res.data) {
-                alert("Sukses mengupdate access!")
-            }
-        } catch (err) {
-            console.log(err.message)
-        }
-    }
-
 
     const getPaket = async () => {
         try {
-            const res = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/paket")
+            const res = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/preservice/paket")
             if (res.data) {
                 setPakets(res.data)
             }
@@ -218,7 +62,7 @@ export default function AdminKnowledgeTest() {
 
     const createPaket = async () => {
         try {
-            const res = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/paket", paketForm)
+            const res = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/preservice/paket", paketForm)
             if (res.data) {
                 alert("Sukses menambahkan paket!")
             }
@@ -229,7 +73,7 @@ export default function AdminKnowledgeTest() {
 
     const updatePaket = async (id) => {
         try {
-            const res = await axios.put(process.env.NEXT_PUBLIC_API_URL + "/api/paket/" + id, selectedPaket)
+            const res = await axios.put(process.env.NEXT_PUBLIC_API_URL + "/api/preservice/paket/" + id, selectedPaket)
             if (res.data) {
                 alert("Sukses mengupdate paket!")
             }
@@ -240,7 +84,7 @@ export default function AdminKnowledgeTest() {
 
     const deletePaket = async (id) => {
         try {
-            const res = await axios.delete(process.env.NEXT_PUBLIC_API_URL + "/api/paket/" + id, selectedPaket)
+            const res = await axios.delete(process.env.NEXT_PUBLIC_API_URL + "/api/preservice/paket/" + id, selectedPaket)
             if (res.data) {
                 alert("Sukses menghapus paket!")
             }
@@ -255,7 +99,7 @@ export default function AdminKnowledgeTest() {
 
     const getSoal = async () => {
         try {
-            const res = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/soal/paketid/" + selectedPaket._id)
+            const res = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/preservice/soal/paketid/" + selectedPaket._id)
             if (res.data) {
                 console.log(res.data)
                 setQuestions(res.data)
@@ -267,7 +111,7 @@ export default function AdminKnowledgeTest() {
 
     const createSoal = async () => {
         try {
-            const res = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/soal", { ...questionForm, paketId: selectedPaket._id })
+            const res = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/preservice/soal", { ...questionForm, paketId: selectedPaket._id })
             if (res.data) {
                 alert("Soal berhasil ditambahkan!")
             }
@@ -278,7 +122,7 @@ export default function AdminKnowledgeTest() {
 
     const editSoal = async () => {
         try {
-            const res = await axios.put(process.env.NEXT_PUBLIC_API_URL + "/api/soal/" + questionForm._id, { ...questionForm })
+            const res = await axios.put(process.env.NEXT_PUBLIC_API_URL + "/api/preservice/soal/" + questionForm._id, { ...questionForm })
             if (res.data) {
                 alert("Soal berhasil di update!")
             }
@@ -289,7 +133,7 @@ export default function AdminKnowledgeTest() {
 
     const deleteSoal = async (id) => {
         try {
-            const res = await axios.delete(process.env.NEXT_PUBLIC_API_URL + "/api/soal/" + id)
+            const res = await axios.delete(process.env.NEXT_PUBLIC_API_URL + "/api/preservice/soal/" + id)
             if (res.data) {
                 alert("Soal berhasil dihapus!")
             }
@@ -301,13 +145,6 @@ export default function AdminKnowledgeTest() {
     useEffect(() => {
         getSoal()
     }, [selectedPaket])
-
-    // const formatTime = (seconds) => {
-    //     const hours = Math.floor(seconds / 3600);
-    //     const minutes = Math.floor((seconds % 3600) / 60);
-    //     const secs = seconds % 60;
-    //     return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-    // };
 
     const handleAddPaket = () => {
         const newPaket = {
@@ -334,13 +171,13 @@ export default function AdminKnowledgeTest() {
 
     };
 
-    const handleAddQuestion = () => {
+    const handleAddQuestion = async () => {
         const newQuestion = {
             _id: Date.now().toString(),
             paketId: selectedPaket._id,
             ...questionForm
         };
-        createSoal()
+        await createSoal()
         setQuestions([...questions, newQuestion]);
         setShowQuestionModal(false);
         setEditingQuestion(null);
@@ -431,43 +268,42 @@ export default function AdminKnowledgeTest() {
         setQuestionForm({ ...questionForm, soal: newSoal });
     };
 
+    function formatNumberID(num) {
+        return num?.toLocaleString("id-ID");
+    }
+
     // Pakets Page
     if (page === 'pakets') {
         return (
             <div className="flex min-h-screen bg-gray-50">
-                <Sidebar />
+                <SidebarAdmin />
                 <div className="w-64 flex-shrink-0"></div>
                 <div className='flex-1 p-6 lg:p-8'>
                     <div className=" mx-auto">
                         <div>
                             <h1 className="text-3xl lg:text-4xl font-bold text-blue-600 mb-1">
-                                Knowledge Test Management
+                                Pre-Service Teacher Test Management
                             </h1>
-                            <p className="text-gray-600 mb-6">Kelola paket dan soal knowledge test</p>
+                            <p className="text-gray-600 mb-6">Kelola paket dan soal Pre-Service Teacher Test</p>
                         </div>
                         <div className="flex justify-between items-center mb-8">
 
                             <div className="flex gap-3">
                                 <button
-                                    onClick={() => setPage('access')}
-                                    className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-                                >
-                                    <Users className="w-5 h-5" />
-                                    Access Test
-                                </button>
-                                <button
                                     onClick={() => setShowAddPaketModal(true)}
-                                    className="flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                                    className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
                                 >
                                     <Plus className="w-5 h-5" />
                                     Add Paket
                                 </button>
+                        
                             </div>
                         </div>
 
+                        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 mb-6">
                         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                             {pakets.map(paket => (
-                                <div key={paket._id} className="bg-white rounded-lg shadow-lg p-6">
+                                <div key={paket._id} className="bg-white rounded-md shadow-md p-6 border border-gray-100">
                                     <div className="flex justify-between items-start mb-4">
                                         <h3 className="text-xl font-bold text-gray-800">{paket.paket}</h3>
                                         <span className={`px-3 py-1 rounded-full text-xs font-semibold ${paket.status === 'PREMIUM' ? 'bg-yellow-400 text-yellow-900' :
@@ -477,7 +313,7 @@ export default function AdminKnowledgeTest() {
                                             {paket.status}
                                         </span>
                                     </div>
-                                    <p className="text-gray-600 mb-4 text-sm">{paket.deskripsi}</p>
+                                    <p className="text-gray-600 mb-4 text-sm min-h-16">{paket.deskripsi}</p>
                                     <div className="flex gap-2">
                                         <button
                                             onClick={() => {
@@ -498,6 +334,7 @@ export default function AdminKnowledgeTest() {
                                     </div>
                                 </div>
                             ))}
+                        </div>
                         </div>
                     </div>
 
@@ -563,7 +400,7 @@ export default function AdminKnowledgeTest() {
     if (page === 'access') {
         return (
             <div className="flex min-h-screen bg-gray-50">
-                <Sidebar />
+                <SidebarAdmin />
                 <div className="w-64 flex-shrink-0"></div>
                 <div className='flex-1 p-6 lg:p-8'>
                     <div className=" mx-auto">
@@ -652,7 +489,7 @@ export default function AdminKnowledgeTest() {
     if (page === 'paket-detail' && selectedPaket) {
         return (
             <div className="flex min-h-screen bg-gray-50">
-                <Sidebar />
+                <SidebarAdmin />
                 <div className="w-64 flex-shrink-0"></div>
                 <div className='flex-1 p-6 lg:p-8'>
                     <div className=" mx-auto">
@@ -829,8 +666,9 @@ export default function AdminKnowledgeTest() {
                                             onChange={(e) => setQuestionForm({ ...questionForm, kategori: e.target.value })}
                                             className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500"
                                         >
-                                            <option value="PCK">PCK</option>
-                                            <option value="SJT">SJT</option>
+                                            <option value="Pedagogik">Pedagogik</option>
+                                            <option value="Kimia_Sekolah">Kimia Sekolah</option>
+                                            <option value="Profesional">Profesional</option>
                                         </select>
                                     </div>
 
@@ -949,7 +787,7 @@ export default function AdminKnowledgeTest() {
 
         return (
             <div className="flex min-h-screen bg-gray-50">
-                <Sidebar />
+                <SidebarAdmin />
                 <div className="w-64 flex-shrink-0"></div>
                 <div className='flex-1 p-6 lg:p-8'>
                     <div className=" mx-auto">
@@ -1007,6 +845,10 @@ export default function AdminKnowledgeTest() {
                                             <span className="text-gray-600">Status PPG:</span>
                                             <span className="ml-2 font-semibold text-gray-800">{selectedAccess.status_ppg}</span>
                                         </div>
+                                        <div>
+                                            <span className="text-gray-600">Status PPG:</span>
+                                            <span className="ml-2 font-semibold text-gray-800">{formatNumberID(selectedAccess.harga)}</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1037,9 +879,12 @@ export default function AdminKnowledgeTest() {
                                     </div>
                                     <div>
                                         <span className="text-gray-600 text-sm">Bukti Pembayaran:</span>
+                                        <div className="mt-1">
+                                            {selectedAccess?.jenis_pembayaran}
+                                        </div>
                                         <div className="mt-1">{
-                                            selectedAccess?.bukti_pembayaran ? <a className={`px-3 py-1 rounded-full text-xs font-semibold`} href={`${process.env.NEXT_PUBLIC_API_FILE_URL}${selectedAccess?.bukti_pembayaran}`}>
-                                                download
+                                            selectedAccess?.bukti_pembayaran ? <a className={`px-3 py-1 rounded-full text-sm text-koreaBlueMuda font-semibold flex items-center`} target="_blank" href={`${process.env.NEXT_PUBLIC_API_FILE_URL}${selectedAccess?.bukti_pembayaran}`}>
+                                                <DownloadIcon size={14} /> <p className='ml-2'>download</p>
                                             </a> : ""
                                         }
 

@@ -131,6 +131,7 @@ const Navbar = () => {
     label: "Personal",
     items: [
       // { href: "/personal", label: "Test schedule" },
+      { href: "/preservice_test_result", label: "Preservice teacher test result" },
       { href: "/knowledge_test_result", label: "Knowledge test result" },
       { href: "/knowledge_test_access", label: "Knowledge test access" },
       { href: "/study_case_access", label: "Study case access" },
@@ -147,13 +148,13 @@ const Navbar = () => {
         <div className="flex justify-between items-center">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3 group" onClick={closeMenu}>
-            <div className="bg-white rounded-full p-2 transition-transform duration-300 group-hover:scale-110 shadow-md">
+            <div className="bg-white rounded-full py-2 px-1 transition-transform duration-300 group-hover:scale-110">
               <img
-                src="/images/lupic-logo.png"
+                src="/logobaru.jpeg"
                 alt="Logo LUPIC"
-                width={30}
-                height={30}
-                className="object-contain"
+                width={40}
+                height={40}
+                className="object-contain rounded-full"
               />
             </div>
           </Link>

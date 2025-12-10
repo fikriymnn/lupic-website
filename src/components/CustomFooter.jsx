@@ -5,9 +5,9 @@ export default function CustomFooter() {
         <div className="md:flex md:justify-between w-full">
           <div className="md:mb-0 mb-10 md:w-[30%] w-[90%]">
             <img
-              src="/images/lupic-logo.png"
+              src="/logobaru.jpeg"
               alt="Logo lupic"
-              className="h-28 w-28 object-cover rounded-full bg-white"
+              className="h-28 w-28 object-cover rounded-full bg-white p-2"
             />
             <div className="w-full flex flex-wrap">
               <img
