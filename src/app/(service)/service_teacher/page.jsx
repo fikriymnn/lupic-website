@@ -185,7 +185,7 @@ export default function Services_workshop() {
             </thead>
             <tbody>
               <tr className="bg-gray-100 font-semibold">
-                <td colSpan="2" className="border border-gray-300 px-4 py-2 text-center">PAEDAGOGI</td>
+                <td colSpan="2" className="border border-gray-300 px-4 py-2 text-center">PEDAGOGIK</td>
               </tr>
               <tr>
                 <td className="border border-gray-300 px-4 py-2">Lingkungan pembelajaran yang aman dan nyaman bagi peserta didik</td>
