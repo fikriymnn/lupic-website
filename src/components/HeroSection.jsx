@@ -7,11 +7,10 @@ import { useEffect, useState } from "react";
 export default function HeroSection() {
   const [heroData, setHeroData] = useState({
     hero_section: "",
-    hero_title: "",
-    hero_description: "",
+    hero_title: "Leading University Project for International Cooperation",
+    hero_description: "Improving Chemistry/Science Education Program in Java and Northern Bali Islands and Community Service",
     hero_partner: ""
   });
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function getData() {
@@ -29,8 +28,6 @@ export default function HeroSection() {
         });
       } catch (err) {
         console.log("Error loading hero data:", err.message);
-      } finally {
-        setLoading(false);
       }
     }
     getData();
@@ -78,20 +75,12 @@ export default function HeroSection() {
 
         {/* Hero Title - Dynamic */}
         <h1 className="text-2xl md:text-5xl lg:text-6xl font-bold text-center font-extrabold mb-4 max-w-4xl">
-          {loading ? (
-            <span className="animate-pulse">Loading...</span>
-          ) : (
-            heroData.hero_title
-          )}
+          {heroData.hero_title}
         </h1>
 
         {/* Hero Description - Dynamic */}
         <p className="text-xs md:text-2xl text-center mb-6 mx-4 md:mx-12 max-w-[600px]">
-          {loading ? (
-            <span className="animate-pulse">Loading...</span>
-          ) : (
-            heroData.hero_description
-          )}
+          {heroData.hero_description}
         </p>
 
         <Link href="/aboutus">
