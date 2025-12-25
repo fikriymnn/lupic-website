@@ -27,15 +27,6 @@ export default function TrialTestApp() {
   const [result, setResult] = useState(null);
   const [startTime, setStartTime] = useState(null);
 
-   function formatMultilineString(str) {
-    if (!str) return "";
-
-    return str
-      .replace(/\\n/g, "\n")   // ubah "\n" literal menjadi newline asli
-      .replace(/\\t/g, "    ") // ubah "\t" literal menjadi 4 spasi
-      .trim();
-  }
-
   const getData = async () => {
     try {
       const res = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/preservice/soal/gratis")
@@ -177,13 +168,13 @@ export default function TrialTestApp() {
   const renderQuestionContent = (soalArray) => {
     return soalArray.map((item, index) => {
       if (item.type === 'TEXT') {
+        // Render HTML from Quill editor
         return (
-          <pre key={index}
-            style={{ whiteSpace: "pre-wrap", fontFamily: "inherit" }}
-            className="text-lg text-gray-800 mb-4 leading-relaxed"
-          >
-            {formatMultilineString(item?.value)}
-          </pre>
+          <div 
+            key={index}
+            className="prose prose-lg max-w-none mb-4 text-gray-800"
+            dangerouslySetInnerHTML={{ __html: item?.value }}
+          />
         );
       } else if (item.type === 'IMAGE') {
         return (
@@ -191,7 +182,7 @@ export default function TrialTestApp() {
             <img
               src={`${process.env.NEXT_PUBLIC_API_FILE_URL}${item.value}`}
               alt={`Soal ${currentQuestionIndex + 1}`}
-              className="w-80 h-auto rounded-lg shadow-md"
+              className="max-w-2xl h-auto rounded-lg shadow-md"
             />
           </div>
         );
@@ -534,13 +525,13 @@ export default function TrialTestApp() {
                     <div className="mb-4">
                       {question.soal.map((item, idx) => {
                         if (item.type === 'TEXT') {
+                          // Render HTML from Quill editor
                           return (
-                            <pre key={idx}
-                                style={{ whiteSpace: "pre-wrap", fontFamily: "inherit" }}
-                                className="text-gray-700 mb-2"
-                              >
-                                {formatMultilineString(item?.value)}
-                              </pre>
+                            <div 
+                              key={idx}
+                              className="prose prose-sm max-w-none mb-2 text-gray-700"
+                              dangerouslySetInnerHTML={{ __html: item?.value }}
+                            />
                           );
                         } else if (item.type === 'IMAGE') {
                           return (
@@ -548,7 +539,7 @@ export default function TrialTestApp() {
                               <img
                                 src={`${process.env.NEXT_PUBLIC_API_FILE_URL}${item.value}`}
                                 alt={`Soal ${index + 1}`}
-                                className="w-56 h-auto rounded-lg shadow-md"
+                                className="max-w-lg h-auto rounded-lg shadow-md"
                               />
                             </div>
                           );
@@ -559,8 +550,6 @@ export default function TrialTestApp() {
 
                     <div className="space-y-2">
                       {question.pilihan.filter(item => item !== "").map((option, idx) => {
-                       
-
                         const optionLetter = String.fromCharCode(65 + idx);
                         const isUserAnswer = question.userAnswer === option;
                         const isCorrectAnswer = question.jawaban === option;
@@ -585,11 +574,15 @@ export default function TrialTestApp() {
                         );
                       })}
                     </div>
-                    {/* Penjelasan */}
+                    
+                    {/* Penjelasan - Also render HTML if it contains HTML tags */}
                     {question.penjelasan && (
                       <div className="mt-4 p-4 bg-blue-50 border-l-4 border-blue-500 rounded">
                         <p className="font-semibold text-blue-900 mb-2">📚 Penjelasan:</p>
-                        <p className="text-gray-700 leading-relaxed">{question.penjelasan}</p>
+                        <div 
+                          className="text-gray-700 leading-relaxed prose prose-sm max-w-none"
+                          dangerouslySetInnerHTML={{ __html: question.penjelasan }}
+                        />
                       </div>
                     )}
                   </div>

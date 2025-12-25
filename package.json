@@ -21,6 +21,7 @@
     "react-icons": "^5.4.0",
     "react-intersection-observer": "^9.15.1",
     "react-player": "^2.16.0",
+    "react-quill": "^2.0.0",
     "react-responsive-3d-carousel": "^2.1.4",
     "react-responsive-pagination": "^2.10.0",
     "react-simple-wysiwyg": "^3.2.0",

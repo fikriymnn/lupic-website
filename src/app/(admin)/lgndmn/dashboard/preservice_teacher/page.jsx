@@ -1,21 +1,129 @@
 "use client"
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo, useRef } from 'react';
 import {
     Plus, Edit, Trash2, Eye, X, Save, ChevronLeft,
     FileText, Users, Package, Check, Ban, Calendar, History,
     Download,
-    DownloadIcon, DollarSign, Loader2, CheckCircle, AlertCircle
+    DownloadIcon, DollarSign, Loader2, CheckCircle, AlertCircle,
+    Bold, Italic, Underline, List, Link as LinkIcon, Image as ImageIcon
 } from 'lucide-react';
 import SidebarAdmin from "@/components/Sidebar";
 import axios from 'axios';
 import { BiMoney } from 'react-icons/bi';
 import { useRouter } from 'next/navigation';
+
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+// Simple Rich Text Editor Component
+const SimpleRichTextEditor = ({ value, onChange, placeholder, minHeight = '200px' }) => {
+    const editorRef = useRef(null);
+
+    const applyFormat = (command, value = null) => {
+        document.execCommand(command, false, value);
+        editorRef.current?.focus();
+    };
+
+    const handleInput = () => {
+        if (editorRef.current) {
+            onChange(editorRef.current.innerHTML);
+        }
+    };
+
+    useEffect(() => {
+        if (editorRef.current && editorRef.current.innerHTML !== value) {
+            editorRef.current.innerHTML = value || '';
+        }
+    }, [value]);
+
+    return (
+        <div className="border rounded-lg overflow-hidden bg-white">
+            {/* Toolbar */}
+            <div className="border-b bg-gray-50 p-2 flex gap-1 flex-wrap">
+                <button
+                    type="button"
+                    onClick={() => applyFormat('bold')}
+                    className="p-2 hover:bg-gray-200 rounded"
+                    title="Bold"
+                >
+                    <Bold className="w-4 h-4" />
+                </button>
+                <button
+                    type="button"
+                    onClick={() => applyFormat('italic')}
+                    className="p-2 hover:bg-gray-200 rounded"
+                    title="Italic"
+                >
+                    <Italic className="w-4 h-4" />
+                </button>
+                <button
+                    type="button"
+                    onClick={() => applyFormat('underline')}
+                    className="p-2 hover:bg-gray-200 rounded"
+                    title="Underline"
+                >
+                    <Underline className="w-4 h-4" />
+                </button>
+                <div className="w-px bg-gray-300 mx-1"></div>
+                <button
+                    type="button"
+                    onClick={() => applyFormat('insertUnorderedList')}
+                    className="p-2 hover:bg-gray-200 rounded"
+                    title="Bullet List"
+                >
+                    <List className="w-4 h-4" />
+                </button>
+                <button
+                    type="button"
+                    onClick={() => applyFormat('insertOrderedList')}
+                    className="p-2 hover:bg-gray-200 rounded"
+                    title="Numbered List"
+                >
+                    <List className="w-4 h-4" />
+                </button>
+                <div className="w-px bg-gray-300 mx-1"></div>
+                <button
+                    type="button"
+                    onClick={() => {
+                        const url = prompt('Enter URL:');
+                        if (url) applyFormat('createLink', url);
+                    }}
+                    className="p-2 hover:bg-gray-200 rounded"
+                    title="Insert Link"
+                >
+                    <LinkIcon className="w-4 h-4" />
+                </button>
+                <div className="w-px bg-gray-300 mx-1"></div>
+                <select
+                    onChange={(e) => {
+                        applyFormat('formatBlock', e.target.value);
+                        e.target.value = '';
+                    }}
+                    className="px-2 py-1 text-sm border-0 bg-transparent hover:bg-gray-200 rounded"
+                    defaultValue=""
+                >
+                    <option value="">Paragraph</option>
+                    <option value="h1">Heading 1</option>
+                    <option value="h2">Heading 2</option>
+                    <option value="h3">Heading 3</option>
+                </select>
+            </div>
+            {/* Editor */}
+            <div
+                ref={editorRef}
+                contentEditable
+                onInput={handleInput}
+                className="p-4 outline-none prose prose-sm max-w-none"
+                style={{ minHeight }}
+                placeholder={placeholder}
+            />
+        </div>
+    );
+};
 
 
 export default function AdminPreServiceTeacherTest() {
     const router = useRouter();
-    const [page, setPage] = useState('pakets'); // pakets, access, paket-detail, access-detail
+    const [page, setPage] = useState('pakets');
     const [pakets, setPakets] = useState([]);
     const [apiPaket, setApiPaket] = useState(false)
     const [questions, setQuestions] = useState([]);
@@ -27,6 +135,7 @@ export default function AdminPreServiceTeacherTest() {
     const [showAddPaketModal, setShowAddPaketModal] = useState(false);
     const [showQuestionModal, setShowQuestionModal] = useState(false);
     const [editingQuestion, setEditingQuestion] = useState(null);
+    const [uploadingImage, setUploadingImage] = useState(false);
     const [paketForm, setPaketForm] = useState({ paket: '', deskripsi: '', status: 'PREMIUM' });
     const [questionForm, setQuestionForm] = useState({
         kategori: 'Pedagogik',
@@ -38,7 +147,6 @@ export default function AdminPreServiceTeacherTest() {
 
     function formatDateTime(dateString) {
         const date = new Date(dateString);
-
         return date.toLocaleString('id-ID', {
             day: 'numeric',
             month: 'long',
@@ -47,7 +155,6 @@ export default function AdminPreServiceTeacherTest() {
             minute: '2-digit'
         });
     }
-
 
     const getPaket = async () => {
         try {
@@ -111,23 +218,52 @@ export default function AdminPreServiceTeacherTest() {
 
     const createSoal = async () => {
         try {
-            const res = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/api/preservice/soal", { ...questionForm, paketId: selectedPaket._id })
+            const soalData = {
+                kategori: questionForm.kategori,
+                paketId: selectedPaket._id,
+                soal: questionForm.soal, // Already in array format
+                pilihan: questionForm.pilihan,
+                jawaban: questionForm.jawaban,
+                penjelasan: questionForm.penjelasan
+            };
+            
+            const res = await axios.post(
+                process.env.NEXT_PUBLIC_API_URL + "/api/preservice/soal", 
+                soalData
+            );
+            
             if (res.data) {
-                alert("Soal berhasil ditambahkan!")
+                alert("Soal berhasil ditambahkan!");
+                return res.data;
             }
         } catch (err) {
-            console.log(err.message)
+            console.log("Error creating soal:", err.response?.data || err.message);
+            throw err;
         }
     }
 
     const editSoal = async () => {
         try {
-            const res = await axios.put(process.env.NEXT_PUBLIC_API_URL + "/api/preservice/soal/" + questionForm._id, { ...questionForm })
+            const soalData = {
+                kategori: questionForm.kategori,
+                soal: questionForm.soal, // Already in array format
+                pilihan: questionForm.pilihan,
+                jawaban: questionForm.jawaban,
+                penjelasan: questionForm.penjelasan
+            };
+            
+            const res = await axios.put(
+                process.env.NEXT_PUBLIC_API_URL + "/api/preservice/soal/" + questionForm._id, 
+                soalData
+            );
+            
             if (res.data) {
-                alert("Soal berhasil di update!")
+                alert("Soal berhasil di update!");
+                return res.data;
             }
         } catch (err) {
-            console.log(err.message)
+            console.log("Error updating soal:", err.response?.data || err.message);
+            throw err;
         }
     }
 
@@ -143,71 +279,113 @@ export default function AdminPreServiceTeacherTest() {
     }
 
     useEffect(() => {
-        getSoal()
+        if (selectedPaket && selectedPaket._id) {
+            getSoal()
+        }
     }, [selectedPaket])
 
-    const handleAddPaket = () => {
-        const newPaket = {
-            _id: Date.now().toString(),
-            ...paketForm
-        };
-        createPaket()
-        setPakets([...pakets, newPaket]);
-        setShowAddPaketModal(false);
-        setPaketForm({ paket: '', deskripsi: '', status: 'PREMIUM' });
-    };
+    // Sort pakets: GRATIS first, then others
+    const sortedPakets = useMemo(() => {
+        return [...pakets].sort((a, b) => {
+            if (a.status === 'GRATIS' && b.status !== 'GRATIS') return -1;
+            if (a.status !== 'GRATIS' && b.status === 'GRATIS') return 1;
+            return 0;
+        });
+    }, [pakets]);
 
-    const handleDeletePaket = (id) => {
-        if (window.confirm('Apakah Anda yakin ingin menghapus paket ini?')) {
-            deletePaket(id)
-            setPakets(pakets.filter(p => p._id !== id));
+    const handleAddPaket = async () => {
+        try {
+            await createPaket();
+            // Refresh the pakets list from server
+            await getPaket();
+            setShowAddPaketModal(false);
+            setPaketForm({ paket: '', deskripsi: '', status: 'PREMIUM' });
+        } catch (error) {
+            console.error('Error adding paket:', error);
+            alert('Gagal menambahkan paket. Silakan coba lagi.');
         }
     };
 
-    const handleSavePaketEdit = () => {
-        updatePaket(selectedPaket._id)
-        setPakets(pakets.map(p => p._id === selectedPaket._id ? selectedPaket : p));
-        setIsEditingPaket(false);
+    const handleDeletePaket = async (id, status) => {
+        if (status === 'GRATIS') {
+            alert('Paket GRATIS tidak dapat dihapus!');
+            return;
+        }
+        
+        if (window.confirm('Apakah Anda yakin ingin menghapus paket ini?')) {
+            try {
+                await deletePaket(id);
+                // Refresh the pakets list from server
+                await getPaket();
+            } catch (error) {
+                console.error('Error deleting paket:', error);
+                alert('Gagal menghapus paket. Silakan coba lagi.');
+            }
+        }
+    };
 
+    const handleSavePaketEdit = async () => {
+        try {
+            await updatePaket(selectedPaket._id);
+            // Refresh the pakets list from server
+            await getPaket();
+            setIsEditingPaket(false);
+        } catch (error) {
+            console.error('Error updating paket:', error);
+            alert('Gagal mengupdate paket. Silakan coba lagi.');
+        }
     };
 
     const handleAddQuestion = async () => {
-        const newQuestion = {
-            _id: Date.now().toString(),
-            paketId: selectedPaket._id,
-            ...questionForm
-        };
-        await createSoal()
-        setQuestions([...questions, newQuestion]);
-        setShowQuestionModal(false);
-        setEditingQuestion(null);
-        setQuestionForm({
-            kategori: 'PCK',
-            soal: [{ type: 'TEXT', value: '' }],
-            pilihan: ['', '', '', '', ''],
-            jawaban: '',
-            penjelasan: ''
-        });
+        try {
+            await createSoal();
+            // Refresh the questions list from server
+            await getSoal();
+            setShowQuestionModal(false);
+            setEditingQuestion(null);
+            setQuestionForm({
+                kategori: 'Pedagogik',
+                soal: [{ type: 'TEXT', value: '' }],
+                pilihan: ['', '', '', '', ''],
+                jawaban: '',
+                penjelasan: ''
+            });
+        } catch (error) {
+            console.error('Error adding question:', error);
+            alert('Gagal menambahkan soal. Silakan coba lagi.');
+        }
     };
 
-    const handleEditQuestion = () => {
-        setQuestions(questions.map(q => q._id === editingQuestion._id ? { ...editingQuestion, ...questionForm } : q));
-        editSoal()
-        setShowQuestionModal(false);
-        setEditingQuestion(null);
-        setQuestionForm({
-            kategori: 'PCK',
-            soal: [{ type: 'TEXT', value: '' }],
-            pilihan: ['', '', '', '', ''],
-            jawaban: '',
-            penjelasan: ''
-        });
+    const handleEditQuestion = async () => {
+        try {
+            await editSoal();
+            // Refresh the questions list from server
+            await getSoal();
+            setShowQuestionModal(false);
+            setEditingQuestion(null);
+            setQuestionForm({
+                kategori: 'Pedagogik',
+                soal: [{ type: 'TEXT', value: '' }],
+                pilihan: ['', '', '', '', ''],
+                jawaban: '',
+                penjelasan: ''
+            });
+        } catch (error) {
+            console.error('Error editing question:', error);
+            alert('Gagal mengupdate soal. Silakan coba lagi.');
+        }
     };
 
-    const handleDeleteQuestion = (id) => {
+    const handleDeleteQuestion = async (id) => {
         if (window.confirm('Apakah Anda yakin ingin menghapus soal ini?')) {
-            deleteSoal(id)
-            setQuestions(questions.filter(q => q._id !== id));
+            try {
+                await deleteSoal(id);
+                // Refresh the questions list from server
+                await getSoal();
+            } catch (error) {
+                console.error('Error deleting question:', error);
+                alert('Gagal menghapus soal. Silakan coba lagi.');
+            }
         }
     };
 
@@ -236,30 +414,47 @@ export default function AdminPreServiceTeacherTest() {
         });
     };
 
-    const updateSoalItem = async (index, field, type, e) => {
-        e.preventDefault()
-        if (type == 'IMAGE') {
-            const file = e.target.files[0];
-            const formData = new FormData();
-            try {
-                formData.append('file', file);
-                const getData = await axios.post(process.env.NEXT_PUBLIC_API_STORAGE + "/api/file", formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                    },
-                })
-                if (getData.data) {
-                    const newSoal = [...questionForm.soal];
-                    newSoal[index][field] = getData.data;
-                    setQuestionForm({ ...questionForm, soal: newSoal });
-                }
-            } catch (err) {
-                console.log(err)
-            }
-        } else {
-            const newSoal = [...questionForm.soal];
-            newSoal[index][field] = e.target.value;
+    const updateSoalItem = async (index, field, value) => {
+        const newSoal = [...questionForm.soal];
+        
+        if (field === 'type') {
+            // When changing type, reset value
+            newSoal[index] = { type: value, value: '' };
             setQuestionForm({ ...questionForm, soal: newSoal });
+        } else if (field === 'value') {
+            if (newSoal[index].type === 'IMAGE' && value instanceof File) {
+                // Handle image upload
+                setUploadingImage(true);
+                const formData = new FormData();
+                try {
+                    formData.append('file', value);
+                    console.log('Uploading image to:', process.env.NEXT_PUBLIC_API_STORAGE + "/api/file");
+                    const getData = await axios.post(
+                        process.env.NEXT_PUBLIC_API_STORAGE + "/api/file", 
+                        formData, 
+                        {
+                            headers: {
+                                'Content-Type': 'multipart/form-data',
+                            },
+                        }
+                    );
+                    console.log('Upload response:', getData.data);
+                    if (getData.data) {
+                        newSoal[index].value = getData.data;
+                        setQuestionForm({ ...questionForm, soal: newSoal });
+                        alert('Gambar berhasil diupload!');
+                    }
+                } catch (err) {
+                    console.error("Error uploading image:", err);
+                    alert("Gagal mengupload gambar. Silakan coba lagi.");
+                } finally {
+                    setUploadingImage(false);
+                }
+            } else {
+                // Handle text value (HTML from rich text editor)
+                newSoal[index].value = value;
+                setQuestionForm({ ...questionForm, soal: newSoal });
+            }
         }
     };
 
@@ -287,7 +482,6 @@ export default function AdminPreServiceTeacherTest() {
                             <p className="text-gray-600 mb-6">Kelola paket dan soal Pre-Service Teacher Test</p>
                         </div>
                         <div className="flex justify-between items-center mb-8">
-
                             <div className="flex gap-3">
                                 <button
                                     onClick={() => setShowAddPaketModal(true)}
@@ -296,45 +490,49 @@ export default function AdminPreServiceTeacherTest() {
                                     <Plus className="w-5 h-5" />
                                     Add Paket
                                 </button>
-                        
                             </div>
                         </div>
 
                         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 mb-6">
-                        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                            {pakets.map(paket => (
-                                <div key={paket._id} className="bg-white rounded-md shadow-md p-6 border border-gray-100">
-                                    <div className="flex justify-between items-start mb-4">
-                                        <h3 className="text-xl font-bold text-gray-800">{paket.paket}</h3>
-                                        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${paket.status === 'PREMIUM' ? 'bg-yellow-400 text-yellow-900' :
-                                            paket.status === 'GRATIS' ? 'bg-green-400 text-green-900' :
+                            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                                {sortedPakets.map(paket => (
+                                    <div key={paket._id} className={`bg-white rounded-md shadow-md p-6 border-2 ${
+                                        paket.status === 'GRATIS' ? 'border-green-400 bg-green-50' : 'border-gray-100'
+                                    }`}>
+                                        <div className="flex justify-between items-start mb-4">
+                                            <h3 className="text-xl font-bold text-gray-800">{paket.paket}</h3>
+                                            <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                                                paket.status === 'PREMIUM' ? 'bg-yellow-400 text-yellow-900' :
+                                                paket.status === 'GRATIS' ? 'bg-green-400 text-green-900' :
                                                 'bg-gray-400 text-gray-900'
                                             }`}>
-                                            {paket.status}
-                                        </span>
+                                                {paket.status}
+                                            </span>
+                                        </div>
+                                        <p className="text-gray-600 mb-4 text-sm min-h-16">{paket.deskripsi}</p>
+                                        <div className="flex gap-2">
+                                            <button
+                                                onClick={() => {
+                                                    setSelectedPaket(paket);
+                                                    setPage('paket-detail');
+                                                }}
+                                                className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700"
+                                            >
+                                                <Eye className="w-4 h-4" />
+                                                Detail
+                                            </button>
+                                            {paket.status !== 'GRATIS' && (
+                                                <button
+                                                    onClick={() => handleDeletePaket(paket._id, paket.status)}
+                                                    className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+                                                >
+                                                    <Trash2 className="w-4 h-4" />
+                                                </button>
+                                            )}
+                                        </div>
                                     </div>
-                                    <p className="text-gray-600 mb-4 text-sm min-h-16">{paket.deskripsi}</p>
-                                    <div className="flex gap-2">
-                                        <button
-                                            onClick={() => {
-                                                setSelectedPaket(paket);
-                                                setPage('paket-detail');
-                                            }}
-                                            className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700"
-                                        >
-                                            <Eye className="w-4 h-4" />
-                                            Detail
-                                        </button>
-                                        <button
-                                            onClick={() => handleDeletePaket(paket._id)}
-                                            className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
-                                        >
-                                            <Trash2 className="w-4 h-4" />
-                                        </button>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
 
@@ -396,7 +594,7 @@ export default function AdminPreServiceTeacherTest() {
         );
     }
 
-    // Access Test Page
+    // Access Test Page (unchanged, keeping for completeness)
     if (page === 'access') {
         return (
             <div className="flex min-h-screen bg-gray-50">
@@ -485,7 +683,7 @@ export default function AdminPreServiceTeacherTest() {
         );
     }
 
-    // Paket Detail Page
+    // Paket Detail Page with Simple Rich Text Editor
     if (page === 'paket-detail' && selectedPaket) {
         return (
             <div className="flex min-h-screen bg-gray-50">
@@ -568,10 +766,11 @@ export default function AdminPreServiceTeacherTest() {
                                     </div>
                                     <div>
                                         <span className="text-sm font-semibold text-gray-700">Status:</span>
-                                        <span className={`ml-2 px-3 py-1 rounded-full text-xs font-semibold ${selectedPaket.status === 'PREMIUM' ? 'bg-yellow-400 text-yellow-900' :
+                                        <span className={`ml-2 px-3 py-1 rounded-full text-xs font-semibold ${
+                                            selectedPaket.status === 'PREMIUM' ? 'bg-yellow-400 text-yellow-900' :
                                             selectedPaket.status === 'GRATIS' ? 'bg-green-400 text-green-900' :
-                                                'bg-gray-400 text-gray-900'
-                                            }`}>
+                                            'bg-gray-400 text-gray-900'
+                                        }`}>
                                             {selectedPaket.status}
                                         </span>
                                     </div>
@@ -587,7 +786,7 @@ export default function AdminPreServiceTeacherTest() {
                                     onClick={() => {
                                         setEditingQuestion(null);
                                         setQuestionForm({
-                                            kategori: 'PCK',
+                                            kategori: 'Pedagogik',
                                             soal: [{ type: 'TEXT', value: '' }],
                                             pilihan: ['', '', '', '', ''],
                                             jawaban: '',
@@ -613,9 +812,19 @@ export default function AdminPreServiceTeacherTest() {
                                                         {question.kategori}
                                                     </span>
                                                 </div>
-                                                <div className="text-sm text-gray-700 mb-2">
-                                                    {question.soal.map((s, i) => (
-                                                        s.type === 'TEXT' ? <p key={i}>{s.value}</p> : <img key={i} src={`${process.env.NEXT_PUBLIC_API_FILE_URL}${s.value}`} className='h-20' />
+                                                <div className="text-sm text-gray-700 mb-2 prose prose-sm max-w-none">
+                                                    {question.soal?.map((s, i) => (
+                                                        <div key={i} className="mb-2">
+                                                            {s.type === 'TEXT' ? (
+                                                                <div dangerouslySetInnerHTML={{ __html: s.value }} />
+                                                            ) : (
+                                                                <img 
+                                                                    src={`${process.env.NEXT_PUBLIC_API_FILE_URL}${s.value}`} 
+                                                                    className='max-h-40 rounded border' 
+                                                                    alt="soal" 
+                                                                />
+                                                            )}
+                                                        </div>
                                                     ))}
                                                 </div>
                                                 <p className="text-xs text-gray-600">Jawaban: {question.jawaban}</p>
@@ -645,10 +854,10 @@ export default function AdminPreServiceTeacherTest() {
                         </div>
                     </div>
 
-                    {/* Question Modal */}
+                    {/* Question Modal with Simple Rich Text Editor */}
                     {showQuestionModal && (
                         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 overflow-y-auto">
-                            <div className="bg-white rounded-lg p-8 max-w-3xl w-full my-8">
+                            <div className="bg-white rounded-lg p-8 max-w-4xl w-full my-8">
                                 <div className="flex justify-between items-center mb-6">
                                     <h2 className="text-2xl font-bold text-gray-800">
                                         {editingQuestion ? 'Edit Soal' : 'Tambah Soal Baru'}
@@ -658,7 +867,7 @@ export default function AdminPreServiceTeacherTest() {
                                     </button>
                                 </div>
 
-                                <div className="space-y-4 max-h-[70vh] overflow-y-auto">
+                                <div className="space-y-6 max-h-[70vh] overflow-y-auto pr-2">
                                     <div>
                                         <label className="block text-sm font-semibold text-gray-700 mb-2">Kategori</label>
                                         <select
@@ -676,47 +885,93 @@ export default function AdminPreServiceTeacherTest() {
                                         <div className="flex justify-between items-center mb-2">
                                             <label className="block text-sm font-semibold text-gray-700">Soal</label>
                                             <button
+                                                type="button"
                                                 onClick={addSoalItem}
-                                                className="text-sm px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700"
+                                                className="text-sm px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700 flex items-center gap-1"
                                             >
-                                                + Item
+                                                <Plus className="w-4 h-4" />
+                                                Tambah Item
                                             </button>
                                         </div>
+                                        
                                         {questionForm.soal.map((item, index) => (
-                                            <div key={index} className="mb-3 p-3 border rounded-lg">
-                                                <div className="flex gap-2 mb-2">
+                                            <div key={index} className="mb-4 p-4 border-2 border-gray-200 rounded-lg bg-gray-50">
+                                                <div className="flex gap-2 mb-3 items-center">
+                                                    <span className="text-sm font-semibold text-gray-600">Item {index + 1}:</span>
                                                     <select
                                                         value={item.type}
-                                                        onChange={(e) => updateSoalItem(index, 'type', item.type, e)}
-                                                        className="px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500"
+                                                        onChange={(e) => updateSoalItem(index, 'type', e.target.value)}
+                                                        className="px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 bg-white"
                                                     >
                                                         <option value="TEXT">TEXT</option>
                                                         <option value="IMAGE">IMAGE</option>
                                                     </select>
                                                     {questionForm.soal.length > 1 && (
                                                         <button
+                                                            type="button"
                                                             onClick={() => removeSoalItem(index)}
-                                                            className="px-3 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+                                                            className="ml-auto px-3 py-2 bg-red-600 text-white rounded hover:bg-red-700 flex items-center gap-1"
                                                         >
                                                             <X className="w-4 h-4" />
+                                                            Hapus
                                                         </button>
                                                     )}
                                                 </div>
+                                                
                                                 {item.type === 'TEXT' ? (
-                                                    <textarea
+                                                    <SimpleRichTextEditor
                                                         value={item.value}
-                                                        onChange={(e) => updateSoalItem(index, 'value', item.type, e)}
-                                                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500"
-                                                        rows="2"
+                                                        onChange={(value) => updateSoalItem(index, 'value', value)}
                                                         placeholder="Masukkan teks soal..."
+                                                        minHeight="150px"
                                                     />
                                                 ) : (
-                                                    <input
-                                                        type="file"
-                                                        onChange={(e) => updateSoalItem(index, 'value', item.type, e)}
-                                                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500"
-                                                        placeholder="URL gambar..."
-                                                    />
+                                                    <div className="space-y-3">
+                                                        <div>
+                                                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                                                                Upload Gambar
+                                                            </label>
+                                                            <input
+                                                                type="file"
+                                                                accept="image/*"
+                                                                disabled={uploadingImage}
+                                                                onChange={(e) => {
+                                                                    const file = e.target.files?.[0];
+                                                                    if (file) {
+                                                                        console.log('File selected:', file.name);
+                                                                        updateSoalItem(index, 'value', file);
+                                                                    }
+                                                                }}
+                                                                className="block w-full text-sm text-gray-500
+                                                                    file:mr-4 file:py-2 file:px-4
+                                                                    file:rounded-lg file:border-0
+                                                                    file:text-sm file:font-semibold
+                                                                    file:bg-indigo-50 file:text-indigo-700
+                                                                    hover:file:bg-indigo-100
+                                                                    cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                                                            />
+                                                            {uploadingImage && (
+                                                                <p className="text-sm text-indigo-600 mt-2 flex items-center gap-2">
+                                                                    <Loader2 className="w-4 h-4 animate-spin" />
+                                                                    Mengupload gambar...
+                                                                </p>
+                                                            )}
+                                                        </div>
+                                                        {item.value && !uploadingImage && (
+                                                            <div className="mt-3">
+                                                                <p className="text-sm text-gray-600 mb-2">Preview:</p>
+                                                                <img 
+                                                                    src={`${process.env.NEXT_PUBLIC_API_FILE_URL}${item.value}`}
+                                                                    alt="Preview"
+                                                                    className="max-h-60 rounded-lg border-2 border-gray-300 shadow-sm"
+                                                                    onError={(e) => {
+                                                                        console.error('Image load error');
+                                                                        e.target.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><text x="50%" y="50%" text-anchor="middle" dy=".3em">No Image</text></svg>';
+                                                                    }}
+                                                                />
+                                                            </div>
+                                                        )}
+                                                    </div>
                                                 )}
                                             </div>
                                         ))}
@@ -725,7 +980,7 @@ export default function AdminPreServiceTeacherTest() {
                                     <div>
                                         <label className="block text-sm font-semibold text-gray-700 mb-2">Pilihan Jawaban</label>
                                         {questionForm.pilihan.map((pilihan, index) => (
-                                            <div key={index} className="mb-2">
+                                            <div key={index} className="mb-3">
                                                 <label className="text-xs text-gray-600 mb-1 block">
                                                     Pilihan {String.fromCharCode(65 + index)}
                                                 </label>
@@ -757,12 +1012,11 @@ export default function AdminPreServiceTeacherTest() {
 
                                     <div>
                                         <label className="block text-sm font-semibold text-gray-700 mb-2">Penjelasan</label>
-                                        <textarea
+                                        <SimpleRichTextEditor
                                             value={questionForm.penjelasan}
-                                            onChange={(e) => setQuestionForm({ ...questionForm, penjelasan: e.target.value })}
-                                            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500"
-                                            rows="4"
-                                            placeholder="Penjelasan lengkap tentang jawaban yang benar..."
+                                            onChange={(value) => setQuestionForm({ ...questionForm, penjelasan: value })}
+                                            placeholder="Masukkan penjelasan jawaban..."
+                                            minHeight="150px"
                                         />
                                     </div>
                                 </div>
@@ -781,7 +1035,7 @@ export default function AdminPreServiceTeacherTest() {
         );
     }
 
-    // Access Detail Page
+    // Access Detail Page (unchanged)
     if (page === 'access-detail' && selectedAccess) {
         const userNilai = nilaiList.filter(n => n.userId === selectedAccess.userId);
 
@@ -846,7 +1100,7 @@ export default function AdminPreServiceTeacherTest() {
                                             <span className="ml-2 font-semibold text-gray-800">{selectedAccess.status_ppg}</span>
                                         </div>
                                         <div>
-                                            <span className="text-gray-600">Status PPG:</span>
+                                            <span className="text-gray-600">Harga:</span>
                                             <span className="ml-2 font-semibold text-gray-800">{formatNumberID(selectedAccess.harga)}</span>
                                         </div>
                                     </div>

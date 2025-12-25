@@ -31,7 +31,7 @@ export default function Services_workshop() {
   return (
     <>
       <Navbar />
-      <section className="max-w-7xl mx-auto md:px-8 px-4 md:pt-16 pt-16">
+      <section className="max-w-6xl mx-auto md:px-8 px-4 md:pt-16 pt-16">
         <div className="mb-4">
           <h3 className="md:text-5xl text-3xl mt-10 font-bold">
             Pre-Service Teacher <br /> Evaluation Test
@@ -175,7 +175,7 @@ export default function Services_workshop() {
           </table>
         </div>
         <br />
-        <div className="w-full m-auto mb-8">
+        <div className="w-full m-auto mb-16">
           <table className="w-full border border-gray-300 bg-white shadow-md">
             <thead>
               <tr className="bg-gray-200">
@@ -217,11 +217,11 @@ export default function Services_workshop() {
             </tbody>
           </table>
         </div>
-        <div className="w-full flex justify-center">
+        {/* <div className="w-full flex justify-center">
           <div onClick={(e) => { window.location.href = `${login ? "pendaftaran" : "login"}` }} className="cursor-pointer px-6 text-lg py-2 hover:bg-blue-800 bg-blue-400 text-white rounded-lg mb-14 mt-10">
             Klik untuk daftar test
           </div>
-        </div>
+        </div> */}
       </section>
       <CustomFooter />
     </>
