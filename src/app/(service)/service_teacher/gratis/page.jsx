@@ -434,7 +434,7 @@ export default function TrialTestApp() {
             </div>
             <button
               onClick={() => {
-                router.push("/knowledge_test")
+                router.push("/service_teacher")
               }}
               className="p-2 hover:bg-gray-200 rounded-full transition-colors"
             >
@@ -597,7 +597,7 @@ export default function TrialTestApp() {
           <div className="mt-8 text-center">
             <button
               onClick={() => {
-                router.push("/knowledge_test")
+                router.push("/service_teacher")
               }}
               className="px-8 py-4 bg-green-600 text-white rounded-lg font-bold text-lg hover:bg-green-700 transition-colors shadow-lg"
             >
