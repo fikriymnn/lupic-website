@@ -317,7 +317,6 @@ export default function TestSimulationApp() {
   if (page === 'start-test') {
     return (
       <>
-        <Navbar />
         <div className="min-h-screen bg-gray-50 flex items-center justify-center p-8">
           <div className="bg-white rounded-lg shadow-2xl p-12 max-w-md w-full text-center">
             <div className="mb-4">
@@ -359,7 +358,6 @@ export default function TestSimulationApp() {
             </button>
           </div>
         </div>
-        <CustomFooter />
       </>
     );
   }
@@ -530,7 +528,7 @@ export default function TestSimulationApp() {
   if (page === 'result') {
     return (
       <>
-        <Navbar />
+  
         <div className="min-h-screen bg-gray-50 p-8">
           <div className="max-w-6xl mx-auto">
             <div className="flex justify-between items-center mb-8">
@@ -717,7 +715,7 @@ export default function TestSimulationApp() {
             </div>
           </div>
         </div>
-        <CustomFooter />
+
       </>
     );
   }
