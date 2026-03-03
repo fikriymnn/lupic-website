@@ -83,7 +83,7 @@ export default function AddNews() {
                     deskripsi: data.deskripsi,
                     content: content,
                     sub_content: subContent,
-                    tanggal: new Date().toLocaleDateString("id-ID")
+                    tanggal: data.tanggal
                 })
                 if (message.data == "success") {
                     alert("Success")
@@ -123,7 +123,7 @@ export default function AddNews() {
                                 </label>
                                 <input
                                     type="text"
-                                    placeholder="Masukkan tanggal..."
+                                    placeholder="Masukkan tanggal (DD/MM/YYYY) => 2/1/2025 ..."
                                     className="mt-2 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                                     name="tanggal"
                                     onChange={handleChange}
