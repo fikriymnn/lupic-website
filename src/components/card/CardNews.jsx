@@ -12,12 +12,10 @@ export default function CardNews({ gambar, judul, deskripsi, tanggal, id }) {
       className="block bg-gray-50 p-2 rounded-md overflow-hidden w-full max-w-[350px] "
     >
       <div className="relative w-full h-[200px]">
-        <Image
+        <img
           src={`${process.env.NEXT_PUBLIC_API_FILE_URL}${gambar}`}
           alt={judul}
-          fill
-          priority
-          className="object-cover rounded-t-md"
+          className="object-cover h-full w-full rounded-t-md"
         />
       </div>
 
