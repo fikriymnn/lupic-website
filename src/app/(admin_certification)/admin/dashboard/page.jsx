@@ -532,7 +532,7 @@ export default function AdminKnowledgeTest() {
                                     <Plus className="w-5 h-5" />
                                     Add Paket
                                 </button>
-                                
+
                                 <button
                                     onClick={() => setPage('access')}
                                     className="flex items-center gap-2 px-6 py-3 
@@ -554,41 +554,47 @@ export default function AdminKnowledgeTest() {
                         </div>
 
                         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 mb-6">
-                        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                            {pakets.map(paket => (
-                                <div key={paket._id} className="bg-white rounded-md shadow-md p-6 border border-gray-100">
-                                    <div className="flex justify-between items-start mb-4">
-                                        <h3 className="text-xl font-bold text-gray-800">{paket.paket}</h3>
-                                        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${paket.status === 'PREMIUM' ? 'bg-yellow-400 text-yellow-900' :
-                                            paket.status === 'GRATIS' ? 'bg-green-400 text-green-900' :
-                                                'bg-gray-400 text-gray-900'
-                                            }`}>
-                                            {paket.status}
-                                        </span>
+                            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                                {[...pakets].sort((a, b) => {
+                                    if (a.status === 'GRATIS') return -1;
+                                    if (b.status === 'GRATIS') return 1;
+                                    return 0;
+                                }).map(paket => (
+                                    <div key={paket._id} className="bg-white rounded-md shadow-md p-6 border border-gray-100">
+                                        <div className="flex justify-between items-start mb-4">
+                                            <h3 className="text-xl font-bold text-gray-800">{paket.paket}</h3>
+                                            <span className={`px-3 py-1 rounded-full text-xs font-semibold ${paket.status === 'PREMIUM' ? 'bg-yellow-400 text-yellow-900' :
+                                                paket.status === 'GRATIS' ? 'bg-green-400 text-green-900' :
+                                                    'bg-gray-400 text-gray-900'
+                                                }`}>
+                                                {paket.status}
+                                            </span>
+                                        </div>
+                                        <p className="text-gray-600 mb-4 text-sm">{paket.deskripsi}</p>
+                                        <div className="flex gap-2">
+                                            <button
+                                                onClick={() => {
+                                                    setSelectedPaket(paket);
+                                                    setPage('paket-detail');
+                                                }}
+
+                                                className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700"
+                                            >
+                                                <Eye className="w-4 h-4" />
+                                                Detail
+                                            </button>
+                                            {paket.status !== 'GRATIS' && (
+                                                <button
+                                                    onClick={() => handleDeletePaket(paket._id)}
+                                                    className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+                                                >
+                                                    <Trash2 className="w-4 h-4" />
+                                                </button>
+                                            )}
+                                        </div>
                                     </div>
-                                    <p className="text-gray-600 mb-4 text-sm">{paket.deskripsi}</p>
-                                    <div className="flex gap-2">
-                                        <button
-                                            onClick={() => {
-                                                setSelectedPaket(paket);
-                                                setPage('paket-detail');
-                                            }}
-                                            
-                                            className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700"
-                                        >
-                                            <Eye className="w-4 h-4" />
-                                            Detail
-                                        </button>
-                                        <button
-                                            onClick={() => handleDeletePaket(paket._id)}
-                                            className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
-                                        >
-                                            <Trash2 className="w-4 h-4" />
-                                        </button>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
 
