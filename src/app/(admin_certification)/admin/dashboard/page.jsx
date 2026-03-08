@@ -573,6 +573,7 @@ export default function AdminKnowledgeTest() {
                                                 setSelectedPaket(paket);
                                                 setPage('paket-detail');
                                             }}
+                                            
                                             className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700"
                                         >
                                             <Eye className="w-4 h-4" />
