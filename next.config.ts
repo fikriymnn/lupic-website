@@ -10,6 +10,11 @@ const nextConfig: NextConfig = {
         hostname: 'api.lupic.org',
         pathname: '**',
       },
+       {
+        protocol: 'https',
+        hostname: 'lupic-backend-six.vercel.app',
+        pathname: '**',
+      }
     ],
 },
  experimental: {
