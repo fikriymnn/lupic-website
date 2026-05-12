@@ -12,7 +12,6 @@ import CarouselHome from "@/components/carousel/CarouselHome";
 import HeroSection from "@/components/HeroSection";
 import axios from "axios";
 
-// Enhanced animation variants
 const fadeUp = {
   hidden: { opacity: 0, y: 60 },
   visible: {
@@ -41,7 +40,6 @@ const scaleIn = {
   },
 };
 
-// Skeleton Loading Component
 const NewsCardSkeleton = () => (
   <div className="bg-white rounded-xl shadow-md overflow-hidden animate-pulse">
     <div className="w-full h-48 bg-gray-200" />
@@ -92,7 +90,7 @@ export default function Home() {
     <>
       <Navbar />
 
-      {/* Hero Section with gradient overlay */}
+      {/* Hero Section */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -100,239 +98,220 @@ export default function Home() {
         className="relative"
       >
         <HeroSection />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/80 pointer-events-none" />
       </motion.div>
 
-      <main className="max-w-6xl mx-auto px-4 md:px-8">
-        {/* Carousel Section - Consistent spacing: py-16 md:py-20 */}
-        <section className="relative py-16 md:py-20 ">
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            className="relative"
-          >
-            <div className="absolute -inset-4 rounded-md -z-10 " />
-            <CarouselHome />
-          </motion.div>
-        </section>
+      <main className="w-full overflow-x-hidden">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 md:px-10">
 
-        {/* Goals Section - Consistent spacing: py-16 md:py-20 */}
-        <section ref={refGoals} className="relative py-16 md:py-20 overflow-hidden">
-          <div className="absolute top-0 left-1/4 w-96 h-96 rounded-full blur-3xl -z-10" />
-          <div className="absolute bottom-0 right-1/4 w-96 h-96 -z-10" />
-
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            animate={inViewGoals ? "visible" : "hidden"}
-          >
-            {/* Section Header */}
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12 md:mb-16">
-              <div className="space-y-2">
-                <span className="inline-block px-4 py-1.5 bg-koreaBlue/10 text-koreaBlue text-sm font-semibold rounded-full">
-                  Our Vision
-                </span>
-                <h2 className="text-3xl md:text-5xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent py-2">
-                  LUPIC Big Goals
-                </h2>
-                <p className="text-gray-600 text-base max-w-2xl">
-                  Empowering excellence through innovative education partnerships
-                </p>
-              </div>
-              <motion.a
-                href="/activities"
-                whileTap={{ scale: 0.95 }}
-                className="group flex items-center gap-2 bg-white px-6 py-3 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100"
-              >
-                <span className="text-koreaBlue font-semibold">Explore More</span>
-                <svg
-                  className="w-5 h-5 text-koreaBlue group-hover:translate-x-1 transition-transform"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </motion.a>
-            </div>
-
-            {/* Goals Image with modern styling */}
+          {/* Carousel Section */}
+          <section className="py-16 md:py-24">
             <motion.div
-              variants={scaleIn}
-              className="relative group"
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
             >
-              <div className="absolute -inset-1 rounded-md opacity-20 group-hover:opacity-30 blur transition-opacity" />
-              <div className="relative py-6 px-4 md:p-14 rounded-lg bg-white shadow-md border border-gray-100">
-                <Image
-                  src="/images/goals.png"
-                  alt="LUPIC Goals"
-                  width={1200}
-                  height={700}
-                  className="rounded-md w-full"
-                />
-              </div>
+              <CarouselHome />
             </motion.div>
-          </motion.div>
-        </section>
+          </section>
 
-        {/* Activities Section - Consistent spacing: py-16 md:py-20 */}
-        <section ref={refActivities} className="relative py-16 md:py-20 from-gray-50">
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            animate={inViewActivities ? "visible" : "hidden"}
-          >
-            <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
-              {/* Left Content */}
-              <div className="space-y-6">
-                <div className="inline-block">
-                  <span className="px-4 py-1.5 bg-koreaBlue/10 text-koreaBlue text-sm font-semibold rounded-full">
+          {/* Goals Section */}
+          <section ref={refGoals} className="py-16 md:py-24">
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              animate={inViewGoals ? "visible" : "hidden"}
+            >
+              {/* Section Header */}
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-12">
+                <div className="space-y-3">
+                  <span className="inline-block px-3 py-1 bg-koreaBlue/8 text-koreaBlue text-xs font-medium tracking-widest uppercase rounded-full">
+                    Our Vision
+                  </span>
+                  <h2 className="text-3xl md:text-4xl text-gray-900 leading-tight font-semibold tracking-tight">
+                    LUPIC{" "}
+                    <em className="not-italic font-semibold">Big Goals</em>
+                  </h2>
+                  <p className="text-gray-500 text-sm leading-relaxed max-w-md">
+                    Empowering excellence through innovative education partnerships
+                  </p>
+                </div>
+                <motion.a
+                  href="/activities"
+                  whileTap={{ scale: 0.95 }}
+                  className="group flex items-center gap-2 text-sm text-koreaBlue font-medium border border-koreaBlue/30 px-5 py-2.5 rounded-lg hover:bg-koreaBlue/5 transition-all duration-200 whitespace-nowrap"
+                >
+                  <span>Explore More</span>
+                  <svg
+                    className="w-4 h-4 group-hover:translate-x-1 transition-transform"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </motion.a>
+              </div>
+
+              {/* Goals Image */}
+              <motion.div variants={scaleIn}>
+                <div className="py-8 px-4 md:p-14 rounded-xl bg-white shadow-sm border border-gray-100">
+                  <Image
+                    src="/images/goals.png"
+                    alt="LUPIC Goals"
+                    width={1200}
+                    height={700}
+                    className="rounded-lg w-full h-auto"
+                  />
+                </div>
+              </motion.div>
+            </motion.div>
+          </section>
+
+          {/* Activities Section */}
+          <section ref={refActivities} className="py-16 md:py-24">
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              animate={inViewActivities ? "visible" : "hidden"}
+            >
+              <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+                {/* Left Content */}
+                <div className="space-y-4">
+                  <span className="inline-block px-3 py-1 bg-koreaBlue/8 text-koreaBlue text-xs font-medium tracking-widest uppercase rounded-full">
                     Our Services
                   </span>
+                  <h2 className="text-3xl md:text-4xl text-gray-900 leading-tight font-semibold tracking-tight">
+                    Main{" "}
+                    <em className="not-italic font-semibold">Activities</em>
+                  </h2>
+                  <p className="text-gray-500 text-sm leading-relaxed">
+                    Lupic's main activities revolve around cutting-edge research
+                    and innovation. Our dedicated team is committed to exploring
+                    uncharted territories, conducting in-depth analyses, and
+                    developing groundbreaking solutions.
+                  </p>
                 </div>
 
-                <h3 className="text-3xl md:text-5xl font-bold leading-tight bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
-                  Main Activities
-                </h3>
+                {/* Right Content - Activity Cards */}
+                <motion.div
+                  variants={staggerContainer}
+                  initial="hidden"
+                  animate={inViewActivities ? "visible" : "hidden"}
+                  className="space-y-4"
+                >
+                  {[
+                    {
+                      title: "Re-organization of department of partner",
+                      desc: "Supporting the construction or re-organization of departments or colleges of partner universities in developing countries.",
+                      color: "from-blue-500 to-cyan-500",
+                    },
+                    {
+                      title: "Training lecturers of partner",
+                      desc: "Training excellent lecturers or professors of partner universities through the Global Korea Scholarship (GKS) Program.",
+                      color: "from-purple-500 to-pink-500",
+                    },
+                    {
+                      title: "Operating programs",
+                      desc: "Operating various programs to contribute to local community developments.",
+                      color: "from-orange-500 to-red-500",
+                    },
+                  ].map((item, i) => (
+                    <motion.div key={i} variants={fadeUp} className="group relative">
+                      <div className={`absolute inset-0 bg-gradient-to-r ${item.color} opacity-0 group-hover:opacity-5 rounded-xl transition-opacity duration-300`} />
+                      <div className="relative bg-white rounded-xl p-5 shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100">
+                        <div className="flex items-start gap-4">
+                          <div className="flex-1">
+                            <h4 className="text-base font-semibold mb-2 text-gray-900 group-hover:text-koreaBlue transition-colors leading-snug">
+                              {item.title}
+                            </h4>
+                            <p className="text-gray-500 text-sm leading-relaxed">
+                              {item.desc}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </motion.div>
+              </div>
+            </motion.div>
+          </section>
 
-                <p className="text-gray-600 text-base leading-relaxed">
-                  Lupic's main activities revolve around cutting-edge research
-                  and innovation. Our dedicated team is committed to exploring
-                  uncharted territories, conducting in-depth analyses, and
-                  developing groundbreaking solutions.
+          {/* News Section */}
+          <section ref={refNews} className="py-16 md:py-24">
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              animate={inViewNews ? "visible" : "hidden"}
+            >
+              {/* Section Header */}
+              <div className="mb-10 space-y-3">
+                <span className="inline-block px-3 py-1 bg-koreaBlue/8 text-koreaBlue text-xs font-medium tracking-widest uppercase rounded-full">
+                  Update
+                </span>
+                <h2 className="text-3xl md:text-4xl text-gray-900 leading-tight font-semibold tracking-tight">
+                  Latest{" "}
+                  <em className="not-italic font-semibold">News</em>
+                </h2>
+                <p className="text-gray-500 text-sm max-w-md leading-relaxed">
+                  Discover the latest updates, achievements, and stories from LUPIC
                 </p>
               </div>
 
-              {/* Right Content - Activity Cards */}
+              {/* News Grid */}
               <motion.div
                 variants={staggerContainer}
-                initial="hidden"
-                animate={inViewActivities ? "visible" : "hidden"}
-                className="space-y-6"
+                className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-10"
               >
-                {[
-                  {
-                    title: "Re-organization of department of partner",
-                    desc: "Supporting the construction or re-organization of departments or colleges of partner universities in developing countries.",
-                    icon: "",
-                    color: "from-blue-500 to-cyan-500"
-                  },
-                  {
-                    title: "Training lecturers of partner",
-                    desc: "Training excellent lecturers or professors of partner universities through the Global Korea Scholarship (GKS) Program.",
-                    icon: "",
-                    color: "from-purple-500 to-pink-500"
-                  },
-                  {
-                    title: "Operating programs",
-                    desc: "Operating various programs to contribute to local community developments.",
-                    icon: "",
-                    color: "from-orange-500 to-red-500"
-                  },
-                ].map((item, i) => (
-                  <motion.div
-                    key={i}
-                    variants={fadeUp}
-                    className="group relative"
-                  >
-                    <div className={`absolute inset-0 bg-gradient-to-r ${item.color} opacity-0 group-hover:opacity-10 rounded-md transition-opacity duration-300`} />
-                    <div className="relative bg-white rounded-md p-6 shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100">
-                      <div className="flex items-start gap-4">
-                        <span className="text-4xl">{item.icon}</span>
-                        <div className="flex-1">
-                          <h4 className="text-xl font-bold mb-3 text-gray-900 group-hover:text-koreaBlue transition-colors">
-                            {item.title}
-                          </h4>
-                          <p className="text-gray-600 leading-relaxed">
-                            {item.desc}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
+                {loading ? (
+                  <>
+                    <NewsCardSkeleton />
+                    <NewsCardSkeleton />
+                    <NewsCardSkeleton />
+                  </>
+                ) : (
+                  data.map((v, i) => (
+                    <motion.div
+                      key={i}
+                      variants={fadeUp}
+                      whileHover={{ y: -6 }}
+                      transition={{ duration: 0.25 }}
+                    >
+                      <CardNews
+                        tanggal={v.tanggal}
+                        judul={v.judul}
+                        deskripsi={v.deskripsi}
+                        gambar={v.gambar}
+                        id={v._id}
+                      />
+                    </motion.div>
+                  ))
+                )}
               </motion.div>
-            </div>
-          </motion.div>
-        </section>
 
-        {/* News Section - Consistent spacing: py-16 md:py-20 */}
-        <section ref={refNews} className="relative py-16 md:py-20">
-          <div className="absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
-
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            animate={inViewNews ? "visible" : "hidden"}
-          >
-            {/* Section Header */}
-            <div className="text-start mb-12 space-y-4">
-              <span className="inline-block px-4 py-1.5 bg-koreaBlue/10 text-koreaBlue text-sm font-semibold rounded-full">
-                Update
-              </span>
-              <h3 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 bg-clip-text text-transparent">
-                Latest News
-              </h3>
-              <p className="text-gray-600 text-base max-w-2xl">
-                Discover the latest updates, achievements, and stories from LUPIC
-              </p>
-            </div>
-
-            {/* News Grid with Skeleton Loading */}
-            <motion.div
-              variants={staggerContainer}
-              className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12"
-            >
-              {loading ? (
-                // Show skeleton loaders while loading
-                <>
-                  <NewsCardSkeleton />
-                  <NewsCardSkeleton />
-                  <NewsCardSkeleton />
-                </>
-              ) : (
-                // Show actual news cards when loaded
-                data.map((v, i) => (
-                  <motion.div
-                    key={i}
-                    variants={fadeUp}
-                    whileHover={{ y: -10 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <CardNews
-                      tanggal={v.tanggal}
-                      judul={v.judul}
-                      deskripsi={v.deskripsi}
-                      gambar={v.gambar}
-                      id={v._id}
-                    />
-                  </motion.div>
-                ))
-              )}
-            </motion.div>
-
-            {/* CTA Button */}
-            <div className="flex justify-center">
-              <motion.a
-                href="/news"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="group relative inline-flex items-center gap-3 bg-gradient-to-r from-koreaRed to-red-600 hover:from-koreaRed/90 hover:to-red-700 text-white font-semibold rounded-xl px-8 py-4 shadow-md hover:shadow-xl transition-all duration-300"
-              >
-                <span className="text-sm">Read More News</span>
-                <svg
-                  className="w-5 h-5 group-hover:translate-x-1 transition-transform"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+              {/* CTA Button */}
+              <div className="flex justify-center">
+                <motion.a
+                  href="/news"
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="group inline-flex items-center gap-2.5 bg-gray-900 hover:bg-gray-800 text-white text-sm font-medium rounded-xl px-7 py-3.5 transition-all duration-200"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </motion.a>
-            </div>
-          </motion.div>
-        </section>
+                  <span>Read More News</span>
+                  <svg
+                    className="w-4 h-4 group-hover:translate-x-1 transition-transform"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </motion.a>
+              </div>
+            </motion.div>
+          </section>
+
+        </div>
       </main>
 
       <footer className="w-full">

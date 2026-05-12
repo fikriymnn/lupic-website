@@ -12,20 +12,24 @@ export default function AdminCardNews({ judul, deskripsi, tanggal, id, gambar })
   const onDelete = async (e) => {
     e.preventDefault();
     if (!confirm("Apakah Anda yakin ingin menghapus berita ini?")) return;
-    
+
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/news/${id}`, {
         method: 'DELETE'
       });
-      const data = await response.json();
-      
+
+      // Gunakan response.text() karena backend mengirim string
+      const data = await response.text();
+
       if (data === "success") {
         alert("Berhasil menghapus berita");
         window.location.reload();
+      } else {
+        alert("Gagal menghapus berita");
       }
     } catch (err) {
       console.error("Error deleting news:", err);
-      alert("Gagal menghapus berita");
+      alert("Terjadi kesalahan saat menghapus berita");
     }
   };
 

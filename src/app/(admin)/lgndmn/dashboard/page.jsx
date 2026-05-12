@@ -9,7 +9,7 @@ export default function HomeContent() {
   const [id, setId] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  
+
   // State untuk semua field
   const [heroSection, setHeroSection] = useState("");
   const [heroTitle, setHeroTitle] = useState("");
@@ -17,13 +17,13 @@ export default function HomeContent() {
   const [heroPartner, setHeroPartner] = useState("");
   const [footerPartner, setFooterPartner] = useState("");
   const [carousel, setCarousel] = useState([]);
-  
+
   // State untuk file upload
   const [fileHeroSection, setFileHeroSection] = useState(null);
   const [fileHeroPartner, setFileHeroPartner] = useState(null);
   const [fileFooterPartner, setFileFooterPartner] = useState(null);
   const [fileCarousel, setFileCarousel] = useState(null);
-  
+
   // Loading state untuk setiap section
   const [uploadingHeroSection, setUploadingHeroSection] = useState(false);
   const [uploadingHeroPartner, setUploadingHeroPartner] = useState(false);
@@ -37,7 +37,7 @@ export default function HomeContent() {
       try {
         const response = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/home");
         const data = response.data;
-        
+
         setId(data._id);
         setHeroSection(data.hero_section || "");
         setHeroTitle(data.hero_title || "");
@@ -45,7 +45,7 @@ export default function HomeContent() {
         setHeroPartner(data.hero_partner || "");
         setFooterPartner(data.footer_partner || "");
         setCarousel(Array.isArray(data.carousel) ? data.carousel : []);
-        
+
         console.log("Data loaded:", data);
       } catch (err) {
         console.log("Error loading data:", err.message);
@@ -61,36 +61,39 @@ export default function HomeContent() {
   const uploadFile = async (file) => {
     const formData = new FormData();
     formData.append('file', file);
-    
+
     const response = await axios.post(
-      process.env.NEXT_PUBLIC_API_STORAGE + "/api/file", 
+      process.env.NEXT_PUBLIC_API_STORAGE + "/api/file",
       formData,
       {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+        headers: { 'Content-Type': 'multipart/form-data' },
       }
     );
-    
-    return response.data;
+
+    // Jika response.data adalah object {filename: "..."}, sesuaikan di sini
+    // Berdasarkan router: res.send(fileUrl) → response.data adalah string langsung
+    return typeof response.data === 'string' ? response.data : response.data.filename;
   };
 
   // Update data helper
   const updateHomeData = async (updates) => {
-    await axios.put(
-      process.env.NEXT_PUBLIC_API_URL + "/api/home/" + id,
-      {
-        hero_section: heroSection,
-        carousel: carousel,
-        hero_partner: heroPartner,
-        footer_partner: footerPartner,
-        hero_title: heroTitle,
-        hero_description: heroDescription,
-        ...updates
-      }
-    );
-  };
+    const payload = {
+      hero_section: heroSection,
+      carousel: carousel,
+      hero_partner: heroPartner,
+      footer_partner: footerPartner,
+      hero_title: heroTitle,
+      hero_description: heroDescription,
+      ...updates  // override field yang diupdate
+    };
 
+    const response = await axios.put(
+      process.env.NEXT_PUBLIC_API_URL + "/api/home/" + id,
+      payload
+    );
+
+    return response.data;
+  };
   // Handle Hero Section Upload
   const handleHeroSectionSubmit = async (e) => {
     e.preventDefault();
@@ -98,7 +101,7 @@ export default function HomeContent() {
       alert("Pilih file terlebih dahulu!");
       return;
     }
-    
+
     setUploadingHeroSection(true);
     try {
       const uploadedFile = await uploadFile(fileHeroSection);
@@ -121,7 +124,7 @@ export default function HomeContent() {
       alert("Pilih file terlebih dahulu!");
       return;
     }
-    
+
     setUploadingHeroPartner(true);
     try {
       const uploadedFile = await uploadFile(fileHeroPartner);
@@ -144,7 +147,7 @@ export default function HomeContent() {
       alert("Pilih file terlebih dahulu!");
       return;
     }
-    
+
     setUploadingFooterPartner(true);
     try {
       const uploadedFile = await uploadFile(fileFooterPartner);
@@ -185,7 +188,7 @@ export default function HomeContent() {
       alert("Pilih file terlebih dahulu!");
       return;
     }
-    
+
     setUploadingCarousel(true);
     try {
       const uploadedFile = await uploadFile(fileCarousel);
@@ -207,7 +210,7 @@ export default function HomeContent() {
     if (!window.confirm("Apakah Anda yakin ingin menghapus gambar ini?")) {
       return;
     }
-    
+
     try {
       const newCarousel = [...carousel];
       newCarousel.splice(index, 1);
@@ -236,7 +239,7 @@ export default function HomeContent() {
     <div className="flex min-h-screen bg-gray-50">
       <Sidebar />
       <div className="w-64 flex-shrink-0"></div>
-      
+
       <div className="flex-1 p-6 lg:p-8">
         {/* Header Section */}
         <div className="mb-8">
@@ -320,10 +323,10 @@ export default function HomeContent() {
 
             {heroSection && (
               <div className="mb-6 rounded-lg overflow-hidden border border-gray-200">
-                <Image 
-                  alt="Hero Section" 
-                  src={`${process.env.NEXT_PUBLIC_API_FILE_URL}${heroSection}`} 
-                  width={1000} 
+                <Image
+                  alt="Hero Section"
+                  src={`${process.env.NEXT_PUBLIC_API_FILE_URL}${heroSection}`}
+                  width={1000}
                   height={400}
                   className="w-full h-auto"
                 />
@@ -373,10 +376,10 @@ export default function HomeContent() {
 
             {heroPartner && (
               <div className="mb-6 rounded-lg overflow-hidden border border-gray-200">
-                <Image 
-                  alt="Hero Partner" 
-                  src={`${process.env.NEXT_PUBLIC_API_FILE_URL}${heroPartner}`} 
-                  width={800} 
+                <Image
+                  alt="Hero Partner"
+                  src={`${process.env.NEXT_PUBLIC_API_FILE_URL}${heroPartner}`}
+                  width={800}
                   height={300}
                   className="w-full h-auto"
                 />
@@ -426,10 +429,10 @@ export default function HomeContent() {
 
             {footerPartner && (
               <div className="mb-6 rounded-lg overflow-hidden border border-gray-200">
-                <Image 
-                  alt="Footer Partner" 
-                  src={`${process.env.NEXT_PUBLIC_API_FILE_URL}${footerPartner}`} 
-                  width={800} 
+                <Image
+                  alt="Footer Partner"
+                  src={`${process.env.NEXT_PUBLIC_API_FILE_URL}${footerPartner}`}
+                  width={800}
                   height={300}
                   className="w-full h-auto"
                 />
@@ -510,7 +513,7 @@ export default function HomeContent() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {carousel.map((img, index) => (
                   <div key={index} className="relative group rounded-lg overflow-hidden border border-gray-200 hover:shadow-lg transition-shadow">
-                    <Image 
+                    <Image
                       alt={`Carousel ${index + 1}`}
                       src={`${process.env.NEXT_PUBLIC_API_FILE_URL}${img}`}
                       width={400}
