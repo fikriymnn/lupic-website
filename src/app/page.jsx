@@ -101,7 +101,7 @@ export default function Home() {
       </motion.div>
 
       <main className="w-full overflow-x-hidden">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 md:px-10">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10">
 
           {/* Carousel Section */}
           <section className="py-16 md:py-24">
@@ -238,7 +238,8 @@ export default function Home() {
           </section>
 
           {/* News Section */}
-          <section ref={refNews} className="py-16 md:py-24">
+          <section ref={refNews} className="py-16 md:py-24 overflow-hidden">
+            {/* ✅ overflow-hidden mencegah konten melebihi batas section */}
             <motion.div
               variants={fadeUp}
               initial="hidden"
@@ -261,7 +262,8 @@ export default function Home() {
               {/* News Grid */}
               <motion.div
                 variants={staggerContainer}
-                className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-10"
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-10 w-full"
+              // ✅ Tambah grid-cols-1 untuk mobile + w-full
               >
                 {loading ? (
                   <>
@@ -276,6 +278,8 @@ export default function Home() {
                       variants={fadeUp}
                       whileHover={{ y: -6 }}
                       transition={{ duration: 0.25 }}
+                      className="w-full min-w-0"
+                    // ✅ min-w-0 mencegah flex/grid item overflow
                     >
                       <CardNews
                         tanggal={v.tanggal}

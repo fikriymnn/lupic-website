@@ -40,7 +40,7 @@ export default function Activities() {
         <>
             <Navbar />
             <div className="md:block grid grid-cols-1 justify-items-center md:justify-items-start max-w-6xl md:px-8 px-4 mx-auto mb-8 pt-16">
-                <h1 className="md:text-5xl text-2xl md:mt-10 font-bold">
+                <h1 className="md:text-4xl text-2xl md:mt-10 font-bold">
                     Our Goals
                 </h1>
                 <div className="h-1 w-36 bg-koreaRed md:mt-3 mt-2"></div>
@@ -196,7 +196,7 @@ export default function Activities() {
                             </div>
                         </div>
 
-                        <div>
+                        {/* <div>
                             <h3 className="md:mt-7 mt-2 text-koreaRed text-xl font-bold">Third year</h3>
                             <div className="flex justify-between cursor-pointer" onClick={(e) => { e.preventDefault(); setActive3(!active3) }}>
                                 <h1 className="md:text-3xl text-2xl mt-2 font-bold">Activities</h1>
@@ -257,9 +257,9 @@ export default function Activities() {
                                     </table>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
 
-                        <div>
+                        {/* <div>
                             <h3 className="md:mt-7 mt-2 text-koreaRed text-xl font-bold">Fourth year</h3>
                             <div className="flex justify-between cursor-pointer" onClick={(e) => { e.preventDefault(); setActive4(!active4) }}>
                                 <h1 className="md:text-3xl text-2xl mt-2 font-bold">Activities</h1>
@@ -320,9 +320,9 @@ export default function Activities() {
                                     </table>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
 
-                        <div>
+                        {/* <div>
                             <h3 className="md:mt-7 mt-2 text-koreaRed text-xl font-bold">Fifth year</h3>
                             <div className="flex justify-between cursor-pointer" onClick={(e) => { e.preventDefault(); setActive5(!active5) }}>
                                 <h1 className="md:text-3xl text-2xl mt-2 font-bold">Activities</h1>
@@ -383,9 +383,9 @@ export default function Activities() {
                                     </table>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
 
-                        <div>
+                        {/* <div>
                             <h3 className="md:mt-7 mt-2 text-koreaRed text-xl font-bold">Sixth  year</h3>
                             <div className="flex justify-between cursor-pointer" onClick={(e) => { e.preventDefault(); setActive6(!active6) }}>
                                 <h1 className="md:text-3xl text-2xl mt-2 font-bold">Activities</h1>
@@ -446,7 +446,7 @@ export default function Activities() {
                                     </table>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>
