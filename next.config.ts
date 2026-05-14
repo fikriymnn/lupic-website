@@ -3,13 +3,23 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   images: {
-    domains: ['localhost', 'example.com','lupic-backend.vercel.app','api.lupic.org','img.youtube.com','images.unsplash.com','apibe.lupic.org'], // Tambahkan 'localhost' di sini
+    domains: ['localhost', 'example.com','lupic-backend.vercel.app','api.lupic.org','apibe.lupic.org','img.youtube.com','images.unsplash.com','lupic-backend-six.vercel.app','apibe.lupic.org'], // Tambahkan 'localhost' di sini
     remotePatterns: [
       {
         protocol: 'https',
         hostname: 'api.lupic.org',
         pathname: '**',
       },
+       {
+        protocol: 'https',
+        hostname: 'apibe.lupic.org',
+        pathname: '**',
+      },
+       {
+        protocol: 'https',
+        hostname: 'lupic-backend-six.vercel.app',
+        pathname: '**',
+      }
     ],
 },
  experimental: {
