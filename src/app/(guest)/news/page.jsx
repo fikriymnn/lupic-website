@@ -49,7 +49,6 @@ const SectionHeader = ({ title, onClear }) => (
   <div className="flex items-end justify-between w-full mb-6">
     <div className="space-y-2">
       <h2 className="text-2xl md:text-3xl font-bold text-gray-900">{title}</h2>
-      <div className="h-1 w-12 bg-koreaRed rounded-full" />
     </div>
     {onClear && (
       <button
