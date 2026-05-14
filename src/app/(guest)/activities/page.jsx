@@ -5,452 +5,197 @@ import CustomFooter from "@/components/CustomFooter"
 import CarouselActivities from "@/components/carousel/CarouselActivities"
 import Image from "next/image"
 import TableDataActivities from "@/components/table/TableDataActivities"
-// import TableActivities2 from "@/components/table/TableActivities2"
 import InformationDropdown1 from "@/components/dropdown/information/InformationDropdown1"
 import InformationDropdown2 from "@/components/dropdown/information/InformationDropdown2"
 import InformationDropdown3 from "@/components/dropdown/information/InformationDropdown3"
 import InformationDropdown4 from "@/components/dropdown/information/InformationDropdown4"
 import axios from "axios"
 
-export default function Activities() {
-    const [active, setActive] = useState(true)
-    const [active2, setActive2] = useState(true)
-    const [active3, setActive3] = useState(true)
-    const [active4, setActive4] = useState(true)
-    const [active5, setActive5] = useState(true)
-    const [active6, setActive6] = useState(true)
-    const [data, setData] = useState([])
+// ─── Reusable Activity Table ──────────────────────────────────────────────────
 
-    useEffect(() => {
-        async function getData() {
-            try {
-                const Data = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/activity_goals")
-                if (Data.data) {
-                    setData(Data.data)
+const ActivityTable = ({ data, yearKey, label, active, onToggle }) => (
+  <div>
+    <p className="text-koreaRed text-xs font-semibold tracking-widest uppercase mt-2">
+      {label}
+    </p>
+    <div
+      className="flex justify-between items-center cursor-pointer mt-1"
+      onClick={onToggle}
+    >
+      <h2 className="text-2xl md:text-3xl font-semibold text-gray-900">Activities</h2>
+      <button onClick={(e) => { e.stopPropagation(); onToggle() }}>
+        <Image
+          className={`transition-transform duration-300 ${active ? "" : "rotate-180"}`}
+          src="/images/logoAbout/up.svg"
+          width={24}
+          height={24}
+          alt="toggle"
+        />
+      </button>
+    </div>
+    <div className="h-px w-full mt-3 bg-koreaRed mb-2" />
 
-                }
-            } catch (err) {
-                console.log(err.message)
+    <div className={`${active ? "hidden" : "block"} w-full`}>
+      {/* Desktop Table */}
+      <table className="w-full text-center mt-5 md:table hidden">
+        <thead>
+          <tr className="text-sm bg-koreaBlueMuda">
+            <th className="py-3 w-[30rem]">NO</th>
+            <th className="py-3 w-[200rem]">GOALS</th>
+            <th className="py-3 w-[100rem]">UPI</th>
+            <th className="py-3 w-[100rem]">UNNES</th>
+            <th className="py-3 w-[100rem]">UNDIKSHA</th>
+          </tr>
+        </thead>
+        <tbody className="text-sm">
+          {data && data.map((v, i) => {
+            if (v[yearKey]?.upi || v[yearKey]?.unnes || v[yearKey]?.undiksha) {
+              return (
+                <TableDataActivities
+                  key={i}
+                  point={v.point}
+                  sub_point={v.sub_point}
+                  sub_sub_point={v.sub_sub_point}
+                  text={v.text}
+                  upi={v[yearKey]?.upi || ""}
+                  unnes={v[yearKey]?.unnes}
+                  undiksha={v[yearKey]?.undiksha}
+                />
+              )
             }
-        }
-        getData()
-    }, [])
+          })}
+        </tbody>
+      </table>
 
-    return (
-        <>
-            <Navbar />
-            <div className="md:block grid grid-cols-1 justify-items-center md:justify-items-start max-w-6xl md:px-8 px-4 mx-auto mb-8 pt-16">
-                <h1 className="md:text-5xl text-2xl md:mt-10 font-bold">
-                    Our Goals
-                </h1>
-                <div className="h-1 w-36 bg-koreaRed md:mt-3 mt-2"></div>
+      {/* Mobile Table */}
+      <div className="w-full overflow-x-auto md:hidden block">
+        <table className="w-[550px] text-center mt-5">
+          <thead>
+            <tr className="text-sm bg-koreaBlueMuda shadow-sm">
+              <th className="py-3 w-[30rem]">NO</th>
+              <th className="py-3 w-[200rem]">GOALS</th>
+              <th className="py-3 w-[100rem]">UPI</th>
+              <th className="py-3 w-[100rem]">UNNES</th>
+              <th className="py-3 w-[100rem]">UNDIKSHA</th>
+            </tr>
+          </thead>
+          <tbody className="text-xs">
+            {data && data.map((v, i) => {
+              if (v[yearKey]?.upi || v[yearKey]?.unnes || v[yearKey]?.undiksha) {
+                return (
+                  <TableDataActivities
+                    key={i}
+                    point={v.point}
+                    sub_point={v.sub_point}
+                    sub_sub_point={v.sub_sub_point}
+                    text={v.text}
+                    upi={v[yearKey]?.upi || ""}
+                    unnes={v[yearKey]?.unnes}
+                    undiksha={v[yearKey]?.undiksha}
+                  />
+                )
+              }
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+)
+
+// ─── Page ─────────────────────────────────────────────────────────────────────
+
+export default function Activities() {
+  const [active, setActive] = useState(true)
+  const [active2, setActive2] = useState(true)
+  const [data, setData] = useState([])
+
+  useEffect(() => {
+    async function getData() {
+      try {
+        const Data = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/activity_goals")
+        if (Data.data) setData(Data.data)
+      } catch (err) {
+        console.log(err.message)
+      }
+    }
+    getData()
+  }, [])
+
+  return (
+    <>
+      <Navbar />
+
+      <main className="w-full overflow-x-hidden">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10">
+
+          {/* ── Our Goals ── */}
+          <section className="py-16 md:py-24">
+            <div className="mb-10 space-y-3">
+              <span className="inline-block px-3 py-1 bg-koreaBlue/8 text-koreaBlue text-xs font-medium tracking-widest uppercase rounded-full">
+                Our Vision
+              </span>
+              <h2 className="text-3xl md:text-4xl text-gray-900 leading-tight font-semibold tracking-tight">
+                Our{" "}
+                <em className="not-italic font-semibold">Goals</em>
+              </h2>
             </div>
-            <div className="max-w-6xl mx-auto px-4 md:px-8 flex justify-center">
-                <CarouselActivities />
+            <CarouselActivities />
+          </section>
+
+          {/* ── Information Dropdowns ── */}
+          <section className="py-16 md:py-24">
+            <div className="mb-10 space-y-3">
+              <span className="inline-block px-3 py-1 bg-koreaBlue/8 text-koreaBlue text-xs font-medium tracking-widest uppercase rounded-full">
+                Details
+              </span>
+              <h2 className="text-3xl md:text-4xl text-gray-900 leading-tight font-semibold tracking-tight">
+                More{" "}
+                <em className="not-italic font-semibold">Information</em>
+              </h2>
             </div>
-            
-            <div className="max-w-6xl mx-auto px-4 md:px-8">
-                <div className="mt-5 m-auto pb-16">
-                    <div className="md:mt-10 mt-7">
-                        <div className="my-10">
-                            <InformationDropdown1 />
-                        </div>
-                        <div className="my-10">
-                            <InformationDropdown2 />
-                        </div>
-                        <div className="my-10">
-                            <InformationDropdown3 />
-                        </div>
-                        <div className="my-10">
-                            <InformationDropdown4 />
-                        </div>
-
-                    </div>
-                </div>
-                <div className="mb-20 w-full">
-                    <div className="m-auto">
-                        <div className="w-full">
-                            <h3 className="md:mt-7 mt-2 text-koreaRed text-xl font-bold">First year</h3>
-                            <div className="flex justify-between cursor-pointer" onClick={(e) => { e.preventDefault(); setActive(!active) }}>
-                                <h1 className="md:text-3xl text-2xl mt-2 font-bold">Activities</h1>
-                                <button className="" onClick={(e) => { e.preventDefault(); setActive(!active) }}>
-                                    <Image className={active ? "" : "rotate-180"} src={"/images/logoAbout/up.svg"} width={30} height={30} alt="foto" />
-                                </button>
-                            </div>
-                            <div className="h-1 w-full mt-3 bg-koreaRed mb-2">
-
-                            </div>
-                            <div className={`${active ? "hidden" : "block"} w-full`}>
-                                <table className="w-full b0 text-center align-center mt-5 md:block hidden">
-
-                                    <thead className="">
-                                        <tr className="text-lg bg-koreaBlueMuda  ">
-                                            <th className="py-4 w-[30rem]">NO</th>
-                                            <th className="py-4 w-[200rem]">GOALS</th>
-                                            <th className="py-4 w-[100rem]">UPI</th>
-                                            <th className="py-4 w-[100rem]">UNNES</th>
-                                            <th className="py-4 w-[100rem]">UNDIKSHA</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="md:text-base text-xs">
-                                        {
-                                            data && data.map((v, i) => {
-                                                if (v.year_1?.upi || v.year_1?.unnes || v.year_1?.undiksha) {
-
-                                                    return (
-                                                        <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_1?.upi || ""} unnes={v.year_1?.unnes} undiksha={v.year_1?.undiksha} />
-                                                    )
-                                                }
-                                            })
-                                        }
-
-                                    </tbody>
-                                </table>
-                                <div className="md:w-[80%] w-full overflow-x-auto md:hidden block ">
-                                    <table className="w-[550px] text-center align-center mt-5 ">
-                                        <thead className="">
-                                            <tr className="text-lg bg-koreaBlueMuda  shadow-lg">
-                                                <th className="py-4 text-sm w-[30rem]">NO</th>
-                                                <th className="py-4 text-sm w-[200rem]">GOALS</th>
-                                                <th className="py-4 text-sm w-[100rem]">UPI</th>
-                                                <th className="py-4 text-sm w-[100rem]">UNNES</th>
-                                                <th className="py-4 text-sm w-[100rem]">UNDIKSHA</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody className="md:text-base text-xs">
-                                            {
-                                                data && data.map((v, i) => {
-                                                    if (v.year_1?.upi || v.year_1?.unnes || v.year_1?.undiksha) {
-                                                        return (
-                                                            <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_1?.upi || ""} unnes={v.year_1?.unnes} undiksha={v.year_1?.undiksha} />
-                                                        )
-                                                    }
-                                                })
-                                            }
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <h3 className="md:mt-7 mt-2 text-koreaRed text-xl font-bold">Second year</h3>
-                            <div className="flex justify-between cursor-pointer" onClick={(e) => { e.preventDefault(); setActive2(!active2) }}>
-                                <h1 className="md:text-3xl text-2xl mt-2 font-bold">Activities</h1>
-                                <button className="" onClick={(e) => { e.preventDefault(); setActive2(!active2) }}>
-                                    <Image className={active2 ? "" : "rotate-180"} src={"/images/logoAbout/up.svg"} width={30} height={30} alt="foto" />
-                                </button>
-                            </div>
-                            <div className="h-1 w-full mt-3 bg-koreaRed mb-2">
-
-                            </div>
-                            <div className={active2 ? "hidden" : "block"}>
-                                <table className="w-full text-center align-center mt-5 md:block hidden">
-                                    <thead className="">
-                                        <tr className="text-lg bg-koreaBlueMuda rounded-xl">
-                                            <th className="py-4 w-[30rem]">NO</th>
-                                            <th className="py-4 w-[200rem]">GOALS</th>
-                                            <th className="py-4 w-[100rem]">UPI</th>
-                                            <th className="py-4 w-[100rem]">UNNES</th>
-                                            <th className="py-4 w-[100rem]">UNDIKSHA</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="md:text-base text-xs">
-                                        {
-                                            data && data.map((v, i) => {
-                                                if (v.year_2?.upi || v.year_2?.unnes || v.year_2?.undiksha) {
-                                                    return (
-                                                        <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_2?.upi || ""} unnes={v.year_2?.unnes} undiksha={v.year_2?.undiksha} />
-                                                    )
-                                                }
-                                            })
-                                        }
-
-                                    </tbody>
-                                </table>
-                                <div className="md:w-[80%] w-full overflow-x-auto md:hidden block rounded-xl">
-                                    <table className="w-[550px] text-center align-center mt-5 rounded-xl">
-                                        <thead className="rounded-xl">
-                                            <tr className="text-lg bg-koreaBlueMuda rounded-xl shadow-lg">
-                                                <th className="py-4 text-sm w-[30rem]">NO</th>
-                                                <th className="py-4 text-sm w-[200rem]">GOALS</th>
-                                                <th className="py-4 text-sm w-[100rem]">UPI</th>
-                                                <th className="py-4 text-sm w-[100rem]">UNNES</th>
-                                                <th className="py-4 text-sm w-[100rem]">UNDIKSHA</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody className="md:text-base text-xs">
-                                            {
-                                                data && data.map((v, i) => {
-                                                    if (v.year_2?.upi || v.year_2?.unnes || v.year_2?.undiksha) {
-                                                        return (
-                                                            <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_2?.upi || ""} unnes={v.year_2?.unnes} undiksha={v.year_2?.undiksha} />
-                                                        )
-                                                    }
-                                                })
-                                            }
-
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <h3 className="md:mt-7 mt-2 text-koreaRed text-xl font-bold">Third year</h3>
-                            <div className="flex justify-between cursor-pointer" onClick={(e) => { e.preventDefault(); setActive3(!active3) }}>
-                                <h1 className="md:text-3xl text-2xl mt-2 font-bold">Activities</h1>
-                                <button className="" onClick={(e) => { e.preventDefault(); setActive3(!active3) }}>
-                                    <Image className={active3 ? "" : "rotate-180"} src={"/images/logoAbout/up.svg"} width={30} height={30} alt="foto" />
-                                </button>
-                            </div>
-                            <div className="h-1 w-full mt-3 bg-koreaRed mb-2">
-
-                            </div>
-                            <div className={active3 ? "hidden" : "block"}>
-                                <table className="w-full text-center align-center mt-5 md:block hidden">
-                                    <thead className="">
-                                        <tr className="text-lg bg-koreaBlueMuda rounded-xl">
-                                            <th className="py-4 w-[30rem]">NO</th>
-                                            <th className="py-4 w-[200rem]">GOALS</th>
-                                            <th className="py-4 w-[100rem]">UPI</th>
-                                            <th className="py-4 w-[100rem]">UNNES</th>
-                                            <th className="py-4 w-[100rem]">UNDIKSHA</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="md:text-base text-xs">
-                                        {
-                                            data && data.map((v, i) => {
-                                                if (v.year_3?.upi || v.year_3?.unnes || v.year_3?.undiksha) {
-                                                    return (
-                                                        <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_3?.upi || ""} unnes={v.year_3?.unnes} undiksha={v.year_3?.undiksha} />
-                                                    )
-                                                }
-                                            })
-                                        }
-
-                                    </tbody>
-                                </table>
-                                <div className="md:w-[80%] w-full overflow-x-auto md:hidden block rounded-xl">
-                                    <table className="w-[550px] text-center align-center mt-5 rounded-xl">
-                                        <thead className="rounded-xl">
-                                            <tr className="text-lg bg-koreaBlueMuda rounded-xl shadow-lg">
-                                                <th className="py-4 text-sm w-[30rem]">NO</th>
-                                                <th className="py-4 text-sm w-[200rem]">GOALS</th>
-                                                <th className="py-4 text-sm w-[100rem]">UPI</th>
-                                                <th className="py-4 text-sm w-[100rem]">UNNES</th>
-                                                <th className="py-4 text-sm w-[100rem]">UNDIKSHA</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody className="md:text-base text-xs">
-                                            {
-                                                data && data.map((v, i) => {
-                                                    if (v.year_3?.upi || v.year_3?.unnes || v.year_3?.undiksha) {
-                                                        return (
-                                                            <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_3?.upi || ""} unnes={v.year_3?.unnes} undiksha={v.year_3?.undiksha} />
-                                                        )
-                                                    }
-                                                })
-                                            }
-
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <h3 className="md:mt-7 mt-2 text-koreaRed text-xl font-bold">Fourth year</h3>
-                            <div className="flex justify-between cursor-pointer" onClick={(e) => { e.preventDefault(); setActive4(!active4) }}>
-                                <h1 className="md:text-3xl text-2xl mt-2 font-bold">Activities</h1>
-                                <button className="" onClick={(e) => { e.preventDefault(); setActive4(!active4) }}>
-                                    <Image className={active4 ? "" : "rotate-180"} src={"/images/logoAbout/up.svg"} width={30} height={30} alt="foto" />
-                                </button>
-                            </div>
-                            <div className="h-1 w-full mt-3 bg-koreaRed mb-2">
-
-                            </div>
-                            <div className={active4 ? "hidden" : "block"}>
-                                <table className="w-full text-center align-center mt-5 md:block hidden">
-                                    <thead className="">
-                                        <tr className="text-lg bg-koreaBlueMuda rounded-xl">
-                                            <th className="py-4 w-[30rem]">NO</th>
-                                            <th className="py-4 w-[200rem]">GOALS</th>
-                                            <th className="py-4 w-[100rem]">UPI</th>
-                                            <th className="py-4 w-[100rem]">UNNES</th>
-                                            <th className="py-4 w-[100rem]">UNDIKSHA</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="md:text-base text-xs">
-                                        {
-                                            data && data.map((v, i) => {
-                                                if (v.year_4?.upi || v.year_4?.unnes || v.year_4?.undiksha) {
-                                                    return (
-                                                        <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_4?.upi || ""} unnes={v.year_4?.unnes} undiksha={v.year_4?.undiksha} />
-                                                    )
-                                                }
-                                            })
-                                        }
-
-                                    </tbody>
-                                </table>
-                                <div className="md:w-[80%] w-full overflow-x-auto md:hidden block rounded-xl">
-                                    <table className="w-[550px] text-center align-center mt-5 rounded-xl">
-                                        <thead className="rounded-xl">
-                                            <tr className="text-lg bg-koreaBlueMuda rounded-xl shadow-lg">
-                                                <th className="py-4 text-sm w-[30rem]">NO</th>
-                                                <th className="py-4 text-sm w-[200rem]">GOALS</th>
-                                                <th className="py-4 text-sm w-[100rem]">UPI</th>
-                                                <th className="py-4 text-sm w-[100rem]">UNNES</th>
-                                                <th className="py-4 text-sm w-[100rem]">UNDIKSHA</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody className="md:text-base text-xs">
-                                            {
-                                                data && data.map((v, i) => {
-                                                    if (v.year_4?.upi || v.year_4?.unnes || v.year_4?.undiksha) {
-                                                        return (
-                                                            <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_4?.upi || ""} unnes={v.year_4?.unnes} undiksha={v.year_4?.undiksha} />
-                                                        )
-                                                    }
-                                                })
-                                            }
-
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <h3 className="md:mt-7 mt-2 text-koreaRed text-xl font-bold">Fifth year</h3>
-                            <div className="flex justify-between cursor-pointer" onClick={(e) => { e.preventDefault(); setActive5(!active5) }}>
-                                <h1 className="md:text-3xl text-2xl mt-2 font-bold">Activities</h1>
-                                <button className="" onClick={(e) => { e.preventDefault(); setActive5(!active5) }}>
-                                    <Image className={active5 ? "" : "rotate-180"} src={"/images/logoAbout/up.svg"} width={30} height={30} alt="foto" />
-                                </button>
-                            </div>
-                            <div className="h-1 w-full mt-3 bg-koreaRed mb-2">
-
-                            </div>
-                            <div className={active5 ? "hidden" : "block"}>
-                                <table className="w-full text-center align-center mt-5 md:block hidden">
-                                    <thead className="">
-                                        <tr className="text-lg bg-koreaBlueMuda rounded-xl">
-                                            <th className="py-4 w-[30rem]">NO</th>
-                                            <th className="py-4 w-[200rem]">GOALS</th>
-                                            <th className="py-4 w-[100rem]">UPI</th>
-                                            <th className="py-4 w-[100rem]">UNNES</th>
-                                            <th className="py-4 w-[100rem]">UNDIKSHA</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="md:text-base text-xs">
-                                        {
-                                            data && data.map((v, i) => {
-                                                if (v.year_5?.upi || v.year_5?.unnes || v.year_5?.undiksha) {
-                                                    return (
-                                                        <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_5?.upi || ""} unnes={v.year_5?.unnes} undiksha={v.year_5?.undiksha} />
-                                                    )
-                                                }
-                                            })
-                                        }
-
-                                    </tbody>
-                                </table>
-                                <div className="md:w-[80%] w-full overflow-x-auto md:hidden block rounded-xl">
-                                    <table className="w-[550px] text-center align-center mt-5 rounded-xl">
-                                        <thead className="rounded-xl">
-                                            <tr className="text-lg bg-koreaBlueMuda rounded-xl shadow-lg">
-                                                <th className="py-4 text-sm w-[30rem]">NO</th>
-                                                <th className="py-4 text-sm w-[200rem]">GOALS</th>
-                                                <th className="py-4 text-sm w-[100rem]">UPI</th>
-                                                <th className="py-4 text-sm w-[100rem]">UNNES</th>
-                                                <th className="py-4 text-sm w-[100rem]">UNDIKSHA</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody className="md:text-base text-xs">
-                                            {
-                                                data && data.map((v, i) => {
-                                                    if (v.year_5?.upi || v.year_5?.unnes || v.year_5?.undiksha) {
-                                                        return (
-                                                            <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_5?.upi || ""} unnes={v.year_5?.unnes} undiksha={v.year_5?.undiksha} />
-                                                        )
-                                                    }
-                                                })
-                                            }
-
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <h3 className="md:mt-7 mt-2 text-koreaRed text-xl font-bold">Sixth  year</h3>
-                            <div className="flex justify-between cursor-pointer" onClick={(e) => { e.preventDefault(); setActive6(!active6) }}>
-                                <h1 className="md:text-3xl text-2xl mt-2 font-bold">Activities</h1>
-                                <button className="" onClick={(e) => { e.preventDefault(); setActive6(!active6) }}>
-                                    <Image className={active6 ? "" : "rotate-180"} src={"/images/logoAbout/up.svg"} width={30} height={30} alt="foto" />
-                                </button>
-                            </div>
-                            <div className="h-1 w-full mt-3 bg-koreaRed mb-2">
-
-                            </div>
-                            <div className={active6 ? "hidden" : "block"}>
-                                <table className="w-full text-center align-center mt-5 md:block hidden">
-                                    <thead className="">
-                                        <tr className="text-lg bg-koreaBlueMuda rounded-xl">
-                                            <th className="py-4 w-[30rem]">NO</th>
-                                            <th className="py-4 w-[200rem]">GOALS</th>
-                                            <th className="py-4 w-[100rem]">UPI</th>
-                                            <th className="py-4 w-[100rem]">UNNES</th>
-                                            <th className="py-4 w-[100rem]">UNDIKSHA</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="md:text-base text-xs">
-                                        {
-                                            data && data.map((v, i) => {
-                                                if (v.year_6?.upi || v.year_6?.unnes || v.year_6?.undiksha) {
-                                                    return (
-                                                        <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_6?.upi || ""} unnes={v.year_6?.unnes} undiksha={v.year_6?.undiksha} />
-                                                    )
-                                                }
-                                            })
-                                        }
-
-                                    </tbody>
-                                </table>
-                                <div className="md:w-[80%] w-full overflow-x-auto md:hidden block rounded-xl">
-                                    <table className="w-[550px] text-center align-center mt-5 rounded-xl">
-                                        <thead className="rounded-xl">
-                                            <tr className="text-lg bg-koreaBlueMuda rounded-xl shadow-lg">
-                                                <th className="py-4 text-sm w-[30rem]">NO</th>
-                                                <th className="py-4 text-sm w-[200rem]">GOALS</th>
-                                                <th className="py-4 text-sm w-[100rem]">UPI</th>
-                                                <th className="py-4 text-sm w-[100rem]">UNNES</th>
-                                                <th className="py-4 text-sm w-[100rem]">UNDIKSHA</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody className="md:text-base text-xs">
-                                            {
-                                                data && data.map((v, i) => {
-                                                    if (v.year_6?.upi || v.year_6?.unnes || v.year_6?.undiksha) {
-                                                        return (
-                                                            <TableDataActivities key={i} point={v.point} sub_point={v.sub_point} sub_sub_point={v.sub_sub_point} text={v.text} upi={v.year_6?.upi || ""} unnes={v.year_6?.unnes} undiksha={v.year_6?.undiksha} />
-                                                        )
-                                                    }
-                                                })
-                                            }
-
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div className="space-y-6">
+              <InformationDropdown1 />
+              <InformationDropdown2 />
+              <InformationDropdown3 />
+              <InformationDropdown4 />
             </div>
-            <CustomFooter />
-        </>
-    )
+          </section>
+
+          {/* ── Activities Tables ── */}
+          <section className="py-16 md:py-24">
+            <div className="mb-10 space-y-3">
+              <span className="inline-block px-3 py-1 bg-koreaBlue/8 text-koreaBlue text-xs font-medium tracking-widest uppercase rounded-full">
+                Progress
+              </span>
+              <h2 className="text-3xl md:text-4xl text-gray-900 leading-tight font-semibold tracking-tight">
+                Year-by-Year{" "}
+                <em className="not-italic font-semibold">Activities</em>
+              </h2>
+            </div>
+
+            <div className="space-y-10 pb-8">
+              <ActivityTable
+                data={data}
+                yearKey="year_1"
+                label="First Year"
+                active={active}
+                onToggle={() => setActive(!active)}
+              />
+              <ActivityTable
+                data={data}
+                yearKey="year_2"
+                label="Second Year"
+                active={active2}
+                onToggle={() => setActive2(!active2)}
+              />
+            </div>
+          </section>
+
+        </div>
+      </main>
+
+      <CustomFooter />
+    </>
+  )
 }

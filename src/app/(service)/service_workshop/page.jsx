@@ -6,27 +6,45 @@ import ResponsivePagination from "react-responsive-pagination";
 import "react-responsive-pagination/themes/classic.css";
 import axios from "axios";
 import CardEvent from "../../../components/card/CardEvent";
+import { motion } from "framer-motion";
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (i) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.4, delay: i * 0.08, ease: "easeOut" },
+  }),
+};
+
+const CardSkeleton = () => (
+  <div className="w-full bg-gray-50 p-2 rounded-md overflow-hidden animate-pulse">
+    <div className="w-full aspect-[16/9] bg-gray-200 rounded-t-md" />
+    <div className="py-4 h-[120px] space-y-2">
+      <div className="h-4 bg-gray-200 rounded w-3/4" />
+      <div className="h-4 bg-gray-200 rounded w-full" />
+      <div className="h-4 bg-gray-200 rounded w-1/2" />
+    </div>
+  </div>
+);
 
 export default function Services_workshop() {
   const [data, setData] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
-  
+
   useEffect(() => {
     async function getData() {
       setLoading(true);
       try {
         const [eventsData, totalData] = await Promise.all([
-          axios.get(
-            `${process.env.NEXT_PUBLIC_API_URL}/api/event?page=${currentPage}&limit=20`
-          ),
-          axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/event`)
+          axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/event?page=${currentPage}&limit=9`),
+          axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/event`),
         ]);
-        
         if (eventsData.data) {
           setData(eventsData.data);
-          setTotalPages(Math.ceil(totalData.data.length / 10));
+          setTotalPages(Math.ceil(totalData.data.length / 9));
         }
       } catch (err) {
         console.error("Error fetching data:", err.message);
@@ -40,66 +58,73 @@ export default function Services_workshop() {
   return (
     <>
       <Navbar />
-      
-      {/* Hero Section */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 ">
-        <div className=" mx-auto">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900">
-            Workshop
-          </h1>
-          <div className="h-1 w-24 bg-red-600 mt-4"></div>
-          
-          <div className="mt-8 space-y-6 text-gray-700">
-            <p className="text-base md:text-lg lg:text-xl leading-relaxed">
-              The Leading University Project for International Cooperation (LUPIC)
-              regularly organizes various workshops aimed at enhancing the quality
-              of education, particularly in the fields of chemistry and Science,
-              Technology, Engineering, and Mathematics (STEM).
-            </p>
-            
-            <div className="text-left mt-10">
-              <h2 className="text-lg md:text-xl font-bold text-gray-900">
-                1. Workshop Fabrication Laboratory Education (Fablab Edu)
+
+      <main className="w-full overflow-x-hidden">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10">
+
+          {/* ── Workshop Info ── */}
+          <section className="pt-16 md:pt-24">
+            <div className="mb-10 space-y-3">
+              <span className="inline-block px-3 py-1 bg-koreaBlue/8 text-koreaBlue text-xs font-medium tracking-widest uppercase rounded-full">
+                Services
+              </span>
+              <h2 className="text-3xl md:text-4xl text-gray-900 leading-tight font-semibold tracking-tight">
+                Our{" "}
+                <em className="not-italic font-semibold">Workshop</em>
               </h2>
-              <p className="text-base md:text-lg mt-3 leading-relaxed">
-                Fablab Edu is a laboratory facility supported by LUPIC to enhance
-                technology-based learning in the fields of chemistry and STEM.
-              </p>
-              <p className="text-base md:text-lg mt-4 leading-relaxed">
-                The fablab workshop will run for 32JP through onsite and online
-                meeting. The figure and table below showed the flow of the meeting
-                and detail program.
-              </p>
             </div>
-          </div>
-        </div>
-      </section>
 
-      {/* Events Section */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="mb-10">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
-            Event Workshop
-          </h2>
-          <div className="h-1 w-32 bg-red-600 mt-3"></div>
-        </div>
-
-        {/* Loading State */}
-        {loading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {[...Array(6)].map((_, i) => (
-              <div key={i} className="animate-pulse">
-                <div className="bg-gray-200 rounded-2xl h-[500px]"></div>
+            <div className="space-y-4 text-sm text-gray-700 leading-relaxed">
+              <p className="text-justify">
+                The Leading University Project for International Cooperation (LUPIC)
+                regularly organizes various workshops aimed at enhancing the quality
+                of education, particularly in the fields of chemistry and Science,
+                Technology, Engineering, and Mathematics (STEM).
+              </p>
+              <div className="space-y-2">
+                <h3 className="text-base font-semibold text-gray-900">
+                  1. Workshop Fabrication Laboratory Education (Fablab Edu)
+                </h3>
+                <p className="text-justify">
+                  Fablab Edu is a laboratory facility supported by LUPIC to enhance
+                  technology-based learning in the fields of chemistry and STEM.
+                </p>
+                <p className="text-justify">
+                  The fablab workshop will run for 32JP through onsite and online
+                  meeting. The figure and table below showed the flow of the meeting
+                  and detail program.
+                </p>
               </div>
-            ))}
-          </div>
-        ) : (
-          <>
-            {/* Cards Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-              {data && data.length > 0 ? (
-                data.map((event) => (
-                  <div key={event._id} className="h-full">
+            </div>
+          </section>
+
+          {/* ── Event Workshop ── */}
+          <section className="py-16 md:py-24">
+            <div className="mb-10 space-y-3">
+              <span className="inline-block px-3 py-1 bg-koreaBlue/8 text-koreaBlue text-xs font-medium tracking-widest uppercase rounded-full">
+                Events
+              </span>
+              <h2 className="text-3xl md:text-4xl text-gray-900 leading-tight font-semibold tracking-tight">
+                Event{" "}
+                <em className="not-italic font-semibold">Workshop</em>
+              </h2>
+            </div>
+
+            {loading ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 w-full">
+                {Array.from({ length: 9 }).map((_, i) => <CardSkeleton key={i} />)}
+              </div>
+            ) : data.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 w-full">
+                {data.map((event, i) => (
+                  <motion.div
+                    key={event._id}
+                    custom={i}
+                    variants={fadeUp}
+                    initial="hidden"
+                    animate="visible"
+                    className="w-full min-w-0"
+                  >
                     <CardEvent
                       gambar={event.gambar}
                       judul={event.judul}
@@ -109,21 +134,22 @@ export default function Services_workshop() {
                       harga={event.harga}
                       id={event._id}
                     />
-                  </div>
-                ))
-              ) : (
-                <div className="col-span-full text-center py-16">
-                  <p className="text-gray-500 text-lg">
-                    No workshops available at the moment.
-                  </p>
-                </div>
-              )}
-            </div>
+                  </motion.div>
+                ))}
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center py-20 text-center">
+                <svg className="w-16 h-16 text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <h3 className="text-lg font-semibold text-gray-700 mb-1">No workshops available</h3>
+                <p className="text-sm text-gray-400">Please check back later</p>
+              </div>
+            )}
 
-            {/* Pagination */}
-            {totalPages > 1 && (
-              <div className="flex justify-center mt-12">
-                <div className="w-full max-w-md">
+            {!loading && totalPages > 1 && (
+              <div className="flex justify-center mt-10">
+                <div className="w-full max-w-xs">
                   <ResponsivePagination
                     current={currentPage}
                     total={totalPages}
@@ -132,9 +158,10 @@ export default function Services_workshop() {
                 </div>
               </div>
             )}
-          </>
-        )}
-      </section>
+          </section>
+
+        </div>
+      </main>
 
       <CustomFooter />
     </>

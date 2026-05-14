@@ -9,7 +9,7 @@ export default function CardNews({ gambar, judul, deskripsi, tanggal, id }) {
     <motion.a
       href={`/news/${id}`}
       transition={{ duration: 0.3, ease: "easeOut" }}
-      className="block bg-gray-50 p-2 rounded-md overflow-hidden w-full max-w-[350px] "
+      className="block bg-gray-50 p-2 rounded-md overflow-hidden w-full"
     >
       <div className="relative w-full h-[200px]">
         <img
